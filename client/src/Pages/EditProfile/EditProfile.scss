@@ -1,0 +1,21 @@
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .edit-pic {
+    width: 30rem;
+    height: 30rem;
+    object-fit: contain;
+    background: black;
+    margin: 1rem;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    color: white;
+  }
+  Input[type='text'],
+  Input[type='email'] {
+    width: 30rem;
+  }
+}

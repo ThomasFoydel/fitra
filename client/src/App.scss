@@ -1,0 +1,63 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+}
+
+html {
+  font-size: 62.5%;
+  background-size: cover;
+  background: rgb(58, 58, 58);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.center {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus,
+input:focus {
+  outline: 0;
+}
+
+.coachportal-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: black;
+  color: white;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  background: linear-gradient(rgba(0, 0, 0, 0.273), rgba(0, 0, 0, 0.433));
+}

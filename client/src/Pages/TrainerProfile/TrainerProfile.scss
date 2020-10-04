@@ -1,0 +1,45 @@
+.trainerprofile {
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  .name {
+    font-size: 6rem;
+    letter-spacing: 0.5rem;
+    margin-left: 0.5rem;
+  }
+  .bio {
+    font-size: 1.4rem;
+  }
+  .email {
+    font-weight: bold;
+    font-size: 1.4rem;
+  }
+
+  .cover-pic {
+    width: 100vw;
+    height: 100vh;
+    background-position: top;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    padding-top: 10rem;
+    overflow: scroll;
+  }
+
+  .profile-pic {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 20rem;
+    border: 12px solid rgb(240, 240, 240);
+    margin-left: 50%;
+    transform: translateX(-50%);
+    display: block;
+  }
+  Input {
+    margin-left: 50%;
+    transform: translateX(-50%);
+    display: block;
+  }
+}

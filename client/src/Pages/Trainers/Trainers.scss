@@ -1,0 +1,42 @@
+.trainers {
+  .background {
+    background: url('../../imgs/kettlebell.jpg');
+    width: 100vw;
+    height: 100vh;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+  }
+  .header {
+    color: white;
+    padding: 10rem;
+    font-size: 4rem;
+    position: absolute;
+  }
+  .trainers-container {
+    position: absolute;
+  }
+  .trainer {
+    width: 20rem;
+    height: 20rem;
+    margin: 4rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.575);
+    transition: all 0.3s ease;
+    .name {
+      // text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  .profilepic,
+  .coverpic {
+    width: 9rem;
+    height: 9rem;
+  }
+}

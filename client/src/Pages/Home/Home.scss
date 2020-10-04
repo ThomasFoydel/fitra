@@ -1,0 +1,63 @@
+.home {
+  margin-top: 5rem;
+  h2 {
+    background: white;
+  }
+
+  .appointment {
+    background: rgb(233, 233, 233);
+    padding: 1.2rem;
+    margin: 1rem;
+    border-radius: 2px;
+
+    .profile-pic {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 25rem;
+    }
+  }
+  .ended {
+    background: rgba(140, 138, 164, 0.705);
+  }
+  .active {
+    background: rgb(30, 248, 194);
+  }
+  .not-started {
+    background: rgb(255, 255, 255);
+  }
+}
+
+// .home {
+//   .background {
+//     background: url('../../imgs/wood.jpg');
+//     width: 100vw;
+//     height: 100vh;
+//     background-position: center;
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//   }
+//   .header {
+//     color: white;
+//     padding: 10rem;
+//     font-size: 4rem;
+//     position: absolute;
+//   }
+//   .appointments {
+//     color: white;
+//     position: absolute;
+//     margin-top: 7rem;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-between;
+//     align-items: center;
+//     height: 20rem;
+//     background: rgba(0, 0, 0, 0.591);
+
+//     a {
+//       color: rgb(245, 245, 245);
+//       padding: 0.5rem 1rem;
+//       margin: 1rem;
+//     }
+//   }
+// }

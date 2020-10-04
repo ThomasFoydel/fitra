@@ -1,0 +1,37 @@
+{
+  "name": "fitr",
+  "version": "1.0.0",
+  "description": "A Scheduler and RealTime Communication Platform for Trainers",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "Thomas Foydel, Benjamin Dain",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "http-proxy-middleware": "^1.0.5",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "gridfs-stream": "^1.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^4.2.0",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.11",
+    "socket.io": "^2.3.0",
+    "uuid": "^8.3.0"
+  }
+}

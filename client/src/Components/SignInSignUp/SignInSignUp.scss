@@ -1,0 +1,15 @@
+.signin-signup {
+  color: white;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+
+  button {
+    background: none;
+    border: none;
+    &:hover {
+      color: white;
+      text-decoration: underline;
+    }
+  }
+}

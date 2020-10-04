@@ -1,0 +1,18 @@
+.schedule {
+  .background {
+    background: url('../../imgs/yoga.jpg');
+    width: 100vw;
+    height: 100vh;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+  }
+  .header {
+    color: white;
+    padding: 10rem;
+    font-size: 4rem;
+    position: absolute;
+  }
+}
