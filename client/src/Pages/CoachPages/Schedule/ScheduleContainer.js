@@ -23,37 +23,11 @@ const ScheduleContainer = () => {
       .then(({ data: { entries } }) => setEntries(entries));
   }, []);
 
-  // useEffect(() => {
-  //   console.log({ entries });
-  // }, [entries]);
   return (
     <div className='schedule-container'>
       {entries && <Schedule entries={entries} change={handleChange} />}
     </div>
   );
 };
-
-const exampleEntries = [
-  // {
-  //   start: '12:00 AM',
-  //   end: '1:30 AM',
-  //   day: 'Sunday',
-  //   title: 'bjj',
-  //   id: 1,
-  //   recurring: false,
-  //   startDate: new Date('2020', '09', '5', '00', '00'),
-  //   endDate: new Date('2020', '09', '5', '01', '30'),
-  // },
-  {
-    start: '12:00 AM',
-    end: '1:30 AM',
-    day: 'Monday',
-    title: 'bjj',
-    id: 2,
-    recurring: false,
-    startDate: new Date('2020', '09', '4', '00', '00'),
-    endDate: new Date('2020', '09', '4', '01', '30'),
-  },
-];
 
 export default ScheduleContainer;

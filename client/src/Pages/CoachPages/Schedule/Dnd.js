@@ -11,7 +11,6 @@ const Dnd = ({
   setBlockEntries,
   invisible,
 }) => {
-  // console.log('DND data: ', data);
   const [day, setDay] = useState(data.day);
   const [startTime, setStartTime] = useState(data.start);
   const [endTime, setEndTime] = useState(data.end);
@@ -29,12 +28,12 @@ const Dnd = ({
   t *= 50;
   let xDefault = days.indexOf(data.day) * 120;
 
-  console.log({ xDefault, e });
   const handleDestroy = () => {
     destroy(data.id);
   };
 
-  const updateBlocks = () => {
+  const updateBlocks = (startDate, endDate, startTime, endTime, recurring) => {
+    let day = days[startDate.getDay()];
     let newTime = {
       day,
       end: endTime,
@@ -54,6 +53,7 @@ const Dnd = ({
       let index = entries.findIndex((x) => x.id === data.id);
       let copy = [...entries];
       copy[index] = newTime;
+      // console.log({ copy, index, newTime });
       return copy;
     });
     // let filteredTimes = times.filter((time) => time.id !== data.id);
@@ -92,22 +92,23 @@ const Dnd = ({
     const timeDifference = mSecondsInADay * index;
     const prevDate = week[days.indexOf(day)];
     let newDate = new Date(prevDate.getTime() + timeDifference);
-    let newStartDate = dateFromDateAndTime(newDate, times[startIndex]);
+    let newStartTime = times[startIndex];
+    let newStartDate = dateFromDateAndTime(newDate, newStartTime);
 
     // NEW END TIME
     if (Number(height) < 0) height = 0;
     let h = height.substring(0, height.length - 2);
     h /= 50;
     let endTime = times[startIndex + h];
-    let newEndDate = dateFromDateAndTime(newDate, endTime, times[startIndex]);
-
+    let newEndDate = dateFromDateAndTime(newDate, endTime, newStartTime);
+    // console.log({ newStartDate, newEndDate });
     // UPDATE STATE
     setStartTime(times[startIndex]);
     setEndTime(endTime);
     setStartDate(newStartDate);
     setEndDate(newEndDate);
     setDay(days[x]);
-    updateBlocks();
+    updateBlocks(newStartDate, newEndDate, newStartTime, endTime, recurring);
   };
 
   const handleResize = (e, dir, refToElement, d) => {
@@ -127,7 +128,7 @@ const Dnd = ({
       // SET END DATE
       let newEndDate = dateFromDateAndTime(endDate, newEndTime, startTime);
       setEndDate(newEndDate);
-      updateBlocks();
+      updateBlocks(startDate, newEndDate, startTime, newEndTime, recurring);
     }
   };
 
@@ -152,7 +153,7 @@ const Dnd = ({
     if (firstLoad) {
       setFirstLoad(false);
     } else {
-      updateBlocks();
+      updateBlocks(startDate, endDate, startTime, endTime, recurring);
     }
   }, [recurring]);
   return (

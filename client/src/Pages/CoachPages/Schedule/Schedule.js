@@ -100,7 +100,10 @@ const Schedule = ({ change, entries }) => {
               .toDateString()
               .substring(0, day.toDateString().length - 4);
             return (
-              <div className={`day-label today-${today === i}`} key={key}>
+              <div
+                className={`day-label today-${today === i && weekShift === 0}`}
+                key={key}
+              >
                 {string}
               </div>
             );
