@@ -43,6 +43,7 @@ router.post('/register', async (req, res) => {
     email: email.toLowerCase(),
     password: hashedPw,
     settings: { darkmode: false },
+    availability: [],
   });
 
   newTrainer
@@ -129,6 +130,24 @@ router.post('/editprofile/', auth, (req, res) => {
   Trainer.findOneAndUpdate({ _id: userId }, formInfo, { new: true })
     .then((result) => res.send(result))
     .catch((err) => res.send({ err: 'database error' }));
+});
+
+router.get('/schedule/', auth, async (req, res) => {
+  let { userId } = req.tokenUser;
+  let foundTrainer = await Trainer.findById(userId);
+  let entries = foundTrainer.availability || [];
+  res.send({ entries });
+});
+
+router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
+  let { userId } = tokenUser;
+  Trainer.findOneAndUpdate(
+    { _id: userId },
+    { availability: body },
+    { new: true, useFindAndModify: false }
+  )
+    .then((user) => res.send(user.availability || []))
+    .catch((err) => res.send({ err }));
 });
 
 module.exports = router;

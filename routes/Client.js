@@ -138,6 +138,7 @@ router.get('/trainer/:trainerId', async (req, res) => {
   // send back profile of trainer, and ifSubscribed
   // console.log(' get trainer. tokenUser', req.tokenUser.userId);
   let trainer = await Trainer.findById(trainerId);
+  console.log({ trainer });
   res.send({ trainer });
 });
 

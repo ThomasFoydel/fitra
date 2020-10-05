@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const availabilitySchema = new mongoose.Schema({
+  day: String,
+  end: String,
+  start: String,
+  startDate: Date,
+  endDate: Date,
+  recurring: Boolean,
+  title: String,
+  id: String,
+});
+
 const trainerSchema = {
   name: {
     type: String,
@@ -30,6 +41,7 @@ const trainerSchema = {
     type: Object,
     select: false,
   },
+  availability: [availabilitySchema],
 };
 
 // needs: weekly schedule

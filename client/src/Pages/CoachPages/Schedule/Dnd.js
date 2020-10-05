@@ -11,12 +11,13 @@ const Dnd = ({
   setBlockEntries,
   invisible,
 }) => {
+  // console.log('DND data: ', data);
   const [day, setDay] = useState(data.day);
   const [startTime, setStartTime] = useState(data.start);
   const [endTime, setEndTime] = useState(data.end);
   // const [title] = useState(data.title);
-  const [startDate, setStartDate] = useState(data.startDate);
-  const [endDate, setEndDate] = useState(data.endDate);
+  const [startDate, setStartDate] = useState(new Date(data.startDate));
+  const [endDate, setEndDate] = useState(new Date(data.endDate));
   const [recurring, setRecurring] = useState(data.recurring);
   const [firstLoad, setFirstLoad] = useState(true);
 
@@ -28,12 +29,14 @@ const Dnd = ({
   t *= 50;
   let xDefault = days.indexOf(data.day) * 120;
 
+  console.log({ xDefault, e });
   const handleDestroy = () => {
     destroy(data.id);
   };
 
   const updateBlocks = () => {
     let newTime = {
+      day,
       end: endTime,
       start: startTime,
       startDate,

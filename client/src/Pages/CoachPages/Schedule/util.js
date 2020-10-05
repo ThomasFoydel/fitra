@@ -127,7 +127,7 @@ export const checkBlock = (data, week) => {
   let endDay = end.getDate();
   let endWeek = new Date(endYear, endMonth, endDay, '23', '59', '59', '999');
 
-  let block = data.startDate;
+  let block = new Date(data.startDate);
   if (block >= startWeek && block < endWeek) {
     return true;
   } else return false;

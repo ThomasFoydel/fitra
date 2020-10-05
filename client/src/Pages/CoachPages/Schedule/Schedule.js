@@ -24,9 +24,11 @@ const Schedule = ({ change, entries }) => {
   const [week, setWeek] = useState(currentWeek);
   const [blockedTimes, setBlockedTimes] = useState(entries);
   const [blockEntries, setBlockEntries] = useState(entries);
+  const [firstRender, setFirstRender] = useState(true);
 
   useEffect(() => {
-    console.log('block entries: ', blockEntries);
+    if (firstRender) setFirstRender(false);
+    else change(blockEntries);
   }, [blockEntries]);
 
   const destroy = (id) => {
