@@ -45,7 +45,10 @@
 }
 
 .appointmentselector {
+  .grid-time {
+    transition: all 0.3s ease;
+  }
   .selected-true {
-    background: #139c91;
+    background: #139c91 !important;
   }
 }
