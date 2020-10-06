@@ -8,7 +8,7 @@ import {
   dateFromDateAndTime,
   setUpWeek,
   checkBlock,
-} from './util';
+} from '../../../util/util';
 import './Schedule.scss';
 
 // todos:

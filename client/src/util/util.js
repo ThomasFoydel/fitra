@@ -167,3 +167,21 @@ export const dateFromDateAndTime = (date, time, startTime) => {
 //   // return `${hour}:${halfHour}`;
 //   return { hour, min: halfHour };
 // };
+
+// export const checkSelection = (hour, hourDate, selection) => {
+//   // selection = array of objects, selected times to loop through
+//   let selected = false;
+
+// // // // // // // // appt selector
+
+//   console.log({ hour, hourDate });
+//   selection.forEach((s) => {
+//     // console.log({
+//     //   currentHour,
+//     //   s: s.dayDate,
+//     //   TRUTH: s.dayDate === currentHour,
+//     // });
+//     if (s.dayDate === currentHour) selected = true;
+//   });
+//   return selected;
+// };

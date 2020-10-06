@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
-import { dateFromDateAndTime } from './util';
+import { dateFromDateAndTime } from '../../../util/util';
 const Dnd = ({
   data,
   destroy,

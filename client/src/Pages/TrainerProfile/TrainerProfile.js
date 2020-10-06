@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TrainerProfile.scss';
+import AppointmentSelector from './AppointmentSelector';
 
 const TrainerProfile = ({ match }) => {
   const [currentTrainer, setCurrentTrainer] = useState({});
@@ -84,54 +85,7 @@ const TrainerProfile = ({ match }) => {
         />
         <input type='date' onChange={(e) => setDay(e.target.value)}></input>
         <button onClick={bookAppointment}>book session</button>
-        <div>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat
-          quod ullam dolorem veniam deserunt reprehenderit, blanditiis nulla
-          quasi voluptatem corrupti soluta quisquam at illo architecto esse
-          quaerat est tenetur? Sint delectus ullam velit deleniti. Modi, quasi
-          laudantium? Dignissimos neque aut nisi sit eum recusandae voluptas
-          quibusdam vero libero doloribus sint nihil, corporis pariatur,
-          adipisci officiis est velit laboriosam, numquam debitis facere modi
-          fuga. Culpa consequatur quisquam ipsum suscipit soluta veniam cum
-          similique, recusandae commodi tenetur exercitationem doloremque
-          dolores temporibus eveniet asperiores aliquam quam reprehenderit,
-          ullam et quod quos porro quidem? Voluptatibus eveniet minima maxime
-          qui sequi a commodi voluptatem repellat voluptatum, laborum maiores
-          vitae nemo aspernatur nulla laudantium deleniti consectetur cupiditate
-          at reprehenderit? Odio, placeat. Voluptatum eum quia harum dignissimos
-          delectus ab explicabo sunt qui veritatis, provident, nihil id? Eius
-          aliquam asperiores animi esse perferendis, sequi, voluptatibus nihil
-          aperiam, laudantium iure fugit consequatur reiciendis? Quos, impedit.
-          Harum adipisci explicabo veritatis nisi. Dolorem nisi ab vero,
-          deleniti magnam modi rem alias quod consectetur laudantium quas
-          tenetur dolorum dicta non maxime eaque, sequi aut repellendus a qui.
-          Molestiae numquam nostrum nulla dicta eos minus, reprehenderit eius
-          hic odio. Numquam ratione, eveniet iure quod neque in? Illo, soluta.
-          Error dignissimos, blanditiis assumenda quis exercitationem ea earum
-          odit necessitatibus facilis iure! Sint quis quos, unde architecto
-          repudiandae sequi? Delectus nesciunt modi tenetur cum aspernatur ad
-          perspiciatis dolor fuga quos consequatur, deserunt placeat quam,
-          repellendus repellat numquam ipsam fugit veritatis voluptatibus neque,
-          esse saepe? Quos dignissimos, ab eius nisi quidem facilis cumque
-          molestiae sapiente itaque deserunt harum, officiis reprehenderit
-          accusantium! Tenetur magni id, ex, dolorem error omnis perferendis
-          quis repellendus ea eos earum, recusandae labore eum dignissimos. Eos
-          dicta nesciunt officiis architecto, perspiciatis aperiam deleniti
-          neque libero accusantium voluptatibus fuga explicabo voluptatum. Odio
-          porro reprehenderit sequi facilis sed tempora quasi dicta maxime nihil
-          deserunt cum nam perspiciatis, magnam nemo exercitationem ipsa
-          mollitia accusantium et voluptatibus, asperiores laborum vero aperiam!
-          Ipsa sunt vitae qui sapiente nobis dolore eos natus illo, totam
-          numquam quis aperiam, debitis officia inventore similique dolor odit
-          facilis, officiis non sit aut unde quos? Quibusdam, aliquam quas.
-          Fugit, quasi voluptas eligendi fuga dolores debitis asperiores earum
-          esse nihil pariatur quis. Quae recusandae deserunt quasi perferendis
-          unde harum atque quam possimus iusto corrupti architecto quaerat non
-          adipisci, voluptatum maxime explicabo sed provident libero consectetur
-          obcaecati, voluptate aspernatur! Impedit error repellendus aliquam
-          hic? Dolores repudiandae corrupti in eius cupiditate nesciunt?
-          Tempora, debitis? Nisi, quasi ducimus.
-        </div>
+        <AppointmentSelector entries={currentTrainer.availability} />
       </div>
     </div>
   );
