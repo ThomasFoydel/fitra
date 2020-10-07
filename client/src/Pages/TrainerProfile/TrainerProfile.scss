@@ -45,8 +45,22 @@
 }
 
 .appointmentselector {
+  .grid-time.unavailable {
+    // color: red !important;
+    background: black !important;
+    // display: none !important;
+    // opacity: 0;
+    cursor: default;
+    &:hover {
+      background: black !important;
+    }
+  }
   .grid-time {
+    cursor: pointer;
     transition: all 0.3s ease;
+    &:hover {
+      background: #97c8df !important;
+    }
   }
   .selected-true {
     background: #139c91 !important;

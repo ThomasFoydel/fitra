@@ -132,11 +132,8 @@ router.get('/trainers', async (req, res) => {
 router.get('/trainer/:trainerId', async (req, res) => {
   // get trainer id from req.params
   let { trainerId } = req.params;
-  // fetch trainer from db
-  // get user id from req.tokenUser
-  // fetch user from db, check if subscribed to trainer
-  // send back profile of trainer, and ifSubscribed
-  // console.log(' get trainer. tokenUser', req.tokenUser.userId);
+
+  // todo: get upcoming appointments for this trainer, include times on trainer.availability
   let trainer = await Trainer.findById(trainerId);
   console.log({ trainer });
   res.send({ trainer });

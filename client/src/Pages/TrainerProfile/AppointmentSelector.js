@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {
   days,
@@ -8,7 +9,7 @@ import {
   checkBlock,
   checkSelection,
 } from '../../util/util';
-const AppointmentSelector = ({ entries }) => {
+const AppointmentSelector = ({ trainer: { availability, _id } }) => {
   const [week, setWeek] = useState(setUpWeek(0));
   const [selection, setSelection] = useState([]);
   const [mouseIsDown, setMouseIsDown] = useState(false);
@@ -16,7 +17,7 @@ const AppointmentSelector = ({ entries }) => {
   useEffect(() => {
     window.addEventListener('mousedown', () => setMouseIsDown(true));
     window.addEventListener('mouseup', () => setMouseIsDown(false));
-  });
+  }, []);
 
   const handleMouseOver = (e) => {
     if (mouseIsDown) {
@@ -112,14 +113,38 @@ const AppointmentSelector = ({ entries }) => {
     }
   };
 
+  const handleBooking = (e) => {
+    console.log({ selection });
+    let startTime = selection[0].hourDate.toUTCString();
+    let endTime = selection[selection.length - 1].hourDate.toUTCString();
+    console.log({ startTime, endTime });
+    let token = localStorage.getItem('fitr-token');
+    axios
+      .post(
+        '/api/appointment/new',
+        { startTime, endTime, trainer: _id },
+        {
+          headers: { 'x-auth-token': token },
+        }
+      )
+      .then((result) => {
+        console.log('booking result: ', result);
+      });
+  };
+
   return (
     <div className='appointmentselector'>
       <h2>AppointmentSelector</h2>
-      {/* {selection.map((m, i) => (
-        <div key={i}>
-          {m.day} - {m.hour} - {m.hourDate.toDateString()}
-        </div>
-      ))} */}
+      <div style={{ position: 'fixed', left: 0 }}>
+        {selection.map((m, i) => (
+          <div key={i}>
+            {m.day} - {m.hour} - {m.hourDate.toDateString()}
+          </div>
+        ))}
+        {selection && selection.length > 0 && (
+          <button onClick={handleBooking}>book</button>
+        )}
+      </div>
       <div className='labels'>
         {Object.keys(week).map((key, i) => {
           let day = week[key];
@@ -152,6 +177,7 @@ const AppointmentSelector = ({ entries }) => {
                   //   let selected = checkSelection(hour, hourDate, selection);
                   if (i < 48) {
                     let selected;
+                    let blocked;
                     let dayIndex = days.indexOf(day);
                     let dayDate = week[dayIndex];
                     let hourDate = dateFromDateAndTime(dayDate, hour);
@@ -159,10 +185,18 @@ const AppointmentSelector = ({ entries }) => {
                       if (s.hourDate.toString() === hourDate.toString())
                         selected = true;
                     });
-
+                    if (availability)
+                      availability.forEach((entry) => {
+                        let startDate = new Date(entry.startDate);
+                        let endDate = new Date(entry.endDate);
+                        if (hourDate >= startDate && hourDate < endDate)
+                          blocked = true;
+                      });
                     return (
                       <div
-                        className={`grid-time ${selected && 'selected-true'}`}
+                        className={`grid-time ${selected && 'selected-true'} ${
+                          blocked && 'unavailable'
+                        }`}
                         style={{
                           background: `rgb(${0 + i * 2}, ${110 - i / 2}, ${
                             159 + i * 2
@@ -171,8 +205,8 @@ const AppointmentSelector = ({ entries }) => {
                         key={hour}
                         id={JSON.stringify({ day, hour })}
                         // onClick={handleGridClick}
-                        onMouseOver={handleMouseOver}
-                        onMouseDown={handleGridClick}
+                        onMouseOver={blocked ? () => {} : handleMouseOver}
+                        onMouseDown={blocked ? () => {} : handleGridClick}
                       >
                         {hour}
                       </div>

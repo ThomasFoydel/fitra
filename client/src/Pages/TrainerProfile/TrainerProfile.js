@@ -56,6 +56,8 @@ const TrainerProfile = ({ match }) => {
   // selecting time should update state value representing their selection
   // and open modal asking to confirm that it is the time they want
   let { name, bio, email, profilePic, coverPic } = currentTrainer;
+
+  // todo: filter currentTrainer.availability down to the times in current week?
   return (
     <div className='trainerprofile'>
       <div
@@ -85,7 +87,7 @@ const TrainerProfile = ({ match }) => {
         />
         <input type='date' onChange={(e) => setDay(e.target.value)}></input>
         <button onClick={bookAppointment}>book session</button>
-        <AppointmentSelector entries={currentTrainer.availability} />
+        <AppointmentSelector trainer={currentTrainer} />
       </div>
     </div>
   );
