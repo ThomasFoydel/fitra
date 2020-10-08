@@ -8,6 +8,8 @@ const Appointment = require('../models/Appointment');
 const { v4: uuidV4 } = require('uuid');
 
 router.post('/new', auth, async (req, res) => {
+  // todo: check if conflicting appointment times already exist, if so, send err instead of making appt
+
   // get userid from token,
   const { userId } = req.tokenUser;
   const { trainer, startTime, endTime } = req.body;

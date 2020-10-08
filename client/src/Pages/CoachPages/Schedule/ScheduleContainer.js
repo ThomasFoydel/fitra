@@ -23,9 +23,22 @@ const ScheduleContainer = () => {
       .then(({ data: { entries } }) => setEntries(entries));
   }, []);
 
+  const handleMinimum = (e) => {
+    axios
+      .get('/api/trainer/minimum/', { headers: { 'x-auth-token': token } })
+      .then((res) => console.log({ res }))
+      .catch((err) => console.log({ err }));
+  };
+
   return (
     <div className='schedule-container'>
-      {entries && <Schedule entries={entries} change={handleChange} />}
+      {entries && (
+        <Schedule
+          entries={entries}
+          change={handleChange}
+          handleMinimum={handleMinimum}
+        />
+      )}
     </div>
   );
 };
