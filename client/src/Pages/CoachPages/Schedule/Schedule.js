@@ -89,7 +89,7 @@ const Schedule = ({ change, entries, handleMinimum }) => {
     <div className='schedule'>
       <div className='minimum'>
         <h2>minimum</h2>
-        <select onChange={handleMinimum}>
+        <select onChange={handleMinimum} value='1'>
           <option value='1'>30 minutes</option>
           <option value='2'>1 hour</option>
           <option value='2'>1.5 hours</option>

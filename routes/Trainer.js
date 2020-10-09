@@ -150,4 +150,21 @@ router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
     .catch((err) => res.send({ err }));
 });
 
+router.post('/minimum/', auth, async ({ tokenUser, body }, res) => {
+  let { userId } = tokenUser;
+  Trainer.findOneAndUpdate({_id:userId }, 
+    {minimum: body},
+    { new: true, useFindAndModify: false }
+    ) .then((user) => res.send(user.minimum || []))
+    .catch((err) => res.send({ err }));
+});
+
+router.post('/rate/', auth, async ({ tokenUser, body }, res) => {
+  let { userId } = tokenUser;
+  Trainer.findOneAndUpdate({_id:userId }, 
+    {rate: body},
+    { new: true, useFindAndModify: false }
+    ) .then((user) => res.send(user.rate || []))
+    .catch((err) => res.send({ err }));
+});
 module.exports = router;
