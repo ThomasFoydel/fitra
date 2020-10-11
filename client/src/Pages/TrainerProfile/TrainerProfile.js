@@ -73,7 +73,19 @@ const TrainerProfile = ({ match }) => {
         <div className='email'>{email}</div>
         <img className='profile-pic' src={`/api/image/${profilePic}`} />
 
-        <input
+       
+        <AppointmentSelector trainer={currentTrainer} />
+      </div>
+    </div>
+  );
+};
+
+export default TrainerProfile;
+
+
+
+/*
+ <input
           type='time'
           onChange={(e) => setStartTime(e.target.value)}
           id='startTime'
@@ -87,10 +99,4 @@ const TrainerProfile = ({ match }) => {
         />
         <input type='date' onChange={(e) => setDay(e.target.value)}></input>
         <button onClick={bookAppointment}>book session</button>
-        <AppointmentSelector trainer={currentTrainer} />
-      </div>
-    </div>
-  );
-};
-
-export default TrainerProfile;
+*/

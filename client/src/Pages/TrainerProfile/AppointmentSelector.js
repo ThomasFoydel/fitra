@@ -27,7 +27,6 @@ const AppointmentSelector = ({ trainer: { availability, _id } }) => {
 
   const handleGridClick = (e) => {
     let { day, hour } = JSON.parse(e.target.id);
-
     let dayIndex = days.indexOf(day);
     let date = week[dayIndex];
     let hourDate = dateFromDateAndTime(date, hour);
@@ -106,7 +105,12 @@ const AppointmentSelector = ({ trainer: { availability, _id } }) => {
       };
 
       if (adjacent) {
-        setSelection((selections) => [...selections, newTime]);
+
+        setSelection((selections) => {
+          // sort selections by hourDate
+          const newArray = [...selections, newTime];
+          return newArray.sort((a, b) => a.hourDate - b.hourDate)
+        });
       } else {
         setSelection([newTime]);
       }
@@ -134,13 +138,15 @@ const AppointmentSelector = ({ trainer: { availability, _id } }) => {
 
   return (
     <div className='appointmentselector'>
-      <h2>AppointmentSelector</h2>
-      <div style={{ position: 'fixed', left: 0 }}>
-        {selection.map((m, i) => (
-          <div key={i}>
-            {m.day} - {m.hour} - {m.hourDate.toDateString()}
+      <div className="booking">
+        {selection[0] && <>
+          <div className="beginning">
+            {selection[0].day} - {selection[0].hour} - {selection[0].hourDate.toDateString()}
           </div>
-        ))}
+          <div className="end">
+            {selection[selection.length - 1].day} - {selection[selection.length - 1].hour} - {selection[selection.length - 1].hourDate.toDateString()}
+          </div>
+        </>}
         {selection && selection.length > 0 && (
           <button onClick={handleBooking}>book</button>
         )}
@@ -194,19 +200,17 @@ const AppointmentSelector = ({ trainer: { availability, _id } }) => {
                       });
                     return (
                       <div
-                        className={`grid-time ${selected && 'selected-true'} ${
-                          blocked && 'unavailable'
-                        }`}
+                        className={`grid-time ${selected && 'selected-true'} ${blocked && 'unavailable'
+                          }`}
                         style={{
-                          background: `rgb(${0 + i * 2}, ${110 - i / 2}, ${
-                            159 + i * 2
-                          })`,
+                          background: `rgb(${0 + i * 2}, ${110 - i / 2}, ${159 + i * 2
+                            })`,
                         }}
                         key={hour}
                         id={JSON.stringify({ day, hour })}
                         // onClick={handleGridClick}
-                        onMouseOver={blocked ? () => {} : handleMouseOver}
-                        onMouseDown={blocked ? () => {} : handleGridClick}
+                        onMouseOver={blocked ? () => { } : handleMouseOver}
+                        onMouseDown={blocked ? () => { } : handleGridClick}
                       >
                         {hour}
                       </div>
