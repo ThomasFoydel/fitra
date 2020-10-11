@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import {Redirect} from "react-router-dom";
 import axios from 'axios';
 import './TrainerProfile.scss';
 import AppointmentSelector from './AppointmentSelector';
 
 const TrainerProfile = ({ match }) => {
   const [currentTrainer, setCurrentTrainer] = useState({});
-  const [startTime, setStartTime] = useState('AUG 25 2020 4:00PM');
-  const [endTime, setEndTime] = useState('AUG 25 2020 5:00PM');
-  const [day, setDay] = useState();
+  // const [startTime, setStartTime] = useState('AUG 25 2020 4:00PM');
+  // const [endTime, setEndTime] = useState('AUG 25 2020 5:00PM');
+  // const [day, setDay] = useState();
   const [errMsg, setErrMsg] = useState('');
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+
   useEffect(() => {
     let subscribed = true;
     const { trainerId } = match.params;
@@ -22,36 +25,36 @@ const TrainerProfile = ({ match }) => {
     return () => (subscribed = false);
   }, []);
 
-  const bookAppointment = () => {
-    // open paypal, upon completion of payment axios post request to server
-    // in backend, create new appointment in db
-    let token = localStorage.getItem('fitr-token');
-    let start = startTime + ':00';
-    let end = endTime + ':00';
-    const startDate = new Date(day + 'T' + start);
-    const startUTC = startDate.toISOString();
-    const endDate = new Date(day + 'T' + end);
-    const endUTC = endDate.toISOString();
-    console.log(' { startTime: startUTC, endTime: endUTC,: ', {
-      startTime: startUTC,
-      endTime: endUTC,
-    });
-    axios
-      .post(
-        '/api/appointment/new',
-        { startTime: startUTC, endTime: endUTC, trainer: currentTrainer._id },
-        {
-          headers: { 'x-auth-token': token },
-        }
-      )
-      .then((result) => {
-        console.log('booking result: ', result);
-      });
+  // const bookAppointment = () => {
+  //   // open paypal, upon completion of payment axios post request to server
+  //   // in backend, create new appointment in db
+  //   let token = localStorage.getItem('fitr-token');
+  //   let start = startTime + ':00';
+  //   let end = endTime + ':00';
+  //   const startDate = new Date(day + 'T' + start);
+  //   const startUTC = startDate.toISOString();
+  //   const endDate = new Date(day + 'T' + end);
+  //   const endUTC = endDate.toISOString();
+  //   console.log(' { startTime: startUTC, endTime: endUTC,: ', {
+  //     startTime: startUTC,
+  //     endTime: endUTC,
+  //   });
+  //   axios
+  //     .post(
+  //       '/api/appointment/new',
+  //       { startTime: startUTC, endTime: endUTC, trainer: currentTrainer._id },
+  //       {
+  //         headers: { 'x-auth-token': token },
+  //       }
+  //     )
+  //     .then((result) => {
+  //       console.log('booking result: ', result);
+  //     });
 
-    // let offset = new Date().getTimezoneOffset();
-  };
+  //   // let offset = new Date().getTimezoneOffset();
+  // };
   // console.log('thing: ', Intl.DateTimeFormat().resolvedOptions().timeZone);
-  console.log('currentTrainer: ', currentTrainer);
+  // console.log('currentTrainer: ', currentTrainer);
   // trainer bio info week / display of availability
   // selecting time should update state value representing their selection
   // and open modal asking to confirm that it is the time they want
@@ -60,6 +63,7 @@ const TrainerProfile = ({ match }) => {
   // todo: filter currentTrainer.availability down to the times in current week?
   return (
     <div className='trainerprofile'>
+      {bookingSuccess && <Redirect to="/schedule" />}
       <div
         className='cover-pic'
         style={{
@@ -74,7 +78,7 @@ const TrainerProfile = ({ match }) => {
         <img className='profile-pic' src={`/api/image/${profilePic}`} />
 
        
-        <AppointmentSelector trainer={currentTrainer} />
+        <AppointmentSelector trainer={currentTrainer}  setBookingSuccess={setBookingSuccess}/>
       </div>
     </div>
   );

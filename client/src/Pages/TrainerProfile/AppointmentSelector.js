@@ -9,7 +9,7 @@ import {
   checkBlock,
   checkSelection,
 } from '../../util/util';
-const AppointmentSelector = ({ trainer: { availability, _id } }) => {
+const AppointmentSelector = ({ setBookingSuccess, trainer: { availability, _id, minimum, rate } }) => {
   const [week, setWeek] = useState(setUpWeek(0));
   const [selection, setSelection] = useState([]);
   const [mouseIsDown, setMouseIsDown] = useState(false);
@@ -133,8 +133,19 @@ const AppointmentSelector = ({ trainer: { availability, _id } }) => {
       )
       .then((result) => {
         console.log('booking result: ', result);
+        setBookingSuccess(true);
       });
   };
+
+
+
+  let minMaxMet = (selection, min, max) => {
+    let diff = selection[selection.length - 1].hourDate.getTime() - selection[0].hourDate.getTime();
+    min *= 1800000;
+    // max *= 1800000;
+    // return diff > min && diff < max
+    return diff > min;
+  }
 
   return (
     <div className='appointmentselector'>
