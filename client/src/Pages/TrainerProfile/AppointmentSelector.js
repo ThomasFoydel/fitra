@@ -9,11 +9,15 @@ import {
   checkBlock,
   checkSelection,
 } from '../../util/util';
-const AppointmentSelector = ({ setBookingSuccess, trainer: { availability, _id, minimum, rate } }) => {
+const AppointmentSelector = ({
+  setBookingSuccess,
+  trainer: { availability, _id, minimum, rate },
+}) => {
   const [week, setWeek] = useState(setUpWeek(0));
   const [selection, setSelection] = useState([]);
   const [mouseIsDown, setMouseIsDown] = useState(false);
-
+  const [minMet, setMinMet] = useState(false);
+  const [err, setErr] = useState('');
   useEffect(() => {
     window.addEventListener('mousedown', () => setMouseIsDown(true));
     window.addEventListener('mouseup', () => setMouseIsDown(false));
@@ -71,6 +75,7 @@ const AppointmentSelector = ({ setBookingSuccess, trainer: { availability, _id, 
           });
           return newArray;
         }
+        //todo: check if minmet
       });
     } else {
       // does not yet exist, so add this halfhour to selections
@@ -105,23 +110,37 @@ const AppointmentSelector = ({ setBookingSuccess, trainer: { availability, _id, 
       };
 
       if (adjacent) {
-
         setSelection((selections) => {
           // sort selections by hourDate
           const newArray = [...selections, newTime];
-          return newArray.sort((a, b) => a.hourDate - b.hourDate)
+          return newArray.sort((a, b) => a.hourDate - b.hourDate);
         });
       } else {
         setSelection([newTime]);
       }
+      //todo: check if minmet
+      // if(minimum > selection.length) setMinMet(false)
     }
   };
 
+  useEffect(() => {
+    setMinMet(minimum < selection.length);
+  }, [selection, minimum]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setErr('');
+    }, 2700);
+  }, [err]);
+
   const handleBooking = (e) => {
-    console.log({ selection });
+    /// check make sure that appt meets minimum time here before sending,
+    //  check on the backend route as well before saving
+    // set error message response display
+    if (!minMet)
+      return setErr(`minimum time for booking is ${minimum * 60} minutes`);
     let startTime = selection[0].hourDate.toUTCString();
     let endTime = selection[selection.length - 1].hourDate.toUTCString();
-    console.log({ startTime, endTime });
     let token = localStorage.getItem('fitr-token');
     axios
       .post(
@@ -132,35 +151,35 @@ const AppointmentSelector = ({ setBookingSuccess, trainer: { availability, _id, 
         }
       )
       .then((result) => {
-        console.log('booking result: ', result);
         setBookingSuccess(true);
       });
   };
 
-
-
-  let minMaxMet = (selection, min, max) => {
-    let diff = selection[selection.length - 1].hourDate.getTime() - selection[0].hourDate.getTime();
-    min *= 1800000;
-    // max *= 1800000;
-    // return diff > min && diff < max
-    return diff > min;
-  }
-
   return (
     <div className='appointmentselector'>
-      <div className="booking">
-        {selection[0] && <>
-          <div className="beginning">
-            {selection[0].day} - {selection[0].hour} - {selection[0].hourDate.toDateString()}
-          </div>
-          <div className="end">
-            {selection[selection.length - 1].day} - {selection[selection.length - 1].hour} - {selection[selection.length - 1].hourDate.toDateString()}
-          </div>
-        </>}
-        {selection && selection.length > 0 && (
-          <button onClick={handleBooking}>book</button>
+      <div className='booking'>
+        {selection[0] && (
+          <>
+            <div className='beginning'>
+              {selection[0].day} - {selection[0].hour} -{' '}
+              {selection[0].hourDate.toDateString()}
+            </div>
+            <div className='end'>
+              {selection[selection.length - 1].day} -{' '}
+              {selection[selection.length - 1].hour} -{' '}
+              {selection[selection.length - 1].hourDate.toDateString()}
+            </div>
+          </>
         )}
+        {selection && selection.length > 0 && (
+          <button
+            className={`booking-btn minmet-${minMet}`}
+            onClick={handleBooking}
+          >
+            book
+          </button>
+        )}
+        {err && <p className='err'>{err}</p>}
       </div>
       <div className='labels'>
         {Object.keys(week).map((key, i) => {
@@ -211,17 +230,19 @@ const AppointmentSelector = ({ setBookingSuccess, trainer: { availability, _id, 
                       });
                     return (
                       <div
-                        className={`grid-time ${selected && 'selected-true'} ${blocked && 'unavailable'
-                          }`}
+                        className={`grid-time ${selected && 'selected-true'} ${
+                          blocked && 'unavailable'
+                        }`}
                         style={{
-                          background: `rgb(${0 + i * 2}, ${110 - i / 2}, ${159 + i * 2
-                            })`,
+                          background: `rgb(${0 + i * 2}, ${110 - i / 2}, ${
+                            159 + i * 2
+                          })`,
                         }}
                         key={hour}
                         id={JSON.stringify({ day, hour })}
                         // onClick={handleGridClick}
-                        onMouseOver={blocked ? () => { } : handleMouseOver}
-                        onMouseDown={blocked ? () => { } : handleGridClick}
+                        onMouseOver={blocked ? () => {} : handleMouseOver}
+                        onMouseDown={blocked ? () => {} : handleGridClick}
                       >
                         {hour}
                       </div>
