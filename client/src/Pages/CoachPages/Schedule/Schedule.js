@@ -19,7 +19,7 @@ let dayOfWeek = current.getDay();
 
 let currentWeek = setUpWeek(0);
 
-const Schedule = ({ change, entries, handleMinimum }) => {
+const Schedule = ({ change, entries, handleMinimum, min }) => {
   const [weekShift, setWeekShift] = useState(0);
   const [week, setWeek] = useState(currentWeek);
   const [blockedTimes, setBlockedTimes] = useState(entries);
@@ -89,7 +89,7 @@ const Schedule = ({ change, entries, handleMinimum }) => {
     <div className='schedule'>
       <div className='minimum'>
         <h2>minimum</h2>
-        <select onChange={handleMinimum} value='1'>
+        <select onChange={handleMinimum} value={min}>
           <option value={1}>30 minutes</option>
           <option value={2}>1 hour</option>
           <option value={3}>1.5 hours</option>

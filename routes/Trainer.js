@@ -136,7 +136,7 @@ router.get('/schedule/', auth, async (req, res) => {
   let { userId } = req.tokenUser;
   let foundTrainer = await Trainer.findById(userId);
   let entries = foundTrainer.availability || [];
-  res.send({ entries });
+  res.send({ entries, min: foundTrainer.minimum });
 });
 
 router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
@@ -150,21 +150,29 @@ router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
     .catch((err) => res.send({ err }));
 });
 
-router.post('/minimum/', auth, async ({ tokenUser, body }, res) => {
+router.post('/minimum/', auth, async ({ tokenUser, body: { value } }, res) => {
   let { userId } = tokenUser;
-  Trainer.findOneAndUpdate({_id:userId }, 
-    {minimum: body},
+
+  Trainer.findOneAndUpdate(
+    { _id: userId },
+    { minimum: Number(value) },
     { new: true, useFindAndModify: false }
-    ) .then((user) => res.send(user.minimum || []))
+  )
+    .then((user) => {
+      return res.send({ min: user.minimum });
+    })
     .catch((err) => res.send({ err }));
 });
 
 router.post('/rate/', auth, async ({ tokenUser, body }, res) => {
   let { userId } = tokenUser;
-  Trainer.findOneAndUpdate({_id:userId }, 
-    {rate: body},
+  Trainer.findOneAndUpdate(
+    { _id: userId },
+
+    { rate: body },
     { new: true, useFindAndModify: false }
-    ) .then((user) => res.send(user.rate || []))
+  )
+    .then((user) => res.send(user.rate || []))
     .catch((err) => res.send({ err }));
 });
 module.exports = router;

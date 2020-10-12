@@ -7,6 +7,7 @@ const ScheduleContainer = () => {
   const [appState, updateState] = useContext(CTX);
   let { token } = appState.user;
   const [entries, setEntries] = useState(null);
+  const [min, setMin] = useState(1);
 
   const handleChange = (e) => {
     axios
@@ -20,13 +21,22 @@ const ScheduleContainer = () => {
   useEffect(() => {
     axios
       .get('/api/trainer/schedule/', { headers: { 'x-auth-token': token } })
-      .then(({ data: { entries } }) => setEntries(entries));
+      .then(({ data: { entries, min } }) => {
+        setEntries(entries);
+        setMin(min);
+      });
   }, []);
 
-  const handleMinimum = (e) => {
+  const handleMinimum = ({ target: { value } }) => {
     axios
-      .get('/api/trainer/minimum/', { headers: { 'x-auth-token': token } })
-      .then((res) => console.log({ res }))
+      .post(
+        '/api/trainer/minimum/',
+        { value },
+        {
+          headers: { 'x-auth-token': token },
+        }
+      )
+      .then(({ data: { min } }) => setMin(min))
       .catch((err) => console.log({ err }));
   };
 
@@ -37,6 +47,7 @@ const ScheduleContainer = () => {
           entries={entries}
           change={handleChange}
           handleMinimum={handleMinimum}
+          min={min}
         />
       )}
     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import './TrainerProfile.scss';
 import AppointmentSelector from './AppointmentSelector';
@@ -11,7 +11,7 @@ const TrainerProfile = ({ match }) => {
   // const [day, setDay] = useState();
   const [errMsg, setErrMsg] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
-
+  console.log({currentTrainer})
   useEffect(() => {
     let subscribed = true;
     const { trainerId } = match.params;
@@ -72,13 +72,16 @@ const TrainerProfile = ({ match }) => {
             : '',
         }}
       >
-        <div className='name'>{name}</div>
-        <div className='bio'>{bio}</div>
-        <div className='email'>{email}</div>
-        <img className='profile-pic' src={`/api/image/${profilePic}`} />
+        <div className="flex">
+          <img className='profile-pic' src={`/api/image/${profilePic}`} />
+          <div>
+            <div className='name'>{name}</div>
+            <div className='bio'>{bio}</div>
+            <div className='email'>{email}</div>
+          </div>
+        </div>
 
-       
-        <AppointmentSelector trainer={currentTrainer}  setBookingSuccess={setBookingSuccess}/>
+        <AppointmentSelector trainer={currentTrainer} setBookingSuccess={setBookingSuccess} />
       </div>
     </div>
   );
