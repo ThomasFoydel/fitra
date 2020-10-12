@@ -1,5 +1,6 @@
 .navbar {
   position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -9,6 +10,8 @@
   // flex-direction: column;
   z-index: 1;
   text-align: left;
+  background: rgba(0, 0, 0, 0.39);
+  backdrop-filter: blur(2px);
 
   .link {
     text-align: center;

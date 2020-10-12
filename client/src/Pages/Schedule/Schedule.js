@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { CTX } from 'context/Store';
 import './Schedule.scss';
 import axios from 'axios';
@@ -24,16 +24,15 @@ const Schedule = () => {
     <div className='schedule'>
       <div className='background' />
       <div className='overlay' />
-      <h1 className='header center'>Schedule</h1>
-
+      {/* <h1 className='header center'>Schedule</h1> */}
 
       <div className='home center'>
-      <h2>appointments</h2>
-      <div className='appts'>
-        {appts &&
-          appts.map((appt) => <Appointment appt={appt} key={appt._id} />)}
+        <h2>schedule</h2>
+        <div className='appts'>
+          {appts &&
+            appts.map((appt) => <Appointment appt={appt} key={appt._id} />)}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

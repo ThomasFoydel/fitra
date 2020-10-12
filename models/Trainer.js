@@ -13,7 +13,7 @@ const availabilitySchema = new mongoose.Schema({
 
 const rateSchema = new mongoose.Schema({
   amount: Number,
-  currency: String
+  currency: String,
 });
 const trainerSchema = {
   name: {
@@ -47,7 +47,8 @@ const trainerSchema = {
   },
   availability: [availabilitySchema],
   minimum: Number,
-  rate: [rateSchema]
+  maximum: Number,
+  rate: [rateSchema],
 };
 
 // needs: weekly schedule

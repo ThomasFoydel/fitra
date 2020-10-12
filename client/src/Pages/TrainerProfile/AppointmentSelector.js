@@ -75,7 +75,6 @@ const AppointmentSelector = ({
           });
           return newArray;
         }
-        //todo: check if minmet
       });
     } else {
       // does not yet exist, so add this halfhour to selections
@@ -118,8 +117,6 @@ const AppointmentSelector = ({
       } else {
         setSelection([newTime]);
       }
-      //todo: check if minmet
-      // if(minimum > selection.length) setMinMet(false)
     }
   };
 

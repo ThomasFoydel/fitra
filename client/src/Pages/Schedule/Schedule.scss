@@ -1,4 +1,6 @@
 .schedule {
+  height: 100vh;
+  overflow-y: scroll;
   .background {
     background: url('../../imgs/yoga.jpg');
     width: 100vw;
@@ -14,5 +16,7 @@
     padding: 10rem;
     font-size: 4rem;
     position: absolute;
+  }
+  .appts {
   }
 }

@@ -16,23 +16,25 @@ const Messages = () => {
   return (
     <div className='messages'>
       <div className='background'></div>
-      <div className='overlay' />
-      <h1 className='header center'>Messages</h1>
-      {Object.keys(messages).map((key) => (
-        <ThreadListItem
-          user={key}
-          key={key}
-          setCurrentThread={setCurrentThread}
-          currentThread={currentThread}
-          token={token}
-        />
-      ))}
-      {currentThread && (
-        <Thread
-          thread={messages[currentThread]}
-          close={() => setCurrentThread(null)}
-        />
-      )}
+      {/* <div className='overlay' /> */}
+      {/* <h1 className='header center'>Messages</h1> */}
+      <div className='thread-section'>
+        {Object.keys(messages).map((key) => (
+          <ThreadListItem
+            user={key}
+            key={key}
+            setCurrentThread={setCurrentThread}
+            currentThread={currentThread}
+            token={token}
+          />
+        ))}
+        {currentThread && (
+          <Thread
+            thread={messages[currentThread]}
+            close={() => setCurrentThread(null)}
+          />
+        )}
+      </div>
 
       <div className='chat-box'>
         {currentThread && (
