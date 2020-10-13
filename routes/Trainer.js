@@ -136,7 +136,8 @@ router.get('/schedule/', auth, async (req, res) => {
   let { userId } = req.tokenUser;
   let foundTrainer = await Trainer.findById(userId);
   let entries = foundTrainer.availability || [];
-  res.send({ entries, min: foundTrainer.minimum });
+  let { minimum, maximum } = foundTrainer || {};
+  res.send({ entries, min: minimum, max: maximum });
 });
 
 router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
@@ -150,19 +151,23 @@ router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
     .catch((err) => res.send({ err }));
 });
 
-router.post('/minimum/', auth, async ({ tokenUser, body: { value } }, res) => {
-  let { userId } = tokenUser;
+router.post(
+  '/minmax/:type',
+  auth,
+  async ({ params: { type }, tokenUser, body: { value } }, res) => {
+    let { userId } = tokenUser;
 
-  Trainer.findOneAndUpdate(
-    { _id: userId },
-    { minimum: Number(value) },
-    { new: true, useFindAndModify: false }
-  )
-    .then((user) => {
-      return res.send({ min: user.minimum });
-    })
-    .catch((err) => res.send({ err }));
-});
+    Trainer.findOneAndUpdate(
+      { _id: userId },
+      { [type]: Number(value) },
+      { new: true, useFindAndModify: false }
+    )
+      .then((user) => {
+        return res.send({ min: user.minimum, max: user.maximum });
+      })
+      .catch((err) => res.send({ err }));
+  }
+);
 
 router.post('/rate/', auth, async ({ tokenUser, body }, res) => {
   let { userId } = tokenUser;

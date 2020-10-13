@@ -3,15 +3,30 @@
 }
 
 .absolute {
-  // width: 100%;
   height: 50rem;
   overflow-y: scroll;
 }
 
+.min-max {
+  transform: translateX(-50%);
+  margin-left: 50%;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  div {
+    padding: 1rem;
+  }
+}
+
+.err {
+  height: 2rem;
+  color: rgb(255, 157, 157);
+
+  text-align: center;
+}
 .drag-n-drop {
   display: grid;
   width: 840px;
-  // height: 100%;
   grid-template-columns: repeat(7, 110px);
   height: 240rem;
   transform: translateX(-50%);
@@ -34,6 +49,8 @@
   overflow: hidden;
   transition: all 0.5s ease;
   font-weight: bold;
+  box-shadow: 0.1rem 0.5rem 1rem rgba(0, 0, 0, 0.2),
+    0rem 0rem 0.2rem rgba(246, 254, 255, 0.2);
 }
 
 .recurring-true {
@@ -53,7 +70,7 @@
 .recurring-btn {
   position: absolute;
   top: 0;
-  border: 2px solid rgba(51, 51, 51, 0);
+  border: 3px solid rgba(51, 51, 51, 0);
   background: rgb(9, 43, 88);
   color: white;
   user-select: none;
@@ -69,7 +86,6 @@
 
 .recurring-btn {
   left: 0;
-  // border-radius: 2px;
 }
 
 .labels {
@@ -97,7 +113,7 @@
   width: 12rem;
   height: 50px;
   border: 3px solid black;
-  border-radius: 7px;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;

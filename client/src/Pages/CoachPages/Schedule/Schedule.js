@@ -19,7 +19,9 @@ let dayOfWeek = current.getDay();
 
 let currentWeek = setUpWeek(0);
 
-const Schedule = ({ change, entries, handleMinimum, min }) => {
+const Schedule = ({
+  props: { change, entries, handleMinMax, max, min, err },
+}) => {
   const [weekShift, setWeekShift] = useState(0);
   const [week, setWeek] = useState(currentWeek);
   const [blockedTimes, setBlockedTimes] = useState(entries);
@@ -87,15 +89,27 @@ const Schedule = ({ change, entries, handleMinimum, min }) => {
 
   return (
     <div className='schedule'>
-      <div className='minimum'>
-        <h2>minimum</h2>
-        <select onChange={handleMinimum} value={min}>
-          <option value={1}>30 minutes</option>
-          <option value={2}>1 hour</option>
-          <option value={3}>1.5 hours</option>
-          <option value={4}>2 hours</option>
-        </select>
+      <div className='min-max'>
+        <div>
+          <h2>minimum</h2>
+          <select onChange={handleMinMax} value={min} id='minimum'>
+            <option value={1}>30 minutes</option>
+            <option value={2}>1 hour</option>
+            <option value={3}>1.5 hours</option>
+            <option value={4}>2 hours</option>
+          </select>
+        </div>
+        <div>
+          <h2>maximum</h2>
+          <select onChange={handleMinMax} value={max} id='maximum'>
+            <option value={1}>30 minutes</option>
+            <option value={2}>1 hour</option>
+            <option value={3}>1.5 hours</option>
+            <option value={4}>2 hours</option>
+          </select>
+        </div>
       </div>
+      <p className='err'>{err}</p>
       <div className='dnd'>
         <div className='weekshift-btns'>
           <button onClick={() => handleWeekShift(weekShift - 1)}>back</button>
