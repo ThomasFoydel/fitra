@@ -31,7 +31,6 @@ const ScheduleContainer = () => {
   }, []);
 
   const handleMinMax = ({ target: { value, id } }) => {
-    console.log({ value, id });
     value = Number(value);
     if (id === 'maximum' && value < min)
       return setErr('maximum must be greater than minimum');
@@ -45,8 +44,8 @@ const ScheduleContainer = () => {
           headers: { 'x-auth-token': token },
         }
       )
-      .then(({ data: { min, max } }) => {
-        console.log({ min, max });
+      .then(({ data: { min, max, err } }) => {
+        if (err) return setErr(err);
         setMin(min);
         setMax(max);
       })

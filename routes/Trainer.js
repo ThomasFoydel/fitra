@@ -157,6 +157,12 @@ router.post(
   async ({ params: { type }, tokenUser, body: { value } }, res) => {
     let { userId } = tokenUser;
 
+    let foundTrainer = await Trainer.findById(userId);
+    if (type === 'maximum' && value < foundTrainer.minimum)
+      return res.send({ err: 'maximum must be greater than minimum' });
+    if (type === 'minimum' && value > foundTrainer.maximum)
+      return res.send({ err: 'minimum cannot be greater than maximum' });
+
     Trainer.findOneAndUpdate(
       { _id: userId },
       { [type]: Number(value) },
