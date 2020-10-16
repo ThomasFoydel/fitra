@@ -6,8 +6,10 @@ const jwt = require('jsonwebtoken');
 const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
 const Appointment = require('../models/Appointment');
+const mongoose = require('mongoose');
 
 const util = require('../util/util');
+const Client = require('../models/Client');
 const { messageSorter } = util;
 
 router.post('/register', async (req, res) => {
@@ -188,5 +190,19 @@ router.post('/rate/', auth, async ({ tokenUser, body }, res) => {
   )
     .then((user) => res.send(user.rate || []))
     .catch((err) => res.send({ err }));
+});
+
+router.get('/appointment/:id', auth, async ({ params: { id } }, res) => {
+  let _id;
+  try {
+    _id = new mongoose.Types.ObjectId(id);
+  } catch (err) {
+    // mongo id cast error, user's using incorrect url
+    return res.send({ err: 'No appointment found' });
+  }
+  let foundAppointment = await Appointment.findById(_id).select('-roomId');
+  if (!foundAppointment) return res.send({ err: 'No appointment found' });
+  let foundClient = await Client.findById(foundAppointment.client);
+  return res.send({ foundAppointment, foundClient });
 });
 module.exports = router;

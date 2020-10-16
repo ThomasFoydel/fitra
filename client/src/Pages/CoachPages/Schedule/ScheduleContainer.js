@@ -24,12 +24,13 @@ const ScheduleContainer = () => {
   };
 
   useEffect(() => {
+    let subscribed = true;
     axios
       .get('/api/trainer/schedule/', { headers: { 'x-auth-token': token } })
       .then(({ data: { entries, min, max, foundAppts } }) => {
         if (foundAppts) {
           let appts = [];
-          foundAppts.forEach(({ trainer, client, startTime, endTime }) => {
+          foundAppts.forEach(({ client, startTime, endTime, _id }) => {
             // console.log(typeof startTime);
             if (typeof startTime === 'string') startTime = new Date(startTime);
             let day = days[startTime.getDay()];
@@ -43,7 +44,7 @@ const ScheduleContainer = () => {
               day,
               title: '',
               recurring: false,
-              id: uuidv4(),
+              id: _id,
               appt: true,
               client,
             };
@@ -51,11 +52,13 @@ const ScheduleContainer = () => {
           });
           setAppointments(appts);
         }
-        console.log({ entries });
-        setEntries(entries);
-        setMin(min);
-        setMax(max);
+        if (subscribed) {
+          setEntries(entries);
+          setMin(min);
+          setMax(max);
+        }
       });
+    return () => (subscribed = false);
   }, []);
 
   const handleMinMax = ({ target: { value, id } }) => {
@@ -81,9 +84,11 @@ const ScheduleContainer = () => {
   };
 
   useEffect(() => {
+    let subscribed = true;
     setTimeout(() => {
-      setErr('');
+      if (subscribed) setErr('');
     }, 2700);
+    return () => (subscribed = false);
   }, [err]);
 
   return (

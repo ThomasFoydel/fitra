@@ -39,8 +39,11 @@ const Schedule = ({
   const [firstRender, setFirstRender] = useState(true);
 
   useEffect(() => {
-    if (firstRender) setFirstRender(false);
-    else change(blockEntries);
+    let subscribed = true;
+    if (subscribed)
+      if (firstRender) setFirstRender(false);
+      else change(blockEntries);
+    return () => (subscribed = false);
   }, [blockEntries]);
 
   const destroy = (id) => {
