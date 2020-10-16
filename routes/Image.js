@@ -149,11 +149,9 @@ router.get('/:id', (req, res) => {
 });
 //       /api/image/user/profilePic/${id}
 router.get('/user/:kind/:id', async (req, res) => {
-  console.log('req params: ', req.params);
   let { id, kind } = req.params;
   if (!id || id === 'undefined') return res.send({ err: 'no image id' });
   let user = await findUser(id);
-  console.log('user: ', user);
   if (user) {
     let foundPicId =
       user[kind] || new mongoose.Types.ObjectId('5f470368cabb0abdebe0c9e4');

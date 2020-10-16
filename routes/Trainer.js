@@ -205,4 +205,13 @@ router.get('/appointment/:id', auth, async ({ params: { id } }, res) => {
   let foundClient = await Client.findById(foundAppointment.client);
   return res.send({ foundAppointment, foundClient });
 });
+
+router.post('/cancel-appointment/', auth, async ({ body: { id } }, res) => {
+  console.log({ id });
+  // let foundAppointment = Appointment.findById(id);
+  // console.log({foundAppointment});
+  let deletedAppointment = await Appointment.findByIdAndDelete(id);
+  if (deletedAppointment) res.send({ id: deletedAppointment.id });
+  else res.send({ err: 'No appointment found' });
+});
 module.exports = router;
