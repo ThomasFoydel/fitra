@@ -26,7 +26,6 @@ const EditProfile = () => {
       .then((res) => console.log('edit profile res: ', res))
       .catch((err) => console.log('err: ', err));
   };
-  console.log('USERL', appState.user);
   return (
     <div className='edit-profile'>
       <h2>edit your profile</h2>
