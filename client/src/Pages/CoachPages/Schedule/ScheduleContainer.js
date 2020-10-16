@@ -2,11 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import Schedule from './Schedule';
 import axios from 'axios';
 import { CTX } from 'context/Store';
+import { v4 as uuidv4 } from 'uuid';
+import { getHalfHourFromDate, days } from '../../../util/util';
 
 const ScheduleContainer = () => {
   const [appState, updateState] = useContext(CTX);
   let { token } = appState.user;
   const [entries, setEntries] = useState(null);
+  const [appointments, setAppointments] = useState(null);
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(3);
   const [err, setErr] = useState('');
@@ -23,7 +26,32 @@ const ScheduleContainer = () => {
   useEffect(() => {
     axios
       .get('/api/trainer/schedule/', { headers: { 'x-auth-token': token } })
-      .then(({ data: { entries, min, max } }) => {
+      .then(({ data: { entries, min, max, foundAppts } }) => {
+        if (foundAppts) {
+          let appts = [];
+          foundAppts.forEach(({ trainer, client, startTime, endTime }) => {
+            // console.log(typeof startTime);
+            if (typeof startTime === 'string') startTime = new Date(startTime);
+            let day = days[startTime.getDay()];
+            let startHour = getHalfHourFromDate(startTime);
+            let endHour = getHalfHourFromDate(endTime);
+            let newAppt = {
+              startDate: startTime,
+              endDate: endTime,
+              start: startHour,
+              end: endHour,
+              day,
+              title: '',
+              recurring: false,
+              id: uuidv4(),
+              appt: true,
+              client,
+            };
+            appts.push(newAppt);
+          });
+          setAppointments(appts);
+        }
+        console.log({ entries });
         setEntries(entries);
         setMin(min);
         setMax(max);
@@ -62,7 +90,16 @@ const ScheduleContainer = () => {
     <div className='schedule-container'>
       {entries && (
         <Schedule
-          props={{ min, handleMinMax, max, change: handleChange, entries, err }}
+          props={{
+            min,
+            handleMinMax,
+            max,
+            change: handleChange,
+            entries,
+            err,
+            appointments,
+            setAppointments,
+          }}
         />
       )}
     </div>

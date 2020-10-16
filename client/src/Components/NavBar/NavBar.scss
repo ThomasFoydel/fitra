@@ -18,16 +18,22 @@
     background: #00000000;
     // backdrop-filter: blur(2px);
     color: #f7f7f7;
-    padding: 0.5rem 1rem;
+    padding: 0.8rem 0.8rem;
     text-decoration: none;
     transition: all 0.3s ease;
     border: none;
     font-size: 1.2rem;
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.1rem !important;
     // font-weight: normal;
     &:hover {
       color: #3a3a3a;
       background: #fafafa;
     }
+  }
+  button {
+    border: none;
+    background: none;
+    color: #f7f7f7;
+    font-size: 1.2rem;
   }
 }

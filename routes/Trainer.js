@@ -136,8 +136,11 @@ router.get('/schedule/', auth, async (req, res) => {
   let { userId } = req.tokenUser;
   let foundTrainer = await Trainer.findById(userId);
   let entries = foundTrainer.availability || [];
+
+  let foundAppts = await Appointment.find({ trainer: userId });
+
   let { minimum, maximum } = foundTrainer || {};
-  res.send({ entries, min: minimum, max: maximum });
+  res.send({ entries, min: minimum, max: maximum, foundAppts });
 });
 
 router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {

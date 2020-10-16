@@ -39,11 +39,8 @@ const NavBar = () => {
           <Link to={`${trainerExt}/settings`} className='link'>
             Settings
           </Link>
-          <button
-            className='link'
-            onClick={() => updateState({ type: 'LOGOUT' })}
-          >
-            Logout
+          <button onClick={() => updateState({ type: 'LOGOUT' })}>
+            <div className='link'>Logout</div>
           </button>
         </>
       )}

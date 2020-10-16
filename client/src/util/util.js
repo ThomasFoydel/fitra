@@ -134,6 +134,7 @@ export const checkBlock = (data, week) => {
 };
 
 export const dateFromDateAndTime = (date, time, startTime) => {
+  console.log({ date, time, startTime });
   let newYear = date.getFullYear();
   let newMonth = Number(date.getMonth());
   // if (newMonth < 10) newMonth = `0${newMonth}`;
@@ -185,3 +186,12 @@ export const dateFromDateAndTime = (date, time, startTime) => {
 //   });
 //   return selected;
 // };
+
+export const getHalfHourFromDate = (date) => {
+  if (typeof date === 'string') date = new Date(date);
+  let sHour = date.getHours();
+  let sMinutes = date.getMinutes();
+  sHour *= 2;
+  if (sMinutes === 30) sHour += 1;
+  return halfHours[sHour];
+};

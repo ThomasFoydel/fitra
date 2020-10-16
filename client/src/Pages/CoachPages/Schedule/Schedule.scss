@@ -8,10 +8,13 @@
 }
 
 .min-max {
+  background: lightgray;
+  width: 28rem;
+  padding: 0 1rem;
   transform: translateX(-50%);
   margin-left: 50%;
   text-align: center;
-  justify-content: center;
+  justify-content: space-around;
   display: flex;
   div {
     padding: 1rem;
@@ -138,6 +141,10 @@
   }
 }
 
+.appt {
+  background: red !important;
+  border: 3px solid yellow !important;
+}
 // *,
 // *::after,
 // *::before {
