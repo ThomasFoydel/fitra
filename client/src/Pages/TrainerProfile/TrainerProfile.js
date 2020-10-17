@@ -8,15 +8,18 @@ import AppointmentSelector from './AppointmentSelector';
 
 const TrainerProfile = ({ match }) => {
   const [currentTrainer, setCurrentTrainer] = useState({});
+  const [appointments, setAppointments] = useState([]);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   useEffect(() => {
     let subscribed = true;
     const { trainerId } = match.params;
     axios
       .get(`/api/client/trainer/${trainerId}`)
-      .then(({ data }) => {
-        let { trainer, err } = data;
-        if (subscribed) setCurrentTrainer(trainer);
+      .then(({ data: { trainer, err, foundAppointments } }) => {
+        if (subscribed) {
+          setCurrentTrainer(trainer);
+          setAppointments(foundAppointments);
+        }
       })
       .catch((err) => console.log('trainer profile error: ', err));
     return () => (subscribed = false);
@@ -28,6 +31,8 @@ const TrainerProfile = ({ match }) => {
   let { name, bio, email, profilePic, coverPic } = currentTrainer;
 
   // todo: filter currentTrainer.availability down to the times in current week?
+  // axios call for each week change?
+
   return (
     <div className='trainerprofile'>
       {bookingSuccess && <Redirect to='/schedule' />}
@@ -49,6 +54,7 @@ const TrainerProfile = ({ match }) => {
         </div>
 
         <AppointmentSelector
+          bookedTimes={appointments}
           trainer={currentTrainer}
           setBookingSuccess={setBookingSuccess}
         />

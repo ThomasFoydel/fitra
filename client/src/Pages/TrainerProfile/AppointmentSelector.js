@@ -11,6 +11,7 @@ import {
 } from '../../util/util';
 const AppointmentSelector = ({
   setBookingSuccess,
+  bookedTimes,
   trainer: { availability, _id, minimum, rate },
 }) => {
   const [week, setWeek] = useState(setUpWeek(0));
@@ -222,6 +223,13 @@ const AppointmentSelector = ({
                       availability.forEach((entry) => {
                         let startDate = new Date(entry.startDate);
                         let endDate = new Date(entry.endDate);
+                        if (hourDate >= startDate && hourDate < endDate)
+                          blocked = true;
+                      });
+                    if (bookedTimes)
+                      bookedTimes.forEach((time) => {
+                        let startDate = new Date(time.startTime);
+                        let endDate = new Date(time.endTime);
                         if (hourDate >= startDate && hourDate < endDate)
                           blocked = true;
                       });

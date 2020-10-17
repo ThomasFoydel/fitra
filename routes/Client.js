@@ -129,14 +129,12 @@ router.get('/trainers', async (req, res) => {
 });
 
 // get profile info of specific trainer
-router.get('/trainer/:trainerId', async (req, res) => {
-  // get trainer id from req.params
-  let { trainerId } = req.params;
-
-  // todo: get upcoming appointments for this trainer, include times on trainer.availability
+router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   let trainer = await Trainer.findById(trainerId);
-  console.log({ trainer });
-  res.send({ trainer });
+  let foundAppointments = await Appointment.find({
+    trainer: trainer._id,
+  }).select('-roomId -createdAt -updatedAt -status -client -trainer');
+  res.send({ trainer, foundAppointments });
 });
 
 router.get('/dashboard', auth, async (req, res) => {
