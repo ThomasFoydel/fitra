@@ -116,9 +116,6 @@ router.post('/login', (req, res) => {
 
 router.get('/dashboard', auth, (req, res) => {
   let { userId } = req.tokenUser;
-  // Trainer.findById(userId).then((result) =>
-  //   console.log('resultttt:  ', result)
-  // );
   Appointment.find({ trainer: userId })
     .select('-roomId')
     .then((appointments) => res.send({ appointments }))
@@ -207,9 +204,6 @@ router.get('/appointment/:id', auth, async ({ params: { id } }, res) => {
 });
 
 router.post('/cancel-appointment/', auth, async ({ body: { id } }, res) => {
-  console.log({ id });
-  // let foundAppointment = Appointment.findById(id);
-  // console.log({foundAppointment});
   let deletedAppointment = await Appointment.findByIdAndDelete(id);
   if (deletedAppointment) res.send({ id: deletedAppointment.id });
   else res.send({ err: 'No appointment found' });

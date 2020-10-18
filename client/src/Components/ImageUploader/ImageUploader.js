@@ -25,7 +25,6 @@ const ImageUploader = ({ kind }) => {
           headers: { 'x-auth-token': token },
         })
         .then(({ data }) => {
-          //   console.log('Data: ', data);
           if (data.err) return setErrorMessage(data.err);
           let { coverPic, profilePic } = data.user;
           updateState({

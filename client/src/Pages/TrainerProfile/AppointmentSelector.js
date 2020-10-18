@@ -148,8 +148,11 @@ const AppointmentSelector = ({
           headers: { 'x-auth-token': token },
         }
       )
-      .then((result) => {
-        setBookingSuccess(true);
+      .then(({ data: { err, newAppt } }) => {
+        if (err) {
+          setErr(err);
+          setSelection([]);
+        } else if (newAppt) setBookingSuccess(true);
       });
   };
 

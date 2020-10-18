@@ -36,7 +36,7 @@ const sendReminders = async () => {
   // const foundAppointments = await Appointment.findAll({})
   // for each appt in array, check if status is 'pending' or 'reminder-sent'
   // if 'pending', send email and update to 'reminder-sent'
-  console.log('burger');
+  console.log('timer');
 };
 
 module.exports = { messageSorter, findUser, sendReminders };

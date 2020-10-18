@@ -118,12 +118,6 @@ router.post('/login', (req, res) => {
 
 // search for relevant trainers
 router.get('/trainers', async (req, res) => {
-  // get user id from req.tokenUser
-  // fetch user from db
-  // check user preferences
-  // search db for trainers
-  // return relevant trainers
-  // console.log(' get trainers. tokenUser', req.tokenUser.userId);
   const trainers = await Trainer.find();
   res.send({ trainers });
 });
@@ -145,7 +139,6 @@ router.get('/dashboard', auth, async (req, res) => {
   )
     .sort({ startTime: 1 })
     .select('-roomId');
-  console.log(foundAppointments);
   res.send({ appointments: foundAppointments });
 });
 router.get('/messages', auth, async (req, res) => {

@@ -17,13 +17,11 @@ router.get('/:id', auth, async (req, res) => {
 });
 
 router.post('/settings/:type/:setting', auth, async (req, res) => {
-  console.log('settings!');
   let { type, setting } = req.params;
   let { checked } = req.body;
   let { userId } = req.tokenUser;
   let User = type === 'client' ? Client : Trainer;
   if (setting === 'darkmode') {
-    console.log('darkmode!', checked, type, setting);
     User.findByIdAndUpdate(
       userId,
       { $set: { 'settings.darkmode': checked } },
