@@ -14,9 +14,9 @@ const NavBar = () => {
   return (
     <>
       <div className='navbar'>
-        <h2 className='logo-title'>FITRA</h2>
-        <Link to={`${trainerExt}/home`} className='link'>
-          Home
+        <Link to={`${trainerExt}/home`} className='home-link'>
+          <h2 className='logo-title'>FITRA</h2>
+          {/* Home */}
         </Link>
         <Link to={`${trainerExt}/schedule`} className='link'>
           Schedule

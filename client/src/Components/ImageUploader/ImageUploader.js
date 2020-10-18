@@ -6,7 +6,7 @@ const ImageUploader = ({ kind }) => {
   const [appState, updateState] = useContext(CTX);
   const { token, type } = appState.user;
   const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
   const fileHandler = (e) => {
@@ -54,16 +54,17 @@ const ImageUploader = ({ kind }) => {
   }, [errorMessage]);
 
   const btnTxt = kind === 'profilePic' ? 'profile' : 'cover';
+
   return (
     <div className='image-uploader'>
-      {/* <div className='kind'>{kind}</div> */}
-
       {uploading ? (
-        <img
-          src={`https://i.pinimg.com/originals/3b/4e/10/3b4e109d6b621ed5a9249769afbd4dfa.gif`}
-          className='image-uploader-loading'
-          alt='upload in progress'
-        />
+        <div className='loading-dots-container'>
+          <img
+            src={`https://i.pinimg.com/originals/3b/4e/10/3b4e109d6b621ed5a9249769afbd4dfa.gif`}
+            className='loading-dots'
+            alt='upload in progress'
+          />
+        </div>
       ) : (
         <>
           <input

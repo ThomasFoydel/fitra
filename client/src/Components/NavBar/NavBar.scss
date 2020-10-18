@@ -5,45 +5,45 @@
   width: 100vw;
   z-index: 1;
   text-align: left;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.93);
   height: 6rem;
   display: flex;
   align-items: center;
 
   .logo-title {
     font-size: 4rem;
-    color: white;
     display: inline;
     margin: 0 1rem;
   }
   .logout-btn {
-    background: none;
     color: inherit;
-    border: none;
-    padding: 0;
     font: inherit;
     cursor: pointer;
-    outline: inherit;
   }
 
+  .home-link {
+    height: 6rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .home-link,
   .link {
-    text-align: center;
-    background: #00000000;
-    // backdrop-filter: blur(2px);
-    color: #f7f7f7;
-    // padding: 0.8rem 0.8rem;
-    padding: 2rem 2rem;
     text-decoration: none;
+    color: #f7f7f7;
     transition: all 0.3s ease;
-    border: none;
-    font-size: 1.2rem;
-    letter-spacing: 0.1rem !important;
-    // font-weight: normal;
     &:hover {
       color: #3a3a3a;
       background: #fafafa;
     }
+  }
+  .link {
+    text-align: center;
+    background: #00000000;
+    padding: 2rem 2rem;
+    border: none;
+    font-size: 1.2rem;
+    letter-spacing: 0.1rem !important;
   }
   button {
     border: none;
