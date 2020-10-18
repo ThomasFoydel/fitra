@@ -14,6 +14,8 @@ const AppointmentSelector = ({
   bookedTimes,
   trainer: { availability, _id, minimum, rate },
 }) => {
+  // todo: scroll week forward and backward
+
   const [week, setWeek] = useState(setUpWeek(0));
   const [selection, setSelection] = useState([]);
   const [mouseIsDown, setMouseIsDown] = useState(false);

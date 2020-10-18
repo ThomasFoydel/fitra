@@ -106,37 +106,6 @@ const Thread = ({ thread, close }) => {
     </div>
   );
 };
-// const Thread = ({ thread, user, setCurrentThread, currentThread, token }) => {
-//   const [userInfo, setUserInfo] = useState({});
-//   useEffect(() => {
-//     axios
-//       .get(`/api/user/${user}`, { headers: { 'x-auth-token': token } })
-//       .then(({ data: { user } }) => setUserInfo(user))
-//       .catch((err) => console.log('err: ', err));
-//   }, []);
-
-//   let current = currentThread === user;
-
-//   return (
-//     <div className='thread'>
-//       {console.log('stufF: ', userInfo)}
-//       <img
-//         className='profile-pic'
-//         src={`/api/image/${userInfo.profilePic}`}
-//         alt={`profile of ${userInfo.name}`}
-//       />
-//       <span>{userInfo.name}</span>
-//       {!current && <button onClick={() => setCurrentThread(user)}>open</button>}
-//       {current &&
-//         thread.map((msg) => (
-//           <div className='message' key={msg._id}>
-//             <strong>{msg.authorName}</strong>
-//             {msg.content}
-//           </div>
-//         ))}
-//     </div>
-//   );
-// };
 
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////

@@ -25,13 +25,7 @@ const TrainerProfile = ({ match }) => {
     return () => (subscribed = false);
   }, []);
 
-  // trainer bio info week / display of availability
-  // selecting time should update state value representing their selection
-  // and open modal asking to confirm that it is the time they want
   let { name, bio, email, profilePic, coverPic } = currentTrainer;
-
-  // todo: filter currentTrainer.availability down to the times in current week?
-  // axios call for each week change?
 
   return (
     <div className='trainerprofile'>

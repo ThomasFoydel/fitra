@@ -95,16 +95,6 @@ export const setUpWeek = (weekShift) => {
       let date = new Date(nowDate - daysBefore);
       weekObj[j - 1] = date;
       count++;
-      //
-      //
-      // let daysBefore = j * mSecondsInADay;
-      // let date = new Date(current - daysBefore);
-      // weekObj[j - 1] = date;
-      //
-      ////
-      // let timeBefore = (6 - j) * mSecondsInADay;
-      // let date = new Date(current - timeBefore);
-      // weekObj[j - 1] = date;
     }
   }
   return weekObj;
@@ -134,7 +124,6 @@ export const checkBlock = (data, week) => {
 };
 
 export const dateFromDateAndTime = (date, time, startTime) => {
-  console.log({ date, time, startTime });
   let newYear = date.getFullYear();
   let newMonth = Number(date.getMonth());
   // if (newMonth < 10) newMonth = `0${newMonth}`;
@@ -157,35 +146,6 @@ export const dateFromDateAndTime = (date, time, startTime) => {
   let newDate = new Date(newYear, newMonth, newDay, newHour, newMin);
   return newDate;
 };
-
-// export const toTimeNumber = (string) => {
-//   let afterNoon = string.split(' ')[1] === 'PM';
-//   let time = string.split(' ')[0];
-//   let hour = time.split(':')[0];
-//   let halfHour = time.split(':')[1];
-//   if (afterNoon) hour = Number(hour) + 12;
-//   if (hour < 10) hour = `0${hour}`;
-//   // return `${hour}:${halfHour}`;
-//   return { hour, min: halfHour };
-// };
-
-// export const checkSelection = (hour, hourDate, selection) => {
-//   // selection = array of objects, selected times to loop through
-//   let selected = false;
-
-// // // // // // // // appt selector
-
-//   console.log({ hour, hourDate });
-//   selection.forEach((s) => {
-//     // console.log({
-//     //   currentHour,
-//     //   s: s.dayDate,
-//     //   TRUTH: s.dayDate === currentHour,
-//     // });
-//     if (s.dayDate === currentHour) selected = true;
-//   });
-//   return selected;
-// };
 
 export const getHalfHourFromDate = (date) => {
   if (typeof date === 'string') date = new Date(date);
