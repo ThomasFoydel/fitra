@@ -28,8 +28,14 @@ const NavBar = () => {
           </Link>
         )}
 
-        <Link to={`${trainerExt}/editprofile`} className='link'>
+        {/* <Link to={`${trainerExt}/editprofile`} className='link'>
           Edit Profile
+        </Link> */}
+        <Link
+          to={`/${isTrainer ? 'trainer' : 'user'}/${user.id}`}
+          className='link'
+        >
+          Profile
         </Link>
 
         {isLoggedIn && (

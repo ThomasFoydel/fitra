@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
-import './TrainerProfile.scss';
+
 import AppointmentSelector from './AppointmentSelector';
+import './TrainerProfile.scss';
+import { CTX } from 'context/Store';
 
 //todo: if no trainer found, redirect
 
-const TrainerProfile = ({ match }) => {
+const TrainerProfile = ({
+  match: {
+    params: { trainerId },
+  },
+}) => {
+  const [appState, updateState] = useContext(CTX);
+  let belongsToCurrentUser = appState.user.id === trainerId;
+
   const [currentTrainer, setCurrentTrainer] = useState({});
   const [appointments, setAppointments] = useState([]);
   const [bookingSuccess, setBookingSuccess] = useState(false);
+
   useEffect(() => {
     let subscribed = true;
-    const { trainerId } = match.params;
     axios
       .get(`/api/client/trainer/${trainerId}`)
       .then(({ data: { trainer, err, foundAppointments } }) => {
@@ -30,6 +39,11 @@ const TrainerProfile = ({ match }) => {
   return (
     <div className='trainerprofile'>
       {bookingSuccess && <Redirect to='/schedule' />}
+      {belongsToCurrentUser && (
+        <Link to={`/coachportal/editprofile`} className='link'>
+          Edit Profile
+        </Link>
+      )}
       <div
         className='cover-pic'
         style={{

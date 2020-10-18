@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import './ClientProfile.scss';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { CTX } from 'context/Store';
+import './ClientProfile.scss';
 
 const ClientProfile = ({
   match: {
@@ -10,6 +11,7 @@ const ClientProfile = ({
 }) => {
   const [appState, updateState] = useContext(CTX);
   let { token } = appState.user;
+  let belongsToCurrentUser = appState.user.id === id;
 
   const [user, setUser] = useState({});
   const [err, setErr] = useState('');
@@ -30,8 +32,11 @@ const ClientProfile = ({
   let { coverPic, profilePic, bio, name, email } = user;
   return (
     <div className='clientprofile'>
-      <h2>ClientProfile</h2>
-
+      {belongsToCurrentUser && (
+        <Link to={`/editprofile`} className='link'>
+          Edit Profile
+        </Link>
+      )}
       <div
         className='cover-pic'
         style={{
