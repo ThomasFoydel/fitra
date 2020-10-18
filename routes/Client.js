@@ -9,6 +9,7 @@ const Trainer = require('../models/Trainer');
 const Appointment = require('../models/Appointment');
 const Message = require('../models/Message');
 const util = require('../util/util');
+const mongoose = require('mongoose');
 const { messageSorter } = util;
 
 router.post('/register', async (req, res) => {
@@ -129,6 +130,19 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
     trainer: trainer._id,
   }).select('-roomId -createdAt -updatedAt -status -client -trainer');
   res.send({ trainer, foundAppointments });
+});
+
+router.get('/profile/:id', auth, async ({ params: { id } }, res) => {
+  console.log({ id });
+  let _id;
+  try {
+    _id = new mongoose.Types.ObjectId(id);
+  } catch (err) {
+    return res.send({ err: 'No user found' });
+  }
+  let foundUser = await Client.findById(_id);
+  if (foundUser) return res.send({ foundUser });
+  else return res.send({ err: 'No user found' });
 });
 
 router.get('/dashboard', auth, async (req, res) => {

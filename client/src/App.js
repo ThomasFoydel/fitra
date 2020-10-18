@@ -23,6 +23,7 @@ import EditProfile from 'Pages/EditProfile/EditProfile';
 import ManageAppt from 'Pages/CoachPages/ManageAppt/ManageAppt';
 import TrainerSettings from 'Pages/CoachPages/Settings/Settings';
 import TrainerSchedule from 'Pages/CoachPages/Schedule/ScheduleContainer';
+import ClientProfile from 'Pages/ClientProfile/ClientProfile';
 
 // import TrainerMessages from 'Pages/CoachPages/Messages/Messages';
 
@@ -146,6 +147,7 @@ function App() {
                 path='/trainer/:trainerId'
                 component={TrainerProfile}
               />
+              <Route exact path='/user/:id' component={ClientProfile} />
 
               <Route exact path='/coachportal/home' component={Home} />
 
@@ -164,6 +166,7 @@ function App() {
                 path='/coachportal/schedule'
                 component={TrainerSchedule}
               />
+
               <Route
                 exact
                 path='/coachportal/messages'

@@ -1,0 +1,28 @@
+.clientprofile {
+  .cover-pic {
+    width: 100vw;
+    height: 100vh;
+    background-position: top;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    padding-top: 2rem;
+    overflow: scroll;
+  }
+  .info {
+    margin-top: 10rem;
+    background: rgba(255, 255, 255, 0.39);
+    text-align: center;
+  }
+  .profile-pic {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 20rem;
+    border: 12px solid rgb(240, 240, 240);
+    margin-left: 50%;
+    transform: translateX(-50%);
+    display: block;
+  }
+}

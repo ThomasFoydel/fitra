@@ -167,15 +167,15 @@ const AppointmentSelector = ({
       <div className='weekshift-btn'>
         <button
           className='weekshift-btn'
-          onClick={() => shiftWeek(weekShift + 1)}
-        >
-          setWeek +
-        </button>
-        <button
-          className='weekshift-btn'
           onClick={() => shiftWeek(weekShift - 1)}
         >
           setWeek -
+        </button>
+        <button
+          className='weekshift-btn'
+          onClick={() => shiftWeek(weekShift + 1)}
+        >
+          setWeek +
         </button>
       </div>
       <div className='booking'>

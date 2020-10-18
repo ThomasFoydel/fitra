@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
+import { Link } from 'react-router-dom';
 import './ManageAppt.scss';
 import { Redirect } from 'react-router-dom';
 const ManageAppt = ({
@@ -67,7 +68,9 @@ const ManageAppt = ({
             className='profile-pic'
             src={`/api/image/user/profilePic/${found.appt.client}`}
           />
-          <div className='name'>{found.client.name}</div>
+          <Link to={`/user/${found.client._id}`}>
+            <div className='name'>{found.client.name}</div>
+          </Link>
           <div className='email'>{found.client.email}</div>
           <div className='date'>{start && start.toDateString()}</div>
           <div className='start'>start: {start && start.toTimeString()}</div>

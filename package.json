@@ -1,7 +1,7 @@
 {
   "name": "fitr",
   "version": "1.0.0",
-  "description": "A Scheduler and RealTime Communication Platform for Trainers",
+  "description": "A Scheduler and RealTime Communication Platform for Trainers, built with MERN and WebRTC",
   "main": "index.js",
   "scripts": {
     "client-install": "npm install --prefix client",
