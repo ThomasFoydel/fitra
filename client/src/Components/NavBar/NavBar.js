@@ -12,39 +12,45 @@ const NavBar = () => {
   const trainerExt = isTrainer ? '/coachportal' : '';
 
   return (
-    <div className='navbar'>
-      <Link to={`${trainerExt}/home`} className='link'>
-        Home
-      </Link>
-      <Link to={`${trainerExt}/schedule`} className='link'>
-        Schedule
-      </Link>
-
-      {!isTrainer && (
-        <Link to='/trainers' className='link'>
-          Trainers
+    <>
+      <div className='navbar'>
+        <h2 className='logo-title'>FITRA</h2>
+        <Link to={`${trainerExt}/home`} className='link'>
+          Home
         </Link>
-      )}
-      {/* {isTrainer && ( */}
-      <Link to={`${trainerExt}/editprofile`} className='link'>
-        Edit Profile
-      </Link>
-      {/* )} */}
+        <Link to={`${trainerExt}/schedule`} className='link'>
+          Schedule
+        </Link>
 
-      {isLoggedIn && (
-        <>
-          <Link to={`${trainerExt}/messages`} className='link'>
-            Messages
+        {!isTrainer && (
+          <Link to='/trainers' className='link'>
+            Trainers
           </Link>
-          <Link to={`${trainerExt}/settings`} className='link'>
-            Settings
-          </Link>
-          <button onClick={() => updateState({ type: 'LOGOUT' })}>
-            <div className='link'>Logout</div>
-          </button>
-        </>
-      )}
-    </div>
+        )}
+
+        <Link to={`${trainerExt}/editprofile`} className='link'>
+          Edit Profile
+        </Link>
+
+        {isLoggedIn && (
+          <>
+            <Link to={`${trainerExt}/messages`} className='link'>
+              Messages
+            </Link>
+            <Link to={`${trainerExt}/settings`} className='link'>
+              Settings
+            </Link>
+            <button
+              className='logout-btn'
+              onClick={() => updateState({ type: 'LOGOUT' })}
+            >
+              <div className='link'>Logout</div>
+            </button>
+          </>
+        )}
+      </div>
+      <div style={{ height: '6rem' }} />
+    </>
   );
 };
 
