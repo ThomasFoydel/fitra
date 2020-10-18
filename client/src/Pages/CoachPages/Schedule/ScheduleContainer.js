@@ -31,7 +31,6 @@ const ScheduleContainer = () => {
         if (foundAppts) {
           let appts = [];
           foundAppts.forEach(({ client, startTime, endTime, _id }) => {
-            // console.log(typeof startTime);
             if (typeof startTime === 'string') startTime = new Date(startTime);
             let day = days[startTime.getDay()];
             let startHour = getHalfHourFromDate(startTime);

@@ -15,7 +15,7 @@ const AppointmentSelector = ({
   trainer: { availability, _id, minimum, rate },
 }) => {
   // todo: scroll week forward and backward
-
+  const [weekShift, setWeekShift] = useState(0);
   const [week, setWeek] = useState(setUpWeek(0));
   const [selection, setSelection] = useState([]);
   const [mouseIsDown, setMouseIsDown] = useState(false);
@@ -157,9 +157,27 @@ const AppointmentSelector = ({
         } else if (newAppt) setBookingSuccess(true);
       });
   };
+  const shiftWeek = (n) => {
+    setWeek(setUpWeek(n));
+    setWeekShift(n);
+  };
 
   return (
     <div className='appointmentselector'>
+      <div className='weekshift-btn'>
+        <button
+          className='weekshift-btn'
+          onClick={() => shiftWeek(weekShift + 1)}
+        >
+          setWeek +
+        </button>
+        <button
+          className='weekshift-btn'
+          onClick={() => shiftWeek(weekShift - 1)}
+        >
+          setWeek -
+        </button>
+      </div>
       <div className='booking'>
         {selection[0] && (
           <>
