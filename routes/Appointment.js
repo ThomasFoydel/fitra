@@ -15,7 +15,15 @@ router.post(
     res
   ) => {
     //  get client and trainer from db
+
+    if (userId === trainer)
+      return res.send({ err: 'you cannot book yourself!' });
+
+    const errTrainer = await Trainer.findById(userId);
+    if (errTrainer) return res.send({ err: 'only clients can book trainers' });
+
     const foundClient = await Client.findById(userId);
+    if (!foundClient) return res.send({ err: 'user info not found' });
     const foundTrainer = await Trainer.findById(trainer);
 
     let { availability } = foundTrainer;

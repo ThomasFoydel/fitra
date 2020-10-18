@@ -5,8 +5,8 @@
   .name {
     font-size: 6rem;
     letter-spacing: 0.5rem;
-    margin-left: 0.5rem;
-    height: 8rem;
+    line-height: 6rem;
+    font-weight: bold;
   }
   .bio {
     font-size: 1.4rem;
@@ -16,6 +16,14 @@
     font-size: 1.4rem;
   }
 
+  .section1 {
+    margin-top: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
   .cover-pic {
     width: 100vw;
     height: 100vh;
@@ -34,8 +42,7 @@
     height: 25rem;
     border-radius: 20rem;
     border: 12px solid rgb(240, 240, 240);
-    margin-left: 50%;
-    transform: translateX(-50%);
+
     display: block;
   }
   Input {

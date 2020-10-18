@@ -12,6 +12,7 @@ import {
 const AppointmentSelector = ({
   setBookingSuccess,
   bookedTimes,
+  belongsToCurrentUser,
   trainer: { availability, _id, minimum, rate },
 }) => {
   // todo: scroll week forward and backward
@@ -21,6 +22,7 @@ const AppointmentSelector = ({
   const [mouseIsDown, setMouseIsDown] = useState(false);
   const [minMet, setMinMet] = useState(false);
   const [err, setErr] = useState('');
+  const [firstRender, setFirstRender] = useState(true);
   useEffect(() => {
     window.addEventListener('mousedown', () => setMouseIsDown(true));
     window.addEventListener('mouseup', () => setMouseIsDown(false));
@@ -128,15 +130,18 @@ const AppointmentSelector = ({
   }, [selection, minimum]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setErr('');
-    }, 2700);
+    firstRender
+      ? setFirstRender(false)
+      : setTimeout(() => {
+          setErr('');
+        }, 2700);
   }, [err]);
 
   const handleBooking = (e) => {
     /// check make sure that appt meets minimum time here before sending,
     //  check on the backend route as well before saving
     // set error message response display
+    if (belongsToCurrentUser) return setErr("you can't book yourself!");
     if (!minMet)
       return setErr(`minimum time for booking is ${minimum * 60} minutes`);
     let startTime = selection[0].hourDate.toUTCString();

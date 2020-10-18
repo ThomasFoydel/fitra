@@ -19,6 +19,7 @@ const TrainerProfile = ({
   const [currentTrainer, setCurrentTrainer] = useState({});
   const [appointments, setAppointments] = useState([]);
   const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [apptSelectorOpen, setApptSelectorOpen] = useState(false);
 
   useEffect(() => {
     let subscribed = true;
@@ -39,11 +40,7 @@ const TrainerProfile = ({
   return (
     <div className='trainerprofile'>
       {bookingSuccess && <Redirect to='/schedule' />}
-      {belongsToCurrentUser && (
-        <Link to={`/coachportal/editprofile`} className='link'>
-          Edit Profile
-        </Link>
-      )}
+
       <div
         className='cover-pic'
         style={{
@@ -52,20 +49,37 @@ const TrainerProfile = ({
             : '',
         }}
       >
-        <div className='flex'>
+        <div className='section1'>
           <img className='profile-pic' src={`/api/image/${profilePic}`} />
-          <div>
+          <div className='info'>
             <div className='name'>{name}</div>
-            <div className='bio'>{bio}</div>
             <div className='email'>{email}</div>
+            {belongsToCurrentUser && (
+              <Link to={`/coachportal/editprofile`} className='link'>
+                Edit Profile
+              </Link>
+            )}
           </div>
         </div>
+        <div className='section2'>
+          <div className='bio'>{bio}</div>
+        </div>
 
-        <AppointmentSelector
-          bookedTimes={appointments}
-          trainer={currentTrainer}
-          setBookingSuccess={setBookingSuccess}
-        />
+        {apptSelectorOpen ? (
+          <AppointmentSelector
+            belongsToCurrentUser={belongsToCurrentUser}
+            bookedTimes={appointments}
+            trainer={currentTrainer}
+            setBookingSuccess={setBookingSuccess}
+          />
+        ) : (
+          <button
+            className='apptselector-open'
+            onClick={() => setApptSelectorOpen(true)}
+          >
+            book session
+          </button>
+        )}
       </div>
     </div>
   );
