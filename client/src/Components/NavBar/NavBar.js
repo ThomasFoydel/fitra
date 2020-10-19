@@ -44,14 +44,14 @@ const NavBar = ({ setAuthOpen }) => {
             <Link to={`${trainerExt}/schedule`} className='link'>
               Schedule
             </Link>
+            <Link to={`${trainerExt}/messages`} className='link'>
+              Messages
+            </Link>
             <Link
               to={`/${isTrainer ? 'trainer' : 'user'}/${appState.user.id}`}
               className='link'
             >
               Profile
-            </Link>
-            <Link to={`${trainerExt}/messages`} className='link'>
-              Messages
             </Link>
             <Link to={`${trainerExt}/settings`} className='link'>
               Settings
@@ -64,7 +64,7 @@ const NavBar = ({ setAuthOpen }) => {
 
         {!isLoggedIn && (
           <button onClick={() => setAuthOpen(true)} className='link login-btn'>
-            Login | Register
+            Login
           </button>
         )}
       </div>

@@ -6,6 +6,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
   const [appState, updateState] = useContext(CTX);
   const [errorMessage, setErrorMessage] = useState('');
   const [userForm, setUserForm] = useState({});
+  const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
     let { id, value } = e.target;
@@ -22,6 +23,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
           let { user, token } = result.data.data;
           user.userType = trainer ? 'trainer' : 'client';
           updateState({ type: 'LOGIN', payload: { user, token } });
+          setRedirect(true);
         }
       })
       .catch((err) => {
@@ -51,6 +53,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
   return (
     <>
       {/* {isLoggedIn && <Redirect to={`${trainerExt}/home`} />} */}
+      {/* {redirect && <Redirect to={trainer ? '/coachportal/home' : '/home'} />} */}
       <div className='login'>
         <button className='closeauth-btn' onClick={() => setAuthOpen(false)}>
           close

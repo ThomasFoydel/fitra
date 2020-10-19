@@ -2,8 +2,15 @@
   display: flex;
   flex-direction: column;
 
+  background: linear-gradient(rgba(0, 0, 0, 0.747), rgba(0, 0, 0, 0.57)),
+    url('../../imgs/weights.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
   align-items: center;
+
   .landing-title {
+    opacity: 0.5;
     font-size: 9rem;
     line-height: 12rem;
     color: white;

@@ -23,8 +23,8 @@
   color: white;
   background: rgb(31, 31, 31);
   // padding: 2rem;
-  border: 1px solid rgb(233, 233, 233);
-  border-radius: 5px;
+  border: 1px solid rgb(156, 156, 156);
+  border-radius: 1px 12px 1px 12px;
   height: 18rem;
 
   .signup-btn,
@@ -45,8 +45,11 @@
   .closeauth-btn {
     width: 5rem;
     position: absolute;
-    top: 0.2rem;
-    right: 0.2rem;
+    top: 0.6rem;
+    right: 0.5rem;
+    border-radius: 10px;
+    padding: 0.1rem;
+    border: none;
   }
   .error-msg {
     position: absolute;

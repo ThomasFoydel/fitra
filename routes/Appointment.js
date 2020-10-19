@@ -32,25 +32,25 @@ router.post(
     let timeBlocked = false;
     let rStart = new Date(startTime);
     let rEnd = new Date(endTime);
-
     availability.forEach((a) => {
       let startIsBetween =
         rStart >= new Date(a.startDate) && rStart <= new Date(a.endDate);
       let endIsBetween =
         rEnd >= new Date(a.startDate) && rEnd <= new Date(a.endDate);
       let blockedTimeIsBetween =
-        new Date(a.startDate) >= rStart && new Date(a.endDate) >= rEnd;
-      if (startIsBetween || endIsBetween || blockedTimeIsBetween)
+        new Date(a.startDate) >= rStart && new Date(a.endDate) <= rEnd;
+      if (startIsBetween || endIsBetween || blockedTimeIsBetween) {
         timeBlocked = true;
+      }
     });
     appointments.forEach((t) => {
       let startIsBetween = rStart >= t.startTime && rStart <= t.endTime;
       let endIsBetween = rEnd >= t.startTime && rEnd <= t.endTime;
       let blockedTimeIsBetween = t.startTime >= rStart && t.endTime <= rEnd;
-      if (startIsBetween || endIsBetween || blockedTimeIsBetween)
+      if (startIsBetween || endIsBetween || blockedTimeIsBetween) {
         timeBlocked = true;
+      }
     });
-
     if (timeBlocked) return res.send({ err: 'selected time is unavailable' });
 
     // create new appointment in db
