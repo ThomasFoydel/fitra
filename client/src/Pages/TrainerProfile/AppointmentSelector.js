@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   days,
   halfHours,
@@ -9,13 +9,16 @@ import {
   checkBlock,
   checkSelection,
 } from '../../util/util';
+import { CTX } from 'context/Store';
+
 const AppointmentSelector = ({
   setBookingSuccess,
   bookedTimes,
   belongsToCurrentUser,
   trainer: { availability, _id, minimum, rate },
 }) => {
-  // todo: scroll week forward and backward
+  const [appState, updateState] = useContext(CTX);
+  let { isLoggedIn } = appState;
   const [weekShift, setWeekShift] = useState(0);
   const [week, setWeek] = useState(setUpWeek(0));
   const [selection, setSelection] = useState([]);
@@ -166,7 +169,11 @@ const AppointmentSelector = ({
     setWeek(setUpWeek(n));
     setWeekShift(n);
   };
-
+  const openAuth = () => {
+    console.log(
+      'TODO: open registeration but make sure to keep user selection in state for after registration completes'
+    );
+  };
   return (
     <div className='appointmentselector'>
       <div className='weekshift-btn'>
@@ -200,7 +207,7 @@ const AppointmentSelector = ({
         {selection && selection.length > 0 && (
           <button
             className={`booking-btn minmet-${minMet}`}
-            onClick={handleBooking}
+            onClick={isLoggedIn ? handleBooking : openAuth}
           >
             book
           </button>

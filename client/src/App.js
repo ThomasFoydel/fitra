@@ -118,6 +118,7 @@ function App() {
         <NavBar isLoggedIn={isLoggedIn} setAuthOpen={setAuthOpen} />
         <Switch>
           <Route exact path='/trainers' component={Trainers} />
+          <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
           {isLoggedIn && (
             <>
               <Route exact path='/home' component={Home} />
@@ -143,11 +144,6 @@ function App() {
                 </>
               )}
 
-              <Route
-                exact
-                path='/trainer/:trainerId'
-                component={TrainerProfile}
-              />
               <Route exact path='/user/:id' component={ClientProfile} />
 
               <Route exact path='/coachportal/home' component={Home} />
