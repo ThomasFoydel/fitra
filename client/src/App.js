@@ -115,8 +115,9 @@ function App() {
     <div className={`App`}>
       <Router>
         {/* {redirect && <Redirect to='/' />} */}
-        {isLoggedIn && <NavBar />}
+        <NavBar isLoggedIn={isLoggedIn} setAuthOpen={setAuthOpen} />
         <Switch>
+          <Route exact path='/trainers' component={Trainers} />
           {isLoggedIn && (
             <>
               <Route exact path='/home' component={Home} />
@@ -141,7 +142,7 @@ function App() {
                   />
                 </>
               )}
-              <Route exact path='/trainers' component={Trainers} />
+
               <Route
                 exact
                 path='/trainer/:trainerId'

@@ -18,16 +18,20 @@ const ClientProfile = ({
   const [firstRender, setFirstRender] = useState(true);
 
   useEffect(() => {
+    let subscribed = true;
     axios
       .get(`/api/client/profile/${id}`, { headers: { 'x-auth-token': token } })
       .then(({ data: { foundUser, err } }) => {
-        if (err) setErr(err);
-        else if (foundUser) setUser(foundUser);
+        if (err && subscribed) setErr(err);
+        else if (foundUser && subscribed) setUser(foundUser);
       });
+    return () => (subscribed = false);
   }, []);
   useEffect(() => {
-    if (firstRender) setFirstRender(false);
-    else setTimeout(() => setErr(''), 2500);
+    let subscribed = true;
+    if (firstRender && subscribed) setFirstRender(false);
+    else setTimeout(() => subscribed && setErr(''), 2500);
+    return () => (subscribed = false);
   }, [err]);
   let { coverPic, profilePic, bio, name, email } = user;
   return (
@@ -37,6 +41,7 @@ const ClientProfile = ({
           Edit Profile
         </Link>
       )}
+      {/* {!belongsToCurrentUser && <button></button>} */}
       <div
         className='cover-pic'
         style={{

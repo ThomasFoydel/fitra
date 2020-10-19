@@ -7,6 +7,7 @@ const SignInSignUp = ({ setAuthOpen, setCurrentShow }) => {
     setAuthOpen(true);
     setCurrentShow(id);
   };
+
   return (
     <div className='signin-signup'>
       <button id='login' onClick={openAuth}>

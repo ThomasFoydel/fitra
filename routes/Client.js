@@ -63,12 +63,12 @@ router.post('/login', (req, res) => {
   }
   Client.findOne(
     { email: req.body.email },
-    '+password settings',
+    '+password settings email name coverPic profilePic',
     async function (err, client) {
       if (err) {
         return res.json({
           err:
-            'Sorry, there is an issue with connecting to the database. We are working on fixing this.',
+            'Sorry, there is an issue with connecting to the database. We are working on fixing this issue.',
         });
       } else {
         if (!client) {
@@ -93,7 +93,7 @@ router.post('/login', (req, res) => {
           );
           const messages = await messageSorter(client._id.toString());
           const clientInfo = {
-            userId: client._id,
+            id: client._id,
             email: client.email,
             name: client.name,
             coverPic: client.coverPic,
@@ -133,7 +133,6 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
 });
 
 router.get('/profile/:id', auth, async ({ params: { id } }, res) => {
-  console.log({ id });
   let _id;
   try {
     _id = new mongoose.Types.ObjectId(id);

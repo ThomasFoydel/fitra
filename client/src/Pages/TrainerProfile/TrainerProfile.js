@@ -65,20 +65,26 @@ const TrainerProfile = ({
           <div className='bio'>{bio}</div>
         </div>
 
-        {apptSelectorOpen ? (
-          <AppointmentSelector
-            belongsToCurrentUser={belongsToCurrentUser}
-            bookedTimes={appointments}
-            trainer={currentTrainer}
-            setBookingSuccess={setBookingSuccess}
-          />
-        ) : (
-          <button
-            className='apptselector-open'
-            onClick={() => setApptSelectorOpen(true)}
-          >
-            book session
-          </button>
+        {!belongsToCurrentUser && (
+          <>
+            <button>message</button>
+
+            {apptSelectorOpen ? (
+              <AppointmentSelector
+                belongsToCurrentUser={belongsToCurrentUser}
+                bookedTimes={appointments}
+                trainer={currentTrainer}
+                setBookingSuccess={setBookingSuccess}
+              />
+            ) : (
+              <button
+                className='apptselector-open'
+                onClick={() => setApptSelectorOpen(true)}
+              >
+                book session
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>

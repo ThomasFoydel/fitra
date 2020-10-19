@@ -8,14 +8,11 @@ const Trainers = () => {
   const [currentTrainers, setCurrentTrainers] = useState([]);
   useEffect(() => {
     let subscribed = true;
-    let token = localStorage.getItem('fitr-token');
-    axios
-      .get('/api/client/trainers', { headers: { 'x-auth-token': token } })
-      .then(({ data: { trainers, err } }) => {
-        if (subscribed) {
-          setCurrentTrainers(trainers);
-        }
-      });
+    axios.get('/api/client/trainers').then(({ data: { trainers, err } }) => {
+      if (subscribed) {
+        setCurrentTrainers(trainers);
+      }
+    });
     return () => {
       subscribed = false;
     };

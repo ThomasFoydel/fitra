@@ -10,15 +10,17 @@
   display: flex;
   align-items: center;
 
-  .logo-title {
-    font-size: 4rem;
-    display: inline;
-    margin: 0 1rem;
-  }
+  .login-btn,
   .logout-btn {
     color: inherit;
     font: inherit;
     cursor: pointer;
+  }
+
+  .logo-title {
+    font-size: 4rem;
+    display: inline;
+    margin: 0 1rem;
   }
 
   .home-link {

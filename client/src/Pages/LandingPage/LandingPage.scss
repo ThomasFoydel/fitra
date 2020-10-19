@@ -1,4 +1,27 @@
-.landing-title {
-  font-size: 4rem;
-  color: white;
+.landing-page {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  .landing-title {
+    font-size: 9rem;
+    line-height: 12rem;
+    color: white;
+    text-align: center;
+  }
+
+  .trainers-link {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 2rem;
+    font-size: 3.4rem;
+    border-radius: 0.8rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    &:hover {
+      color: rgb(0, 0, 0);
+      background-color: white;
+    }
+  }
 }

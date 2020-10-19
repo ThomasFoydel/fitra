@@ -5,9 +5,17 @@ import { Link } from 'react-router-dom';
 
 const LandingPage = ({ setCurrentShow, setAuthOpen }) => {
   return (
-    <div className='landingpage'>
-      <h2 className="landing-title">FITRA</h2>
-      <SignInSignUp setAuthOpen={setAuthOpen} setCurrentShow={setCurrentShow} />
+    <div className='landing-page'>
+      <h2 className='landing-title'>
+        SHARPEN
+        <br />
+        YOUR BODY
+      </h2>
+      {/* <SignInSignUp setAuthOpen={setAuthOpen} setCurrentShow={setCurrentShow} /> */}
+
+      <Link to='/trainers' className='trainers-link'>
+        Get Started
+      </Link>
 
       <Link to='/coachportal' className='coachportal-btn'>
         coach portal
