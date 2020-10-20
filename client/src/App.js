@@ -1,11 +1,6 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import {
-  // Redirect,
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import io from 'socket.io-client';
 
 import Auth from 'Components/Auth/Auth';
@@ -34,10 +29,9 @@ import './App.scss';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
-  let { isLoggedIn } = appState;
+  let { isLoggedIn, user } = appState;
   const [authOpen, setAuthOpen] = useState(false);
   const [currentShow, setCurrentShow] = useState('login');
-  // const [redirect, setRedirect] = useState(false);
   const [mySocket, setMySocket] = useState(null);
 
   let socket;
@@ -74,10 +68,10 @@ function App() {
   useEffect(() => {
     let subscribed = true;
 
-    if (appState.user.token) {
+    if (user.token) {
       const urlBase =
         process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000/';
-      const ENDPOINT = urlBase + `?token=${appState.user.token}`;
+      const ENDPOINT = urlBase + `?token=${user.token}`;
       socket = io(ENDPOINT);
       if (subscribed) {
         setMySocket(socket);
@@ -96,33 +90,37 @@ function App() {
         socket.off();
       }
     };
-  }, [appState.user.token]);
+  }, [user.token]);
 
-  // useEffect(() => {
-  //   let subscribed = true;
-  //   setTimeout(() => {
-  //     if (!isLoggedIn && subscribed) setRedirect(true);
-  //   }, 5000);
-  //   return () => (subscribed = false);
-  // }, [appState.isLoggedIn]);
-
-  // useEffect(() => {
-  //   let subscribed = true;
-  //   if (subscribed) setTimeout(() => setRedirect(false), 100);
-  //   return () => (subscribed = false);
-  // }, [redirect]);
   return (
     <div className={`App`}>
       <Router>
-        {/* {redirect && <Redirect to='/' />} */}
         <NavBar isLoggedIn={isLoggedIn} setAuthOpen={setAuthOpen} />
         <Switch>
+          <Route
+            exact
+            path='/'
+            component={() =>
+              isLoggedIn ? (
+                <Home />
+              ) : (
+                <LandingPage
+                  setCurrentShow={setCurrentShow}
+                  setAuthOpen={setAuthOpen}
+                />
+              )
+            }
+          />
+          <Route
+            exact
+            path='/coachportal'
+            component={isLoggedIn ? Home : TrainerLandingPage}
+          />
+
           <Route exact path='/trainers' component={Trainers} />
           <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
           {isLoggedIn && (
             <>
-              <Route exact path='/home' component={Home} />
-
               <Route exact path='/schedule' component={Schedule} />
               <Route exact path='/settings' component={Settings} />
               <Route exact path='/editprofile' component={EditProfile} />
@@ -145,8 +143,6 @@ function App() {
               )}
 
               <Route exact path='/user/:id' component={ClientProfile} />
-
-              <Route exact path='/coachportal/home' component={Home} />
 
               <Route
                 exact
@@ -177,24 +173,9 @@ function App() {
               />
             </>
           )}
-
-          {!isLoggedIn && (
-            <>
-              <Route
-                exact
-                path='/'
-                component={() => (
-                  <LandingPage
-                    setCurrentShow={setCurrentShow}
-                    setAuthOpen={setAuthOpen}
-                  />
-                )}
-              />
-              <Route exact path='/coachportal' component={TrainerLandingPage} />
-            </>
-          )}
         </Switch>
       </Router>
+
       {!isLoggedIn && authOpen && (
         <Auth
           trainer={false}

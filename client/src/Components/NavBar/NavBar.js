@@ -23,10 +23,7 @@ const NavBar = ({ setAuthOpen }) => {
     <>
       {redirect && <Redirect to='/' />}
       <div className='navbar'>
-        <Link
-          to={isLoggedIn ? `${trainerExt}/home` : '/'}
-          className='home-link'
-        >
+        <Link to={isLoggedIn ? `${trainerExt}/` : '/'} className='home-link'>
           <h2 className='logo-title'>FITRA</h2>
         </Link>
 

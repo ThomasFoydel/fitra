@@ -136,8 +136,7 @@ router.post(
   }
 );
 
-router.get('/:id', (req, res) => {
-  let { id } = req.params;
+router.get('/:id', ({ params: { id } }, res) => {
   if (!id || id === 'undefined') return res.send({ err: 'no image id' });
   const _id = new mongoose.Types.ObjectId(id);
   gfs.find({ _id }).toArray((err, files) => {
@@ -147,9 +146,9 @@ router.get('/:id', (req, res) => {
     gfs.openDownloadStream(_id).pipe(res);
   });
 });
+
 //       /api/image/user/profilePic/${id}
-router.get('/user/:kind/:id', async (req, res) => {
-  let { id, kind } = req.params;
+router.get('/user/:kind/:id', async ({ params: { id, kind } }, res) => {
   if (!id || id === 'undefined') return res.send({ err: 'no image id' });
   let user = await findUser(id);
   if (user) {

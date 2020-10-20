@@ -125,6 +125,11 @@ router.get('/trainers', async (req, res) => {
 
 // get profile info of specific trainer
 router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
+  try {
+    trainerId = new mongoose.Types.ObjectId(id);
+  } catch (err) {
+    return res.send({ err: 'No user found' });
+  }
   let trainer = await Trainer.findById(trainerId);
   let foundAppointments = await Appointment.find({
     trainer: trainer._id,
@@ -133,13 +138,12 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
 });
 
 router.get('/profile/:id', auth, async ({ params: { id } }, res) => {
-  let _id;
   try {
-    _id = new mongoose.Types.ObjectId(id);
+    id = new mongoose.Types.ObjectId(id);
   } catch (err) {
     return res.send({ err: 'No user found' });
   }
-  let foundUser = await Client.findById(_id);
+  let foundUser = await Client.findById(id);
   if (foundUser) return res.send({ foundUser });
   else return res.send({ err: 'No user found' });
 });

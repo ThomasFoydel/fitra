@@ -5,6 +5,7 @@ import axios from 'axios';
 import AppointmentSelector from './AppointmentSelector';
 import './TrainerProfile.scss';
 import { CTX } from 'context/Store';
+import Image from 'Components/Image/Image';
 
 //todo: if no trainer found, redirect
 
@@ -20,13 +21,16 @@ const TrainerProfile = ({
   const [appointments, setAppointments] = useState([]);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [apptSelectorOpen, setApptSelectorOpen] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
+  const [err, setErr] = useState('');
 
   useEffect(() => {
     let subscribed = true;
     axios
       .get(`/api/client/trainer/${trainerId}`)
       .then(({ data: { trainer, err, foundAppointments } }) => {
-        if (subscribed) {
+        if (err && subscribed) setErr(err);
+        else if (subscribed) {
           setCurrentTrainer(trainer);
           setAppointments(foundAppointments);
         }
@@ -40,53 +44,58 @@ const TrainerProfile = ({
   return (
     <div className='trainerprofile'>
       {bookingSuccess && <Redirect to='/schedule' />}
+      {err ? (
+        <p>{err}</p>
+      ) : (
+        <div
+          className='cover-pic'
+          style={{
+            backgroundImage: coverPic
+              ? ` linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.9)), url("/api/image/${coverPic}")`
+              : '',
+          }}
+        >
+          <div className='section1'>
+            {/* <img className='profile-pic' src={`/api/image/${profilePic}`} /> */}
 
-      <div
-        className='cover-pic'
-        style={{
-          backgroundImage: coverPic
-            ? ` linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.9)), url("/api/image/${coverPic}")`
-            : '',
-        }}
-      >
-        <div className='section1'>
-          <img className='profile-pic' src={`/api/image/${profilePic}`} />
-          <div className='info'>
-            <div className='name'>{name}</div>
-            <div className='email'>{email}</div>
-            {belongsToCurrentUser && (
-              <Link to={`/coachportal/editprofile`} className='link'>
-                Edit Profile
-              </Link>
-            )}
+            <Image src={`/api/image/${profilePic}`} name='profile-pic' />
+            <div className='info'>
+              <div className='name'>{name}</div>
+              <div className='email'>{email}</div>
+              {belongsToCurrentUser && (
+                <Link to={`/coachportal/editprofile`} className='link'>
+                  Edit Profile
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
-        <div className='section2'>
-          <div className='bio'>{bio}</div>
-        </div>
+          <div className='section2'>
+            <div className='bio'>{bio}</div>
+          </div>
 
-        {!belongsToCurrentUser && (
-          <>
-            <button>message</button>
+          {!belongsToCurrentUser && (
+            <>
+              <button>message</button>
 
-            {apptSelectorOpen ? (
-              <AppointmentSelector
-                belongsToCurrentUser={belongsToCurrentUser}
-                bookedTimes={appointments}
-                trainer={currentTrainer}
-                setBookingSuccess={setBookingSuccess}
-              />
-            ) : (
-              <button
-                className='apptselector-open'
-                onClick={() => setApptSelectorOpen(true)}
-              >
-                book session
-              </button>
-            )}
-          </>
-        )}
-      </div>
+              {apptSelectorOpen ? (
+                <AppointmentSelector
+                  belongsToCurrentUser={belongsToCurrentUser}
+                  bookedTimes={appointments}
+                  trainer={currentTrainer}
+                  setBookingSuccess={setBookingSuccess}
+                />
+              ) : (
+                <button
+                  className='apptselector-open'
+                  onClick={() => setApptSelectorOpen(true)}
+                >
+                  book session
+                </button>
+              )}
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
