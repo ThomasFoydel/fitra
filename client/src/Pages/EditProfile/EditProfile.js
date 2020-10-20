@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './EditProfile.scss';
 import { CTX } from 'context/Store';
@@ -10,7 +11,7 @@ import ImageUploader from 'Components/ImageUploader/ImageUploader';
 const EditProfile = () => {
   const [appState, updateState] = useContext(CTX);
   const { type } = appState.user;
-  let { token, coverPic, profilePic, name, bio, email } = appState.user;
+  let { token, coverPic, profilePic, name, bio, email, id } = appState.user;
   const [formInfo, setFormInfo] = useState({});
 
   const handleChange = (e) => {
@@ -29,6 +30,9 @@ const EditProfile = () => {
   return (
     <div className='edit-profile'>
       <h2>edit your profile</h2>
+      <Link to={`${type === 'trainer' ? '/trainer' : '/user'}/${id}`}>
+        back to my profile
+      </Link>
       <input
         type='text'
         id='name'

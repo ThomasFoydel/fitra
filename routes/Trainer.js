@@ -97,6 +97,7 @@ router.post('/login', (req, res) => {
             profilePic: user.profilePic,
             settings: user.settings,
             messages,
+            id: user._id,
           };
           res.json({
             status: 'success',

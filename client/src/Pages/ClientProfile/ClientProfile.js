@@ -36,11 +36,6 @@ const ClientProfile = ({
   let { coverPic, profilePic, bio, name, email } = user;
   return (
     <div className='clientprofile'>
-      {belongsToCurrentUser && (
-        <Link to={`/editprofile`} className='link'>
-          Edit Profile
-        </Link>
-      )}
       {/* {!belongsToCurrentUser && <button></button>} */}
       <div
         className='cover-pic'
@@ -56,6 +51,11 @@ const ClientProfile = ({
             <div className='name'>{name}</div>
             <div className='bio'>{bio}</div>
             <div className='email'>{email}</div>
+            {belongsToCurrentUser && (
+              <Link to={`/editprofile`} className='link'>
+                Edit Profile
+              </Link>
+            )}
           </div>
         </div>
       </div>

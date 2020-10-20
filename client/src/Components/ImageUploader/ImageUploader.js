@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import './ImageUploader.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
+import dots from 'imgs/loading/loading-dots.gif';
+
 const ImageUploader = ({ kind }) => {
   const [appState, updateState] = useContext(CTX);
   const { token, type } = appState.user;
@@ -59,11 +61,7 @@ const ImageUploader = ({ kind }) => {
     <div className='image-uploader'>
       {uploading ? (
         <div className='loading-dots-container'>
-          <img
-            src={`https://i.pinimg.com/originals/3b/4e/10/3b4e109d6b621ed5a9249769afbd4dfa.gif`}
-            className='loading-dots'
-            alt='upload in progress'
-          />
+          <img src={dots} className='loading-dots' alt='upload in progress' />
         </div>
       ) : (
         <>
