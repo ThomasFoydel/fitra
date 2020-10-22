@@ -126,11 +126,12 @@ router.get('/trainers', async (req, res) => {
 // get profile info of specific trainer
 router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   try {
-    trainerId = new mongoose.Types.ObjectId(id);
+    trainerId = new mongoose.Types.ObjectId(trainerId);
   } catch (err) {
     return res.send({ err: 'No user found' });
   }
   let trainer = await Trainer.findById(trainerId);
+  console.log({ trainer });
   let foundAppointments = await Appointment.find({
     trainer: trainer._id,
   }).select('-roomId -createdAt -updatedAt -status -client -trainer');

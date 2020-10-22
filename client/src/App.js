@@ -21,6 +21,7 @@ import TrainerSchedule from 'Pages/CoachPages/Schedule/ScheduleContainer';
 import ClientProfile from 'Pages/ClientProfile/ClientProfile';
 
 import UserRegister from 'Pages/UserRegister/UserRegister';
+import TermsOfUse from 'Pages/TermsOfUse/TermsOfUse';
 
 // import TrainerMessages from 'Pages/CoachPages/Messages/Messages';
 
@@ -123,6 +124,7 @@ function App() {
             path='/register'
             component={() => <UserRegister setCurrentShow={setCurrentShow} />}
           />
+          <Route exact path='/terms-of-use' component={TermsOfUse} />
           <Route exact path='/trainers' component={Trainers} />
           <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
           {isLoggedIn && (

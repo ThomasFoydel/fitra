@@ -46,4 +46,10 @@
     bottom: 0.2rem;
     color: rgb(255, 53, 53);
   }
+  a {
+    color: rgb(255, 137, 137);
+    &:hover {
+      color: rgb(255, 72, 72);
+    }
+  }
 }
