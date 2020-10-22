@@ -20,6 +20,8 @@ import TrainerSettings from 'Pages/CoachPages/Settings/Settings';
 import TrainerSchedule from 'Pages/CoachPages/Schedule/ScheduleContainer';
 import ClientProfile from 'Pages/ClientProfile/ClientProfile';
 
+import UserRegister from 'Pages/UserRegister/UserRegister';
+
 // import TrainerMessages from 'Pages/CoachPages/Messages/Messages';
 
 import TrainerLandingPage from 'Pages/CoachPages/TrainerLandingPage/TrainerLandingPage';
@@ -116,7 +118,11 @@ function App() {
             path='/coachportal'
             component={isLoggedIn ? Home : TrainerLandingPage}
           />
-
+          <Route
+            exact
+            path='/register'
+            component={() => <UserRegister setCurrentShow={setCurrentShow} />}
+          />
           <Route exact path='/trainers' component={Trainers} />
           <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
           {isLoggedIn && (
