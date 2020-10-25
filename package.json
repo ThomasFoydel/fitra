@@ -1,5 +1,5 @@
 {
-  "name": "fitr",
+  "name": "ReactWebRTC",
   "version": "1.0.0",
   "description": "A Scheduler and RealTime Communication Platform for Trainers, built with MERN and WebRTC",
   "main": "index.js",

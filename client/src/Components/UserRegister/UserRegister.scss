@@ -1,4 +1,12 @@
-.login,
+.register-backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.522);
+}
+
 .register {
   position: absolute;
   display: flex;

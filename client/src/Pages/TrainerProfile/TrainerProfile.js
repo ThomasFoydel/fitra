@@ -3,10 +3,11 @@ import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 
 import AppointmentSelector from './AppointmentSelector';
-import './TrainerProfile.scss';
-import { CTX } from 'context/Store';
 import Image from 'Components/Image/Image';
+import UserRegister from 'Components/UserRegister/UserRegister';
 
+import { CTX } from 'context/Store';
+import './TrainerProfile.scss';
 //todo: if no trainer found, redirect
 
 const TrainerProfile = ({
@@ -15,6 +16,7 @@ const TrainerProfile = ({
   },
 }) => {
   const [appState, updateState] = useContext(CTX);
+  const { isLoggedIn } = appState.user;
   let belongsToCurrentUser = appState.user.id === trainerId;
 
   const [currentTrainer, setCurrentTrainer] = useState({});
@@ -22,6 +24,7 @@ const TrainerProfile = ({
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [apptSelectorOpen, setApptSelectorOpen] = useState(false);
   const [firstRender, setFirstRender] = useState(true);
+  const [showRegister, setShowRegister] = useState(false);
   const [err, setErr] = useState('');
 
   useEffect(() => {
@@ -79,6 +82,7 @@ const TrainerProfile = ({
 
               {apptSelectorOpen ? (
                 <AppointmentSelector
+                  setShowRegister={setShowRegister}
                   belongsToCurrentUser={belongsToCurrentUser}
                   bookedTimes={appointments}
                   trainer={currentTrainer}
@@ -95,6 +99,9 @@ const TrainerProfile = ({
             </>
           )}
         </div>
+      )}
+      {!isLoggedIn && showRegister && (
+        <UserRegister setShowRegister={setShowRegister} />
       )}
     </div>
   );

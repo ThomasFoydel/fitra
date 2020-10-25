@@ -23,7 +23,6 @@ const LandingPage = ({ setCurrentShow, setAuthOpen }) => {
         <br />
         YOUR BODY
       </h2>
-      {/* <SignInSignUp setAuthOpen={setAuthOpen} setCurrentShow={setCurrentShow} /> */}
 
       <Link to='/trainers' className='trainers-link'>
         Get Started

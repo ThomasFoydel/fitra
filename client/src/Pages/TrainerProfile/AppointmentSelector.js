@@ -15,6 +15,7 @@ const AppointmentSelector = ({
   setBookingSuccess,
   bookedTimes,
   belongsToCurrentUser,
+  setShowRegister,
   trainer: { availability, _id, minimum, rate },
 }) => {
   const [appState, updateState] = useContext(CTX);
@@ -174,6 +175,10 @@ const AppointmentSelector = ({
       'TODO: open registeration but make sure to keep user selection in state for after registration completes'
     );
   };
+
+  const showRegister = (e) => {
+    setShowRegister(true);
+  };
   return (
     <div className='appointmentselector'>
       <div className='weekshift-btn'>
@@ -207,7 +212,8 @@ const AppointmentSelector = ({
         {selection && selection.length > 0 && (
           <button
             className={`booking-btn minmet-${minMet}`}
-            onClick={isLoggedIn ? handleBooking : openAuth}
+            // onClick={isLoggedIn ? handleBooking : showRegister}
+            onClick={showRegister}
           >
             book
           </button>
