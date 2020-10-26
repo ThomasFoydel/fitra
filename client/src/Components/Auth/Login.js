@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import AuthPageToggle from './AuthPageToggle';
+
 const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
   const [appState, updateState] = useContext(CTX);
   const [errorMessage, setErrorMessage] = useState('');
@@ -76,14 +78,15 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         <button className='submit-btn' onClick={handleSubmit}>
           Login
         </button>
-        <Link
-          to='/register'
+        <button
           className='signup-btn'
-          onClick={() => setAuthOpen(false)}
+          onClick={() => setCurrentShow('register')}
         >
           Sign up
-        </Link>
+        </button>
+
         <p className='error-msg'>{errorMessage}</p>
+        <AuthPageToggle />
       </div>
     </>
   );

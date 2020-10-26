@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import './NavBar.scss';
 import { CTX } from 'context/Store';
 
-const NavBar = ({ setAuthOpen }) => {
+const NavBar = () => {
   const [appState, updateState] = useContext(CTX);
   const { isLoggedIn, user } = appState;
   const [redirect, setRedirect] = useState(false);
@@ -17,6 +17,18 @@ const NavBar = ({ setAuthOpen }) => {
     setTimeout(() => {
       setRedirect(true);
     }, 700);
+  };
+
+  const openLogin = () => {
+    updateState({
+      type: 'CHANGE_AUTH_TYPE',
+      payload: { type: 'client' },
+    });
+    updateState({
+      type: 'CHANGE_AUTH_PAGE',
+      payload: { page: 'login' },
+    });
+    updateState({ type: 'TOGGLE_AUTH' });
   };
 
   return (
@@ -60,7 +72,7 @@ const NavBar = ({ setAuthOpen }) => {
         )}
 
         {!isLoggedIn && (
-          <button onClick={() => setAuthOpen(true)} className='link login-btn'>
+          <button onClick={openLogin} className='link login-btn'>
             Login
           </button>
         )}

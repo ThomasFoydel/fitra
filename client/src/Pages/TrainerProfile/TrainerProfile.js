@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import AppointmentSelector from './AppointmentSelector';
 import Image from 'Components/Image/Image';
-import UserRegister from 'Components/UserRegister/UserRegister';
 
 import { CTX } from 'context/Store';
 import './TrainerProfile.scss';
@@ -16,15 +15,12 @@ const TrainerProfile = ({
   },
 }) => {
   const [appState, updateState] = useContext(CTX);
-  const { isLoggedIn } = appState.user;
   let belongsToCurrentUser = appState.user.id === trainerId;
 
   const [currentTrainer, setCurrentTrainer] = useState({});
   const [appointments, setAppointments] = useState([]);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [apptSelectorOpen, setApptSelectorOpen] = useState(false);
-  const [firstRender, setFirstRender] = useState(true);
-  const [showRegister, setShowRegister] = useState(false);
   const [err, setErr] = useState('');
 
   useEffect(() => {
@@ -59,8 +55,6 @@ const TrainerProfile = ({
           }}
         >
           <div className='section1'>
-            {/* <img className='profile-pic' src={`/api/image/${profilePic}`} /> */}
-
             <Image src={`/api/image/${profilePic}`} name='profile-pic' />
             <div className='info'>
               <div className='name'>{name}</div>
@@ -82,7 +76,6 @@ const TrainerProfile = ({
 
               {apptSelectorOpen ? (
                 <AppointmentSelector
-                  setShowRegister={setShowRegister}
                   belongsToCurrentUser={belongsToCurrentUser}
                   bookedTimes={appointments}
                   trainer={currentTrainer}
@@ -99,9 +92,6 @@ const TrainerProfile = ({
             </>
           )}
         </div>
-      )}
-      {!isLoggedIn && showRegister && (
-        <UserRegister setShowRegister={setShowRegister} />
       )}
     </div>
   );

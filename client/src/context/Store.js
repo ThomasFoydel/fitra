@@ -5,8 +5,17 @@ export { CTX };
 
 export function reducer(state, action) {
   let { payload } = action;
-  let { user, token, profilePic, coverPic, kind, message, darkmode } =
-    payload || {};
+  let {
+    user,
+    token,
+    profilePic,
+    coverPic,
+    kind,
+    message,
+    darkmode,
+    page,
+    type,
+  } = payload || {};
   console.log('action: ', action);
   switch (action.type) {
     case 'LOGIN':
@@ -49,6 +58,12 @@ export function reducer(state, action) {
       return { ...state, messages: updatedMessages };
     case 'TOGGLE_DARKMODE':
       return { ...state, settings: { ...state.settings, darkmode } };
+    case 'TOGGLE_AUTH':
+      return { ...state, showAuth: !state.showAuth };
+    case 'CHANGE_AUTH_PAGE':
+      return { ...state, authPage: page };
+    case 'CHANGE_AUTH_TYPE':
+      return { ...state, authType: type };
     default:
       console.log('REDUCER ERROR: action: ', action);
       // throw Error('reducer error');
@@ -59,6 +74,9 @@ export function reducer(state, action) {
 export default function Store(props) {
   const stateHook = React.useReducer(reducer, {
     isLoggedIn: false,
+    showAuth: false,
+    authPage: 'register',
+    authType: 'client',
     user: { name: '', email: '', type: 'client', token: null, id: null },
     messages: {},
     settings: { darkmode: false },

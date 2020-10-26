@@ -27,6 +27,7 @@ const AppointmentSelector = ({
   const [minMet, setMinMet] = useState(false);
   const [err, setErr] = useState('');
   const [firstRender, setFirstRender] = useState(true);
+
   useEffect(() => {
     window.addEventListener('mousedown', () => setMouseIsDown(true));
     window.addEventListener('mouseup', () => setMouseIsDown(false));
@@ -141,6 +142,11 @@ const AppointmentSelector = ({
         }, 2700);
   }, [err]);
 
+  const shiftWeek = (n) => {
+    setWeek(setUpWeek(n));
+    setWeekShift(n);
+  };
+
   const handleBooking = (e) => {
     /// check make sure that appt meets minimum time here before sending,
     //  check on the backend route as well before saving
@@ -166,18 +172,16 @@ const AppointmentSelector = ({
         } else if (newAppt) setBookingSuccess(true);
       });
   };
-  const shiftWeek = (n) => {
-    setWeek(setUpWeek(n));
-    setWeekShift(n);
-  };
-  const openAuth = () => {
-    console.log(
-      'TODO: open registeration but make sure to keep user selection in state for after registration completes'
-    );
-  };
 
-  const showRegister = (e) => {
-    setShowRegister(true);
+  // const openAuth = () => {
+  //   console.log(
+  //     'TODO: open registeration but make sure to keep user selection in state for after registration completes'
+  //   );
+  // };
+
+  const showRegister = () => {
+    updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page: 'register' } });
+    updateState({ type: 'TOGGLE_AUTH' });
   };
   return (
     <div className='appointmentselector'>
@@ -212,8 +216,8 @@ const AppointmentSelector = ({
         {selection && selection.length > 0 && (
           <button
             className={`booking-btn minmet-${minMet}`}
-            // onClick={isLoggedIn ? handleBooking : showRegister}
-            onClick={showRegister}
+            onClick={isLoggedIn ? handleBooking : showRegister}
+            // onClick={showRegister}
           >
             book
           </button>

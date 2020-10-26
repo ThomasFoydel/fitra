@@ -31,8 +31,8 @@ import './App.scss';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
-  let { isLoggedIn, user } = appState;
-  const [authOpen, setAuthOpen] = useState(false);
+  let { isLoggedIn, user, showAuth } = appState;
+  // const [authOpen, setAuthOpen] = useState(false);
   const [currentShow, setCurrentShow] = useState('login');
   const [mySocket, setMySocket] = useState(null);
 
@@ -94,35 +94,24 @@ function App() {
     };
   }, [user.token]);
 
+  const setAuthOpen = () => updateState({ type: 'TOGGLE_AUTH' });
+
   return (
     <div className={`App`}>
       <Router>
-        <NavBar isLoggedIn={isLoggedIn} setAuthOpen={setAuthOpen} />
+        <NavBar />
         <Switch>
           <Route
             exact
             path='/'
-            component={() =>
-              isLoggedIn ? (
-                <Home />
-              ) : (
-                <LandingPage
-                  setCurrentShow={setCurrentShow}
-                  setAuthOpen={setAuthOpen}
-                />
-              )
-            }
+            component={() => (isLoggedIn ? <Home /> : <LandingPage />)}
           />
           <Route
             exact
             path='/coachportal'
             component={isLoggedIn ? Home : TrainerLandingPage}
           />
-          {/* <Route
-            exact
-            path='/register'
-            component={() => <UserRegister setCurrentShow={setCurrentShow} />}
-          /> */}
+
           <Route exact path='/terms-of-use' component={TermsOfUse} />
           <Route exact path='/trainers' component={Trainers} />
           <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
@@ -182,14 +171,7 @@ function App() {
           )}
         </Switch>
 
-        {!isLoggedIn && authOpen && (
-          <Auth
-            trainer={false}
-            setAuthOpen={setAuthOpen}
-            currentShow={currentShow}
-            setCurrentShow={setCurrentShow}
-          />
-        )}
+        {!isLoggedIn && showAuth && <Auth trainer={false} />}
       </Router>
     </div>
   );

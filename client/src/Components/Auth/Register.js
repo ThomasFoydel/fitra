@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AuthPageToggle from './AuthPageToggle';
 
 const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
   const [errorMessage, setErrorMessage] = useState('');
@@ -70,6 +71,12 @@ const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
         onChange={handleChange}
         onKeyPress={handleKeyDown}
       />
+      <p>
+        by registering, you agree to our{' '}
+        <a target='_blank' href='/terms-of-use'>
+          Terms Of Use
+        </a>
+      </p>
 
       <button className='submit-btn' onClick={handleSubmit}>
         Submit
@@ -78,6 +85,7 @@ const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
         Sign in
       </button>
       <p className='error-msg'>{errorMessage}</p>
+      <AuthPageToggle />
     </div>
   );
 };

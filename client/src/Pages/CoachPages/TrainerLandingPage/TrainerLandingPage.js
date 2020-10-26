@@ -9,9 +9,7 @@ import { Redirect } from 'react-router-dom';
 
 const TrainerLandingPage = () => {
   const [appState, updateState] = useContext(CTX);
-  const { isLoggedIn } = appState;
-  const [authOpen, setAuthOpen] = useState(false);
-  const [currentShow, setCurrentShow] = useState('register');
+  const { isLoggedIn, showAuth } = appState;
 
   useEffect(() => {
     let token = localStorage.getItem('fitr-token');
@@ -25,21 +23,17 @@ const TrainerLandingPage = () => {
       .then((res) => console.log('trainer auth res: ', res))
       .catch((err) => console.log('err: ', err));
   }, []);
+
+  const openAuth = () => {
+    updateState({ type: 'CHANGE_AUTH_TYPE', payload: { type: 'trainer' } });
+    updateState({ type: 'TOGGLE_AUTH' });
+  };
   return (
     <div className='coachportal'>
       {isLoggedIn && <Redirect to='/coachportal/home' />}
       <h1>trainer landing page</h1>
 
-      {!isLoggedIn && authOpen && (
-        <Auth
-          trainer={true}
-          setAuthOpen={setAuthOpen}
-          currentShow={currentShow}
-          setCurrentShow={setCurrentShow}
-        />
-      )}
-
-      <button onClick={() => setAuthOpen(!authOpen)}>Login / Register</button>
+      <button onClick={openAuth}>Login / Register</button>
     </div>
   );
 };
