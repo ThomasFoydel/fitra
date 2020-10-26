@@ -181,16 +181,16 @@ function App() {
             </>
           )}
         </Switch>
-      </Router>
 
-      {!isLoggedIn && authOpen && (
-        <Auth
-          trainer={false}
-          setAuthOpen={setAuthOpen}
-          currentShow={currentShow}
-          setCurrentShow={setCurrentShow}
-        />
-      )}
+        {!isLoggedIn && authOpen && (
+          <Auth
+            trainer={false}
+            setAuthOpen={setAuthOpen}
+            currentShow={currentShow}
+            setCurrentShow={setCurrentShow}
+          />
+        )}
+      </Router>
     </div>
   );
 }

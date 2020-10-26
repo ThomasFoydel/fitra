@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
   const [appState, updateState] = useContext(CTX);
   const [errorMessage, setErrorMessage] = useState('');
   const [userForm, setUserForm] = useState({});
-  const [redirect, setRedirect] = useState(false);
+  // const [redirect, setRedirect] = useState(false);
 
   const handleChange = (e) => {
     let { id, value } = e.target;
@@ -23,7 +23,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
           let { user, token } = result.data.data;
           user.userType = trainer ? 'trainer' : 'client';
           updateState({ type: 'LOGIN', payload: { user, token } });
-          setRedirect(true);
+          // setRedirect(true);
         }
       })
       .catch((err) => {
@@ -76,12 +76,13 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         <button className='submit-btn' onClick={handleSubmit}>
           Login
         </button>
-        <button
+        <Link
+          to='/register'
           className='signup-btn'
-          onClick={() => setCurrentShow('register')}
+          onClick={() => setAuthOpen(false)}
         >
           Sign up
-        </button>
+        </Link>
         <p className='error-msg'>{errorMessage}</p>
       </div>
     </>

@@ -53,21 +53,8 @@ const Dnd = ({
       let index = entries.findIndex((x) => x.id === data.id);
       let copy = [...entries];
       copy[index] = newTime;
-      // console.log({ copy, index, newTime });
       return copy;
     });
-    // let filteredTimes = times.filter((time) => time.id !== data.id);
-    // let newTimes = [
-    //   ...filteredTimes,
-    //   {
-    //     end: endTime,
-    //     start: startTime,
-    //     startDate,
-    //     endDate,
-    //     id: data.id,
-    //     recurring,
-    //   },
-    // ];
   };
 
   const handleDrag = (e, el) => {
@@ -85,7 +72,6 @@ const Dnd = ({
     y = Number(y);
 
     if (y < 50 && y > -50) y = 0;
-    // if (y < 0) y += 2400;
     if (y < 0) y += 2750;
     let startIndex = Math.ceil(y / 50);
 
@@ -103,7 +89,6 @@ const Dnd = ({
     h /= 50;
     let endTime = times[startIndex + h];
     let newEndDate = dateFromDateAndTime(newDate, endTime, newStartTime);
-    // console.log({ newStartDate, newEndDate });
     // UPDATE STATE
     setStartTime(times[startIndex]);
     setEndTime(endTime);
@@ -124,13 +109,19 @@ const Dnd = ({
     let newEndTime = times[startIndex + h];
     if (newEndTime && newEndTime !== startTime) {
       setEndTime(newEndTime);
-      // todo: consider also setting the start date again as well, incase this is from a previous
-      // week and has been reccuring for a while and has a startDate that does not match
 
       // SET END DATE
+
+      // without setting startState
+      // let newEndDate = dateFromDateAndTime(endDate, newEndTime, startTime);
+      // setEndDate(newEndDate);
+      // updateBlocks(startDate, newEndDate, startTime, newEndTime, recurring);
+
+      // with setting startState
       let newEndDate = dateFromDateAndTime(endDate, newEndTime, startTime);
+      let newStartDate = dateFromDateAndTime(endDate, startTime);
       setEndDate(newEndDate);
-      updateBlocks(startDate, newEndDate, startTime, newEndTime, recurring);
+      updateBlocks(newStartDate, newEndDate, startTime, newEndTime, recurring);
     }
   };
 
