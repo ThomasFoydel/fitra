@@ -40,6 +40,7 @@ export function reducer(state, action) {
       return {
         ...state,
         isLoggedIn: false,
+        showAuth: false,
         user: { name: '', email: '', userType: 'client' },
       };
     case 'CHANGE_PIC':
