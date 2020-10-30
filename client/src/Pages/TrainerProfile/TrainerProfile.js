@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
+import IntroMessage from 'Components/IntroMessage/IntroMessage';
 
 import AppointmentSelector from './AppointmentSelector';
 import Image from 'Components/Image/Image';
@@ -21,6 +22,7 @@ const TrainerProfile = ({
   const [appointments, setAppointments] = useState([]);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [apptSelectorOpen, setApptSelectorOpen] = useState(false);
+  const [messageOpen, setMessageOpen] = useState(false);
   const [err, setErr] = useState('');
 
   useEffect(() => {
@@ -72,7 +74,7 @@ const TrainerProfile = ({
 
           {!belongsToCurrentUser && (
             <>
-              <button>message</button>
+              <button onClick={() => setMessageOpen((o) => !o)}>message</button>
 
               {apptSelectorOpen ? (
                 <AppointmentSelector
@@ -88,6 +90,9 @@ const TrainerProfile = ({
                 >
                   book session
                 </button>
+              )}
+              {messageOpen && (
+                <IntroMessage toggle={setMessageOpen} id={trainerId} />
               )}
             </>
           )}

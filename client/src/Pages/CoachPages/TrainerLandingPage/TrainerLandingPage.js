@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-
+import IntroMessage from 'Components/IntroMessage/IntroMessage';
 import Auth from 'Components/Auth/Auth';
 
 import './TrainerLandingPage.scss';
