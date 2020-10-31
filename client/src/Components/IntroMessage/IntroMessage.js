@@ -2,15 +2,36 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import './IntroMessage.scss';
-const IntroMessage = () => {
+const IntroMessage = ({ id }) => {
   const [appState, updateState] = useContext(CTX);
   const [message, setMessage] = useState('');
 
   const handleChange = ({ target: { value } }) => setMessage(value);
 
   const handleSubmit = () => {
-    // axios.post("/api/message")
+    const newMsg = {
+      userId: id,
+      message,
+      sender: appState.user.id,
+      name: appState.user.name,
+    };
+
+    axios.post('/api/message', { message: newMsg });
   };
+
+  /* 
+
+  userId, message, sender, name 
+  
+  const newMessage = new Message({
+    authorName: name,
+    sender,
+    receiver: userId,
+    content: message,
+    participants: [sender, userId],
+  }); 
+
+  */
   return (
     <div className='intro-message'>
       <h2>intro message</h2>

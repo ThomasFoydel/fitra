@@ -75,7 +75,9 @@ const TrainerProfile = ({
           {!belongsToCurrentUser && (
             <>
               <button onClick={() => setMessageOpen((o) => !o)}>message</button>
-
+              {messageOpen && (
+                <IntroMessage toggle={setMessageOpen} id={trainerId} />
+              )}
               {apptSelectorOpen ? (
                 <AppointmentSelector
                   belongsToCurrentUser={belongsToCurrentUser}
@@ -90,9 +92,6 @@ const TrainerProfile = ({
                 >
                   book session
                 </button>
-              )}
-              {messageOpen && (
-                <IntroMessage toggle={setMessageOpen} id={trainerId} />
               )}
             </>
           )}
