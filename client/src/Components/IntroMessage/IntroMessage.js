@@ -12,11 +12,13 @@ const IntroMessage = ({ id }) => {
     const newMsg = {
       userId: id,
       message,
-      sender: appState.user.id,
+      sender: appState.user.ids,
       name: appState.user.name,
     };
 
-    axios.post('/api/message', { message: newMsg });
+    axios.post('/api/message', { message: newMsg }).then((result) => {
+      console.log({ result });
+    });
   };
 
   /* 

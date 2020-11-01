@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 import './NavBar.scss';
 import { CTX } from 'context/Store';
+import MobileNavBar from './MobileNavBar';
 
 const NavBar = () => {
   const [appState, updateState] = useContext(CTX);
@@ -77,6 +78,9 @@ const NavBar = () => {
           </button>
         )}
       </div>
+      <MobileNavBar
+        props={{ isLoggedIn, openLogin, isTrainer, trainerExt, logout }}
+      />
       <div style={{ height: '6rem' }} />
     </>
   );
