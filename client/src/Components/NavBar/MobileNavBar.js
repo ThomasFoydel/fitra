@@ -62,7 +62,11 @@ const MobileNavBar = ({
         )}
       </animated.div>
       <div className='mobile-navbar1'>
-        <Link to={isLoggedIn ? `${trainerExt}/` : '/'} className='home-link'>
+        <Link
+          to={isLoggedIn ? `${trainerExt}/` : '/'}
+          className='home-link'
+          onClick={() => setSideBarOpen(false)}
+        >
           <h2 className='logo-title'>FITRA</h2>
         </Link>
         <img
