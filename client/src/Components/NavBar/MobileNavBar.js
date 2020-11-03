@@ -12,7 +12,7 @@ const MobileNavBar = ({
       <Link to={isLoggedIn ? `${trainerExt}/` : '/'} className='home-link'>
         <h2 className='logo-title'>FITRA</h2>
       </Link>
-      MOBILENAVBAR
+
       {!isTrainer && (
         <Link to='/trainers' className='link'>
           Trainers

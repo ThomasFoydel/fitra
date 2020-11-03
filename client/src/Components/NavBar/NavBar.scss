@@ -1,4 +1,9 @@
-.navbar {
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
+.navbar,
+.mobile-navbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -7,7 +12,7 @@
   text-align: left;
   background: rgba(0, 0, 0, 1);
   height: 6rem;
-  display: flex;
+
   align-items: center;
 
   .login-btn,
@@ -42,15 +47,34 @@
   .link {
     text-align: center;
     background: #00000000;
-    padding: 2rem 2rem;
     border: none;
-    font-size: 1.2rem;
     letter-spacing: 0.1rem !important;
   }
   button {
     border: none;
     background: none;
     color: #f7f7f7;
+  }
+}
+
+.navbar {
+  display: flex;
+  @media screen and (max-width: $medium) {
+    display: none;
+  }
+
+  .link {
+    padding: 2rem 2rem;
     font-size: 1.2rem;
+  }
+  button {
+    font-size: 1.2rem;
+  }
+}
+
+.mobile-navbar {
+  display: none;
+  @media screen and (max-width: $medium) {
+    display: inherit;
   }
 }
