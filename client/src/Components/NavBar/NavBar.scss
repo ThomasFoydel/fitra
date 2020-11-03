@@ -3,16 +3,18 @@ $medium: 768px;
 $large: 992px;
 
 .navbar,
-.mobile-navbar {
+.mobile-navbar1 {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
+  background: rgba(0, 0, 0, 1);
+}
+
+.navbar {
   z-index: 1;
   text-align: left;
-  background: rgba(0, 0, 0, 1);
   height: 6rem;
-
   align-items: center;
 
   .login-btn,
@@ -49,11 +51,14 @@ $large: 992px;
     background: #00000000;
     border: none;
     letter-spacing: 0.1rem !important;
+    padding: 2rem 2rem;
+    font-size: 1.2rem;
   }
   button {
     border: none;
     background: none;
     color: #f7f7f7;
+    font-size: 1.2rem;
   }
 }
 
@@ -62,19 +67,94 @@ $large: 992px;
   @media screen and (max-width: $medium) {
     display: none;
   }
+}
 
-  .link {
-    padding: 2rem 2rem;
-    font-size: 1.2rem;
-  }
-  button {
-    font-size: 1.2rem;
-  }
+.white-border {
+  height: 6.1rem;
+  border-bottom: 1px solid white;
+  z-index: 0;
 }
 
 .mobile-navbar {
   display: none;
   @media screen and (max-width: $medium) {
     display: inherit;
+  }
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.mobile-navbar1 {
+  display: none;
+  height: 6rem;
+  z-index: 2;
+  // border-bottom: 1px solid white;
+
+  @media screen and (max-width: $medium) {
+    display: inherit;
+  }
+  .home-link {
+    position: absolute;
+    left: 1rem;
+    top: 0.4rem;
+  }
+
+  .link,
+  .home-link {
+    text-decoration: none;
+    color: #f7f7f7;
+  }
+  .open-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1.2rem;
+    filter: invert(1);
+  }
+}
+
+.mobile-sidebar {
+  position: fixed;
+  left: 0;
+  top: 5.9rem;
+  width: 28rem;
+  background: rgba(0, 0, 0, 1);
+  display: flex;
+  flex-direction: column;
+  // height: 38rem;
+  border-radius: 0 0 3rem 0;
+  overflow: hidden;
+  z-index: 1;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  display: none;
+
+  @media screen and (max-width: $medium) {
+    display: flex;
+  }
+
+  .link {
+    // color: white;
+    color: #f7f7f7;
+    text-decoration: none;
+    letter-spacing: 0.2rem;
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+  button {
+    border: none;
+    background: none;
+  }
+
+  .link,
+  button {
+    font-weight: bold;
+    font-size: 1.5rem;
+
+    transition: all 0.2s ease;
+    &:hover {
+      background: rgb(168, 168, 168);
+      color: rgb(17, 17, 17);
+    }
   }
 }
