@@ -67,3 +67,7 @@ input:focus {
   z-index: -1;
   background: linear-gradient(rgba(0, 0, 0, 0.273), rgba(0, 0, 0, 0.433));
 }
+
+.App {
+  min-width: 100vw;
+}

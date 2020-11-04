@@ -70,9 +70,17 @@ $large: 992px;
 }
 
 .white-border {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 6.1rem;
   border-bottom: 1px solid white;
-  z-index: 0;
+  z-index: 1;
+  display: none;
+  @media screen and (max-width: $medium) {
+    display: inherit;
+  }
 }
 
 .mobile-navbar {
@@ -89,6 +97,7 @@ $large: 992px;
   display: none;
   height: 6rem;
   z-index: 2;
+  min-width: 100vw;
   // border-bottom: 1px solid white;
 
   @media screen and (max-width: $medium) {
