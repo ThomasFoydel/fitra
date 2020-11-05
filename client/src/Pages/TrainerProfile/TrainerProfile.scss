@@ -161,7 +161,10 @@ $large: 992px;
     background: black;
     border-radius: 8px;
     position: absolute;
-    top: 0;
+    top: 50rem;
+    overflow-y: scroll;
+    height: 80vh;
+    z-index: 2;
 
     transform: translateX(-50%) scale(1);
     @media screen and (max-width: $medium) {
@@ -189,8 +192,10 @@ $large: 992px;
     user-select: none;
     @media screen and (max-width: $medium) {
       font-size: 1.4rem;
+      height: 80px;
     }
     @media screen and (max-width: $small) {
+      height: 120px;
       font-size: 1.7rem;
     }
   }
