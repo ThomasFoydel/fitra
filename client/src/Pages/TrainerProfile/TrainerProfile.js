@@ -4,6 +4,7 @@ import axios from 'axios';
 import IntroMessage from 'Components/IntroMessage/IntroMessage';
 
 import AppointmentSelector from './AppointmentSelector';
+import MobileAppointmentSelector from './MobileAppointmentSelector';
 import Image from 'Components/Image/Image';
 
 import { CTX } from 'context/Store';
@@ -23,6 +24,7 @@ const TrainerProfile = ({
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [apptSelectorOpen, setApptSelectorOpen] = useState(false);
   const [messageOpen, setMessageOpen] = useState(false);
+  const [selection, setSelection] = useState([]);
   const [err, setErr] = useState('');
 
   useEffect(() => {
@@ -57,8 +59,8 @@ const TrainerProfile = ({
           }}
         >
           <div className='section1'>
-            <Image src={`/api/image/${profilePic}`} name='profile-pic' />
             <div className='info'>
+              <Image src={`/api/image/${profilePic}`} name='profile-pic' />
               <div className='name'>{name}</div>
               <div className='email'>{email}</div>
               {belongsToCurrentUser && (
@@ -79,23 +81,28 @@ const TrainerProfile = ({
                 <IntroMessage toggle={setMessageOpen} id={trainerId} />
               )}
 
-              <div className='large-selector'>
-                {apptSelectorOpen ? (
+              {apptSelectorOpen ? (
+                <>
+                  {/* <div className='large-selector'> */}
                   <AppointmentSelector
                     belongsToCurrentUser={belongsToCurrentUser}
                     bookedTimes={appointments}
                     trainer={currentTrainer}
                     setBookingSuccess={setBookingSuccess}
+                    selection={selection}
+                    setSelection={setSelection}
                   />
-                ) : (
-                  <button
-                    className='apptselector-open'
-                    onClick={() => setApptSelectorOpen(true)}
-                  >
-                    book session
-                  </button>
-                )}
-              </div>
+                  {/* </div> */}
+                  {/* <MobileAppointmentSelector /> */}
+                </>
+              ) : (
+                <button
+                  className='apptselector-open'
+                  onClick={() => setApptSelectorOpen(true)}
+                >
+                  book session
+                </button>
+              )}
             </>
           )}
         </div>

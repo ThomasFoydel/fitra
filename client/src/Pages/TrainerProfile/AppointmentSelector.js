@@ -16,13 +16,15 @@ const AppointmentSelector = ({
   bookedTimes,
   belongsToCurrentUser,
   setShowRegister,
+  selection,
+  setSelection,
   trainer: { availability, _id, minimum, rate },
 }) => {
   const [appState, updateState] = useContext(CTX);
   let { isLoggedIn } = appState;
   const [weekShift, setWeekShift] = useState(0);
   const [week, setWeek] = useState(setUpWeek(0));
-  const [selection, setSelection] = useState([]);
+
   const [mouseIsDown, setMouseIsDown] = useState(false);
   const [minMet, setMinMet] = useState(false);
   const [err, setErr] = useState('');

@@ -30,12 +30,19 @@ $large: 992px;
     display: block;
   }
 
-  .large-selector {
-    display: inherit;
-    @media screen and (max-width: $medium) {
-      display: none;
-    }
-  }
+  // .large-selector {
+  //   display: inherit;
+  //   @media screen and (max-width: $medium) {
+  //     display: none;
+  //   }
+  // }
+
+  // .mobile-appointment-selector {
+  //   display: none;
+  //   @media screen and (max-width: $medium) {
+  //     display: inherit;
+  //   }
+  // }
 }
 // .trainerprofile {
 //   color: white;
@@ -126,5 +133,104 @@ $large: 992px;
   }
   .err {
     color: red;
+  }
+
+  //////////////////////
+  .absolute {
+    height: 50rem;
+    overflow-y: scroll;
+    // min-width: 840px;
+    // display: flex;
+    // justify-content: center;
+  }
+
+  .err {
+    height: 2rem;
+    color: rgb(255, 157, 157);
+    text-align: center;
+  }
+
+  .drag-n-drop {
+    display: grid;
+    width: 840px;
+    grid-template-columns: repeat(7, 110px);
+    height: 240rem;
+    margin-left: 50%;
+    text-align: center;
+    z-index: -1;
+    background: black;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+
+    transform: translateX(-50%) scale(1);
+    @media screen and (max-width: $medium) {
+      transform: translateX(-50%) scale(0.65);
+    }
+    @media screen and (max-width: $small) {
+      transform: translateX(-50%) scale(0.4);
+    }
+  }
+
+  .time-grid {
+    display: flex;
+    width: 84rem;
+  }
+  .grid-time {
+    width: 12rem;
+    height: 50px;
+    border: 3px solid black;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.425);
+    font-weight: bold;
+    user-select: none;
+    @media screen and (max-width: $medium) {
+      font-size: 1.4rem;
+    }
+    @media screen and (max-width: $small) {
+      font-size: 1.7rem;
+    }
+  }
+
+  .grid-day {
+    // display: flex;
+  }
+
+  // .weekshift-btns {
+  //   margin-left: 50%;
+  //   transform: translateX(-50%);
+  //   width: 840px;
+  //   display: flex;
+  //   justify-content: space-around;
+  //   button {
+  //     padding: 0.5rem;
+  //     width: 10rem;
+  //   }
+  // }
+
+  // .appt {
+  //   background: red !important;
+  //   border: 3px solid yellow !important;
+  // }
+  //////////////////////
+}
+
+.labels {
+  margin-top: 1rem;
+  display: flex;
+  width: 840px;
+  transform: translateX(-50%);
+  margin-left: 50%;
+  .day-label {
+    width: 150px;
+    text-align: center;
+    color: rgb(196, 196, 196);
+  }
+  .today-true {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
   }
 }
