@@ -1,34 +1,11 @@
-.trainerprofile {
-  color: white;
-  text-align: center;
-  overflow: hidden;
-  .name {
-    font-size: 6rem;
-    letter-spacing: 0.5rem;
-    line-height: 6rem;
-    font-weight: bold;
-    width: 50rem;
-  }
-  .bio {
-    font-size: 1.4rem;
-  }
-  .email {
-    font-weight: bold;
-    font-size: 1.4rem;
-  }
+$small: 576px;
+$medium: 850px;
+$large: 992px;
 
-  .section1 {
-    margin-top: 5rem;
-    width: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-left: 50%;
-    transform: translateX(-50%);
-  }
+.trainerprofile {
   .cover-pic {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background-position: top;
     background-size: cover;
     position: absolute;
@@ -38,24 +15,86 @@
     padding-top: 2rem;
     overflow: scroll;
   }
-
+  .info {
+    margin-top: 10rem;
+    background: rgba(255, 255, 255, 0.39);
+    text-align: center;
+  }
   .profile-pic {
-    min-width: 25rem;
-    min-height: 25rem;
-    max-width: 25rem;
-    max-height: 25rem;
+    width: 25rem;
+    height: 25rem;
     border-radius: 20rem;
     border: 12px solid rgb(240, 240, 240);
-    background-color: rgb(240, 240, 240);
-
+    margin-left: 50%;
+    transform: translateX(-50%);
     display: block;
   }
-  // Input {
-  //   margin-left: 50%;
-  //   transform: translateX(-50%);
-  //   display: block;
-  // }
+
+  .large-selector {
+    display: inherit;
+    @media screen and (max-width: $medium) {
+      display: none;
+    }
+  }
 }
+// .trainerprofile {
+//   color: white;
+//   text-align: center;
+//   overflow: hidden;
+//   .name {
+//     font-size: 6rem;
+//     letter-spacing: 0.5rem;
+//     line-height: 6rem;
+//     font-weight: bold;
+//     width: 50rem;
+//   }
+//   .bio {
+//     font-size: 1.4rem;
+//   }
+//   .email {
+//     font-weight: bold;
+//     font-size: 1.4rem;
+//   }
+
+//   .section1 {
+//     margin-top: 5rem;
+//     width: 80%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-around;
+//     margin-left: 50%;
+//     transform: translateX(-50%);
+//   }
+//   .cover-pic {
+//     width: 100vw;
+//     height: 100vh;
+//     background-position: top;
+//     background-size: cover;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     z-index: -1;
+//     padding-top: 2rem;
+//     overflow: scroll;
+//   }
+
+//   .profile-pic {
+//     min-width: 25rem;
+//     min-height: 25rem;
+//     max-width: 25rem;
+//     max-height: 25rem;
+//     border-radius: 20rem;
+//     border: 12px solid rgb(240, 240, 240);
+//     background-color: rgb(240, 240, 240);
+
+//     display: block;
+//   }
+//   // Input {
+//   //   margin-left: 50%;
+//   //   transform: translateX(-50%);
+//   //   display: block;
+//   // }
+// }
 
 .appointmentselector {
   .grid-time.unavailable {

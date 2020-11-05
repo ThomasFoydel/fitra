@@ -94,7 +94,7 @@ function App() {
     };
   }, [user.token]);
 
-  const setAuthOpen = () => updateState({ type: 'TOGGLE_AUTH' });
+  // const setAuthOpen = () => updateState({ type: 'TOGGLE_AUTH' });
 
   return (
     <div className={`App`}>

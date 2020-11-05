@@ -78,21 +78,24 @@ const TrainerProfile = ({
               {messageOpen && (
                 <IntroMessage toggle={setMessageOpen} id={trainerId} />
               )}
-              {apptSelectorOpen ? (
-                <AppointmentSelector
-                  belongsToCurrentUser={belongsToCurrentUser}
-                  bookedTimes={appointments}
-                  trainer={currentTrainer}
-                  setBookingSuccess={setBookingSuccess}
-                />
-              ) : (
-                <button
-                  className='apptselector-open'
-                  onClick={() => setApptSelectorOpen(true)}
-                >
-                  book session
-                </button>
-              )}
+
+              <div className='large-selector'>
+                {apptSelectorOpen ? (
+                  <AppointmentSelector
+                    belongsToCurrentUser={belongsToCurrentUser}
+                    bookedTimes={appointments}
+                    trainer={currentTrainer}
+                    setBookingSuccess={setBookingSuccess}
+                  />
+                ) : (
+                  <button
+                    className='apptselector-open'
+                    onClick={() => setApptSelectorOpen(true)}
+                  >
+                    book session
+                  </button>
+                )}
+              </div>
             </>
           )}
         </div>
