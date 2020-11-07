@@ -30,7 +30,10 @@ const EditProfile = () => {
   return (
     <div className='edit-profile'>
       <h2>edit your profile</h2>
-      <Link to={`${type === 'trainer' ? '/trainer' : '/user'}/${id}`}>
+      <Link
+        className='link'
+        to={`${type === 'trainer' ? '/trainer' : '/user'}/${id}`}
+      >
         back to my profile
       </Link>
       <input
@@ -52,7 +55,7 @@ const EditProfile = () => {
         placeholder={email || 'email...'}
       />
       <button onClick={handleSubmit}>submit</button>
-      <div className='flex'>
+      <div className='image-uploaders'>
         <div>
           <img
             className='edit-pic'

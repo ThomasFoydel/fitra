@@ -216,26 +216,20 @@ $large: 992px;
   //   }
   // }
 
-  // .appt {
-  //   background: red !important;
-  //   border: 3px solid yellow !important;
-  // }
-  //////////////////////
-}
-
-.labels {
-  margin-top: 1rem;
-  display: flex;
-  width: 840px;
-  transform: translateX(-50%);
-  margin-left: 50%;
-  .day-label {
-    width: 150px;
-    text-align: center;
-    color: rgb(196, 196, 196);
-  }
-  .today-true {
-    color: rgb(255, 255, 255);
-    font-weight: bold;
+  .labels {
+    margin-top: 1rem;
+    display: flex;
+    width: 840px;
+    transform: translateX(-50%);
+    margin-left: 50%;
+    .day-label {
+      width: 150px;
+      text-align: center;
+      color: rgb(196, 196, 196);
+    }
+    .today-true {
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+    }
   }
 }

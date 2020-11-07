@@ -4,7 +4,6 @@ import axios from 'axios';
 import IntroMessage from 'Components/IntroMessage/IntroMessage';
 
 import AppointmentSelector from './AppointmentSelector';
-import MobileAppointmentSelector from './MobileAppointmentSelector';
 import Image from 'Components/Image/Image';
 
 import { CTX } from 'context/Store';

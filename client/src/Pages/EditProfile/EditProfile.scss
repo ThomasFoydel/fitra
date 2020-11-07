@@ -1,3 +1,7 @@
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
 .edit-profile {
   display: flex;
   flex-direction: column;
@@ -18,5 +22,20 @@
   Input[type='email'] {
     width: 30rem;
     margin-bottom: 0.4rem;
+  }
+
+  .link {
+    color: lightgrey;
+    &:hover {
+      color: white;
+    }
+  }
+
+  .image-uploaders {
+    display: flex;
+
+    @media screen and (max-width: $medium) {
+      display: block;
+    }
   }
 }
