@@ -43,6 +43,7 @@ router.get('/client/:connectionId', auth, async (req, res) => {
 
   if (!started) return res.send({ err: 'This appointment has not yet begun' });
   if (!active) return res.send({ err: 'This appointment has ended' });
+
   // change status of appointment if !started or !active
   // if !started and time until appt is less than 5hrs
   // then send back time until appt starts
