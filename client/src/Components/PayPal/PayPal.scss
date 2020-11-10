@@ -1,0 +1,18 @@
+.paypal-background {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.603);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 3;
+}
+
+.paypal-container {
+  background: white;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20rem;
+  z-index: 3;
+}

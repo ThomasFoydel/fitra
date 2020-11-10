@@ -11,6 +11,8 @@ import {
 } from '../../util/util';
 import { CTX } from 'context/Store';
 
+import PayPal from 'Components/PayPal/PayPal';
+
 const AppointmentSelector = ({
   setBookingSuccess,
   bookedTimes,
@@ -18,7 +20,7 @@ const AppointmentSelector = ({
   setShowRegister,
   selection,
   setSelection,
-  trainer: { availability, _id, minimum, rate },
+  trainer: { availability, _id, minimum, rate, name },
 }) => {
   const [appState, updateState] = useContext(CTX);
   let { isLoggedIn } = appState;
@@ -29,6 +31,7 @@ const AppointmentSelector = ({
   const [minMet, setMinMet] = useState(false);
   const [err, setErr] = useState('');
   const [firstRender, setFirstRender] = useState(true);
+  const [payPalOpen, setPayPalOpen] = useState(false);
 
   useEffect(() => {
     window.addEventListener('mousedown', () => setMouseIsDown(true));
@@ -149,20 +152,21 @@ const AppointmentSelector = ({
     setWeekShift(n);
   };
 
-  const handleBooking = (e) => {
-    /// check make sure that appt meets minimum time here before sending,
-    //  check on the backend route as well before saving
-    // set error message response display
+  const handleBooking = (order) => {
+    setPayPalOpen(false);
+
     if (belongsToCurrentUser) return setErr("you can't book yourself!");
     if (!minMet)
       return setErr(`minimum time for booking is ${minimum * 60} minutes`);
+    console.log({ selection });
     let startTime = selection[0].hourDate.toUTCString();
     let endTime = selection[selection.length - 1].hourDate.toUTCString();
+    console.log({ startTime, endTime });
     let token = localStorage.getItem('fitr-token');
     axios
       .post(
         '/api/appointment/new',
-        { startTime, endTime, trainer: _id },
+        { startTime, endTime, order, trainer: _id },
         {
           headers: { 'x-auth-token': token },
         }
@@ -185,6 +189,16 @@ const AppointmentSelector = ({
     updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page: 'register' } });
     updateState({ type: 'TOGGLE_AUTH' });
   };
+
+  let startTime = selection[0] ? selection[0].hourDate.toUTCString() : '';
+  let endTime = selection[selection.length - 1]
+    ? selection[selection.length - 1].hourDate.toUTCString()
+    : '';
+
+  const handlePayPalOpen = () => {
+    isLoggedIn ? setPayPalOpen(true) : showRegister();
+  };
+
   return (
     <div className='appointmentselector'>
       <div className='weekshift-btn'>
@@ -218,7 +232,7 @@ const AppointmentSelector = ({
         {selection && selection.length > 0 && (
           <button
             className={`booking-btn minmet-${minMet}`}
-            onClick={isLoggedIn ? handleBooking : showRegister}
+            onClick={handlePayPalOpen}
             // onClick={showRegister}
           >
             book
@@ -243,7 +257,6 @@ const AppointmentSelector = ({
           );
         })}
       </div>
-
       <div className='absolute'>
         <div className='drag-n-drop'>
           {
@@ -306,6 +319,15 @@ const AppointmentSelector = ({
           </div>
         </div>
       </div>
+      {payPalOpen && (
+        <PayPal
+          props={{
+            desc: `Booking ${name} for ${startTime} - ${endTime}`,
+            price: 50,
+            complete: handleBooking,
+          }}
+        />
+      )}
     </div>
   );
 };

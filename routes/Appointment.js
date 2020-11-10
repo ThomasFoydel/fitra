@@ -11,11 +11,11 @@ router.post(
   '/new',
   auth,
   async (
-    { body: { trainer, startTime, endTime }, tokenUser: { userId } },
+    { body: { trainer, startTime, endTime, order }, tokenUser: { userId } },
     res
   ) => {
+    console.log({ startTime, endTime });
     //  get client and trainer from db
-
     if (userId === trainer)
       return res.send({ err: 'you cannot book yourself!' });
 
@@ -62,14 +62,16 @@ router.post(
       startTime,
       endTime,
       roomId,
+      order,
     });
-    newAppointment
-      .save()
-      .then((result) => {
-        let { startTime, endTime, status, trainer, client } = result;
-        res.send({ newAppt: { startTime, endTime, status, trainer, client } });
-      })
-      .catch((err) => res.send({ err: 'Database error' }));
+    console.log({ newAppointment });
+    // newAppointment
+    //   .save()
+    //   .then((result) => {
+    //     let { startTime, endTime, status, trainer, client } = result;
+    //     res.send({ newAppt: { startTime, endTime, status, trainer, client } });
+    //   })
+    //   .catch((err) => res.send({ err: 'Database error' }));
   }
 );
 

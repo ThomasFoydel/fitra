@@ -134,7 +134,7 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   console.log({ trainer });
   let foundAppointments = await Appointment.find({
     trainer: trainer._id,
-  }).select('-roomId -createdAt -updatedAt -status -client -trainer');
+  }).select('-roomId -createdAt -updatedAt -status -client -trainer -order');
   res.send({ trainer, foundAppointments });
 });
 

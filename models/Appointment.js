@@ -9,6 +9,7 @@ const appointmentSchema = new Schema(
     endTime: { type: Date, required: true },
     status: { type: String, required: true },
     roomId: { type: String, required: true },
+    order: { type: Object, required: true, select: false },
   },
   { timestamps: true }
 );

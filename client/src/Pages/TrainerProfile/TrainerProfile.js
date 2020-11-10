@@ -9,8 +9,6 @@ import Image from 'Components/Image/Image';
 import { CTX } from 'context/Store';
 import './TrainerProfile.scss';
 
-import PayPal from 'Components/PayPal/PayPal';
-
 //todo: if no trainer found, redirect
 
 const TrainerProfile = ({
@@ -48,7 +46,6 @@ const TrainerProfile = ({
 
   return (
     <div className='trainerprofile'>
-      <PayPal />
       {bookingSuccess && <Redirect to='/schedule' />}
       {err ? (
         <p>{err}</p>
