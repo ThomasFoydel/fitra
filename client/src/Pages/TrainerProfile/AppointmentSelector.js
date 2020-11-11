@@ -286,13 +286,18 @@ const AppointmentSelector = ({
                         if (hourDate >= startDate && hourDate < endDate)
                           blocked = true;
                       });
-                    if (bookedTimes)
+                    if (bookedTimes) {
+                      // var offset = new Date().getTimezoneOffset();
+                      // console.log({ offset });
                       bookedTimes.forEach((time) => {
                         let startDate = new Date(time.startTime);
                         let endDate = new Date(time.endTime);
+                        // startDate.setMinutes(startDate.getMinutes() + offset);
+                        // endDate.setMinutes(endDate.getMinutes() + offset);
                         if (hourDate >= startDate && hourDate < endDate)
                           blocked = true;
                       });
+                    }
                     return (
                       <div
                         className={`grid-time ${selected && 'selected-true'} ${
@@ -325,6 +330,7 @@ const AppointmentSelector = ({
             desc: `Booking ${name} for ${startTime} - ${endTime}`,
             price: 50,
             complete: handleBooking,
+            setPayPalOpen,
           }}
         />
       )}

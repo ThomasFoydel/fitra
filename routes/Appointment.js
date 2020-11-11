@@ -65,13 +65,13 @@ router.post(
       order,
     });
     console.log({ newAppointment });
-    // newAppointment
-    //   .save()
-    //   .then((result) => {
-    //     let { startTime, endTime, status, trainer, client } = result;
-    //     res.send({ newAppt: { startTime, endTime, status, trainer, client } });
-    //   })
-    //   .catch((err) => res.send({ err: 'Database error' }));
+    newAppointment
+      .save()
+      .then((result) => {
+        let { startTime, endTime, status, trainer, client } = result;
+        res.send({ newAppt: { startTime, endTime, status, trainer, client } });
+      })
+      .catch((err) => res.send({ err: 'Database error' }));
   }
 );
 

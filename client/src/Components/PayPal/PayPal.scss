@@ -15,4 +15,23 @@
   transform: translateX(-50%);
   top: 20rem;
   z-index: 3;
+
+  .paypal {
+    position: relative;
+    display: block;
+    width: 40rem;
+    height: 30rem;
+    padding-top: 4rem;
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 0.3rem;
+    top: 0.3rem;
+    color: rgb(121, 0, 0);
+    cursor: pointer;
+    &:hover {
+      color: rgb(173, 0, 0);
+    }
+  }
 }
