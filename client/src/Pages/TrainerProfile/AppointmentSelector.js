@@ -136,7 +136,7 @@ const AppointmentSelector = ({
   };
 
   useEffect(() => {
-    setMinMet(minimum < selection.length);
+    setMinMet(minimum <= selection.length);
   }, [selection, minimum]);
 
   useEffect(() => {
@@ -201,44 +201,48 @@ const AppointmentSelector = ({
 
   return (
     <div className='appointmentselector'>
-      <div className='weekshift-btn'>
-        <button
-          className='weekshift-btn'
-          onClick={() => shiftWeek(weekShift - 1)}
-        >
-          setWeek -
-        </button>
-        <button
-          className='weekshift-btn'
-          onClick={() => shiftWeek(weekShift + 1)}
-        >
-          setWeek +
-        </button>
-      </div>
-      <div className='booking'>
-        {selection[0] && (
-          <>
-            <div className='beginning'>
-              {selection[0].day} - {selection[0].hour} -{' '}
-              {selection[0].hourDate.toDateString()}
-            </div>
-            <div className='end'>
-              {selection[selection.length - 1].day} -{' '}
-              {selection[selection.length - 1].hour} -{' '}
-              {selection[selection.length - 1].hourDate.toDateString()}
-            </div>
-          </>
-        )}
-        {selection && selection.length > 0 && (
+      <div className='ctrls'>
+        <div className='weekshift-btns'>
           <button
-            className={`booking-btn minmet-${minMet}`}
-            onClick={handlePayPalOpen}
-            // onClick={showRegister}
+            className='weekshift-btn'
+            onClick={() => shiftWeek(weekShift - 1)}
           >
-            book
+            <i className='far fa-arrow-alt-circle-left fa-4x'></i>
           </button>
-        )}
-        {err && <p className='err'>{err}</p>}
+          <button
+            className='weekshift-btn'
+            onClick={() => shiftWeek(weekShift + 1)}
+          >
+            <i className='far fa-arrow-alt-circle-right fa-4x'></i>
+          </button>
+        </div>
+        <div className='booking'>
+          {selection[0] ? (
+            <>
+              <div className='beginning'>
+                {selection[0].day} - {selection[0].hour} -{' '}
+                {selection[0].hourDate.toDateString()}
+              </div>
+              <div className='end'>
+                {selection[selection.length - 1].day} -{' '}
+                {selection[selection.length - 1].hour} -{' '}
+                {selection[selection.length - 1].hourDate.toDateString()}
+              </div>
+            </>
+          ) : (
+            <p>Select Time Below, miminum: {minimum * 30} minutes</p>
+          )}
+          {selection && selection.length > 0 && (
+            <button
+              className={`booking-btn minmet-${minMet}`}
+              onClick={handlePayPalOpen}
+              // onClick={showRegister}
+            >
+              book
+            </button>
+          )}
+          {err && <p className='err'>{err}</p>}
+        </div>
       </div>
       <div className='labels'>
         {Object.keys(week).map((key, i) => {

@@ -44,6 +44,16 @@ const TrainerProfile = ({
 
   let { name, bio, email, profilePic, coverPic } = currentTrainer;
 
+  const handleOpenMessage = () => {
+    setApptSelectorOpen(false);
+    setMessageOpen(true);
+  };
+
+  const handleOpenSelector = () => {
+    setMessageOpen(false);
+    setApptSelectorOpen(true);
+  };
+
   return (
     <div className='trainerprofile'>
       {bookingSuccess && <Redirect to='/schedule' />}
@@ -76,32 +86,32 @@ const TrainerProfile = ({
 
           {!belongsToCurrentUser && (
             <>
-              <button onClick={() => setMessageOpen((o) => !o)}>message</button>
+              <div className='btns'>
+                <button
+                  className={`msg-btn ${messageOpen ? 'current' : ''}`}
+                  onClick={handleOpenMessage}
+                >
+                  <i className='far fa-envelope fa-4x'></i>
+                </button>
+                <button
+                  className={`book-btn ${apptSelectorOpen ? 'current' : ''}`}
+                  onClick={handleOpenSelector}
+                >
+                  <i className='fa fa-calendar fa-4x' aria-hidden='true'></i>
+                </button>
+              </div>
               {messageOpen && (
                 <IntroMessage toggle={setMessageOpen} id={trainerId} />
               )}
-
-              {apptSelectorOpen ? (
-                <>
-                  {/* <div className='large-selector'> */}
-                  <AppointmentSelector
-                    belongsToCurrentUser={belongsToCurrentUser}
-                    bookedTimes={appointments}
-                    trainer={currentTrainer}
-                    setBookingSuccess={setBookingSuccess}
-                    selection={selection}
-                    setSelection={setSelection}
-                  />
-                  {/* </div> */}
-                  {/* <MobileAppointmentSelector /> */}
-                </>
-              ) : (
-                <button
-                  className='apptselector-open'
-                  onClick={() => setApptSelectorOpen(true)}
-                >
-                  book session
-                </button>
+              {apptSelectorOpen && (
+                <AppointmentSelector
+                  belongsToCurrentUser={belongsToCurrentUser}
+                  bookedTimes={appointments}
+                  trainer={currentTrainer}
+                  setBookingSuccess={setBookingSuccess}
+                  selection={selection}
+                  setSelection={setSelection}
+                />
               )}
             </>
           )}
