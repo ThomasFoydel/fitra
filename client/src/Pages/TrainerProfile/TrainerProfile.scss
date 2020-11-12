@@ -151,10 +151,31 @@ $large: 992px;
     height: 20rem;
     text-align: center;
     .booking {
-      height: 6rem;
+      height: 10rem;
+      padding: 1rem;
       background: #ddd;
+      border-radius: 0 2rem 0 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .booking-btn {
+      padding: 0.4rem;
+      width: 15rem;
+      background: rgb(211, 0, 0);
+      color: white;
+      font-size: 2.6rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      border-radius: 1rem;
+      border: none;
+      &:hover {
+        background-color: rgb(122, 0, 0);
+      }
     }
     .minmet-false {
+      background: rgb(126, 126, 126);
       opacity: 0.6;
     }
     .weekshift-btns {
@@ -165,12 +186,10 @@ $large: 992px;
   }
 
   //////////////////////
-  .absolute {
+  .relative-container {
     height: 50rem;
-    overflow-y: scroll;
-    // min-width: 840px;
-    // display: flex;
-    // justify-content: center;
+    overflow-y: hidden;
+    position: relative;
   }
 
   .err {
@@ -183,24 +202,24 @@ $large: 992px;
     display: grid;
     width: 840px;
     grid-template-columns: repeat(7, 110px);
-    height: 240rem;
     margin-left: 50%;
-    margin-top: 22rem;
+    top: 4rem;
     text-align: center;
     z-index: -1;
     background: black;
     border-radius: 8px;
     position: absolute;
-    top: 50rem;
     overflow-y: scroll;
-    height: 80vh;
+    height: 40rem;
     z-index: 2;
 
     transform: translateX(-50%) scale(1);
     @media screen and (max-width: $medium) {
+      top: -4rem;
       transform: translateX(-50%) scale(0.65);
     }
     @media screen and (max-width: $small) {
+      top: -9.5rem;
       transform: translateX(-50%) scale(0.4);
     }
   }
@@ -261,5 +280,21 @@ $large: 992px;
       color: rgb(255, 255, 255);
       font-weight: bold;
     }
+
+    @media screen and (max-width: $medium) {
+      transform: translateX(-50%) scale(0.65);
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    @media screen and (max-width: $small) {
+      transform: translateX(-50%) scale(0.4);
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
   }
 }
+
+// * {
+//   background: black;
+//   border: 2px solid red;
+// }

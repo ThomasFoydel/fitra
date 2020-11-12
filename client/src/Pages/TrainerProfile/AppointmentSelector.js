@@ -230,13 +230,12 @@ const AppointmentSelector = ({
               </div>
             </>
           ) : (
-            <p>Select Time Below, miminum: {minimum * 30} minutes</p>
+            <p>Select time below, miminum: {minimum * 30} minutes</p>
           )}
           {selection && selection.length > 0 && (
             <button
               className={`booking-btn minmet-${minMet}`}
               onClick={handlePayPalOpen}
-              // onClick={showRegister}
             >
               book
             </button>
@@ -244,24 +243,25 @@ const AppointmentSelector = ({
           {err && <p className='err'>{err}</p>}
         </div>
       </div>
-      <div className='labels'>
-        {Object.keys(week).map((key, i) => {
-          let day = week[key];
-          let string = day
-            .toDateString()
-            .substring(0, day.toDateString().length - 4);
-          return (
-            <div
-              className='day-label'
-              //   className={`day-label today-${today === i && weekShift === 0}`}
-              key={key}
-            >
-              {string}
-            </div>
-          );
-        })}
-      </div>
-      <div className='absolute'>
+
+      <div className='relative-container'>
+        <div className='labels'>
+          {Object.keys(week).map((key, i) => {
+            let day = week[key];
+            let string = day
+              .toDateString()
+              .substring(0, day.toDateString().length - 4);
+            return (
+              <div
+                className='day-label'
+                //   className={`day-label today-${today === i && weekShift === 0}`}
+                key={key}
+              >
+                {string}
+              </div>
+            );
+          })}
+        </div>
         <div className='drag-n-drop'>
           {
             //////////////////////////
