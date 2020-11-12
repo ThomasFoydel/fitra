@@ -1,14 +1,18 @@
 .intro-message {
   width: 40rem;
-  right: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
   position: absolute;
-  background: rgb(68, 68, 68);
   display: flex;
   flex-direction: column;
   align-items: space-around;
   justify-content: space-around;
   padding: 0 4rem 4rem 4rem;
-  border-radius: 1rem;
+  color: white;
+  background: rgb(31, 31, 31);
+  border: 1px solid rgb(156, 156, 156);
+  border-radius: 0 18px 0 18px;
   button {
     margin-top: 1.5rem;
   }

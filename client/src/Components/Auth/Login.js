@@ -58,7 +58,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
       {/* {redirect && <Redirect to={trainer ? '/coachportal/home' : '/home'} />} */}
       <div className='login'>
         <button className='closeauth-btn' onClick={() => setAuthOpen(false)}>
-          close
+          <i className='fas fa-times fa-3x close-btn'></i>
         </button>
         <h2>{trainer && 'Trainer '}Login</h2>
         <input

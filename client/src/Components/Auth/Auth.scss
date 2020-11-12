@@ -31,10 +31,11 @@ h2 {
   top: 20rem;
   margin-left: 50%;
   text-align: center;
+
   color: white;
   background: rgb(31, 31, 31);
   border: 1px solid rgb(156, 156, 156);
-  border-radius: 1px 12px 1px 12px;
+  border-radius: 0 18px 0 18px;
 
   .signup-btn,
   .signin-btn,
@@ -72,13 +73,22 @@ h2 {
     border: 1px solid rgba(255, 0, 0, 0);
   }
   .closeauth-btn {
-    width: 5rem;
+    width: 4rem;
+
     position: absolute;
-    top: 0.6rem;
-    right: 0.5rem;
-    border-radius: 4px;
-    padding: 0.1rem;
+    top: 0.8rem;
+    right: 1rem;
     border: none;
+    background: none;
+    &:hover {
+      .close-btn {
+        color: rgb(173, 0, 0);
+      }
+    }
+  }
+  .close-btn {
+    color: rgb(121, 0, 0);
+    cursor: pointer;
   }
   .error-msg {
     position: absolute;

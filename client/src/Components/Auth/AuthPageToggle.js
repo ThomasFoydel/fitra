@@ -4,7 +4,7 @@ const AuthPageToggle = () => {
   const [appState, updateState] = useContext(CTX);
   let { authType } = appState;
   let trainer = authType === 'trainer';
-  let text = trainer ? 'User login' : 'Trainer login';
+  let text = trainer ? 'User?' : 'Trainer?';
   let type = trainer ? 'client' : 'trainer';
   const toggle = () =>
     updateState({ type: 'CHANGE_AUTH_TYPE', payload: { type } });
