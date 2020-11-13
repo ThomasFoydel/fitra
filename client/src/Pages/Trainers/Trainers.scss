@@ -26,6 +26,7 @@
     padding: 1rem;
     background: rgba(255, 255, 255, 0.575);
     transition: all 0.3s ease;
+    border-radius: 1rem;
     .name {
       // text-decoration: none;
       color: black;
@@ -37,7 +38,9 @@
   }
   .profilepic,
   .coverpic {
-    width: 9rem;
-    height: 9rem;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 0.8rem;
+    margin: 0.3rem;
   }
 }
