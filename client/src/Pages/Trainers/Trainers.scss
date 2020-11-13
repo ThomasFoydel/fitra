@@ -28,12 +28,13 @@
     transition: all 0.3s ease;
     border-radius: 1rem;
     .name {
-      // text-decoration: none;
+      letter-spacing: 0.3rem;
       color: black;
       font-weight: bold;
     }
     &:hover {
       transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.975);
     }
   }
   .profilepic,

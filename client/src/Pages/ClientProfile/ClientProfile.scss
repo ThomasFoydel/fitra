@@ -25,4 +25,10 @@
     transform: translateX(-50%);
     display: block;
   }
+  .link {
+    color: rgb(240, 240, 240);
+    &:hover {
+      color: rgb(204, 204, 204);
+    }
+  }
 }
