@@ -17,6 +17,7 @@ const appointmentRoutes = require('./routes/Appointment');
 const connectRoutes = require('./routes/Connect');
 const imageRoutes = require('./routes/Image');
 const userRoutes = require('./routes/User');
+const searchRoutes = require('./routes/Search');
 
 const Message = require('./models/Message');
 
@@ -31,6 +32,7 @@ app.use('/api/appointment', appointmentRoutes);
 app.use('/api/connect', connectRoutes);
 app.use('/api/image', imageRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/search', searchRoutes);
 
 // static file declaration
 app.use(express.static(path.join(__dirname, 'client/build')));

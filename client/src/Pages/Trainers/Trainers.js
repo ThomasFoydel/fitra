@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import SearchBar from 'Components/SearchBar/SearchBar';
 import './Trainers.scss';
 
 const Trainers = () => {
@@ -23,6 +23,7 @@ const Trainers = () => {
       <div className='overlay' />
       <h1 className='header center'>Trainers</h1>
       <div className='trainers-container'>
+        <SearchBar />
         {currentTrainers.map((trainer) => (
           <Link
             to={`/trainer/${trainer._id}`}
