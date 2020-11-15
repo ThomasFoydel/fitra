@@ -21,9 +21,9 @@ const Trainers = () => {
     <div className='trainers'>
       <div className='background' />
       <div className='overlay' />
-      <h1 className='header center'>Trainers</h1>
+      {/* <h1 className='header center'>Trainers</h1> */}
+      <SearchBar />
       <div className='trainers-container'>
-        <SearchBar />
         {currentTrainers.map((trainer) => (
           <Link
             to={`/trainer/${trainer._id}`}
@@ -31,15 +31,17 @@ const Trainers = () => {
             style={{ textDecoration: 'inherit' }}
           >
             <div className='trainer'>
-              <div className='center name'>{trainer.name}</div>
               <img
                 className='coverpic'
                 src={`/api/image/${trainer.coverPic}`}
               />
-              <img
-                className='profilepic'
-                src={`/api/image/${trainer.profilePic}`}
-              />
+              <div className='shadow'>
+                <img
+                  className='profilepic'
+                  src={`/api/image/${trainer.profilePic}`}
+                />
+              </div>
+              {/* <div className='center name'>{trainer.name}</div> */}
             </div>
           </Link>
         ))}
