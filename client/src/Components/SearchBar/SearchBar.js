@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import './SearchBar.scss';
 const SearchBar = ({ change }) => {
   const [search, setSearch] = useState('');
 
@@ -14,7 +14,12 @@ const SearchBar = ({ change }) => {
   }, [search]);
   return (
     <div>
-      <input type='text' onChange={handleChange} />
+      <input
+        className='searchbar'
+        placeholder='search...'
+        type='text'
+        onChange={handleChange}
+      />
     </div>
   );
 };
