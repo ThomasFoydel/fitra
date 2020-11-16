@@ -26,7 +26,7 @@ const Trainers = () => {
       <SearchBar />
       <div className='trainers-container'>
         {currentTrainers.map((trainer) => (
-          <TrainerCard trainer={trainer} />
+          <TrainerCard key={trainer._id} trainer={trainer} />
         ))}
       </div>
     </div>
