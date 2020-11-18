@@ -19,19 +19,23 @@ $large: 992px;
   .schedule-spacer {
     height: 25rem;
   }
-  .min-max {
+  .ctrl-panel {
     font-size: 1.2rem;
-
-    width: 28rem;
     padding: 0 1rem;
     transform: translateX(-50%);
     margin-left: 50%;
-    text-align: center;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     display: flex;
+    background: rgba(211, 211, 211, 0.842);
     position: fixed;
+    border-radius: 1rem;
 
     div {
+      justify-content: space-around;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
       border-radius: 1rem;
       background: lightgray;
       padding: 1rem;
@@ -40,10 +44,14 @@ $large: 992px;
   }
 
   .err {
-    height: 2rem;
+    // height: 20rem;
     color: rgb(255, 157, 157);
-
+    background: black;
+    width: 100%;
     text-align: center;
+    position: fixed;
+    top: 6rem;
+    height: 4rem;
   }
 
   .drag-n-drop {
@@ -122,17 +130,18 @@ $large: 992px;
     margin-top: 1rem;
     display: flex;
     min-width: 840px;
-    transform: translateX(-50%) translateY(-3rem);
+    transform: translateX(-50%) translateY(-4rem);
     margin-left: 50%;
     position: absolute;
     top: 0;
     left: 0;
     background-color: black;
-    height: 2rem;
+    height: 3rem;
     border-radius: 1rem;
+    padding-top: 0.5rem;
 
     @media screen and (max-width: $medium) {
-      transform: translateX(0%) translateY(-3rem);
+      transform: translateX(0%) translateY(-4rem);
       margin-left: 0%;
     }
 
@@ -173,10 +182,10 @@ $large: 992px;
     // margin-left: 50%;
     // transform: translateX(-50%);
     // width: 840px;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    // width: 100vw;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
     // display: none;
     button {
       padding: 0.5rem;

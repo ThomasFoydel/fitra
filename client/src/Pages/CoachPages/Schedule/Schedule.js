@@ -103,9 +103,9 @@ const Schedule = ({
   return (
     <div className='schedule'>
       <div className='background'></div>
-      <div className='min-max'>
-        <div>
-          <h4>minimum</h4>
+      <div className='ctrl-panel'>
+        <div className='min-max'>
+          <h4>min</h4>
           <select onChange={handleMinMax} value={min} id='minimum'>
             <option value={1}>30 minutes</option>
             <option value={2}>1 hour</option>
@@ -113,8 +113,8 @@ const Schedule = ({
             <option value={4}>2 hours</option>
           </select>
         </div>
-        <div>
-          <h4>maximum</h4>
+        <div className='min-max'>
+          <h4>max</h4>
           <select onChange={handleMinMax} value={max} id='maximum'>
             <option value={1}>30 minutes</option>
             <option value={2}>1 hour</option>
@@ -130,9 +130,9 @@ const Schedule = ({
           <button onClick={() => handleWeekShift(weekShift + 1)}>
             <i className='far fa-arrow-alt-circle-right fa-4x'></i>
           </button>
-          <p className='err'>{err}</p>
         </div>
       </div>
+      <p className='err'>{err}</p>
       <div className='schedule-spacer'></div>
       <div className='dnd'>
         <div className='large-schedule'>
