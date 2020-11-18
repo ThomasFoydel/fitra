@@ -71,3 +71,14 @@ input:focus {
 .App {
   min-width: 100vw;
 }
+
+.background {
+  background: url('./imgs/sweat.jpg');
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: -1;
+}

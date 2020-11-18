@@ -16,6 +16,7 @@ const Messages = () => {
   return (
     <div className='messages'>
       <div className='background'></div>
+      <div className='overlay'></div>
       {/* <div className='overlay' /> */}
       {/* <h1 className='header center'>Messages</h1> */}
       <div className='thread-section'>

@@ -1,13 +1,21 @@
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
 .schedule-container {
   margin-top: 5rem;
 
-  .absolute {
+  .large {
     height: 50rem;
     overflow-y: scroll;
+    @media screen and (max-width: $medium) {
+      display: none;
+    }
   }
 
   .min-max {
-    background: lightgray;
+    font-size: 1.2rem;
+
     width: 28rem;
     padding: 0 1rem;
     transform: translateX(-50%);
@@ -16,7 +24,10 @@
     justify-content: space-around;
     display: flex;
     div {
+      border-radius: 1rem;
+      background: lightgray;
       padding: 1rem;
+      margin: 1rem;
     }
   }
 
@@ -34,9 +45,16 @@
     transform: translateX(-50%);
     margin-left: 50%;
     text-align: center;
-    z-index: -1;
+    z-index: 1;
     background: black;
     border-radius: 8px;
+    position: absolute;
+
+    @media screen and (max-width: $medium) {
+      display: none;
+    }
+    // @media screen and (max-width: $small) {
+    // }
   }
 
   .rnd-item {

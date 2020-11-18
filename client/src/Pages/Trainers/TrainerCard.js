@@ -29,6 +29,7 @@ const TrainerCard = ({ trainer }) => {
               src={`/api/image/${trainer.profilePic}`}
             />
           </div>
+          <div className='bio'>{trainer.bio}</div>
         </animated.div>
       </Link>
     </div>

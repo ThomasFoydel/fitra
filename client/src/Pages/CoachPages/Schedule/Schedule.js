@@ -102,9 +102,10 @@ const Schedule = ({
 
   return (
     <div className='schedule'>
+      <div className='background'></div>
       <div className='min-max'>
         <div>
-          <h2>minimum</h2>
+          <h4>minimum</h4>
           <select onChange={handleMinMax} value={min} id='minimum'>
             <option value={1}>30 minutes</option>
             <option value={2}>1 hour</option>
@@ -113,7 +114,7 @@ const Schedule = ({
           </select>
         </div>
         <div>
-          <h2>maximum</h2>
+          <h4>maximum</h4>
           <select onChange={handleMinMax} value={max} id='maximum'>
             <option value={1}>30 minutes</option>
             <option value={2}>1 hour</option>
@@ -125,29 +126,33 @@ const Schedule = ({
       <p className='err'>{err}</p>
       <div className='dnd'>
         <div className='weekshift-btns'>
-          <button onClick={() => handleWeekShift(weekShift - 1)}>back</button>
+          <button onClick={() => handleWeekShift(weekShift - 1)}>
+            <i className='far fa-arrow-alt-circle-left fa-4x'></i>
+          </button>
           <button onClick={() => handleWeekShift(weekShift + 1)}>
-            forward
+            <i className='far fa-arrow-alt-circle-right fa-4x'></i>
           </button>
         </div>
-        <div className='labels'>
-          {Object.keys(week).map((key, i) => {
-            let day = week[key];
-            let string = day
-              .toDateString()
-              .substring(0, day.toDateString().length - 4);
-            return (
-              <div
-                className={`day-label today-${today === i && weekShift === 0}`}
-                key={key}
-              >
-                {string}
-              </div>
-            );
-          })}
-        </div>
 
-        <div className='absolute'>
+        <div className='large'>
+          <div className='labels'>
+            {Object.keys(week).map((key, i) => {
+              let day = week[key];
+              let string = day
+                .toDateString()
+                .substring(0, day.toDateString().length - 4);
+              return (
+                <div
+                  className={`day-label today-${
+                    today === i && weekShift === 0
+                  }`}
+                  key={key}
+                >
+                  {string}
+                </div>
+              );
+            })}
+          </div>
           <div className='drag-n-drop'>
             {
               //////////////////////////
