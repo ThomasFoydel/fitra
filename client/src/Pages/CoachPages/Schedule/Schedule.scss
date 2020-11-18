@@ -4,15 +4,21 @@ $large: 992px;
 
 .schedule-container {
   margin-top: 5rem;
-
-  .large {
-    height: 50rem;
-    overflow-y: scroll;
-    @media screen and (max-width: $medium) {
-      display: none;
-    }
+  max-width: 100vw;
+  overflow-x: scroll;
+  .large-schedule {
+    // transform: translateX(-50%);
+    // margin-left: 50%;
+    // overflow-x: scroll;
+    // height: 50rem;
+    // overflow-y: scroll;
+    // @media screen and (max-width: $medium) {
+    //   display: none;
+    // }
   }
-
+  .schedule-spacer {
+    height: 25rem;
+  }
   .min-max {
     font-size: 1.2rem;
 
@@ -23,6 +29,8 @@ $large: 992px;
     text-align: center;
     justify-content: space-around;
     display: flex;
+    position: fixed;
+
     div {
       border-radius: 1rem;
       background: lightgray;
@@ -37,9 +45,10 @@ $large: 992px;
 
     text-align: center;
   }
+
   .drag-n-drop {
     display: grid;
-    width: 840px;
+    min-width: 840px;
     grid-template-columns: repeat(7, 110px);
     height: 240rem;
     transform: translateX(-50%);
@@ -49,12 +58,12 @@ $large: 992px;
     background: black;
     border-radius: 8px;
     position: absolute;
+    margin-top: 4rem;
 
     @media screen and (max-width: $medium) {
-      display: none;
+      transform: translateX(0%);
+      margin-left: 0%;
     }
-    // @media screen and (max-width: $small) {
-    // }
   }
 
   .rnd-item {
@@ -64,6 +73,7 @@ $large: 992px;
       rgb(248, 248, 248),
       rgb(189, 189, 189)
     );
+
     color: rgb(4, 37, 28);
     border-radius: 9px;
     overflow: hidden;
@@ -111,11 +121,23 @@ $large: 992px;
   .labels {
     margin-top: 1rem;
     display: flex;
-    width: 840px;
-    transform: translateX(-50%);
+    min-width: 840px;
+    transform: translateX(-50%) translateY(-3rem);
     margin-left: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    height: 2rem;
+    border-radius: 1rem;
+
+    @media screen and (max-width: $medium) {
+      transform: translateX(0%) translateY(-3rem);
+      margin-left: 0%;
+    }
+
     .day-label {
-      width: 150px;
+      width: 120px;
       text-align: center;
       color: rgb(196, 196, 196);
     }
@@ -130,6 +152,7 @@ $large: 992px;
   }
   .grid-time {
     // background: rgb(0, 89, 255);
+    cursor: pointer;
     width: 12rem;
     height: 50px;
     border: 3px solid black;
@@ -147,14 +170,19 @@ $large: 992px;
   }
 
   .weekshift-btns {
-    margin-left: 50%;
-    transform: translateX(-50%);
-    width: 840px;
+    // margin-left: 50%;
+    // transform: translateX(-50%);
+    // width: 840px;
+    width: 100vw;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    // display: none;
     button {
       padding: 0.5rem;
-      width: 10rem;
+      width: 11rem;
+      margin: 0.5rem;
+      border-radius: 1rem;
     }
   }
 

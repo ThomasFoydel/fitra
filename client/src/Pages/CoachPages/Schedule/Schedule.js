@@ -122,9 +122,7 @@ const Schedule = ({
             <option value={4}>2 hours</option>
           </select>
         </div>
-      </div>
-      <p className='err'>{err}</p>
-      <div className='dnd'>
+
         <div className='weekshift-btns'>
           <button onClick={() => handleWeekShift(weekShift - 1)}>
             <i className='far fa-arrow-alt-circle-left fa-4x'></i>
@@ -132,28 +130,31 @@ const Schedule = ({
           <button onClick={() => handleWeekShift(weekShift + 1)}>
             <i className='far fa-arrow-alt-circle-right fa-4x'></i>
           </button>
+          <p className='err'>{err}</p>
         </div>
-
-        <div className='large'>
-          <div className='labels'>
-            {Object.keys(week).map((key, i) => {
-              let day = week[key];
-              let string = day
-                .toDateString()
-                .substring(0, day.toDateString().length - 4);
-              return (
-                <div
-                  className={`day-label today-${
-                    today === i && weekShift === 0
-                  }`}
-                  key={key}
-                >
-                  {string}
-                </div>
-              );
-            })}
-          </div>
+      </div>
+      <div className='schedule-spacer'></div>
+      <div className='dnd'>
+        <div className='large-schedule'>
           <div className='drag-n-drop'>
+            <div className='labels'>
+              {Object.keys(week).map((key, i) => {
+                let day = week[key];
+                let string = day
+                  .toDateString()
+                  .substring(0, day.toDateString().length - 4);
+                return (
+                  <div
+                    className={`day-label today-${
+                      today === i && weekShift === 0
+                    }`}
+                    key={key}
+                  >
+                    {string}
+                  </div>
+                );
+              })}
+            </div>
             {
               //////////////////////////
               //   background grid
