@@ -223,6 +223,16 @@ $large: 992px;
     border: 3px solid yellow !important;
   }
 }
+
+.mobileschedule {
+  background: white;
+  z-index: 1;
+  position: absolute;
+  display: none;
+  @media screen and (max-width: $medium) {
+    display: inherit;
+  }
+}
 // *,
 // *::after,
 // *::before {

@@ -11,6 +11,7 @@ import {
   checkBlock,
 } from '../../../util/util';
 import './Schedule.scss';
+import MobileSchedule from './MobileSchedule';
 
 // todos:
 // double check values across blockentries and blocktimes for all changes
@@ -231,6 +232,19 @@ const Schedule = ({
           </div>
         </div>
       </div>
+      <MobileSchedule
+        props={{
+          halfHours,
+          days,
+          dayOfWeek,
+          week,
+          blockedTimes,
+          setBlockedTimes,
+          entries,
+          blockEntries,
+          setBlockEntries,
+        }}
+      />
     </div>
   );
 };
