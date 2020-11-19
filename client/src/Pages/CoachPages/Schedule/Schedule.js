@@ -100,7 +100,6 @@ const Schedule = ({
   const handleBlockedTimes = (e) => {
     setBlockedTimes(e);
   };
-
   return (
     <div className='schedule'>
       <div className='background'></div>

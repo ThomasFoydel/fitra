@@ -12,6 +12,7 @@ const MobileNavBar = ({
 
   const sideBarAnimation = useSpring({
     left: sideBarOpen ? 0 : -280,
+    // zIndex: sideBarOpen ? 2 : -1,
     // top: sideBarOpen ? '5.9rem' : '-100%',
     // opacity: sideBarOpen ? 1 : 0,
     config: config.smooth,

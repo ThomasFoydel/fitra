@@ -224,13 +224,43 @@ $large: 992px;
   }
 }
 
-.mobileschedule {
-  background: white;
-  z-index: 1;
+.mb-schedule {
+  background: rgb(68, 68, 68);
+  z-index: 0;
   position: absolute;
   display: none;
+  width: 100%;
+  text-align: center;
+  // background: #333;
+  padding-bottom: 30rem;
   @media screen and (max-width: $medium) {
     display: inherit;
+  }
+
+  .time-picker {
+    color: black;
+    background-color: white;
+  }
+
+  .title {
+    font-size: 4rem;
+    color: #eee;
+  }
+  .mb-day {
+    color: rgb(255, 21, 21);
+    // border: 2px solid rgba(255, 255, 255, 0.25);
+    margin: 0.2rem;
+    background: linear-gradient(rgb(29, 29, 29), rgb(12, 12, 12));
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+  .mb-block {
+    border-radius: 1rem;
+    padding: 0.5rem;
+    color: rgb(143, 0, 0);
+    border: 2px solid rgb(155, 0, 0);
+    background: rgb(202, 202, 202);
+    margin: 0.4rem;
   }
 }
 // *,
