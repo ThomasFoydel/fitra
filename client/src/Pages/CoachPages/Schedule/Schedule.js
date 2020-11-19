@@ -113,8 +113,8 @@ const Schedule = ({
               <option value={3}>1.5 hours</option>
               <option value={4}>2 hours</option>
             </select>
-          </div>
-          <div className='min-max'>
+            {/* </div> */}
+            {/* <div className='min-max'> */}
             <h4>max</h4>
             <select onChange={handleMinMax} value={max} id='maximum'>
               <option value={1}>30 minutes</option>
