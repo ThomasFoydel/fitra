@@ -79,7 +79,6 @@ const NavBar = () => {
         )}
       </div>
       <MobileNavBar
-        style={{ zIndex: 4, position: 'absolute' }}
         props={{ isLoggedIn, openLogin, isTrainer, trainerExt, logout }}
       />
       <div style={{ height: '6rem' }} />

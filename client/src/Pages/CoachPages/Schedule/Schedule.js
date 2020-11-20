@@ -101,42 +101,43 @@ const Schedule = ({
     setBlockedTimes(e);
   };
   return (
-    <div className='schedule'>
-      <div className='background'></div>
-      <div className='ctrl-panel'>
-        <div className='min-and-max'>
-          <div className='min-max'>
-            <h4>min</h4>
-            <select onChange={handleMinMax} value={min} id='minimum'>
-              <option value={1}>30 minutes</option>
-              <option value={2}>1 hour</option>
-              <option value={3}>1.5 hours</option>
-              <option value={4}>2 hours</option>
-            </select>
-            {/* </div> */}
-            {/* <div className='min-max'> */}
-            <h4>max</h4>
-            <select onChange={handleMinMax} value={max} id='maximum'>
-              <option value={1}>30 minutes</option>
-              <option value={2}>1 hour</option>
-              <option value={3}>1.5 hours</option>
-              <option value={4}>2 hours</option>
-            </select>
+    <>
+      <div className='schedule'>
+        <div className='background'></div>
+        <div className='ctrl-panel'>
+          <div className='min-and-max'>
+            <div className='min-max'>
+              <h4>min</h4>
+              <select onChange={handleMinMax} value={min} id='minimum'>
+                <option value={1}>30 minutes</option>
+                <option value={2}>1 hour</option>
+                <option value={3}>1.5 hours</option>
+                <option value={4}>2 hours</option>
+              </select>
+              {/* </div> */}
+              {/* <div className='min-max'> */}
+              <h4>max</h4>
+              <select onChange={handleMinMax} value={max} id='maximum'>
+                <option value={1}>30 minutes</option>
+                <option value={2}>1 hour</option>
+                <option value={3}>1.5 hours</option>
+                <option value={4}>2 hours</option>
+              </select>
+            </div>
+          </div>
+
+          <div className='weekshift-btns'>
+            <button onClick={() => handleWeekShift(weekShift - 1)}>
+              <i className='far fa-arrow-alt-circle-left fa-4x'></i>
+            </button>
+            <button onClick={() => handleWeekShift(weekShift + 1)}>
+              <i className='far fa-arrow-alt-circle-right fa-4x'></i>
+            </button>
           </div>
         </div>
+        <p className='err'>{err}</p>
+        <div className='schedule-spacer'></div>
 
-        <div className='weekshift-btns'>
-          <button onClick={() => handleWeekShift(weekShift - 1)}>
-            <i className='far fa-arrow-alt-circle-left fa-4x'></i>
-          </button>
-          <button onClick={() => handleWeekShift(weekShift + 1)}>
-            <i className='far fa-arrow-alt-circle-right fa-4x'></i>
-          </button>
-        </div>
-      </div>
-      <p className='err'>{err}</p>
-      <div className='schedule-spacer'></div>
-      <div className='dnd'>
         <div className='large-schedule'>
           <div className='drag-n-drop'>
             <div className='labels'>
@@ -230,21 +231,22 @@ const Schedule = ({
             })}
           </div>
         </div>
+
+        <MobileSchedule
+          props={{
+            halfHours,
+            days,
+            dayOfWeek,
+            week,
+            blockedTimes,
+            setBlockedTimes,
+            entries,
+            blockEntries,
+            setBlockEntries,
+          }}
+        />
       </div>
-      <MobileSchedule
-        props={{
-          halfHours,
-          days,
-          dayOfWeek,
-          week,
-          blockedTimes,
-          setBlockedTimes,
-          entries,
-          blockEntries,
-          setBlockEntries,
-        }}
-      />
-    </div>
+    </>
   );
 };
 

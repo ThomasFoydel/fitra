@@ -5,7 +5,7 @@ $large: 992px;
 .schedule-container {
   margin-top: 5rem;
   max-width: 100vw;
-  overflow-x: scroll;
+  // overflow-x: scroll;
   .large-schedule {
     // transform: translateX(-50%);
     // margin-left: 50%;
@@ -15,6 +15,12 @@ $large: 992px;
     // @media screen and (max-width: $medium) {
     //   display: none;
     // }
+
+    @media screen and (max-width: $medium) {
+      overflow: hidden;
+      position: relative;
+      max-width: 10rem;
+    }
   }
   .schedule-spacer {
     height: 25rem;
@@ -78,12 +84,12 @@ $large: 992px;
     background: black;
     border-radius: 8px;
     position: absolute;
-    // margin-top: 4rem;
+    visibility: visible;
 
     @media screen and (max-width: $medium) {
-      transform: translateX(0%);
-      margin-left: 0%;
-      display: none;
+      position: absolute;
+      // visibility: hidden;
+      z-index: -1;
     }
   }
 
@@ -229,10 +235,13 @@ $large: 992px;
   z-index: 0;
   position: absolute;
   display: none;
-  width: 100%;
+  max-width: 100vw;
+  min-width: 100vw;
   text-align: center;
   // background: #333;
   padding-bottom: 30rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
   @media screen and (max-width: $medium) {
     display: inherit;
   }
@@ -261,6 +270,34 @@ $large: 992px;
     border: 2px solid rgb(155, 0, 0);
     background: rgb(202, 202, 202);
     margin: 0.4rem;
+  }
+  .close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .addtime-form {
+    background: white;
+    border-radius: 1rem;
+    // padding-top: 1rem;
+    position: relative;
+  }
+  .timeinput {
+    .selectors {
+      display: flex;
+      padding: 1rem;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      justify-content: space-between;
+    }
+    .label {
+      margin-left: 50%;
+      margin-top: 1rem;
+      transform: translateX(-50%);
+      width: 80%;
+      border-radius: 1rem;
+      background: #222;
+    }
   }
 }
 // *,

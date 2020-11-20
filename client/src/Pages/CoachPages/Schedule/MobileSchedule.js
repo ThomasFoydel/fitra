@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 // import TimeInput from 'react-time-input';
-import TimePicker from 'react-time-picker';
+
+// import { halfHours } from '../../../util/util';
 const MobileSchedule = ({
   props: {
-    halfHours,
     days,
     dayOfWeek,
     week,
@@ -32,15 +32,15 @@ export default MobileSchedule;
 
 const Day = ({ props: { currentDate, day, blockedTimes } }) => {
   const [addTimeOpen, setAddTimeOpen] = useState(false);
-  const [timeSelection, setTimeSelection] = useState({ start: '', end: '' });
+  const [timeSelection, setTimeSelection] = useState({ start: {}, end: {} });
 
   if (timeSelection) console.log('TIME SELECTION!');
 
   const toggleOpen = () => setAddTimeOpen((o) => !o);
 
-  const handleTimeSelect = ({ target: { id, value } }) => {
+  const handleTimeSelect = ({ id, value, label }) => {
     setTimeSelection((s) => {
-      return { ...s, [id]: value };
+      return { ...s, [label]: { ...s[label], [id]: value } };
     });
   };
 
@@ -66,40 +66,81 @@ const Day = ({ props: { currentDate, day, blockedTimes } }) => {
             </div>
           );
       })}
-      {addTimeOpen ? (
+      {/* {addTimeOpen ? (
         <div className='addtime-form'>
-          <button onClick={toggleOpen}>
+          <button className='close-btn' onClick={toggleOpen}>
             <i className='fas fa-times fa-2x'></i>
           </button>
-          {/* <TimePicker
-            className='time-picker'
-            onChange={(e) => {
-              console.log(e);
-            }}
-          /> */}
-          {/* <input
-            type='time'
-            step='6'
-            id='start'
-            value={start}
-            onChange={handleTimeSelect}
-          /> */}
-
-          {/* 
-          <input
-            value={end}
-            type='time'
-            step='600'
-            id='end'
-            onChange={handleTimeSelect}
-          /> */}
+          <TimeInput id='start' label='start' onChange={handleTimeSelect} />
+          <TimeInput id='end' label='end' onChange={handleTimeSelect} />
           {start && end && <button>submit</button>}
         </div>
       ) : (
         <button className='addtime-btn' onClick={toggleOpen}>
           add time
         </button>
+      )} */}
+      <div
+        className='addtime-form'
+        style={{
+          height: addTimeOpen ? '16rem' : '0rem',
+          transition: 'all 0.3s ease',
+          overflow: 'hidden',
+        }}
+      >
+        <button className='close-btn' onClick={toggleOpen}>
+          <i className='fas fa-times fa-2x'></i>
+        </button>
+        <TimeInput id='start' label='start' onChange={handleTimeSelect} />
+        <TimeInput id='end' label='end' onChange={handleTimeSelect} />
+        {start && end && (
+          <button
+            onClick={() => {
+              console.log({ timeSelection });
+            }}
+          >
+            submit
+          </button>
+        )}
+      </div>
+
+      {!addTimeOpen && (
+        <button className='addtime-btn' onClick={toggleOpen}>
+          add time
+        </button>
       )}
+    </div>
+  );
+};
+
+const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+const TimeInput = ({ onChange, label }) => {
+  const handleChange = ({ target: { value, id } }) => {
+    onChange({ value, id, label });
+  };
+
+  return (
+    <div className='timeinput'>
+      <div className='label'>{label}</div>
+      <div className='selectors'>
+        <h6>hr</h6>
+        <select onChange={handleChange} id='hour'>
+          {hours.map((h) => (
+            <option value={h}>{h}</option>
+          ))}
+        </select>
+        <h6>min</h6>
+        <select onChange={handleChange} id='minute'>
+          <option value={0}>00</option>
+          <option value={30}>30</option>
+        </select>
+
+        <select onChange={handleChange} id='amOrPm'>
+          <option value='AM'>AM</option>
+          <option value='PM'>PM</option>
+        </select>
+      </div>
     </div>
   );
 };
