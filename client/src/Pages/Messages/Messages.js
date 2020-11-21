@@ -16,9 +16,6 @@ const Messages = () => {
   return (
     <div className='messages'>
       <div className='background'></div>
-      <div className='overlay'></div>
-      {/* <div className='overlay' /> */}
-      {/* <h1 className='header center'>Messages</h1> */}
       <div className='thread-section'>
         {Object.keys(messages).map((key) => (
           <ThreadListItem
@@ -92,7 +89,9 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
 const Thread = ({ thread, close }) => {
   return (
     <div className='thread'>
-      <button onClick={close}>close</button>
+      <button onClick={close} className='close-btn'>
+        <i className='fa fa-times' aria-hidden='true'></i>
+      </button>
       {thread.map((msg) => (
         <div className='message' key={msg._id}>
           {console.log('msg: ', msg.sender)}

@@ -8,12 +8,17 @@
     border-radius: 20rem;
   }
   .thread-section {
-    background: rgba(255, 255, 255, 0.267);
+    background: rgba(255, 255, 255, 0.548);
     margin-top: 5rem;
+    min-width: 30rem;
+    max-width: 70%;
+    margin-left: 50%;
+    transform: translateX(-50%);
   }
   .thread {
     border: 1px solid white;
     max-height: 70vh;
+    position: relative;
   }
   .background {
     background: linear-gradient(rgba(0, 0, 0, 0.404), rgba(0, 0, 0, 0.404)),
@@ -35,5 +40,12 @@
   }
   .chat-box {
     position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 }
