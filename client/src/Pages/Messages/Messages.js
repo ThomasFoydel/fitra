@@ -94,7 +94,6 @@ const Thread = ({ thread, close }) => {
       </button>
       {thread.map((msg) => (
         <div className='message' key={msg._id}>
-          {console.log('msg: ', msg.sender)}
           <img
             className='profile-pic'
             src={`/api/image/user/profilePic/${msg.sender}`}
