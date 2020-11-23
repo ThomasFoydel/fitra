@@ -1,14 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import './IntroMessage.scss';
-const IntroMessage = ({ id }) => {
+
+const IntroMessage = ({ id, toggle }) => {
   const [appState, updateState] = useContext(CTX);
   const [message, setMessage] = useState('');
+  const [complete, setComplete] = useState(false);
 
   const handleChange = ({ target: { value } }) => setMessage(value);
 
   const handleSubmit = () => {
+    let valid = id && message && appState.user.id && appState.user.name;
+    if (!valid) return;
     const newMsg = {
       userId: id,
       message,
@@ -16,10 +20,21 @@ const IntroMessage = ({ id }) => {
       name: appState.user.name,
     };
 
-    axios.post('/api/message', newMsg).then((result) => {
-      console.log({ result });
+    axios.post('/api/message', newMsg).then(({ data }) => {
+      updateState({ type: 'NEW_MESSAGE', payload: { message: data } });
+      setComplete(true);
     });
   };
+
+  useEffect(() => {
+    let subscribed = true;
+    if (complete) {
+      setTimeout(() => {
+        if (subscribed) toggle();
+      }, 2800);
+    }
+    return () => (subscribed = false);
+  }, [complete]);
 
   /* 
 
@@ -45,6 +60,8 @@ const IntroMessage = ({ id }) => {
         cols='30'
         rows='10'
       ></textarea>
+      {complete && <p>message sent!</p>}
+      <button onClick={() => console.log(appState.messages)}>LOG!</button>
       <button onClick={handleSubmit}>submit</button>
     </div>
   );

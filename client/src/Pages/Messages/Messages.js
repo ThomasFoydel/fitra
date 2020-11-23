@@ -9,6 +9,10 @@ const Messages = () => {
   let { token, id, name } = appState.user;
   const [currentThread, setCurrentThread] = useState(null);
 
+  // useEffect(() => {
+  //   axios.get(`/api/${appState.user.type}/messages`);
+  // }, []);
+
   const newMessage = (message) => {
     updateState({ type: 'NEW_MESSAGE', payload: { message } });
   };
