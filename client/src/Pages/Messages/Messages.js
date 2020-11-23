@@ -17,34 +17,38 @@ const Messages = () => {
     <div className='messages'>
       <div className='background'></div>
       <div className='thread-section'>
-        {Object.keys(messages).map((key) => (
-          <ThreadListItem
-            user={key}
-            key={key}
-            setCurrentThread={setCurrentThread}
-            currentThread={currentThread}
-            token={token}
-          />
-        ))}
-        {currentThread && (
-          <Thread
-            currentUser={appState.user.id}
-            thread={messages[currentThread]}
-            close={() => setCurrentThread(null)}
-          />
-        )}
+        <div className='thread-list'>
+          {Object.keys(messages).map((key) => (
+            <ThreadListItem
+              user={key}
+              key={key}
+              setCurrentThread={setCurrentThread}
+              currentThread={currentThread}
+              token={token}
+            />
+          ))}
+        </div>
+        <div className='current-thread'>
+          {currentThread && (
+            <Thread
+              currentUser={appState.user.id}
+              thread={messages[currentThread]}
+              close={() => setCurrentThread(null)}
+            />
+          )}
+        </div>
       </div>
 
-      <div className='chat-box'>
-        {currentThread && (
+      {currentThread && (
+        <div className='chat-box'>
           <ChatBox
             userId={id}
             userName={name}
             currentThread={currentThread}
             update={newMessage}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -92,9 +96,9 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
 const Thread = ({ thread, close, currentUser }) => {
   return (
     <div className='thread'>
-      <button onClick={close} className='close-btn'>
+      {/* <button onClick={close} className='close-btn'>
         <i className='fa fa-times' aria-hidden='true'></i>
-      </button>
+      </button> */}
       {thread.map((msg) => {
         let ownMessage = msg.sender === currentUser;
         return (
@@ -138,15 +142,20 @@ const ChatBox = ({ userId, userName, currentThread, update }) => {
       })
       .catch((err) => console.log('chatbox err: ', err));
   };
+  const handleKeyPress = ({ charCode }) => {
+    if (charCode === 13) submit();
+  };
   return (
-    <div className='chat-box'>
+    <>
       <input
         onChange={(e) => setText(e.target.value)}
         type='text'
+        className='input'
         value={text}
+        onKeyPress={handleKeyPress}
       />
-      <button onClick={submit}>submit</button>
-    </div>
+      <button onClick={submit}>send</button>
+    </>
   );
 };
 export default Messages;

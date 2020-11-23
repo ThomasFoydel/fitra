@@ -1,10 +1,11 @@
 const Message = require('../models/Message');
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
-const Appointment = require('../models/Appointment');
-const nodemailer = require('nodemailer');
+// const Appointment = require('../models/Appointment');
+// const nodemailer = require('nodemailer');
 
 const messageSorter = async (userId) => {
+  console.log({ userId });
   let sortedMessages = {};
   const messages = await Message.find({
     participants: { $in: [userId] },

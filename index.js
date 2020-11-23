@@ -63,7 +63,6 @@ mongoose
     const io = socketio(expressServer);
     app.post('/api/message', (req, res) => {
       let { userId, message, sender, name } = req.body;
-
       const newMessage = new Message({
         authorName: name,
         sender,

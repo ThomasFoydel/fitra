@@ -7,6 +7,13 @@
     height: 3rem;
     border-radius: 20rem;
   }
+  .thread-list {
+    width: 25%;
+  }
+  .current-thread {
+    width: 75%;
+    overflow: scroll;
+  }
   .thread-section {
     background: rgba(255, 255, 255, 0.548);
     margin-top: 5rem;
@@ -14,14 +21,20 @@
     max-width: 70%;
     margin-left: 50%;
     transform: translateX(-50%);
-    border-radius: 2rem;
+    border-radius: 1.5rem;
+    display: flex;
+    height: 35rem;
   }
   .threadlistitem {
     display: flex;
     align-items: center;
     justify-content: left;
     border-radius: 2rem;
-    border: 1px solid white;
+    padding: 0.4rem;
+    background: linear-gradient(
+      rgba(255, 255, 255, 0.63),
+      rgba(194, 194, 194, 0.384)
+    );
     cursor: pointer;
     span {
       margin-left: 1rem;
@@ -35,7 +48,7 @@
     max-height: 70vh;
     position: relative;
     overflow: scroll;
-    border-radius: 2rem;
+    border-radius: 1.5rem;
   }
   .background {
     background: linear-gradient(rgba(0, 0, 0, 0.404), rgba(0, 0, 0, 0.404)),
@@ -59,6 +72,26 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    background-color: rgba(201, 201, 201, 0.884);
+    display: flex;
+    min-width: 20rem;
+    width: 50%;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    height: 5rem;
+    border-radius: 4rem;
+    Input,
+    Button {
+      padding: 0.5rem;
+      border-radius: 1rem;
+    }
+    Button {
+      width: 18%;
+    }
+    Input {
+      width: 78%;
+    }
   }
   .close-btn {
     position: absolute;
@@ -67,7 +100,7 @@
   }
   .message {
     width: 100%;
-    min-height: 3.6rem;
+    min-height: 3.8rem;
     font-size: 1.3rem;
     display: flex;
 
@@ -80,7 +113,12 @@
     text-align: end;
     justify-content: flex-end;
     align-items: center;
-    background-color: rgba(19, 19, 19, 0.938);
+    background-color: rgba(29, 29, 29, 0.788);
     color: rgb(212, 212, 212);
+
+    .content {
+      margin-right: 1rem;
+      padding-right: 1rem;
+    }
   }
 }
