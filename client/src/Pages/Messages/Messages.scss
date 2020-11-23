@@ -1,3 +1,7 @@
+$small: 576px;
+$medium: 850px;
+$large: 992px;
+
 .messages {
   // margin-top: 8rem;
   max-height: 100vh;
@@ -8,10 +12,10 @@
     border-radius: 20rem;
   }
   .thread-list {
-    width: 25%;
+    width: 30%;
   }
   .current-thread {
-    width: 75%;
+    width: 70%;
     overflow: scroll;
   }
   .thread-section {
@@ -41,6 +45,32 @@
     }
     &:hover {
       background: rgba(255, 255, 255, 0.76);
+    }
+
+    .name {
+      @media screen and (max-width: $large) {
+        display: inherit;
+        font-size: 0.8rem;
+      }
+      @media screen and (max-width: $medium) {
+        display: none;
+      }
+    }
+  }
+  .current-item {
+    background: linear-gradient(
+      to bottom right,
+      rgba(189, 0, 0, 0.63),
+      rgba(10, 10, 10, 0.705)
+    );
+    color: rgb(250, 250, 250);
+    &:hover {
+      opacity: 0.8;
+      background: linear-gradient(
+        to bottom right,
+        rgba(189, 0, 0, 0.63),
+        rgba(10, 10, 10, 0.705)
+      );
     }
   }
   .thread {
@@ -88,6 +118,7 @@
     }
     Button {
       width: 18%;
+      min-width: 4.3rem;
     }
     Input {
       width: 78%;

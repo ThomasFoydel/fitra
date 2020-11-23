@@ -71,7 +71,7 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
 
   return (
     <div
-      className={`threadlistitem ${current && 'current'}`}
+      className={`threadlistitem ${current && 'current-item'}`}
       onClick={() =>
         setCurrentThread((cUser) => (cUser === user ? null : user))
       }
@@ -82,7 +82,7 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
         src={`/api/image/user/profilePic/${user}`}
         alt={`profile of ${userInfo.name}`}
       />
-      <span>{userInfo.name}</span>
+      <span className='name'>{userInfo.name}</span>
       {/* {!current && <button onClick={() => setCurrentThread(user)}>open</button>} */}
     </div>
   );
