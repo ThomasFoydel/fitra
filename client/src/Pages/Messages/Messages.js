@@ -28,6 +28,7 @@ const Messages = () => {
         ))}
         {currentThread && (
           <Thread
+            currentUser={appState.user.id}
             thread={messages[currentThread]}
             close={() => setCurrentThread(null)}
           />
@@ -67,7 +68,9 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
   return (
     <div
       className={`threadlistitem ${current && 'current'}`}
-      onClick={() => setCurrentThread(user)}
+      onClick={() =>
+        setCurrentThread((cUser) => (cUser === user ? null : user))
+      }
     >
       <img
         className='profile-pic'
@@ -86,22 +89,29 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
 ////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////   THREAD   /////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
-const Thread = ({ thread, close }) => {
+const Thread = ({ thread, close, currentUser }) => {
   return (
     <div className='thread'>
       <button onClick={close} className='close-btn'>
         <i className='fa fa-times' aria-hidden='true'></i>
       </button>
-      {thread.map((msg) => (
-        <div className='message' key={msg._id}>
-          <img
-            className='profile-pic'
-            src={`/api/image/user/profilePic/${msg.sender}`}
-          ></img>
-          <strong>{msg.authorName}</strong>
-          {msg.content}
-        </div>
-      ))}
+      {thread.map((msg) => {
+        let ownMessage = msg.sender === currentUser;
+        return (
+          <div className={`message ownmsg-${ownMessage}`} key={msg._id}>
+            {!ownMessage && (
+              <>
+                <img
+                  className='profile-pic'
+                  src={`/api/image/user/profilePic/${msg.sender}`}
+                ></img>
+                <strong className='name'>{msg.authorName}</strong>
+              </>
+            )}
+            <p className='content'>{msg.content}</p>
+          </div>
+        );
+      })}
     </div>
   );
 };

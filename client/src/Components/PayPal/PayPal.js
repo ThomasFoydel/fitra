@@ -41,6 +41,8 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
             onClick={() => setPayPalOpen(false)}
             className='fas fa-times fa-3x close-btn'
           ></i>
+          <p>test email: sb-7ub213671568@personal.example.com</p>
+          <p>{`test password: %)z6>&Ry`}</p>
           <div ref={paypal}></div>
         </div>
         {/* {checkout ? <PayPal/> : <button onClick={()=>setCheckOut(true)}>checkout</button> } */}

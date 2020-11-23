@@ -65,4 +65,22 @@
     right: 0;
     top: 0;
   }
+  .message {
+    width: 100%;
+    min-height: 3.6rem;
+    font-size: 1.3rem;
+    display: flex;
+
+    .name,
+    .content {
+      margin-left: 0.7rem;
+    }
+  }
+  .ownmsg-true {
+    text-align: end;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: rgba(19, 19, 19, 0.938);
+    color: rgb(212, 212, 212);
+  }
 }
