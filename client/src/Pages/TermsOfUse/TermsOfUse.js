@@ -146,7 +146,9 @@ const TermsOfUse = () => {
 
       <p>We accept the following forms of payment: </p>
 
-      <strong>- PayPal</strong>
+      <strong>
+        <p>- PayPal</p>
+      </strong>
       <p>
         You agree to provide current, complete, and accurate purchase and
         account information for all purchases of the Marketplace Offerings made

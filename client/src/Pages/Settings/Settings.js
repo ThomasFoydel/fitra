@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import './Settings.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
+import { Link } from 'react-router-dom';
 
 const Settings = () => {
   const [appState, updateState] = useContext(CTX);
@@ -49,6 +50,7 @@ const Settings = () => {
           />
           <span className='slider round'></span>
         </label>
+        <Link to='/terms-of-use'>terms of use</Link>
         {/* <input type='text' /> */}
       </div>
     </div>

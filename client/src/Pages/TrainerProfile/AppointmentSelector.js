@@ -3,11 +3,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import {
   days,
   halfHours,
-  getOneHalfHourAhead,
+  // getOneHalfHourAhead,
   dateFromDateAndTime,
   setUpWeek,
-  checkBlock,
-  checkSelection,
+  // checkBlock,
+  // checkSelection,
 } from '../../util/util';
 import { CTX } from 'context/Store';
 
@@ -17,7 +17,7 @@ const AppointmentSelector = ({
   setBookingSuccess,
   bookedTimes,
   belongsToCurrentUser,
-  setShowRegister,
+  // setShowRegister,
   selection,
   setSelection,
   trainer: { availability, _id, minimum, rate, name },
@@ -190,12 +190,6 @@ const AppointmentSelector = ({
       });
   };
 
-  // const openAuth = () => {
-  //   console.log(
-  //     'TODO: open registeration but make sure to keep user selection in state for after registration completes'
-  //   );
-  // };
-
   const showRegister = () => {
     updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page: 'register' } });
     updateState({ type: 'TOGGLE_AUTH' });
@@ -228,29 +222,36 @@ const AppointmentSelector = ({
           </button>
         </div>
         <div className='booking'>
-          {selection[0] ? (
-            <>
-              <div className='beginning'>
-                {selection[0].day} - {selection[0].hour} -{' '}
-                {selection[0].hourDate.toDateString()}
-              </div>
-              <div className='end'>
-                {selection[selection.length - 1].day} -{' '}
-                {selection[selection.length - 1].hour} -{' '}
-                {selection[selection.length - 1].hourDate.toDateString()}
-              </div>
-            </>
+          {isNaN(minimum) ? (
+            <p>this trainer's scheduling is not set up</p>
           ) : (
-            <p>Select time below, miminum: {minimum * 30} minutes</p>
+            <>
+              {selection[0] ? (
+                <>
+                  <div className='beginning'>
+                    {selection[0].day} - {selection[0].hour} -{' '}
+                    {selection[0].hourDate.toDateString()}
+                  </div>
+                  <div className='end'>
+                    {selection[selection.length - 1].day} -{' '}
+                    {selection[selection.length - 1].hour} -{' '}
+                    {selection[selection.length - 1].hourDate.toDateString()}
+                  </div>
+                </>
+              ) : (
+                <p>Select time below, miminum: {minimum * 30} minutes</p>
+              )}
+              {selection && selection.length > 0 && (
+                <button
+                  className={`booking-btn minmet-${minMet}`}
+                  onClick={handlePayPalOpen}
+                >
+                  book
+                </button>
+              )}
+            </>
           )}
-          {selection && selection.length > 0 && (
-            <button
-              className={`booking-btn minmet-${minMet}`}
-              onClick={handlePayPalOpen}
-            >
-              book
-            </button>
-          )}
+
           {err && <p className='err'>{err}</p>}
         </div>
       </div>
@@ -325,7 +326,6 @@ const AppointmentSelector = ({
                         }}
                         key={hour}
                         id={JSON.stringify({ day, hour })}
-                        // onClick={handleGridClick}
                         onMouseOver={blocked ? () => {} : handleMouseOver}
                         onMouseDown={blocked ? () => {} : handleGridClick}
                       >

@@ -9,7 +9,7 @@ const util = require('../util/util');
 const { messageSorter } = util;
 
 router.post('/', async (req, res) => {
-  let { search } = req.body;
+  let { search, type } = req.body;
   res.send(`testing: ${search}`);
 });
 

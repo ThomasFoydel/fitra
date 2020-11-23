@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { CTX } from 'context/Store';
+import Image from 'Components/Image/Image';
 import './ClientProfile.scss';
 
 const ClientProfile = ({
@@ -46,7 +47,7 @@ const ClientProfile = ({
         }}
       >
         <div className='info'>
-          <img className='profile-pic' src={`/api/image/${profilePic}`} />
+          <Image src={`/api/image/${profilePic}`} name='profile-pic' />
           <div>
             <div className='name'>{name}</div>
             <div className='bio'>{bio}</div>
