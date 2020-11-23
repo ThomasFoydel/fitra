@@ -15,8 +15,12 @@
   border-radius: 0 18px 0 18px;
   button {
     margin-top: 1.5rem;
+    padding: 0.5rem;
   }
   textarea {
     padding: 1rem;
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 15rem;
   }
 }

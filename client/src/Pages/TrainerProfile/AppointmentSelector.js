@@ -33,9 +33,16 @@ const AppointmentSelector = ({
   const [firstRender, setFirstRender] = useState(true);
   const [payPalOpen, setPayPalOpen] = useState(false);
 
+  const mouseDown = () => setMouseIsDown(true);
+  const mouseUp = () => setMouseIsDown(false);
+
   useEffect(() => {
-    window.addEventListener('mousedown', () => setMouseIsDown(true));
-    window.addEventListener('mouseup', () => setMouseIsDown(false));
+    window.addEventListener('mousedown', mouseDown);
+    window.addEventListener('mouseup', mouseUp);
+    return () => {
+      window.removeEventListener('mousedown', mouseDown);
+      window.removeEventListener('mouseup', mouseUp);
+    };
   }, []);
 
   const handleMouseOver = (e) => {
@@ -136,15 +143,19 @@ const AppointmentSelector = ({
   };
 
   useEffect(() => {
-    setMinMet(minimum <= selection.length);
+    let subscribed = true;
+    if (subscribed) setMinMet(minimum <= selection.length);
+    return () => (subscribed = false);
   }, [selection, minimum]);
 
   useEffect(() => {
-    firstRender
+    let subscribed = true;
+    firstRender && subscribed
       ? setFirstRender(false)
       : setTimeout(() => {
-          setErr('');
+          if (subscribed) setErr('');
         }, 2700);
+    return () => (subscribed = false);
   }, [err]);
 
   const shiftWeek = (n) => {

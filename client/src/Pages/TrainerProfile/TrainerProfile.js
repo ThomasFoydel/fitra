@@ -25,6 +25,8 @@ const TrainerProfile = ({
   const [apptSelectorOpen, setApptSelectorOpen] = useState(false);
   const [messageOpen, setMessageOpen] = useState(false);
   const [selection, setSelection] = useState([]);
+  const [redirectToMessages, setRedirectToMessages] = useState(false);
+
   const [err, setErr] = useState('');
 
   useEffect(() => {
@@ -44,19 +46,30 @@ const TrainerProfile = ({
 
   let { name, bio, email, profilePic, coverPic } = currentTrainer;
 
-  const handleOpenMessage = () => {
-    setApptSelectorOpen(false);
-    setMessageOpen(true);
+  const toggleMessageOpen = () => {
+    if (appState.messages[currentTrainer._id]) {
+      setRedirectToMessages(true);
+    } else {
+      setApptSelectorOpen(false);
+      setMessageOpen((o) => !o);
+    }
   };
 
-  const handleOpenSelector = () => {
+  const toggleSelectorOpen = () => {
     setMessageOpen(false);
-    setApptSelectorOpen(true);
+    setApptSelectorOpen((o) => !o);
   };
 
   return (
     <div className='trainerprofile'>
       {bookingSuccess && <Redirect to='/schedule' />}
+      {redirectToMessages && (
+        <Redirect
+          to={`${
+            appState.user.type === 'trainer' ? 'coachportal' : ''
+          }/messages`}
+        />
+      )}
       {err ? (
         <p>{err}</p>
       ) : (
@@ -89,13 +102,13 @@ const TrainerProfile = ({
               <div className='btns'>
                 <button
                   className={`msg-btn ${messageOpen ? 'current' : ''}`}
-                  onClick={handleOpenMessage}
+                  onClick={toggleMessageOpen}
                 >
                   <i className='far fa-envelope fa-4x'></i>
                 </button>
                 <button
                   className={`book-btn ${apptSelectorOpen ? 'current' : ''}`}
-                  onClick={handleOpenSelector}
+                  onClick={toggleSelectorOpen}
                 >
                   <i className='fa fa-calendar fa-4x' aria-hidden='true'></i>
                 </button>
