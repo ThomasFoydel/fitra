@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import './Messages.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
@@ -9,13 +9,18 @@ const Messages = () => {
   let { token, id, name } = appState.user;
   const [currentThread, setCurrentThread] = useState(null);
 
-  // useEffect(() => {
-  //   axios.get(`/api/${appState.user.type}/messages`);
-  // }, []);
-
   const newMessage = (message) => {
     updateState({ type: 'NEW_MESSAGE', payload: { message } });
   };
+
+  const scrollRef = useRef();
+
+  const refEl = () => <div ref={scrollRef} />;
+
+  useEffect(() => {
+    if (scrollRef.current)
+      scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, currentThread]);
 
   return (
     <div className='messages'>
@@ -37,6 +42,7 @@ const Messages = () => {
             <Thread
               currentUser={appState.user.id}
               thread={messages[currentThread]}
+              refEl={refEl}
               close={() => setCurrentThread(null)}
             />
           )}
@@ -97,12 +103,9 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
 ////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////   THREAD   /////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
-const Thread = ({ thread, close, currentUser }) => {
+const Thread = ({ thread, close, currentUser, refEl }) => {
   return (
     <div className='thread'>
-      {/* <button onClick={close} className='close-btn'>
-        <i className='fa fa-times' aria-hidden='true'></i>
-      </button> */}
       {thread.map((msg) => {
         let ownMessage = msg.sender === currentUser;
         return (
@@ -120,6 +123,7 @@ const Thread = ({ thread, close, currentUser }) => {
           </div>
         );
       })}
+      {refEl()}
     </div>
   );
 };

@@ -1,3 +1,17 @@
+.trainer-settings {
+  .tag-editor {
+    background: gray;
+    .tag {
+      //   min-height: 40rem !important;
+      border-radius: 3rem;
+      background: red;
+      width: 10%;
+    }
+  }
+  .form {
+    height: 20rem;
+  }
+}
 // .settings {
 //   .background {
 //     // background: url('../../imgs/mountain.jpg');

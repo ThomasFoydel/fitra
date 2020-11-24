@@ -13,15 +13,18 @@ router.get('/', auth, async (req, res) => {
   let { tokenUser } = req;
   if (tokenUser) {
     let { userId, userType } = tokenUser;
-    let User;
-    if (userType === 'client') {
-      User = Client;
-    } else {
-      User = Trainer;
-    }
+    let isClient = userType === 'client';
+    let User = isClient ? Client : Trainer;
+    // if (userType === 'client') {
+    //   User = Client;
+    // } else {
+    //   User = Trainer;
+    // }
     User.find(
       { _id: userId },
-      '+password settings email bio name profilePic coverPic'
+      `+password settings email bio name profilePic coverPic ${
+        !isClient && 'tags'
+      }`
     )
       .then(async (foundUser) => {
         const {
@@ -31,6 +34,7 @@ router.get('/', auth, async (req, res) => {
           coverPic,
           profilePic,
           settings,
+          tags,
         } = foundUser[0];
         let sortedMessages = await messageSorter(userId);
         return res.send({
@@ -42,6 +46,7 @@ router.get('/', auth, async (req, res) => {
           userType: tokenUser.userType,
           messages: sortedMessages,
           settings,
+          tags,
         });
       })
       .catch((err) => {

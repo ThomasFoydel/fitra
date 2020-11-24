@@ -7,7 +7,6 @@ const Image = ({ name, src }) => {
   let [err, setErr] = useState(false);
   if (err) src = defaultProfile;
   return (
-    // <div></div>
     <img
       className={name}
       src={loading ? loadingGif : src}

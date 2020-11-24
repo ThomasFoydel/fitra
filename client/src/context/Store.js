@@ -15,6 +15,7 @@ export function reducer(state, action) {
     darkmode,
     page,
     type,
+    tags,
   } = payload || {};
   console.log('action: ', action);
   switch (action.type) {
@@ -30,6 +31,7 @@ export function reducer(state, action) {
           email: user.email,
           coverPic: user.coverPic,
           profilePic: user.profilePic,
+          tags: user.tags,
           token,
         },
         settings: user.settings,
@@ -65,6 +67,8 @@ export function reducer(state, action) {
       return { ...state, authPage: page };
     case 'CHANGE_AUTH_TYPE':
       return { ...state, authType: type };
+    case 'CHANGE_TAGS':
+      return { ...state, user: { ...state.user, tags } };
     default:
       console.log('REDUCER ERROR: action: ', action);
       // throw Error('reducer error');

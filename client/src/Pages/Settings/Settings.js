@@ -51,7 +51,6 @@ const Settings = () => {
           <span className='slider round'></span>
         </label>
         <Link to='/terms-of-use'>terms of use</Link>
-        {/* <input type='text' /> */}
       </div>
     </div>
   );

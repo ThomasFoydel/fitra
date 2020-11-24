@@ -61,7 +61,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', (req, res) => {
   Trainer.findOne(
     { email: req.body.email },
-    '+password settings name email bio profilePic coverPic',
+    '+password settings name email bio profilePic coverPic tags',
     async function (err, user) {
       if (err) {
         return res.json({
@@ -209,4 +209,46 @@ router.post('/cancel-appointment/', auth, async ({ body: { id } }, res) => {
   if (deletedAppointment) res.send({ id: deletedAppointment.id });
   else res.send({ err: 'No appointment found' });
 });
+
+router.post(
+  '/edit-tags',
+  auth,
+  async ({ tokenUser: { userId }, body: { value } }, res) => {
+    let foundTrainer = await Trainer.findById(userId);
+    if (!foundTrainer) return res.send({ err: 'User not found' });
+    if (foundTrainer.tags.length >= 4)
+      return res.send({ err: 'Tag list limit exceeded' });
+    Trainer.findOneAndUpdate(
+      { _id: userId },
+      { $push: { tags: value } },
+      { new: true }
+    )
+      .then((result) => res.send(result.tags))
+      .catch((err) => {
+        console.log({ err });
+        res.send({ err: 'database error' });
+      });
+  }
+);
+router.post(
+  '/delete-tag',
+  auth,
+  async ({ tokenUser: { userId }, body: { value } }, res) => {
+    let foundTrainer = await Trainer.findById(userId);
+    if (!foundTrainer) return res.send({ err: 'User not found' });
+    let tags = [...foundTrainer.tags];
+    let filteredTags = tags.filter((t) => t !== value);
+    Trainer.findOneAndUpdate(
+      { _id: userId },
+      { tags: filteredTags },
+      { new: true }
+    )
+      .then((result) => {
+        res.send(result.tags);
+      })
+      .catch((err) => {
+        res.send({ err });
+      });
+  }
+);
 module.exports = router;

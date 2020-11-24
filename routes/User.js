@@ -4,10 +4,11 @@ const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
 const Client = require('../models/Client');
 
-// get user auth info (happens on every reload of ui, in app.js)
+// get user
 router.get('/:id', auth, async (req, res) => {
   let { id } = req.params;
   const foundClient = await Client.findById(id);
+  console.log({ foundClient });
   if (foundClient) res.send({ user: foundClient });
   else {
     const foundTrainer = await Trainer.findById(id);

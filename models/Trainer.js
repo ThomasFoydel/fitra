@@ -49,6 +49,7 @@ const trainerSchema = {
   minimum: Number,
   maximum: Number,
   rate: [rateSchema],
+  tags: [String],
 };
 
 // needs: weekly schedule
