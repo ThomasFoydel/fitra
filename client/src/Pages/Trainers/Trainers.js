@@ -18,12 +18,16 @@ const Trainers = () => {
     };
   }, []);
 
+  const handleSearch = (trainers) => {
+    setCurrentTrainers(trainers);
+  };
+
   return (
     <div className='trainers'>
       <div className='background' />
       <div className='overlay' />
       {/* <h1 className='header center'>Trainers</h1> */}
-      <SearchBar />
+      <SearchBar change={handleSearch} />
       <div className='trainers-container'>
         {currentTrainers.map((trainer) => (
           <TrainerCard key={trainer._id} trainer={trainer} />

@@ -10,6 +10,7 @@ const Appointment = require('../models/Appointment');
 const Message = require('../models/Message');
 const util = require('../util/util');
 const mongoose = require('mongoose');
+const { query } = require('express');
 const { messageSorter } = util;
 
 router.post('/register', async (req, res) => {
@@ -207,4 +208,23 @@ router.get('/info/:id', auth, async (req, res) => {
 
   if (foundUser) res.send({ user: foundUser });
 });
+
+router.post(
+  '/search/:queryType',
+  async ({ body: { search }, params: { queryType } }, res) => {
+    let searchArray = search.split(' ');
+    let filteredArray = searchArray.filter(Boolean);
+    let queryFilter = [];
+    filteredArray.forEach((term) =>
+      queryFilter.push({ [queryType]: { $regex: `${term}`, $options: '$i' } })
+    );
+    if (queryFilter.length < 1)
+      return res.send({ err: 'requires at least one term' });
+    Trainer.find({ $or: queryFilter }).then((result) => {
+      console.log({ [search]: result });
+      res.send({ result });
+    });
+    // Trainer.find(     { $or: [{ tags: { $regex: `${term}`, $options: '$i' } }, { name: { $regex: `${term}`, $options: '$i' } },   ]}  )
+  }
+);
 module.exports = router;
