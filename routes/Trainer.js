@@ -191,7 +191,6 @@ router.post('/rate/', auth, async ({ tokenUser, body }, res) => {
   let { userId } = tokenUser;
   Trainer.findOneAndUpdate(
     { _id: userId },
-
     { rate: body },
     { new: true, useFindAndModify: false }
   )
@@ -220,7 +219,7 @@ router.post('/cancel-appointment/', auth, async ({ body: { id } }, res) => {
 });
 
 router.post(
-  '/edit-tags',
+  '/add-tag',
   auth,
   async ({ tokenUser: { userId }, body: { value } }, res) => {
     let foundTrainer = await Trainer.findById(userId);
@@ -230,7 +229,7 @@ router.post(
     Trainer.findOneAndUpdate(
       { _id: userId },
       { $push: { tags: value } },
-      { new: true }
+      { new: true, useFindAndModify: false }
     )
       .then((result) => res.send(result.tags))
       .catch((err) => {
@@ -250,7 +249,7 @@ router.post(
     Trainer.findOneAndUpdate(
       { _id: userId },
       { tags: filteredTags },
-      { new: true }
+      { new: true, useFindAndModify: false }
     )
       .then((result) => {
         res.send(result.tags);

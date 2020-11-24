@@ -67,7 +67,7 @@ const TagEditor = ({ props: { appState, updateState } }) => {
   const handleAddTag = () => {
     axios
       .post(
-        '/api/trainer/edit-tags',
+        '/api/trainer/add-tag',
         { value: inputVal },
         {
           headers: { 'x-auth-token': token },
