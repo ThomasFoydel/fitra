@@ -8,6 +8,7 @@ const clientSchema = {
   },
   email: {
     type: String,
+    unique: true,
     required: true,
   },
   password: {

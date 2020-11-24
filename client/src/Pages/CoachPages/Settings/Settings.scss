@@ -1,15 +1,59 @@
 .trainer-settings {
+  background: rgba(255, 255, 255, 0.788);
+
   .tag-editor {
-    background: gray;
+    background: rgba(148, 148, 148, 0.664);
+    padding: 1rem;
+    margin-top: 1rem;
+    input {
+      padding: 0.5rem;
+      border-radius: 1rem;
+    }
+    .add-btn {
+      padding: 0.5rem;
+      margin-left: 0.5rem;
+      border-radius: 0.8rem;
+    }
+    .err {
+      height: 3.5rem;
+    }
+
     .tag {
-      //   min-height: 40rem !important;
+      margin-left: 50%;
+      transform: translateX(-50%);
       border-radius: 3rem;
-      background: red;
+      background: linear-gradient(
+        to bottom right,
+        rgb(228, 218, 218),
+        rgb(107, 100, 100)
+      );
       width: 10%;
+      min-width: 15rem;
+      display: flex;
+      justify-content: space-between;
+      padding-left: 0.5rem;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+      button {
+        border: none;
+        padding: 0 0.7rem;
+        &:hover {
+          color: rgb(214, 30, 30);
+        }
+      }
     }
   }
   .form {
-    height: 20rem;
+    text-align: center;
+    background: rgba(22, 22, 22, 0.192);
+    margin-top: 4rem;
+    padding: 1rem 0;
+  }
+  .setting-item {
+    font-size: 2rem;
+  }
+  a {
+    color: rgb(54, 54, 54);
   }
 }
 // .settings {

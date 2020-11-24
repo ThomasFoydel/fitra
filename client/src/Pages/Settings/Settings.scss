@@ -1,16 +1,22 @@
 .settings {
+  background: rgba(255, 255, 255, 0.788);
   .header {
-    color: white;
     margin-top: 8rem;
     font-size: 4rem;
   }
   .form {
     margin-top: 4rem;
-    // width: 50rem;
     background: rgba(22, 22, 22, 0.192);
-    height: 10rem;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  a {
+    color: rgb(54, 54, 54);
   }
 
+  .setting-item {
+    font-size: 2rem;
+  }
   // input:checked + .slider {
   //   background-color: #000000;
   // }
@@ -38,4 +44,8 @@
 .settings.dm-true {
   background: black;
   color: #888;
+  h1,
+  div {
+    color: #888;
+  }
 }

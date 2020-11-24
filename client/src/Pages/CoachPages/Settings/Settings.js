@@ -1,13 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Settings.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
+import { Link } from 'react-router-dom';
 
 const Settings = () => {
   const [appState, updateState] = useContext(CTX);
   const { type, id, token } = appState.user;
   const { darkmode } = appState.settings || {};
   const [formData, setFormData] = useState({});
+  const [firstRender, setFirstRender] = useState(true);
   // const submit = () => {
   //   axios.post(`/api/${type}/settings`, formData, {
   //     headers: { 'x-auth-token': token },
@@ -32,30 +34,41 @@ const Settings = () => {
       })
       .catch((err) => console.log('darkmode error'));
   };
+
   return (
     <div className={`trainer-settings dm-${darkmode}`}>
       <div className='background' />
       <div className='overlay' />
-      <h1 className='header center'>Settings</h1>
+      <h2 className='header center'>Settings</h2>
 
       <div className='form'>
-        <h2>darkmode</h2>
-        <label className='switch' htmlFor='darkmode'>
-          <input
-            checked={darkmode}
-            type='checkbox'
-            onChange={handleDarkMode}
-            id='darkmode'
-          />
-          <span className='slider round'></span>
-        </label>
-        <TagEditor props={{ appState, updateState }} />
+        <div className='setting-item'>
+          <span>darkmode</span>
+          <label className='switch' htmlFor='darkmode'>
+            <input
+              checked={darkmode}
+              type='checkbox'
+              onChange={handleDarkMode}
+              id='darkmode'
+            />
+            <span className='slider round'></span>
+          </label>
+        </div>
+        <div className='setting-item'>
+          <TagEditor props={{ appState, updateState }} />
+        </div>
+        <div className='setting-item'>
+          <Link to='/terms-of-use'>terms of use</Link>
+        </div>
       </div>
     </div>
   );
 };
 
 const TagEditor = ({ props: { appState, updateState } }) => {
+  let maxMet = appState.user.tags && appState.user.tags.length >= 4;
+
+  const [firstRender, setFirstRender] = useState(true);
   const [inputVal, setInputVal] = useState('');
   const [err, setErr] = useState('');
   let { token, id } = appState.user;
@@ -104,6 +117,21 @@ const TagEditor = ({ props: { appState, updateState } }) => {
         console.log({ err });
       });
   };
+  const handleKeyPress = ({ charCode }) => {
+    if (charCode === 13) handleAddTag();
+  };
+
+  useEffect(() => {
+    let subscribed = true;
+    if (firstRender) {
+      setFirstRender(false);
+    } else {
+      setTimeout(() => {
+        if (subscribed) setErr('');
+      }, 2500);
+    }
+    return () => (subscribed = false);
+  }, [err]);
 
   return (
     <div className='tag-editor'>
@@ -112,13 +140,25 @@ const TagEditor = ({ props: { appState, updateState } }) => {
           <div className='tag' key={tag}>
             {tag}
             <button id={tag} onClick={handleDelete}>
-              X
+              <i id={tag} onClick={handleDelete} className='fas fa-times '></i>
             </button>
           </div>
         ))}
-      <input type='text' value={inputVal} onChange={handleChange} />
-      <p>{err}</p>
-      <button onClick={handleAddTag}>add tag</button>
+      <input
+        type='text'
+        value={inputVal}
+        onChange={handleChange}
+        onKeyPress={handleKeyPress}
+      />
+      <button
+        className='add-btn'
+        onClick={
+          maxMet ? () => setErr('Tag list limited to 4 tags') : handleAddTag
+        }
+      >
+        add tag
+      </button>
+      <p className='err'>{err}</p>
     </div>
   );
 };
