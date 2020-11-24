@@ -51,9 +51,11 @@ const NavBar = () => {
         </Link> */}
         {isLoggedIn && (
           <>
-            <Link to={`${trainerExt}/schedule`} className='link'>
-              Schedule
-            </Link>
+            {isTrainer && (
+              <Link to={`${trainerExt}/schedule`} className='link'>
+                Schedule
+              </Link>
+            )}
             <Link to={`${trainerExt}/messages`} className='link'>
               Messages
             </Link>

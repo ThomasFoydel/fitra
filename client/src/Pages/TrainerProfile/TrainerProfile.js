@@ -62,7 +62,7 @@ const TrainerProfile = ({
 
   return (
     <div className='trainerprofile'>
-      {bookingSuccess && <Redirect to='/schedule' />}
+      {bookingSuccess && <Redirect to='/' />}
       {redirectToMessages && (
         <Redirect
           to={`${

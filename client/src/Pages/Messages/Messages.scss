@@ -74,23 +74,10 @@ $large: 992px;
     }
   }
   .thread {
-    // border: 1px solid white;
     max-height: 70vh;
     position: relative;
     overflow: scroll;
     border-radius: 1.5rem;
-  }
-  .background {
-    background: linear-gradient(rgba(0, 0, 0, 0.404), rgba(0, 0, 0, 0.404)),
-      url('../../imgs/sweat.jpg');
-
-    width: 100vw;
-    height: 100vh;
-    background-position: center;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: -1;
   }
   .header {
     color: white;

@@ -117,7 +117,7 @@ function App() {
           <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
           {isLoggedIn && (
             <>
-              <Route exact path='/schedule' component={Schedule} />
+              {/* <Route exact path='/schedule' component={Schedule} /> */}
               <Route exact path='/settings' component={Settings} />
               <Route exact path='/editprofile' component={EditProfile} />
               {mySocket && (
