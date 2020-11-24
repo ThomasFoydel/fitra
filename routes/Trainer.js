@@ -127,7 +127,16 @@ router.get('/dashboard', auth, (req, res) => {
 router.post('/editprofile/', auth, (req, res) => {
   let { userId } = req.tokenUser;
   let formInfo = req.body;
-  Trainer.findOneAndUpdate({ _id: userId }, formInfo, { new: true })
+  let update = {};
+  Object.keys(formInfo).forEach((key) => {
+    let trimmedValue = formInfo[key].replace(/^\s+|\s+$/gm, '');
+    if (trimmedValue && trimmedValue.length > 0) update[key] = trimmedValue;
+  });
+
+  Trainer.findOneAndUpdate({ _id: userId }, update, {
+    new: true,
+    useFindAndModify: false,
+  })
     .then((result) => res.send(result))
     .catch((err) => res.send({ err: 'database error' }));
 });

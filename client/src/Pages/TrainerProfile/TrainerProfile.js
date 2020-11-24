@@ -91,10 +91,11 @@ const TrainerProfile = ({
                   Edit Profile
                 </Link>
               )}
+              <div className='bio'>{bio}</div>
             </div>
           </div>
           <div className='section2'>
-            <div className='bio'>{bio}</div>
+            {/* <div className='bio'>{bio}</div> */}
           </div>
 
           {!belongsToCurrentUser && (

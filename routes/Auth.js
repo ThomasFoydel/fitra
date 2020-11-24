@@ -35,6 +35,7 @@ router.get('/', auth, async (req, res) => {
           profilePic,
           settings,
           tags,
+          bio,
         } = foundUser[0];
         let sortedMessages = await messageSorter(userId);
         return res.send({
@@ -47,6 +48,7 @@ router.get('/', auth, async (req, res) => {
           messages: sortedMessages,
           settings,
           tags,
+          bio,
         });
       })
       .catch((err) => {

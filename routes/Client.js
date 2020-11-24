@@ -64,7 +64,7 @@ router.post('/login', (req, res) => {
   }
   Client.findOne(
     { email: req.body.email },
-    '+password settings email name coverPic profilePic',
+    '+password settings email name coverPic profilePic bio',
     async function (err, client) {
       if (err) {
         return res.json({
@@ -75,7 +75,7 @@ router.post('/login', (req, res) => {
         if (!client) {
           return res.json({ err: 'No client found with this email' });
         }
-
+        console.log({ client });
         const passwordsMatch = await bcrypt.compare(
           req.body.password,
           client.password
@@ -100,6 +100,7 @@ router.post('/login', (req, res) => {
             coverPic: client.coverPic,
             profilePic: client.profilePic,
             settings: client.settings,
+            bio: client.bio,
             messages,
           };
           res.json({
@@ -148,6 +149,23 @@ router.get('/profile/:id', auth, async ({ params: { id } }, res) => {
   let foundUser = await Client.findById(id);
   if (foundUser) return res.send({ foundUser });
   else return res.send({ err: 'No user found' });
+});
+
+router.post('/editprofile/', auth, (req, res) => {
+  let { userId } = req.tokenUser;
+  let formInfo = req.body;
+  let update = {};
+  Object.keys(formInfo).forEach((key) => {
+    let trimmedValue = formInfo[key].replace(/^\s+|\s+$/gm, '');
+    if (trimmedValue && trimmedValue.length > 0) update[key] = trimmedValue;
+  });
+
+  Client.findOneAndUpdate({ _id: userId }, update, {
+    new: true,
+    useFindAndModify: false,
+  })
+    .then((result) => res.send(result))
+    .catch((err) => res.send({ err: 'database error' }));
 });
 
 router.get('/dashboard', auth, async (req, res) => {
@@ -227,4 +245,5 @@ router.post(
     // Trainer.find(     { $or: [{ tags: { $regex: `${term}`, $options: '$i' } }, { name: { $regex: `${term}`, $options: '$i' } },   ]}  )
   }
 );
+
 module.exports = router;

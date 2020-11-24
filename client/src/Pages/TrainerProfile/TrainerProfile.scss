@@ -3,6 +3,11 @@ $medium: 850px;
 $large: 992px;
 
 .trainerprofile {
+  .name,
+  .email,
+  .bio {
+    height: 2.5rem;
+  }
   .cover-pic {
     width: 100vw;
     height: 100%;
@@ -17,6 +22,7 @@ $large: 992px;
   }
   .info {
     margin-top: 10rem;
+    padding: 2rem 0;
     background: rgba(255, 255, 255, 0.39);
     text-align: center;
   }

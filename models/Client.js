@@ -28,6 +28,7 @@ const clientSchema = {
     type: Object,
     select: false,
   },
+  bio: String,
 };
 
 module.exports = mongoose.model('Client', clientSchema);

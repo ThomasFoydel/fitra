@@ -12,19 +12,30 @@ const EditProfile = () => {
   const [appState, updateState] = useContext(CTX);
   const { type } = appState.user;
   let { token, coverPic, profilePic, name, bio, email, id } = appState.user;
-  const [formInfo, setFormInfo] = useState({});
+  const [formInfo, setFormInfo] = useState({
+    name: name || '',
+    bio: bio || '',
+    email: email || '',
+  });
 
   const handleChange = (e) => {
     let { id, value } = e.target;
     setFormInfo({ ...formInfo, [id]: value });
   };
+  // const resetForm = () => {
+  //   setFormInfo({name: "", bio: "", email:""})
+  // }
 
   const handleSubmit = () => {
     axios
       .post(`/api/${type}/editprofile`, formInfo, {
         headers: { 'x-auth-token': token },
       })
-      .then((res) => console.log('edit profile res: ', res))
+      .then(({ data: { bio, coverPic, email, name, profilePic } }) => {
+        let filteredRes = { bio, coverPic, email, name, profilePic };
+        updateState({ type: 'EDIT_PROFILE', payload: { res: filteredRes } });
+        setFormInfo({ name: '', bio: '', email: '' });
+      })
       .catch((err) => console.log('err: ', err));
   };
   return (
@@ -41,18 +52,21 @@ const EditProfile = () => {
         id='name'
         onChange={handleChange}
         placeholder={name || 'name...'}
+        value={formInfo.name}
       />
       <input
         type='text'
         id='bio'
         onChange={handleChange}
         placeholder={bio || 'bio...'}
+        value={formInfo.bio}
       />
       <input
         type='email'
         id='email'
         onChange={handleChange}
         placeholder={email || 'email...'}
+        value={formInfo.email}
       />
       <button onClick={handleSubmit}>submit</button>
       <div className='image-uploaders'>

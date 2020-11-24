@@ -16,6 +16,7 @@ export function reducer(state, action) {
     page,
     type,
     tags,
+    res,
   } = payload || {};
   console.log('action: ', action);
   switch (action.type) {
@@ -26,6 +27,7 @@ export function reducer(state, action) {
         isLoggedIn: true,
         user: {
           id: user.id,
+          bio: user.bio,
           type: user.userType,
           name: user.name,
           email: user.email,
@@ -69,6 +71,8 @@ export function reducer(state, action) {
       return { ...state, authType: type };
     case 'CHANGE_TAGS':
       return { ...state, user: { ...state.user, tags } };
+    case 'EDIT_PROFILE':
+      return { ...state, user: { ...state.user, ...res } };
     default:
       console.log('REDUCER ERROR: action: ', action);
       // throw Error('reducer error');
