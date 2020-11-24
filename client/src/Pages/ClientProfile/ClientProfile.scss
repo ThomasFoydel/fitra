@@ -15,12 +15,14 @@
     margin-top: 10rem;
     background: rgba(255, 255, 255, 0.39);
     text-align: center;
+    padding: 2rem 0;
   }
   .profile-pic {
     width: 25rem;
     height: 25rem;
     border-radius: 20rem;
     border: 12px solid rgb(240, 240, 240);
+    background-color: rgb(240, 240, 240);
     margin-left: 50%;
     transform: translateX(-50%);
     display: block;
