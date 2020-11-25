@@ -103,7 +103,8 @@ const Schedule = ({
   return (
     <>
       <div className='schedule'>
-        <div className='background'></div>
+        <div className='background' />
+        <div className='overlay' />
         <div className='ctrl-panel'>
           <div className='min-and-max'>
             <div className='min-max'>

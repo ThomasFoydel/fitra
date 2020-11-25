@@ -1,8 +1,15 @@
 .home {
   margin-top: 5rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
   h2 {
     background: white;
     font-size: 2rem;
+    border-radius: 0.4rem;
+    padding: 0.8rem 0;
+    // text-align: center;
+    letter-spacing: 0.5rem;
   }
 
   .appointment {

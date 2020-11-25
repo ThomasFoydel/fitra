@@ -24,7 +24,8 @@ const Messages = () => {
 
   return (
     <div className='messages'>
-      <div className='background'></div>
+      <div className='background' />
+      <div className='overlay' />
       <div className='thread-section'>
         <div className='thread-list'>
           {Object.keys(messages).map((key) => (

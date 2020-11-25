@@ -20,13 +20,17 @@ const Home = () => {
     return () => (subscribed = false);
   }, []);
   return (
-    <div className='home center'>
-      <h2>schedule</h2>
-      <div className='appts'>
-        {appts &&
-          appts.map((appt) => <Appointment appt={appt} key={appt._id} />)}
+    <>
+      <div className='background' />
+      <div className='overlay' />
+      <div className='home'>
+        <h2>schedule</h2>
+        <div className='appts'>
+          {appts &&
+            appts.map((appt) => <Appointment appt={appt} key={appt._id} />)}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

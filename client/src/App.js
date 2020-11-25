@@ -9,7 +9,7 @@ import NavBar from 'Components/NavBar/NavBar';
 import LandingPage from 'Pages/LandingPage/LandingPage';
 import Home from 'Pages/Home/Home';
 import Settings from 'Pages/Settings/Settings';
-import Schedule from 'Pages/Schedule/Schedule';
+// import Schedule from 'Pages/ScheduleCURRENTLYUNUSED/Schedule';
 import Trainers from 'Pages/Trainers/Trainers';
 import Messages from 'Pages/Messages/Messages';
 import TrainerProfile from 'Pages/TrainerProfile/TrainerProfile';

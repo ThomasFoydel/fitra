@@ -12,7 +12,6 @@ const Image = ({ name, src }) => {
       src={loading ? loadingGif : src}
       onError={(err) => setErr(true)}
       onLoad={(e) => {
-        console.log({ e });
         setTimeout(() => {
           setLoading(false);
         }, 200);

@@ -4,8 +4,11 @@ import { Link, Redirect } from 'react-router-dom';
 import './NavBar.scss';
 import { CTX } from 'context/Store';
 import MobileNavBar from './MobileNavBar';
+import { useLocation } from 'react-router-dom';
 
 const NavBar = () => {
+  const location = useLocation();
+  console.log(location.pathname);
   const [appState, updateState] = useContext(CTX);
   const { isLoggedIn, user } = appState;
   const [redirect, setRedirect] = useState(false);
@@ -89,3 +92,7 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+// var parseLocation = (loc)=>{
+//   if (loc.substring())
+// }
