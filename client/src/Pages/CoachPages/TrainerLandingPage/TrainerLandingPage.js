@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import IntroMessage from 'Components/IntroMessage/IntroMessage';
-import Auth from 'Components/Auth/Auth';
-
+// import IntroMessage from 'Components/IntroMessage/IntroMessage';
+// import Auth from 'Components/Auth/Auth';
+import yogatrainer from 'imgs/yogacoach.jpg';
 import './TrainerLandingPage.scss';
 import { CTX } from 'context/Store';
 import { Redirect } from 'react-router-dom';
@@ -29,11 +29,19 @@ const TrainerLandingPage = () => {
     updateState({ type: 'TOGGLE_AUTH' });
   };
   return (
-    <div className='coachportal'>
+    <div className='trainer-landingpage'>
+      {/* <div className='landing-background'></div> */}
+      <img src={yogatrainer} alt='yoga coach' className='landing-background' />
+      <div className='overlay'></div>
       {isLoggedIn && <Redirect to='/coachportal/home' />}
-      <h1>trainer landing page</h1>
-
-      <button onClick={openAuth}>Login / Register</button>
+      <h2 className='heading'>
+        STREAMLINE
+        <br />
+        YOUR
+        <br />
+        WORKFLOW
+        <button onClick={openAuth}>Get Started</button>
+      </h2>
     </div>
   );
 };

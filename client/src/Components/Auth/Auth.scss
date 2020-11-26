@@ -1,3 +1,7 @@
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
 .auth {
   z-index: 3;
   width: 100%;
@@ -29,7 +33,7 @@ h2 {
   justify-content: center;
   width: 50%;
   min-width: 32rem;
-  top: 20rem;
+  top: 10rem;
   margin-left: 50%;
   text-align: center;
 
@@ -72,7 +76,7 @@ h2 {
   }
   input {
     height: 2.8rem;
-    width: 80%;
+    width: 75%;
     margin-bottom: 0.3rem;
     border-radius: 0.2rem;
     border: 1px solid rgba(255, 0, 0, 0);

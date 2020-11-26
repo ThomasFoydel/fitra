@@ -1,0 +1,56 @@
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
+.trainer-landingpage {
+  position: relative;
+  height: 80vh;
+  min-height: 50rem;
+  .landing-background {
+    background: linear-gradient(rgba(0, 0, 0, 0.307), rgba(0, 0, 0, 0.525)),
+      url('../../../imgs/yogacoach.jpg');
+    object-fit: contain;
+    width: 80vw;
+    height: 80vh;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    margin-top: 0rem;
+    z-index: -1;
+    left: 50%;
+    transform: translateX(-50%);
+    min-height: 50rem;
+  }
+  .heading {
+    text-align: center;
+    font-size: 4rem;
+    line-height: 5.5rem;
+    letter-spacing: 0.2rem;
+    width: 80%;
+    color: rgba(255, 255, 255, 0.8);
+    left: 50%;
+    transform: scaleY(1.15) translateX(-50%);
+    position: absolute;
+    bottom: 1rem;
+  }
+  button {
+    transform: translateX(-50%);
+    margin-left: 50%;
+    padding: 1.4rem 2rem;
+    display: block;
+    margin-bottom: 5rem;
+    border-radius: 0.8rem;
+    border: none;
+    background: rgb(17, 0, 0);
+    color: rgb(201, 201, 201);
+    font-weight: bold;
+    font-size: 1.7rem;
+    transition: all 0.1s ease;
+    letter-spacing: 0.2rem;
+    &:hover {
+      background: rgb(199, 10, 10);
+      color: black;
+      //   text-decoration: underline;
+    }
+  }
+}

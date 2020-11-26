@@ -1,3 +1,7 @@
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
 .landing-page {
   display: flex;
   flex-direction: column;
@@ -15,6 +19,11 @@
     line-height: 12rem;
     color: white;
     text-align: center;
+    padding: 0 2rem;
+    line-height: 10rem;
+    @media screen and (max-width: $medium) {
+      font-size: 7rem;
+    }
   }
 
   .trainers-link {
