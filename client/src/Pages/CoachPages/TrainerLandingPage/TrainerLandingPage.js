@@ -25,6 +25,7 @@ const TrainerLandingPage = () => {
   }, []);
 
   const openAuth = () => {
+    updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page: 'register' } });
     updateState({ type: 'CHANGE_AUTH_TYPE', payload: { type: 'trainer' } });
     updateState({ type: 'TOGGLE_AUTH' });
   };
@@ -32,7 +33,7 @@ const TrainerLandingPage = () => {
     <div className='trainer-landingpage'>
       {/* <div className='landing-background'></div> */}
       <img src={yogatrainer} alt='yoga coach' className='landing-background' />
-      <div className='overlay'></div>
+      <div className='overlay trainer-overlay'></div>
       {isLoggedIn && <Redirect to='/coachportal/home' />}
       <h2 className='heading'>
         STREAMLINE

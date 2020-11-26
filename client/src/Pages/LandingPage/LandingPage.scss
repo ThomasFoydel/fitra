@@ -21,8 +21,13 @@ $large: 992px;
     text-align: center;
     padding: 0 2rem;
     line-height: 10rem;
+
     @media screen and (max-width: $medium) {
       font-size: 7rem;
+    }
+    @media screen and (max-width: $small) {
+      font-size: 5rem;
+      line-height: 9rem;
     }
   }
 
