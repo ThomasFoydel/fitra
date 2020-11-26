@@ -45,7 +45,7 @@ const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
   return (
     <div className='register'>
       <button className='closeauth-btn' onClick={() => setAuthOpen(false)}>
-        close
+        <i className='fas fa-times fa-3x close-btn'></i>
       </button>
 
       <h2>{trainer && 'Trainer '}Register</h2>
@@ -71,18 +71,17 @@ const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
         onChange={handleChange}
         onKeyPress={handleKeyDown}
       />
-      <p>
-        by registering, you agree to our{' '}
-        <a target='_blank' href='/terms-of-use'>
-          Terms Of Use
-        </a>
-      </p>
+      <p>by registering, you agree to our </p>
+
+      <a target='_blank' href='/terms-of-use'>
+        Terms Of Use
+      </a>
 
       <button className='submit-btn' onClick={handleSubmit}>
         Submit
       </button>
       <button className='signin-btn' onClick={() => setCurrentShow('login')}>
-        Sign in
+        I already have an account
       </button>
       <p className='error-msg'>{errorMessage}</p>
       <AuthPageToggle />
