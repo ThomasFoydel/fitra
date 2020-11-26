@@ -21,14 +21,15 @@ const Messages = () => {
     if (scrollRef.current)
       scrollRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [messages, currentThread]);
-
+  let messageKeys = Object.keys(messages);
   return (
     <div className='messages'>
       <div className='background' />
       <div className='overlay' />
       <div className='thread-section'>
+        {messageKeys.length === 0 && <div className='no-msg'>no messages</div>}
         <div className='thread-list'>
-          {Object.keys(messages).map((key) => (
+          {messageKeys.map((key) => (
             <ThreadListItem
               user={key}
               key={key}

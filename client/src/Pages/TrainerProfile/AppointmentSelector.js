@@ -169,10 +169,10 @@ const AppointmentSelector = ({
     if (belongsToCurrentUser) return setErr("you can't book yourself!");
     if (!minMet)
       return setErr(`minimum time for booking is ${minimum * 60} minutes`);
-    console.log({ selection });
+    // console.log({ selection });
     let startTime = selection[0].hourDate.toUTCString();
     let endTime = selection[selection.length - 1].hourDate.toUTCString();
-    console.log({ startTime, endTime });
+    // console.log({ startTime, endTime });
     let token = localStorage.getItem('fitr-token');
     axios
       .post(
@@ -203,7 +203,7 @@ const AppointmentSelector = ({
   const handlePayPalOpen = () => {
     isLoggedIn ? setPayPalOpen(true) : showRegister();
   };
-
+  console.log(rate * selection.length);
   return (
     <div className='appointmentselector'>
       <div className='ctrls'>
@@ -343,7 +343,7 @@ const AppointmentSelector = ({
         <PayPal
           props={{
             desc: `Booking ${name} for ${startTime} - ${endTime}`,
-            price: 50,
+            price: rate * selection.length,
             complete: handleBooking,
             setPayPalOpen,
           }}

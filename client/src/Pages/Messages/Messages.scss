@@ -111,6 +111,13 @@ $large: 992px;
       width: 78%;
     }
   }
+  .no-msg {
+    width: 100%;
+    text-align: center;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+  }
   .close-btn {
     position: absolute;
     right: 0;

@@ -15,6 +15,7 @@ const rateSchema = new mongoose.Schema({
   amount: Number,
   currency: String,
 });
+
 const trainerSchema = {
   name: {
     type: String,
