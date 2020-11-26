@@ -48,7 +48,7 @@ const ClientProfile = ({
       >
         <div className='info'>
           <Image src={`/api/image/${profilePic}`} name='profile-pic' />
-          <div>
+          <div className='section-1'>
             <div className='name'>{name}</div>
             <div className='bio'>{bio}</div>
             <div className='email'>{email}</div>

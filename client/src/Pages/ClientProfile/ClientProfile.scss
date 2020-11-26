@@ -11,11 +11,23 @@
     padding-top: 2rem;
     overflow: scroll;
   }
+  .email,
+  .bio {
+    height: 2.5rem;
+    font-size: 1.5rem;
+  }
+  .name {
+    height: 3.5rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 0.4rem;
+  }
   .info {
     margin-top: 10rem;
     background: rgba(255, 255, 255, 0.39);
     text-align: center;
     padding: 2rem 0;
+    height: 40rem;
   }
   .profile-pic {
     width: 25rem;
@@ -28,9 +40,19 @@
     display: block;
   }
   .link {
-    color: rgb(240, 240, 240);
+    text-decoration: none;
+    background: rgba(230, 230, 230, 0.767);
+    padding: 0.4rem;
+    border-radius: 0.3rem;
+    color: rgb(18, 65, 221);
     &:hover {
       color: rgb(204, 204, 204);
+      background: rgb(18, 65, 221);
     }
   }
+  // .section-1 {
+  //   div {
+  //     height: 2rem;
+  //   }
+  // }
 }

@@ -81,17 +81,17 @@ const TrainerProfile = ({
               : '',
           }}
         >
-          <div className='section1'>
-            <div className='info'>
-              <Image src={`/api/image/${profilePic}`} name='profile-pic' />
+          <div className='info'>
+            <Image src={`/api/image/${profilePic}`} name='profile-pic' />
+            <div className='section-1'>
               <div className='name'>{name}</div>
               <div className='email'>{email}</div>
+              <div className='bio'>{bio}</div>
               {belongsToCurrentUser && (
-                <Link to={`/coachportal/editprofile`} className='link'>
+                <Link to={`/coachportal/editprofile`} className='link '>
                   Edit Profile
                 </Link>
               )}
-              <div className='bio'>{bio}</div>
             </div>
           </div>
           <div className='section2'>
