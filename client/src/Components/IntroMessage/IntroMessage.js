@@ -61,7 +61,6 @@ const IntroMessage = ({ id, toggle }) => {
         rows='10'
       ></textarea>
       {complete && <p>message sent!</p>}
-      <button onClick={() => console.log(appState.messages)}>LOG!</button>
       <button onClick={handleSubmit}>send</button>
     </div>
   );
