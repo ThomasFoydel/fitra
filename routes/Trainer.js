@@ -98,6 +98,7 @@ router.post('/login', (req, res) => {
             settings: user.settings,
             messages,
             id: user._id,
+            tags: user.tags,
           };
           res.json({
             status: 'success',

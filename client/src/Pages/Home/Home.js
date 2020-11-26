@@ -19,12 +19,13 @@ const Home = () => {
       .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
   }, []);
+  console.log({ type });
   return (
     <>
       <div className='background' />
       <div className='overlay' />
       <div className='home'>
-        <h2>schedule</h2>
+        <h2>{type === 'trainer' ? 'appointments' : 'schedule'}</h2>
         <div className='appts'>
           {appts &&
             appts.map((appt) => <Appointment appt={appt} key={appt._id} />)}
