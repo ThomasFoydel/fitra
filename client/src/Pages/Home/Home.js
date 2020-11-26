@@ -39,7 +39,9 @@ const Appointment = ({ appt }) => {
   let { startTime, endTime, _id, client, trainer } = appt;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
+  // todo: account for dates being stored as GMT, and currentTime being in localTime
   let currentTime = new Date(Date.now());
+
   let started = currentTime > startDate;
   let ended = currentTime > endDate;
   let active = started && !ended;
@@ -59,10 +61,12 @@ const Appointment = ({ appt }) => {
       <div className='start-time'>
         <strong>start: </strong>
         {startDate.toUTCString()}
+        {/* {startDate.toDateString()} {startDate.toLocaleTimeString()} */}
       </div>
       <div className='end-time'>
         <strong>end: </strong>
         {endDate.toUTCString()}
+        {/* {endDate.toDateString()} {endDate.toLocaleTimeString()} */}
       </div>
       {active && <Link to={`/connect/${_id}`}>connect</Link>}
     </div>

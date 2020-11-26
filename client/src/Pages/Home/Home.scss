@@ -4,11 +4,10 @@
   transform: translateX(-50%);
   text-align: center;
   h2 {
-    background: white;
+    background: rgb(233, 233, 233);
     font-size: 2rem;
     border-radius: 0.4rem;
     padding: 0.8rem 0;
-    // text-align: center;
     letter-spacing: 0.5rem;
   }
 
@@ -22,15 +21,18 @@
       width: 3rem;
       height: 3rem;
       border-radius: 25rem;
+      border: 2px solid #f0f0f0;
     }
   }
   .ended {
-    background: rgba(140, 138, 164, 0.705);
+    background: rgba(186, 194, 218, 0.705);
   }
   .active {
-    background: rgb(30, 248, 194);
+    background: rgb(15, 15, 15);
+    color: rgb(30, 248, 194);
+    border: solid 1px rgb(30, 248, 194);
   }
   .not-started {
-    background: rgb(255, 255, 255);
+    background: rgb(155, 223, 206);
   }
 }

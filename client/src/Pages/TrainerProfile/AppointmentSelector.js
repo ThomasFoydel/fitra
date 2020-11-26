@@ -343,7 +343,8 @@ const AppointmentSelector = ({
         <PayPal
           props={{
             desc: `Booking ${name} for ${startTime} - ${endTime}`,
-            price: rate * selection.length,
+            // price: rate * selection.length,
+            price: 50,
             complete: handleBooking,
             setPayPalOpen,
           }}
