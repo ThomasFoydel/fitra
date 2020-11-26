@@ -8,10 +8,15 @@ $large: 992px;
 
   background: linear-gradient(rgba(0, 0, 0, 0.747), rgba(0, 0, 0, 0.57)),
     url('../../imgs/weights.jpg');
-  height: 100vh;
+  max-height: 100vh;
+  min-height: 100vh;
   background-size: cover;
   background-position: center;
+  position: absolute;
   align-items: center;
+  overflow: hidden;
+  width: 100vw;
+  top: 0;
 
   .landing-title {
     opacity: 0.5;
@@ -21,6 +26,7 @@ $large: 992px;
     text-align: center;
     padding: 0 2rem;
     line-height: 10rem;
+    margin-top: 12rem;
 
     @media screen and (max-width: $medium) {
       font-size: 7rem;
