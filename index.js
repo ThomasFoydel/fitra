@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 const jwt = require('jsonwebtoken');
 const util = require('./util/util');
 const { sendReminders } = util;

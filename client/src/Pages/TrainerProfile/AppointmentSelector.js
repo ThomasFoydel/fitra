@@ -51,6 +51,8 @@ const AppointmentSelector = ({
     }
   };
 
+  console.log('booked times: ', bookedTimes);
+
   const handleGridClick = (e) => {
     let { day, hour } = JSON.parse(e.target.id);
     let dayIndex = days.indexOf(day);
@@ -143,6 +145,7 @@ const AppointmentSelector = ({
   };
 
   useEffect(() => {
+    console.log({ selection });
     let subscribed = true;
     if (subscribed) setMinMet(minimum <= selection.length);
     return () => (subscribed = false);
@@ -169,9 +172,9 @@ const AppointmentSelector = ({
     if (belongsToCurrentUser) return setErr("you can't book yourself!");
     if (!minMet)
       return setErr(`minimum time for booking is ${minimum * 60} minutes`);
-    // console.log({ selection });
+
     let startTime = selection[0].hourDate.toUTCString();
-    let endTime = selection[selection.length - 1].hourDate.toUTCString();
+    let endTime = selection[selection.length].hourDate.toUTCString();
     // console.log({ startTime, endTime });
     let token = localStorage.getItem('fitr-token');
     axios

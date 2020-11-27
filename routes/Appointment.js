@@ -40,6 +40,12 @@ router.post(
       let blockedTimeIsBetween =
         new Date(a.startDate) >= rStart && new Date(a.endDate) <= rEnd;
       if (startIsBetween || endIsBetween || blockedTimeIsBetween) {
+        console.log('AVAILABILITY block true: ');
+        console.log('start: ', rStart);
+        console.log('end: ', rEnd);
+        console.log({ startIsBetween });
+        console.log({ endIsBetween });
+        console.log({ blockedTimeIsBetween });
         timeBlocked = true;
       }
     });
@@ -48,6 +54,12 @@ router.post(
       let endIsBetween = rEnd >= t.startTime && rEnd <= t.endTime;
       let blockedTimeIsBetween = t.startTime >= rStart && t.endTime <= rEnd;
       if (startIsBetween || endIsBetween || blockedTimeIsBetween) {
+        console.log('APPOINTMENT block true: ');
+        console.log('start: ', rStart);
+        console.log('end: ', rEnd);
+        console.log({ startIsBetween });
+        console.log({ endIsBetween });
+        console.log({ blockedTimeIsBetween });
         timeBlocked = true;
       }
     });

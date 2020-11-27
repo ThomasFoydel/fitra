@@ -227,7 +227,6 @@ router.post(
     if (!foundTrainer) return res.send({ err: 'User not found' });
     if (foundTrainer.tags.indexOf(value) > -1)
       return res.send({ err: 'Tag duplicate' });
-    console.log(foundTrainer.tags.length);
     if (foundTrainer.tags.length >= 4)
       return res.send({ err: 'Tag list limited to 4 tags' });
     Trainer.findOneAndUpdate(

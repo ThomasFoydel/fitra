@@ -5,7 +5,6 @@ const Trainer = require('../models/Trainer');
 // const nodemailer = require('nodemailer');
 
 const messageSorter = async (userId) => {
-  console.log({ userId });
   let sortedMessages = {};
   const messages = await Message.find({
     participants: { $in: [userId] },

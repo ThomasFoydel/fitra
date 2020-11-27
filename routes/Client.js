@@ -10,7 +10,6 @@ const Appointment = require('../models/Appointment');
 const Message = require('../models/Message');
 const util = require('../util/util');
 const mongoose = require('mongoose');
-const { query } = require('express');
 const { messageSorter } = util;
 
 router.post('/register', async (req, res) => {
@@ -75,7 +74,6 @@ router.post('/login', (req, res) => {
         if (!client) {
           return res.json({ err: 'No client found with this email' });
         }
-        console.log({ client });
         const passwordsMatch = await bcrypt.compare(
           req.body.password,
           client.password
@@ -133,7 +131,6 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
     return res.send({ err: 'No user found' });
   }
   let trainer = await Trainer.findById(trainerId);
-  console.log({ trainer });
   let foundAppointments = await Appointment.find({
     trainer: trainer._id,
   }).select('-roomId -createdAt -updatedAt -status -client -trainer -order');
@@ -198,18 +195,8 @@ router.get('/messages', auth, async (req, res) => {
   });
   res.send({ messages: sortedMessages });
 });
-// const privateMessagesArray = await PrivateMessage.find({
-//   $and: [
-//     { participants: { $in: [friendId] } },
-//     { participants: { $in: [message.senderId] } }
-//   ]
-// })
 
 router.get('/info/:id', auth, async (req, res) => {
-  // Client.findById(req.params.id)
-  // .then((user) => res.send({ user }))
-  // .catch((err) => res.send({ err }));
-
   let foundUser;
 
   Client.findById(req.params.id)
