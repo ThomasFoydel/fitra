@@ -8,7 +8,6 @@ const Client = require('../models/Client');
 router.get('/:id', auth, async (req, res) => {
   let { id } = req.params;
   const foundClient = await Client.findById(id);
-  console.log({ foundClient });
   if (foundClient) res.send({ user: foundClient });
   else {
     const foundTrainer = await Trainer.findById(id);

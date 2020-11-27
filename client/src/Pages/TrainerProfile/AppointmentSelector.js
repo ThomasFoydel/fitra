@@ -51,7 +51,7 @@ const AppointmentSelector = ({
     }
   };
 
-  console.log('booked times: ', bookedTimes);
+  // console.log('booked times: ', bookedTimes);
 
   const handleGridClick = (e) => {
     let { day, hour } = JSON.parse(e.target.id);
@@ -174,8 +174,13 @@ const AppointmentSelector = ({
       return setErr(`minimum time for booking is ${minimum * 60} minutes`);
 
     let startTime = selection[0].hourDate.toUTCString();
-    let endTime = selection[selection.length].hourDate.toUTCString();
-    // console.log({ startTime, endTime });
+    // let endTime = selection[selection.length - 1].hourDate.toUTCString();
+    let endTimeDate = new Date(
+      selection[selection.length - 1].hourDate.getTime()
+    );
+    endTimeDate.setMinutes(endTimeDate.getMinutes() + 30);
+    let endTime = endTimeDate.toUTCString();
+
     let token = localStorage.getItem('fitr-token');
     axios
       .post(
@@ -206,7 +211,7 @@ const AppointmentSelector = ({
   const handlePayPalOpen = () => {
     isLoggedIn ? setPayPalOpen(true) : showRegister();
   };
-  console.log(rate * selection.length);
+  // console.log(rate * selection.length);
   return (
     <div className='appointmentselector'>
       <div className='ctrls'>

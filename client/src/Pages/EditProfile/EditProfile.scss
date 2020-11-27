@@ -11,6 +11,7 @@ $large: 992px;
   width: 80%;
   margin-left: 50%;
   transform: translateX(-50%);
+  padding-bottom: 2rem;
   .edit-pic {
     width: 30rem;
     height: 30rem;
@@ -41,7 +42,6 @@ $large: 992px;
     border-radius: 0.3rem;
     color: rgb(18, 65, 221);
     margin-bottom: 1rem;
-    font-weight: bold;
     &:hover {
       color: rgb(204, 204, 204);
       background: rgb(18, 65, 221);
