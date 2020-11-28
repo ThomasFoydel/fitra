@@ -8,6 +8,7 @@ import NavBar from 'Components/NavBar/NavBar';
 
 import LandingPage from 'Pages/LandingPage/LandingPage';
 import Home from 'Pages/Home/Home';
+import TrainerHome from 'Pages/CoachPages/TrainerHome/TrainerHome';
 import Settings from 'Pages/Settings/Settings';
 // import Schedule from 'Pages/ScheduleCURRENTLYUNUSED/Schedule';
 import Trainers from 'Pages/Trainers/Trainers';
@@ -33,7 +34,7 @@ function App() {
   const [appState, updateState] = useContext(CTX);
   let { isLoggedIn, user, showAuth } = appState;
   // const [authOpen, setAuthOpen] = useState(false);
-  const [currentShow, setCurrentShow] = useState('login');
+  // const [currentShow, setCurrentShow] = useState('login');
   const [mySocket, setMySocket] = useState(null);
 
   let socket;
@@ -106,11 +107,13 @@ function App() {
             path='/'
             component={() => (isLoggedIn ? <Home /> : <LandingPage />)}
           />
-          <Route
-            exact
-            path='/coachportal'
-            component={isLoggedIn ? Home : TrainerLandingPage}
-          />
+          {user.type === 'trainer' && (
+            <Route
+              exact
+              path='/coachportal'
+              component={isLoggedIn ? TrainerHome : TrainerLandingPage}
+            />
+          )}
 
           <Route exact path='/terms-of-use' component={TermsOfUse} />
           <Route exact path='/trainers' component={Trainers} />
