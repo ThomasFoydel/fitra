@@ -69,6 +69,7 @@ const Appointment = ({ appt }) => {
         {/* {endDate.toDateString()} {endDate.toLocaleTimeString()} */}
       </div>
       {active && <Link to={`/connect/${_id}`}>connect</Link>}
+      {ended && <Link to={`/review/${_id}`}>review</Link>}
     </div>
   );
 };

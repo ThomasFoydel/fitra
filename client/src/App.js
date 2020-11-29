@@ -20,6 +20,7 @@ import ManageAppt from 'Pages/CoachPages/ManageAppt/ManageAppt';
 import TrainerSettings from 'Pages/CoachPages/Settings/Settings';
 import TrainerSchedule from 'Pages/CoachPages/Schedule/ScheduleContainer';
 import ClientProfile from 'Pages/ClientProfile/ClientProfile';
+import SessionReview from 'Pages/SessionReview/SessionReview';
 
 import TermsOfUse from 'Pages/TermsOfUse/TermsOfUse';
 
@@ -123,6 +124,11 @@ function App() {
               {/* <Route exact path='/schedule' component={Schedule} /> */}
               <Route exact path='/settings' component={Settings} />
               <Route exact path='/editprofile' component={EditProfile} />
+              <Route
+                exact
+                path='/review/:sessionId'
+                component={SessionReview}
+              />
               {mySocket && (
                 <>
                   <Route
