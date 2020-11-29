@@ -3,7 +3,7 @@ import { Rnd } from 'react-rnd';
 import { days, halfHours } from '../../../util/util';
 import { Link } from 'react-router-dom';
 
-const Appt = ({ props: { data, inCurrentWeek } }) => {
+const Session = ({ props: { data, inCurrentWeek } }) => {
   let invisible = !inCurrentWeek;
 
   let t = halfHours.indexOf(data.start);
@@ -39,4 +39,4 @@ const Appt = ({ props: { data, inCurrentWeek } }) => {
   );
 };
 
-export default Appt;
+export default Session;

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const appointmentSchema = new Schema(
+const sessionSchema = new Schema(
   {
     trainer: { type: String, required: true },
     client: { type: String, required: true },
@@ -14,4 +14,4 @@ const appointmentSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Appointment', appointmentSchema);
+module.exports = mongoose.model('Session', sessionSchema);

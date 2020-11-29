@@ -2,9 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
-import './ManageAppt.scss';
+import './ManageSession.scss';
 import { Redirect } from 'react-router-dom';
-const ManageAppt = ({
+const ManageSession = ({
   match: {
     params: { id },
   },
@@ -30,13 +30,13 @@ const ManageAppt = ({
   useEffect(() => {
     let subscribed = true;
     axios
-      .get(`/api/trainer/appointment/${id}`, {
+      .get(`/api/trainer/session/${id}`, {
         headers: { 'x-auth-token': token },
       })
-      .then(({ data: { foundAppointment, err, foundClient } }) => {
+      .then(({ data: { foundSession, err, foundClient } }) => {
         if (subscribed)
           if (err) setErr(err);
-          else setFound({ appt: foundAppointment, client: foundClient });
+          else setFound({ session: foundSession, client: foundClient });
       });
     return () => (subscribed = false);
   }, []);
@@ -44,7 +44,7 @@ const ManageAppt = ({
   const handleCancel = () => {
     axios
       .post(
-        `/api/trainer/cancel-appointment/`,
+        `/api/trainer/cancel-session/`,
         { id },
         {
           headers: { 'x-auth-token': token },
@@ -57,16 +57,16 @@ const ManageAppt = ({
       .catch((err) => console.log({ err }));
   };
 
-  let start = found && new Date(found.appt.startTime);
-  let end = found && new Date(found.appt.endTime);
+  let start = found && new Date(found.session.startTime);
+  let end = found && new Date(found.session.endTime);
   return (
-    <div className='manage-appt'>
+    <div className='manage-session'>
       {deleted && <Redirect to='/coachportal/schedule' />}
       {found && (
         <>
           <img
             className='profile-pic'
-            src={`/api/image/user/profilePic/${found.appt.client}`}
+            src={`/api/image/user/profilePic/${found.session.client}`}
           />
           <Link to={`/user/${found.client._id}`}>
             <div className='name'>{found.client.name}</div>
@@ -75,12 +75,10 @@ const ManageAppt = ({
           <div className='date'>{start && start.toDateString()}</div>
           <div className='start'>start: {start && start.toTimeString()}</div>
           <div className='end'>end: {end && end.toTimeString()}</div>
-          <button onClick={() => setOpenCancel(true)}>
-            cancel appointment
-          </button>
+          <button onClick={() => setOpenCancel(true)}>cancel session</button>
           {openCancel && (
             <div className='cancel'>
-              <p>cancel this appointment?</p>
+              <p>cancel this session?</p>
               <button onClick={handleCancel}>confirm</button>
               <button onClick={() => setOpenCancel(false)}>close</button>
             </div>
@@ -91,4 +89,4 @@ const ManageAppt = ({
   );
 };
 
-export default ManageAppt;
+export default ManageSession;

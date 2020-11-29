@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom';
 const Schedule = () => {
   const [appState, updateState] = useContext(CTX);
   const { type } = appState.user;
-  const [appts, setAppts] = useState([]);
+  const [sessions, setFoundSessions] = useState([]);
   let { token } = appState.user;
   useEffect(() => {
     let subscribed = true;
     axios
       .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
-      .then(({ data: { appointments } }) => {
-        if (subscribed) setAppts(appointments);
+      .then(({ data: { sessions } }) => {
+        if (subscribed) setFoundSessions(sessions);
       })
       .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
@@ -28,17 +28,19 @@ const Schedule = () => {
 
       <div className='home center'>
         <h2>schedule</h2>
-        <div className='appts'>
-          {appts &&
-            appts.map((appt) => <Appointment appt={appt} key={appt._id} />)}
+        <div className='sessions'>
+          {sessions &&
+            sessions.map((session) => (
+              <Session session={session} key={session._id} />
+            ))}
         </div>
       </div>
     </div>
   );
 };
 
-const Appointment = ({ appt }) => {
-  let { startTime, endTime, _id, client, trainer } = appt;
+const Session = ({ session }) => {
+  let { startTime, endTime, _id, client, trainer } = session;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
   let currentTime = new Date(Date.now());
@@ -48,7 +50,7 @@ const Appointment = ({ appt }) => {
 
   return (
     <div
-      className={`appointment 
+      className={`session 
       ${ended && ' ended '}
       ${active && ' active '} 
       ${!started && ' not-started '} 

@@ -2,14 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import Schedule from './Schedule';
 import axios from 'axios';
 import { CTX } from 'context/Store';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { getHalfHourFromDate, days } from '../../../util/util';
 
 const ScheduleContainer = () => {
   const [appState, updateState] = useContext(CTX);
   let { token } = appState.user;
   const [entries, setEntries] = useState(null);
-  const [appointments, setAppointments] = useState(null);
+  const [sessions, setSessions] = useState(null);
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(3);
   const [err, setErr] = useState('');
@@ -27,15 +27,15 @@ const ScheduleContainer = () => {
     let subscribed = true;
     axios
       .get('/api/trainer/schedule/', { headers: { 'x-auth-token': token } })
-      .then(({ data: { entries, min, max, foundAppts } }) => {
-        if (foundAppts) {
-          let appts = [];
-          foundAppts.forEach(({ client, startTime, endTime, _id }) => {
+      .then(({ data: { entries, min, max, foundSessions } }) => {
+        if (foundSessions) {
+          let sessions = [];
+          foundSessions.forEach(({ client, startTime, endTime, _id }) => {
             if (typeof startTime === 'string') startTime = new Date(startTime);
             let day = days[startTime.getDay()];
             let startHour = getHalfHourFromDate(startTime);
             let endHour = getHalfHourFromDate(endTime);
-            let newAppt = {
+            let newSession = {
               startDate: startTime,
               endDate: endTime,
               start: startHour,
@@ -44,12 +44,12 @@ const ScheduleContainer = () => {
               title: '',
               recurring: false,
               id: _id,
-              appt: true,
+              session: true,
               client,
             };
-            appts.push(newAppt);
+            sessions.push(newSession);
           });
-          setAppointments(appts);
+          setSessions(sessions);
         }
         if (subscribed) {
           setEntries(entries);
@@ -101,8 +101,8 @@ const ScheduleContainer = () => {
             change: handleChange,
             entries,
             err,
-            appointments,
-            setAppointments,
+            sessions,
+            setSessions,
           }}
         />
       )}

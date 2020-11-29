@@ -16,7 +16,7 @@ import Messages from 'Pages/Messages/Messages';
 import TrainerProfile from 'Pages/TrainerProfile/TrainerProfile';
 import Connect from 'Pages/Connect/Connect';
 import EditProfile from 'Pages/EditProfile/EditProfile';
-import ManageAppt from 'Pages/CoachPages/ManageAppt/ManageAppt';
+import ManageSession from 'Pages/CoachPages/ManageSession/ManageSession';
 import TrainerSettings from 'Pages/CoachPages/Settings/Settings';
 import TrainerSchedule from 'Pages/CoachPages/Schedule/ScheduleContainer';
 import ClientProfile from 'Pages/ClientProfile/ClientProfile';
@@ -174,7 +174,7 @@ function App() {
               <Route
                 exact
                 path='/coachportal/manage/:id'
-                component={({ match }) => <ManageAppt match={match} />}
+                component={({ match }) => <ManageSession match={match} />}
               />
             </>
           )}

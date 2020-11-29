@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
-const Appointment = require('../models/Appointment');
+const Session = require('../models/Session');
 const mongoose = require('mongoose');
 
 const util = require('../util/util');
@@ -118,9 +118,9 @@ router.post('/login', (req, res) => {
 
 router.get('/dashboard', auth, (req, res) => {
   let { userId } = req.tokenUser;
-  Appointment.find({ trainer: userId })
+  Session.find({ trainer: userId })
     .select('-roomId')
-    .then((appointments) => res.send({ appointments }))
+    .then((sessions) => res.send({ sessions }))
     .catch((err) => res.send('Database error'));
   //res.send(result)
 });
@@ -147,10 +147,10 @@ router.get('/schedule/', auth, async (req, res) => {
   let foundTrainer = await Trainer.findById(userId);
   let entries = foundTrainer.availability || [];
 
-  let foundAppts = await Appointment.find({ trainer: userId });
+  let foundSessions = await Session.find({ trainer: userId });
 
   let { minimum, maximum } = foundTrainer || {};
-  res.send({ entries, min: minimum, max: maximum, foundAppts });
+  res.send({ entries, min: minimum, max: maximum, foundSessions });
 });
 
 router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
@@ -199,24 +199,24 @@ router.post('/rate/', auth, async ({ tokenUser, body }, res) => {
     .catch((err) => res.send({ err }));
 });
 
-router.get('/appointment/:id', auth, async ({ params: { id } }, res) => {
+router.get('/session/:id', auth, async ({ params: { id } }, res) => {
   let _id;
   try {
     _id = new mongoose.Types.ObjectId(id);
   } catch (err) {
     // mongo id cast error, user's using incorrect url
-    return res.send({ err: 'No appointment found' });
+    return res.send({ err: 'No session found' });
   }
-  let foundAppointment = await Appointment.findById(_id).select('-roomId');
-  if (!foundAppointment) return res.send({ err: 'No appointment found' });
-  let foundClient = await Client.findById(foundAppointment.client);
-  return res.send({ foundAppointment, foundClient });
+  let foundSession = await Session.findById(_id).select('-roomId');
+  if (!foundSession) return res.send({ err: 'No session found' });
+  let foundClient = await Client.findById(foundSession.client);
+  return res.send({ foundSession, foundClient });
 });
 
-router.post('/cancel-appointment/', auth, async ({ body: { id } }, res) => {
-  let deletedAppointment = await Appointment.findByIdAndDelete(id);
-  if (deletedAppointment) res.send({ id: deletedAppointment.id });
-  else res.send({ err: 'No appointment found' });
+router.post('/cancel-session/', auth, async ({ body: { id } }, res) => {
+  let deletedSession = await Session.findByIdAndDelete(id);
+  if (deletedSession) res.send({ id: deletedSession.id });
+  else res.send({ err: 'No session found' });
 });
 
 router.post(

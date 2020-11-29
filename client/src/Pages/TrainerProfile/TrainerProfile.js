@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import IntroMessage from 'Components/IntroMessage/IntroMessage';
 
-import AppointmentSelector from './AppointmentSelector';
+import SessionSelector from './SessionSelector';
 import Image from 'Components/Image/Image';
 
 import { CTX } from 'context/Store';
@@ -20,9 +20,9 @@ const TrainerProfile = ({
   let belongsToCurrentUser = appState.user.id === trainerId;
 
   const [currentTrainer, setCurrentTrainer] = useState({});
-  const [appointments, setAppointments] = useState([]);
+  const [sessions, setSessions] = useState([]);
   const [bookingSuccess, setBookingSuccess] = useState(false);
-  const [apptSelectorOpen, setApptSelectorOpen] = useState(false);
+  const [sessionSelectorOpen, setSessionSelectorOpen] = useState(false);
   const [messageOpen, setMessageOpen] = useState(false);
   const [selection, setSelection] = useState([]);
   const [redirectToMessages, setRedirectToMessages] = useState(false);
@@ -33,11 +33,11 @@ const TrainerProfile = ({
     let subscribed = true;
     axios
       .get(`/api/client/trainer/${trainerId}`)
-      .then(({ data: { trainer, err, foundAppointments } }) => {
+      .then(({ data: { trainer, err, foundSessions } }) => {
         if (err && subscribed) setErr(err);
         else if (subscribed) {
           setCurrentTrainer(trainer);
-          setAppointments(foundAppointments);
+          setSessions(foundSessions);
         }
       })
       .catch((err) => console.log('trainer profile error: ', err));
@@ -50,14 +50,14 @@ const TrainerProfile = ({
     if (appState.messages[currentTrainer._id]) {
       setRedirectToMessages(true);
     } else {
-      setApptSelectorOpen(false);
+      setSessionSelectorOpen(false);
       setMessageOpen((o) => !o);
     }
   };
 
   const toggleSelectorOpen = () => {
     setMessageOpen(false);
-    setApptSelectorOpen((o) => !o);
+    setSessionSelectorOpen((o) => !o);
   };
 
   return (
@@ -108,7 +108,7 @@ const TrainerProfile = ({
                   <i className='far fa-envelope fa-4x'></i>
                 </button>
                 <button
-                  className={`book-btn ${apptSelectorOpen ? 'current' : ''}`}
+                  className={`book-btn ${sessionSelectorOpen ? 'current' : ''}`}
                   onClick={toggleSelectorOpen}
                 >
                   <i className='fa fa-calendar fa-4x' aria-hidden='true'></i>
@@ -117,10 +117,10 @@ const TrainerProfile = ({
               {messageOpen && (
                 <IntroMessage toggle={setMessageOpen} id={trainerId} />
               )}
-              {apptSelectorOpen && (
-                <AppointmentSelector
+              {sessionSelectorOpen && (
+                <SessionSelector
                   belongsToCurrentUser={belongsToCurrentUser}
-                  bookedTimes={appointments}
+                  bookedTimes={sessions}
                   trainer={currentTrainer}
                   setBookingSuccess={setBookingSuccess}
                   selection={selection}
@@ -151,12 +151,12 @@ export default TrainerProfile;
           value={endTime}
         />
         <input type='date' onChange={(e) => setDay(e.target.value)}></input>
-        <button onClick={bookAppointment}>book session</button>
+        <button onClick={bookSession}>book session</button>
 
 
-// const bookAppointment = () => {
+// const bookSession = () => {
   //   // open paypal, upon completion of payment axios post request to server
-  //   // in backend, create new appointment in db
+  //   // in backend, create new session in db
   //   let token = localStorage.getItem('fitr-token');
   //   let start = startTime + ':00';
   //   let end = endTime + ':00';
@@ -170,7 +170,7 @@ export default TrainerProfile;
   //   });
   //   axios
   //     .post(
-  //       '/api/appointment/new',
+  //       '/api/session/new',
   //       { startTime: startUTC, endTime: endUTC, trainer: currentTrainer._id },
   //       {
   //         headers: { 'x-auth-token': token },

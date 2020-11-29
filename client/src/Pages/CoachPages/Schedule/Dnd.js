@@ -213,7 +213,7 @@ export default Dnd;
 //   setBlockedTimes,
 //   setBlockEntries,
 //   invisible,
-//   appt,
+//   session,
 // }) => {
 //   const [day, setDay] = useState(data.day);
 //   const [startTime, setStartTime] = useState(data.start);
@@ -233,12 +233,12 @@ export default Dnd;
 //   let xDefault = days.indexOf(data.day) * 120;
 
 //   const handleDestroy = () => {
-//     if (appt) return;
+//     if (session) return;
 //     destroy(data.id);
 //   };
 
 //   const updateBlocks = (startDate, endDate, startTime, endTime, recurring) => {
-//     if (appt) return;
+//     if (session) return;
 //     let day = days[startDate.getDay()];
 //     let newTime = {
 //       day,
@@ -277,7 +277,7 @@ export default Dnd;
 //   };
 
 //   const handleDrag = (e, el) => {
-//     if (appt) return;
+//     if (session) return;
 //     let { node } = el;
 //     let { transform, height } = node.style;
 
@@ -320,7 +320,7 @@ export default Dnd;
 //   };
 
 //   const handleResize = (e, dir, refToElement, d) => {
-//     if (appt) return;
+//     if (session) return;
 //     let { transform, height } = refToElement.style;
 //     let y = transform.split(', ')[1];
 //     y = y.substring(0, y.length - 3);
@@ -342,7 +342,7 @@ export default Dnd;
 //   };
 
 //   const toggleRecurring = (e) => {
-//     if (appt) return;
+//     if (session) return;
 //     // set startDate to match the current week
 //     // get current day of the week
 //     // get that date from the week obj
@@ -373,7 +373,7 @@ export default Dnd;
 //         zIndex: invisible ? '-1' : '1',
 //         opacity: invisible ? '0' : '1',
 //       }}
-//       className={`rnd-item recurring-${recurring} appt-${appt}`}
+//       className={`rnd-item recurring-${recurring} session-${session}`}
 //       bounds='parent'
 //       resizeGrid={[0, 50]}
 //       dragGrid={[120, 50]}
@@ -387,7 +387,7 @@ export default Dnd;
 //       }}
 //       onDragStop={handleDrag}
 //       onResizeStop={handleResize}
-//       disableDragging={appt}
+//       disableDragging={session}
 //     >
 //       <div>
 //         <p>

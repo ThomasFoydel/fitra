@@ -4,7 +4,7 @@ const router = express.Router();
 const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
 const Client = require('../models/Client');
-const Appointment = require('../models/Appointment');
+const Session = require('../models/Session');
 const { v4: uuidV4 } = require('uuid');
 
 router.post(
@@ -27,7 +27,7 @@ router.post(
     const foundTrainer = await Trainer.findById(trainer);
 
     let { availability } = foundTrainer;
-    let appointments = await Appointment.find({ trainer: foundTrainer._id });
+    let sessions = await Session.find({ trainer: foundTrainer._id });
 
     let timeBlocked = false;
     let rStart = new Date(startTime);
@@ -49,12 +49,12 @@ router.post(
         timeBlocked = true;
       }
     });
-    appointments.forEach((t) => {
+    sessions.forEach((t) => {
       let startIsBetween = rStart >= t.startTime && rStart <= t.endTime;
       let endIsBetween = rEnd >= t.startTime && rEnd <= t.endTime;
       let blockedTimeIsBetween = t.startTime >= rStart && t.endTime <= rEnd;
       if (startIsBetween || endIsBetween || blockedTimeIsBetween) {
-        console.log('APPOINTMENT block true: ');
+        console.log('SESSION block true: ');
         console.log('start: ', rStart);
         console.log('end: ', rEnd);
         console.log({ startIsBetween });
@@ -65,9 +65,9 @@ router.post(
     });
     if (timeBlocked) return res.send({ err: 'selected time is unavailable' });
 
-    // create new appointment in db
+    // create new session in db
     const roomId = uuidV4();
-    const newAppointment = new Appointment({
+    const newSession = new Session({
       status: 'scheduled',
       client: foundClient._id,
       trainer: foundTrainer._id,
@@ -76,12 +76,14 @@ router.post(
       roomId,
       order,
     });
-    console.log({ newAppointment });
-    newAppointment
+    console.log({ newSession });
+    newSession
       .save()
       .then((result) => {
         let { startTime, endTime, status, trainer, client } = result;
-        res.send({ newAppt: { startTime, endTime, status, trainer, client } });
+        res.send({
+          newSession: { startTime, endTime, status, trainer, client },
+        });
       })
       .catch((err) => res.send({ err: 'Database error' }));
   }

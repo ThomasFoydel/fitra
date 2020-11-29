@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
-
+import './SessionReview.scss';
 const SessionReview = ({
   match: {
     params: { sessionId },
@@ -12,6 +12,11 @@ const SessionReview = ({
   const [formData, setFormData] = useState({ rating: 2, comment: '' });
   let { rating, comment } = formData;
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [err, setErr] = useState('');
+
+  useEffect(() => {
+    axios.get('/api/session/');
+  }, []);
 
   const handleChange = ({ target: { value, id } }) =>
     setFormData((form) => {
@@ -23,7 +28,9 @@ const SessionReview = ({
       .post(`/api/client/review/${sessionId}`, formData, {
         headers: { 'x-auth-token': appState.user.token },
       })
-      .then((res) => console.log({ res }))
+      .then(({ data, err }) => {
+        if (err) return setErr(err);
+      })
       .catch((err) => console.log({ err }));
   };
   return (

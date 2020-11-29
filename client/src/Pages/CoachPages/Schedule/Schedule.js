@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Dnd from './Dnd';
-import Appt from './Appt';
+import Session from './Session';
 import {
   days,
   halfHours,
@@ -29,8 +29,8 @@ const Schedule = ({
     max,
     min,
     err,
-    appointments,
-    setAppointments,
+    sessions,
+    setSessions,
   },
 }) => {
   const [weekShift, setWeekShift] = useState(0);
@@ -192,15 +192,15 @@ const Schedule = ({
 
             {
               //////////////////////////////
-              ///// APPOINTMENTS ///////////
+              ///// sessions ///////////
               //////////////////////////////
 
-              appointments.map((data) => {
+              sessions.map((data) => {
                 const inCurrentWeek = checkBlock(data, week);
 
                 return (
-                  <Appt
-                    props={{ data, inCurrentWeek, setAppointments }}
+                  <Session
+                    props={{ data, inCurrentWeek, setSessions }}
                     key={data.id}
                   />
                 );

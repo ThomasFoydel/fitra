@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
 const Review = require('../models/Review');
-const Appointment = require('../models/Appointment');
+const Session = require('../models/Session');
 const Message = require('../models/Message');
 const util = require('../util/util');
 const mongoose = require('mongoose');
@@ -132,10 +132,10 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
     return res.send({ err: 'No user found' });
   }
   let trainer = await Trainer.findById(trainerId);
-  let foundAppointments = await Appointment.find({
+  let foundSession = await Session.find({
     trainer: trainer._id,
   }).select('-roomId -createdAt -updatedAt -status -client -trainer -order');
-  res.send({ trainer, foundAppointments });
+  res.send({ trainer, foundSession });
 });
 
 router.get('/profile/:id', auth, async ({ params: { id } }, res) => {
@@ -168,13 +168,13 @@ router.post('/editprofile/', auth, (req, res) => {
 
 router.get('/dashboard', auth, async (req, res) => {
   const { userId } = req.tokenUser;
-  const foundAppointments = await Appointment.find(
+  const foundSession = await Session.find(
     { client: userId }
     // { sort: ['startTime', 'asc'] }
   )
     .sort({ startTime: 1 })
     .select('-roomId');
-  res.send({ appointments: foundAppointments });
+  res.send({ sessions: foundSession });
 });
 router.get('/messages', auth, async (req, res) => {
   const { userId } = req.tokenUser;
@@ -241,23 +241,28 @@ router.post(
     { body: { rating, comment }, params: { sessionId }, tokenUser: { userId } },
     res
   ) => {
-    let foundAppt = await Appointment.findById(sessionId);
-    if (foundAppt.client !== userId) return res.send({ err: 'Not authorized' });
+    let foundSession = await Session.findById(sessionId);
+    if (!foundSession) return res.send({ err: 'No session found' });
+    if (foundSession.client !== userId)
+      return res.send({ err: 'Not authorized' });
     const newReview = new Review({
       client: userId,
-      trainer: foundAppt.trainer,
-      appointment: sessionId,
+      trainer: foundSession.trainer,
+      session: sessionId,
       rating,
       comment,
     });
-    newReview.save().then(async (savedReview) => {
-      let updatedAppt = await Appointment.findOneAndUpdate(
-        { _id: sessionId },
-        { status: 'reviewed' },
-        { useFindAndModify: false, new: true }
-      );
-      res.send({ updatedAppt, savedReview });
-    });
+    newReview
+      .save()
+      .then(async (savedReview) => {
+        let updatedSession = await Session.findOneAndUpdate(
+          { _id: sessionId },
+          { status: 'reviewed' },
+          { useFindAndModify: false, new: true }
+        );
+        res.send({ updatedSession, savedReview });
+      })
+      .catch((err) => res.send({ err }));
   }
 );
 

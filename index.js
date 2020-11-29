@@ -14,7 +14,7 @@ const socketio = require('socket.io');
 const clientRoutes = require('./routes/Client');
 const trainerRoutes = require('./routes/Trainer');
 const authRoutes = require('./routes/Auth');
-const appointmentRoutes = require('./routes/Appointment');
+const sessionRoutes = require('./routes/Session');
 const connectRoutes = require('./routes/Connect');
 const imageRoutes = require('./routes/Image');
 const userRoutes = require('./routes/User');
@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use('/api/client', clientRoutes);
 app.use('/api/trainer', trainerRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/appointment', appointmentRoutes);
+app.use('/api/session', sessionRoutes);
 app.use('/api/connect', connectRoutes);
 app.use('/api/image', imageRoutes);
 app.use('/api/user', userRoutes);
@@ -106,9 +106,9 @@ mongoose
       }
 
       socket.on('join-room', ({ roomId, mySocketId, token, peerId }) => {
-        // find appointment in db
-        // check if user is client for this appointment
-        // check if appointment is currently happening
+        // find session in db
+        // check if user is client for this session
+        // check if session is currently happening
         // if not, send back err and redirect or display countdown, if so, do the following
         socket.join(roomId);
         socket
@@ -169,7 +169,7 @@ mongoose
 // const clientRoutes = require('./routes/Client');
 // const trainerRoutes = require('./routes/Trainer');
 // const authRoutes = require('./routes/Auth');
-// const appointmentRoutes = require('./routes/Appointment');
+// const sessionRoutes = require('./routes/Session');
 // const connectRoutes = require('./routes/Connect');
 
 // const app = express();
@@ -179,7 +179,7 @@ mongoose
 // app.use('/api/client', clientRoutes);
 // app.use('/api/trainer', trainerRoutes);
 // app.use('/api/auth', authRoutes);
-// app.use('/api/appointment', appointmentRoutes);
+// app.use('/api/session', sessionRoutes);
 // app.use('/api/connect', connectRoutes);
 
 // // static file declaration
@@ -216,9 +216,9 @@ mongoose
 
 //       socket.on('join-room', (joinInfo) => {
 //         let { roomId, mySocketId, token } = joinInfo;
-//         // find appointment in db
-//         // check if user is client for this appointment
-//         // check if appointment is currently happening
+//         // find session in db
+//         // check if user is client for this session
+//         // check if session is currently happening
 //         // if not, send back err and redirect or display countdown, if so, do the following
 //         socket.join(roomId);
 //         socket.to(roomId).broadcast.emit('user-connected', mySocketId);

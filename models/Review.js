@@ -7,7 +7,7 @@ const reviewSchema = new Schema(
     client: { type: String, required: true },
     comment: { type: String, required: true },
     rating: { type: Number, required: true },
-    appointment: { type: String, required: true },
+    session: { type: String, required: true },
   },
   { timestamps: true }
 );

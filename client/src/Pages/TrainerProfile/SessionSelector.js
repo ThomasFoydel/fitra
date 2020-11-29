@@ -13,7 +13,7 @@ import { CTX } from 'context/Store';
 
 import PayPal from 'Components/PayPal/PayPal';
 
-const AppointmentSelector = ({
+const SessionSelector = ({
   setBookingSuccess,
   bookedTimes,
   belongsToCurrentUser,
@@ -184,17 +184,17 @@ const AppointmentSelector = ({
     let token = localStorage.getItem('fitr-token');
     axios
       .post(
-        '/api/appointment/new',
+        '/api/session/new',
         { startTime, endTime, order, trainer: _id },
         {
           headers: { 'x-auth-token': token },
         }
       )
-      .then(({ data: { err, newAppt } }) => {
+      .then(({ data: { err, newSession } }) => {
         if (err) {
           setErr(err);
           setSelection([]);
-        } else if (newAppt) setBookingSuccess(true);
+        } else if (newSession) setBookingSuccess(true);
       });
   };
 
@@ -213,7 +213,7 @@ const AppointmentSelector = ({
   };
   // console.log(rate * selection.length);
   return (
-    <div className='appointmentselector'>
+    <div className='session-selector'>
       <div className='ctrls'>
         <div className='weekshift-btns'>
           <button
@@ -362,4 +362,4 @@ const AppointmentSelector = ({
   );
 };
 
-export default AppointmentSelector;
+export default SessionSelector;

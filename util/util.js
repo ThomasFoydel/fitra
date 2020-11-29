@@ -1,7 +1,7 @@
 const Message = require('../models/Message');
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
-// const Appointment = require('../models/Appointment');
+// const Session = require('../models/Session');
 // const nodemailer = require('nodemailer');
 
 const messageSorter = async (userId) => {
@@ -32,9 +32,9 @@ const findUser = async (id) => {
 };
 
 const sendReminders = async () => {
-  // fine all appts that happen between 23 and 24 hours away from current time in UTC
-  // const foundAppointments = await Appointment.findAll({})
-  // for each appt in array, check if status is 'pending' or 'reminder-sent'
+  // fine all sessions that happen between 23 and 24 hours away from current time in UTC
+  // const foundSessions = await Sessions.findAll({})
+  // for each session in array, check if status is 'pending' or 'reminder-sent'
   // if 'pending', send email and update to 'reminder-sent'
   console.log('timer');
 };

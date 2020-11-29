@@ -7,14 +7,14 @@ import { CTX } from 'context/Store';
 const TrainerHome = () => {
   const [appState, updateState] = useContext(CTX);
   const { type } = appState.user;
-  const [appts, setAppts] = useState([]);
+  const [foundSessions, setFoundSessions] = useState([]);
   let { token } = appState.user;
   useEffect(() => {
     let subscribed = true;
     axios
       .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
-      .then(({ data: { appointments } }) => {
-        if (subscribed) setAppts(appointments);
+      .then(({ data: { sessions } }) => {
+        if (subscribed) setFoundSessions(sessions);
       })
       .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
@@ -25,18 +25,20 @@ const TrainerHome = () => {
       <div className='background' />
       <div className='overlay' />
       <div className='trainer-home'>
-        <h2>{type === 'trainer' ? 'appointments' : 'schedule'}</h2>
-        <div className='appts'>
-          {appts &&
-            appts.map((appt) => <Appointment appt={appt} key={appt._id} />)}
+        <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
+        <div className='session'>
+          {foundSessions &&
+            foundSessions.map((session) => (
+              <Session session={session} key={session._id} />
+            ))}
         </div>
       </div>
     </>
   );
 };
 
-const Appointment = ({ appt }) => {
-  let { startTime, endTime, _id, client, trainer } = appt;
+const Session = ({ session }) => {
+  let { startTime, endTime, _id, client, trainer } = session;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
   // todo: account for dates being stored as GMT, and currentTime being in localTime
@@ -48,7 +50,7 @@ const Appointment = ({ appt }) => {
 
   return (
     <div
-      className={`appointment 
+      className={`session 
       ${ended && ' ended '}
       ${active && ' active '} 
       ${!started && ' not-started '} 

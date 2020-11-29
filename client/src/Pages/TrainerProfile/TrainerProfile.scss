@@ -89,7 +89,7 @@ $large: 992px;
   //   }
   // }
 
-  // .mobile-appointment-selector {
+  // .mobile-session-selector {
   //   display: none;
   //   @media screen and (max-width: $medium) {
   //     display: inherit;
@@ -155,7 +155,7 @@ $large: 992px;
 //   // }
 // }
 
-.appointmentselector {
+.session-selector {
   .grid-time.unavailable {
     background: black !important;
     cursor: default;
