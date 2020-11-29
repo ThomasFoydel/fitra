@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { CTX } from 'context/Store';
+
 const SessionReview = ({
   match: {
     params: { sessionId },
   },
 }) => {
+  const [appState, updateState] = useContext(CTX);
+
   const [formData, setFormData] = useState({ rating: 2, comment: '' });
   let { rating, comment } = formData;
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleChange = ({ target: { value, id } }) =>
-    setFormData((f) => {
-      return { ...f, [id]: value };
+    setFormData((form) => {
+      return { ...form, [id]: value };
     });
 
   const submit = () => {
-    axios.post(`/api/client/review/${sessionId}`, formData);
+    axios
+      .post(`/api/client/review/${sessionId}`, formData, {
+        headers: { 'x-auth-token': appState.user.token },
+      })
+      .then((res) => console.log({ res }))
+      .catch((err) => console.log({ err }));
   };
   return (
     <div className='session-review'>
-      <h2>SessionReview</h2>
+      <h2>Session Review</h2>
       <select onChange={handleChange} value={rating} id='rating'>
         <option value={4}>perfect</option>
         <option value={3}>great</option>
@@ -33,6 +43,14 @@ const SessionReview = ({
         cols='30'
         rows='10'
       ></textarea>
+      {confirmOpen ? (
+        <>
+          <button onClick={submit}>confirm</button>
+          <button onClick={() => setConfirmOpen(false)}>cancel</button>
+        </>
+      ) : (
+        <button onClick={() => setConfirmOpen(true)}>submit</button>
+      )}
     </div>
   );
 };

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
+const Review = require('../models/Review');
 const Appointment = require('../models/Appointment');
 const Message = require('../models/Message');
 const util = require('../util/util');
@@ -230,6 +231,33 @@ router.post(
       res.send({ result });
     });
     // Trainer.find(     { $or: [{ tags: { $regex: `${term}`, $options: '$i' } }, { name: { $regex: `${term}`, $options: '$i' } },   ]}  )
+  }
+);
+
+router.post(
+  '/review/:sessionId',
+  auth,
+  async (
+    { body: { rating, comment }, params: { sessionId }, tokenUser: { userId } },
+    res
+  ) => {
+    let foundAppt = await Appointment.findById(sessionId);
+    if (foundAppt.client !== userId) return res.send({ err: 'Not authorized' });
+    const newReview = new Review({
+      client: userId,
+      trainer: foundAppt.trainer,
+      appointment: sessionId,
+      rating,
+      comment,
+    });
+    newReview.save().then(async (savedReview) => {
+      let updatedAppt = await Appointment.findOneAndUpdate(
+        { _id: sessionId },
+        { status: 'reviewed' },
+        { useFindAndModify: false, new: true }
+      );
+      res.send({ updatedAppt, savedReview });
+    });
   }
 );
 
