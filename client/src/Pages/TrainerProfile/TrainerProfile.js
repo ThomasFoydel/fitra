@@ -27,6 +27,7 @@ const TrainerProfile = ({
   const [selection, setSelection] = useState([]);
   const [redirectToMessages, setRedirectToMessages] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [avg, setAvg] = useState('');
 
   const [err, setErr] = useState('');
 
@@ -34,14 +35,17 @@ const TrainerProfile = ({
     let subscribed = true;
     axios
       .get(`/api/client/trainer/${trainerId}`)
-      .then(({ data: { trainer, err, foundSessions, foundReviews } }) => {
-        if (err && subscribed) setErr(err);
-        else if (subscribed) {
-          setCurrentTrainer(trainer);
-          setSessions(foundSessions);
-          setReviews(foundReviews);
+      .then(
+        ({ data: { trainer, err, foundSessions, foundReviews, foundAvg } }) => {
+          if (err && subscribed) setErr(err);
+          else if (subscribed) {
+            setCurrentTrainer(trainer);
+            setSessions(foundSessions);
+            setReviews(foundReviews);
+            setAvg(foundAvg);
+          }
         }
-      })
+      )
       .catch((err) => console.log('trainer profile error: ', err));
     return () => (subscribed = false);
   }, []);
@@ -90,6 +94,7 @@ const TrainerProfile = ({
               <div className='email'>{email}</div>
               <div className='bio'>{bio}</div>
 
+              <div className='avg'>Average Rating {Math.floor(avg * 20)} %</div>
               {belongsToCurrentUser && (
                 <Link to={`/coachportal/editprofile`} className='link '>
                   Edit Profile
