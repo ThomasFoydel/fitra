@@ -8,9 +8,9 @@ import { useLocation } from 'react-router-dom';
 
 const NavBar = () => {
   const location = useLocation();
-  console.log(location.pathname);
   const [appState, updateState] = useContext(CTX);
   const { isLoggedIn, user } = appState;
+  const currentPage = parsePage(location.pathname, appState.user || {});
   const [redirect, setRedirect] = useState(false);
 
   const isTrainer = user.type === 'trainer';
@@ -34,17 +34,23 @@ const NavBar = () => {
     });
     updateState({ type: 'TOGGLE_AUTH' });
   };
-
+  console.log(currentPage);
   return (
     <>
       {redirect && <Redirect to='/' />}
       <div className='navbar'>
-        <Link to={isLoggedIn ? `${trainerExt}/` : '/'} className='home-link'>
+        <Link
+          to={isLoggedIn ? `${trainerExt}/` : '/'}
+          className={`home-link ${currentPage === 'home' && 'current-nav'}`}
+        >
           <h2 className='logo-title'>FITRA</h2>
         </Link>
 
         {!isTrainer && (
-          <Link to='/trainers' className='link'>
+          <Link
+            to='/trainers'
+            className={`link ${currentPage === 'trainers' && 'current-nav'}`}
+          >
             Trainers
           </Link>
         )}
@@ -55,20 +61,33 @@ const NavBar = () => {
         {isLoggedIn && (
           <>
             {isTrainer && (
-              <Link to={`${trainerExt}/schedule`} className='link'>
+              <Link
+                to={`${trainerExt}/schedule`}
+                className={`link ${
+                  currentPage === 'schedule' && 'current-nav'
+                }`}
+              >
                 Schedule
               </Link>
             )}
-            <Link to={`${trainerExt}/messages`} className='link'>
+            <Link
+              to={`${trainerExt}/messages`}
+              className={`link ${currentPage === 'messages' && 'current-nav'}`}
+            >
               Messages
             </Link>
             <Link
               to={`/${isTrainer ? 'trainer' : 'user'}/${appState.user.id}`}
-              className='link'
+              className={`link ${
+                currentPage === 'ownprofile' && 'current-nav'
+              }`}
             >
               Profile
             </Link>
-            <Link to={`${trainerExt}/settings`} className='link'>
+            <Link
+              to={`${trainerExt}/settings`}
+              className={`link ${currentPage === 'settings' && 'current-nav'}`}
+            >
               Settings
             </Link>
             <button className='logout-btn' onClick={logout}>
@@ -93,6 +112,24 @@ const NavBar = () => {
 
 export default NavBar;
 
-// var parseLocation = (loc)=>{
-//   if (loc.substring())
-// }
+var parsePage = (string, user) => {
+  if (string.substring(0, 12) === '/coachportal') string = string.slice(12);
+  if (string === `/${user.type}/${user.id}`) return 'ownprofile';
+  else if (string === '/') return 'home';
+  else if (string.substring(0, 9) === '/trainer/') return 'trainer';
+  else if (string.substring(0, 6) === '/user/') return 'user';
+  else return string.substring(1, string.length);
+};
+
+/* 
+pages: 
+/settings
+/trainer/:id
+/user/:id
+/editprofile
+/messages
+/schedule
+/trainers
+/
+/terms-of-use
+*/

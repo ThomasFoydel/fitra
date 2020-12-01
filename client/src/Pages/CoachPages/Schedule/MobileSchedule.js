@@ -34,7 +34,7 @@ const Day = ({ props: { currentDate, day, blockedTimes } }) => {
   const [addTimeOpen, setAddTimeOpen] = useState(false);
   const [timeSelection, setTimeSelection] = useState({ start: {}, end: {} });
 
-  if (timeSelection) console.log('TIME SELECTION!');
+  // if (timeSelection) console.log('TIME SELECTION!');
 
   const toggleOpen = () => setAddTimeOpen((o) => !o);
 
@@ -127,7 +127,9 @@ const TimeInput = ({ onChange, label }) => {
         <h6>hr</h6>
         <select onChange={handleChange} id='hour'>
           {hours.map((h) => (
-            <option value={h}>{h}</option>
+            <option key={h} value={h}>
+              {h}
+            </option>
           ))}
         </select>
         <h6>min</h6>
