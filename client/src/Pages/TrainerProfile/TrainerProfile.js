@@ -89,6 +89,7 @@ const TrainerProfile = ({
               <div className='name'>{name}</div>
               <div className='email'>{email}</div>
               <div className='bio'>{bio}</div>
+
               {belongsToCurrentUser && (
                 <Link to={`/coachportal/editprofile`} className='link '>
                   Edit Profile
@@ -98,6 +99,11 @@ const TrainerProfile = ({
           </div>
           <div className='section2'>
             {/* <div className='bio'>{bio}</div> */}
+            <div className='reviews'>
+              {reviews.map((review) => (
+                <Review review={review} key={review._id} />
+              ))}
+            </div>
           </div>
 
           {!belongsToCurrentUser && (
@@ -131,9 +137,6 @@ const TrainerProfile = ({
               )}
             </>
           )}
-          {reviews.map((review) => (
-            <Review review={review} key={review._id} />
-          ))}
         </div>
       )}
     </div>

@@ -81,6 +81,12 @@ $large: 992px;
       background: rgb(18, 65, 221);
     }
   }
+
+  .reviews {
+    display: flex;
+    width: 100%;
+    overflow-x: scroll;
+  }
   .review {
     border: 2px solid rgb(29, 29, 29);
     border-radius: 1rem;
