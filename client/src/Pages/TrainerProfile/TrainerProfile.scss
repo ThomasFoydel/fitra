@@ -36,7 +36,7 @@ $large: 992px;
     width: 25rem;
     height: 25rem;
     border-radius: 20rem;
-    border: 12px solid rgb(240, 240, 240);
+    border: 12px solid hsl(0, 0%, 94%);
     margin-left: 50%;
     transform: translateX(-50%);
     display: block;
@@ -81,20 +81,44 @@ $large: 992px;
       background: rgb(18, 65, 221);
     }
   }
+  .review {
+    border: 2px solid rgb(29, 29, 29);
+    border-radius: 1rem;
+    margin: 0.5rem;
+    background: #eee;
+    width: 20rem;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    .review-profile-pic {
+      width: 6rem;
+      height: 6rem;
+      border-radius: 90rem;
+      border: 3px solid rgb(240, 240, 240);
+      background: rgb(240, 240, 240);
+    }
 
-  // .large-selector {
-  //   display: inherit;
-  //   @media screen and (max-width: $medium) {
-  //     display: none;
-  //   }
-  // }
+    .star-rating {
+      position: relative;
+      width: 12rem;
+      height: 2rem;
+      background: black;
 
-  // .mobile-session-selector {
-  //   display: none;
-  //   @media screen and (max-width: $medium) {
-  //     display: inherit;
-  //   }
-  // }
+      .rating-background,
+      .stars {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        height: 100%;
+      }
+      .stars {
+        width: 100%;
+      }
+    }
+  }
 }
 // .trainerprofile {
 //   color: white;

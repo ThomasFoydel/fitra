@@ -6,21 +6,27 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  align-items: space-around;
-  justify-content: space-around;
-  padding: 0 4rem 4rem 4rem;
+  align-items: center;
+  padding: 1rem 4rem 2rem 4rem;
   color: white;
   background: rgb(31, 31, 31);
   border: 1px solid rgb(156, 156, 156);
   border-radius: 0 18px 0 18px;
   button {
-    margin-top: 1.5rem;
-    padding: 0.5rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-weight: bold;
+    width: 50%;
+    border: none;
+    border-radius: 0.4rem;
   }
   textarea {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
     padding: 1rem;
     max-width: 100%;
     min-width: 100%;
     min-height: 15rem;
+    max-height: 25rem;
   }
 }

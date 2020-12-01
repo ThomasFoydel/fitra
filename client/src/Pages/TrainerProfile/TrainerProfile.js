@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import IntroMessage from 'Components/IntroMessage/IntroMessage';
-
+import stars from 'imgs/icons/stars.png';
 import SessionSelector from './SessionSelector';
 import Image from 'Components/Image/Image';
 
@@ -26,6 +26,7 @@ const TrainerProfile = ({
   const [messageOpen, setMessageOpen] = useState(false);
   const [selection, setSelection] = useState([]);
   const [redirectToMessages, setRedirectToMessages] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
   const [err, setErr] = useState('');
 
@@ -33,11 +34,12 @@ const TrainerProfile = ({
     let subscribed = true;
     axios
       .get(`/api/client/trainer/${trainerId}`)
-      .then(({ data: { trainer, err, foundSessions } }) => {
+      .then(({ data: { trainer, err, foundSessions, foundReviews } }) => {
         if (err && subscribed) setErr(err);
         else if (subscribed) {
           setCurrentTrainer(trainer);
           setSessions(foundSessions);
+          setReviews(foundReviews);
         }
       })
       .catch((err) => console.log('trainer profile error: ', err));
@@ -129,6 +131,9 @@ const TrainerProfile = ({
               )}
             </>
           )}
+          {reviews.map((review) => (
+            <Review review={review} key={review._id} />
+          ))}
         </div>
       )}
     </div>
@@ -136,6 +141,34 @@ const TrainerProfile = ({
 };
 
 export default TrainerProfile;
+
+const Review = ({ review: { rating, comment, client } }) => {
+  return (
+    <div className='review'>
+      {/* <img src="" className="client" alt="client profile"/> */}
+      <Image
+        src={`/api/image/user/profilePic/${client}`}
+        name='review-profile-pic'
+      />
+      <div className='star-rating'>
+        <div
+          className='rating-background'
+          style={{
+            width: `${Math.floor(rating * 20)}%`,
+            background: `linear-gradient(
+            to right, rgb(245, 220, 0), rgb(255, ${Math.floor(
+              255 - rating * 51
+            )}, 0)
+          )`,
+          }}
+        ></div>
+        <img className='stars' src={stars} alt='star rating' />
+      </div>
+      <div className='rating'>{rating}</div>
+      <div className='comment'>{comment}</div>
+    </div>
+  );
+};
 
 /*
  <input

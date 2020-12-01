@@ -51,10 +51,10 @@ const SessionReview = ({
         rows='10'
       ></textarea>
       {confirmOpen ? (
-        <>
+        <div className='confirm-btns'>
           <button onClick={submit}>confirm</button>
           <button onClick={() => setConfirmOpen(false)}>cancel</button>
-        </>
+        </div>
       ) : (
         <button onClick={() => setConfirmOpen(true)}>submit</button>
       )}
