@@ -5,16 +5,13 @@ import hamburger from 'imgs/icons/hamburger.svg';
 import { useSpring, animated, config } from 'react-spring';
 
 const MobileNavBar = ({
-  props: { isLoggedIn, openLogin, trainerExt, logout, isTrainer },
+  props: { isLoggedIn, openLogin, trainerExt, logout, isTrainer, currentPage },
 }) => {
   const [appState, updateState] = useContext(CTX);
   const [sideBarOpen, setSideBarOpen] = useState(false);
 
   const sideBarAnimation = useSpring({
     left: sideBarOpen ? 0 : -280,
-    // zIndex: sideBarOpen ? 2 : -1,
-    // top: sideBarOpen ? '5.9rem' : '-100%',
-    // opacity: sideBarOpen ? 1 : 0,
     config: config.smooth,
   });
 
@@ -25,10 +22,12 @@ const MobileNavBar = ({
         className='mobile-sidebar'
         style={sideBarAnimation}
         onClick={() => setSideBarOpen(false)}
-        // style={{ display: sideBarOpen ? 'flex' : 'none' }}
       >
         {!isTrainer && (
-          <Link to='/trainers' className='link'>
+          <Link
+            to='/trainers'
+            className={`link ${currentPage === 'trainers' && 'current-nav'}`}
+          >
             Trainers
           </Link>
         )}
@@ -42,20 +41,33 @@ const MobileNavBar = ({
         {isLoggedIn && (
           <>
             {isTrainer && (
-              <Link to={`${trainerExt}/schedule`} className='link'>
+              <Link
+                to={`${trainerExt}/schedule`}
+                className={`link ${
+                  currentPage === 'schedule' && 'current-nav'
+                }`}
+              >
                 Schedule
               </Link>
             )}
-            <Link to={`${trainerExt}/messages`} className='link'>
+            <Link
+              to={`${trainerExt}/messages`}
+              className={`link ${currentPage === 'messages' && 'current-nav'}`}
+            >
               Messages
             </Link>
             <Link
               to={`/${isTrainer ? 'trainer' : 'user'}/${appState.user.id}`}
-              className='link'
+              className={`link ${
+                currentPage === 'ownprofile' && 'current-nav'
+              }`}
             >
               Profile
             </Link>
-            <Link to={`${trainerExt}/settings`} className='link'>
+            <Link
+              to={`${trainerExt}/settings`}
+              className={`link ${currentPage === 'settings' && 'current-nav'}`}
+            >
               Settings
             </Link>
             <button className='logout-btn' onClick={logout}>

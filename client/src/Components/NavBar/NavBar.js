@@ -34,7 +34,7 @@ const NavBar = () => {
     });
     updateState({ type: 'TOGGLE_AUTH' });
   };
-  console.log(currentPage);
+
   return (
     <>
       {redirect && <Redirect to='/' />}
@@ -55,9 +55,6 @@ const NavBar = () => {
           </Link>
         )}
 
-        {/* <Link to={`${trainerExt}/editprofile`} className='link'>
-          Edit Profile
-        </Link> */}
         {isLoggedIn && (
           <>
             {isTrainer && (
@@ -103,7 +100,14 @@ const NavBar = () => {
         )}
       </div>
       <MobileNavBar
-        props={{ isLoggedIn, openLogin, isTrainer, trainerExt, logout }}
+        props={{
+          isLoggedIn,
+          openLogin,
+          isTrainer,
+          trainerExt,
+          logout,
+          currentPage,
+        }}
       />
       <div style={{ height: '6rem' }} />
     </>
