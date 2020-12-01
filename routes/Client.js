@@ -235,10 +235,8 @@ router.post(
     if (queryFilter.length < 1)
       return res.send({ err: 'requires at least one term' });
     Trainer.find({ $or: queryFilter }).then((result) => {
-      console.log({ [search]: result });
       res.send({ result });
     });
-    // Trainer.find(     { $or: [{ tags: { $regex: `${term}`, $options: '$i' } }, { name: { $regex: `${term}`, $options: '$i' } },   ]}  )
   }
 );
 
@@ -251,8 +249,13 @@ router.post(
   ) => {
     let foundSession = await Session.findById(sessionId);
     if (!foundSession) return res.send({ err: 'No session found' });
+    if (rating < 0) return res.send({ err: 'Must select a rating' });
     if (foundSession.client !== userId)
       return res.send({ err: 'Not authorized' });
+    if (comment.length < 20)
+      return res.send({ err: 'Comment must be at least 20 characters' });
+    if (foundSession.status === 'reviewed')
+      return res.send({ err: 'Session already reviewed' });
     const newReview = new Review({
       client: userId,
       trainer: foundSession.trainer,

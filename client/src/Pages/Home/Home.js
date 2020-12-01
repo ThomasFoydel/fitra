@@ -19,7 +19,7 @@ const Home = () => {
       .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
   }, []);
-  console.log({ type });
+
   return (
     <>
       <div className='background' />
@@ -38,7 +38,7 @@ const Home = () => {
 };
 
 const Session = ({ session }) => {
-  let { startTime, endTime, _id, client, trainer } = session;
+  let { startTime, endTime, _id, client, trainer, status } = session;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
   // todo: account for dates being stored as GMT, and currentTime being in localTime
@@ -71,7 +71,9 @@ const Session = ({ session }) => {
         {/* {endDate.toDateString()} {endDate.toLocaleTimeString()} */}
       </div>
       {active && <Link to={`/connect/${_id}`}>connect</Link>}
-      {ended && <Link to={`/review/${_id}`}>review</Link>}
+      {ended && status !== 'reviewed' && (
+        <Link to={`/review/${_id}`}>review</Link>
+      )}
     </div>
   );
 };

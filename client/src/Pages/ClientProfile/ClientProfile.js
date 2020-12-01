@@ -37,7 +37,6 @@ const ClientProfile = ({
   let { coverPic, profilePic, bio, name, email } = user;
   return (
     <div className='clientprofile'>
-      {/* {!belongsToCurrentUser && <button></button>} */}
       <div
         className='cover-pic'
         style={{
