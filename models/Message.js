@@ -7,6 +7,7 @@ const messageSchema = new mongoose.Schema(
     receiver: { type: String, required: true },
     content: { type: String, required: true },
     participants: { type: Array, required: true },
+    fromTrainer: { type: Boolean, required: true },
   },
   { timestamps: true }
 );

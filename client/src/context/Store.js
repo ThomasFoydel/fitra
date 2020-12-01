@@ -58,7 +58,7 @@ export function reducer(state, action) {
       let copy = { ...state.messages };
       let other = message.participants.filter((p) => p !== state.user.id)[0];
       let thread = copy[other];
-      let updatedThread = [...thread, message];
+      let updatedThread = thread ? [...thread, message] : [message];
       let updatedMessages = { ...copy, [other]: updatedThread };
       return { ...state, messages: updatedMessages };
     case 'TOGGLE_DARKMODE':

@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import './Messages.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
+import { Link } from 'react-router-dom';
 
 const Messages = () => {
   const [appState, updateState] = useContext(CTX);
   let { messages } = appState;
-  let { token, id, name } = appState.user;
+  let { token, id, name, type } = appState.user;
   const [currentThread, setCurrentThread] = useState(null);
 
   const newMessage = (message) => {
@@ -54,6 +55,7 @@ const Messages = () => {
       {currentThread && (
         <div className='chat-box'>
           <ChatBox
+            isTrainer={type === 'trainer'}
             userId={id}
             userName={name}
             currentThread={currentThread}
@@ -114,10 +116,14 @@ const Thread = ({ thread, close, currentUser, refEl }) => {
           <div className={`message ownmsg-${ownMessage}`} key={msg._id}>
             {!ownMessage && (
               <>
-                <img
-                  className='profile-pic'
-                  src={`/api/image/user/profilePic/${msg.sender}`}
-                ></img>
+                <Link
+                  to={`/${msg.fromTrainer ? 'trainer' : 'user'}/${msg.sender}`}
+                >
+                  <img
+                    className='profile-pic'
+                    src={`/api/image/user/profilePic/${msg.sender}`}
+                  />
+                </Link>
                 <strong className='name'>{msg.authorName}</strong>
               </>
             )}
@@ -135,14 +141,16 @@ const Thread = ({ thread, close, currentUser, refEl }) => {
 ////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////   CHATBOX  /////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
-const ChatBox = ({ userId, userName, currentThread, update }) => {
+const ChatBox = ({ userId, userName, currentThread, update, isTrainer }) => {
   const [text, setText] = useState('');
   const submit = () => {
+    if (!text) return;
     let message = {
       userId: currentThread,
       message: text,
       sender: userId,
       name: userName,
+      fromTrainer: isTrainer,
     };
     axios
       .post('/api/message/', message)

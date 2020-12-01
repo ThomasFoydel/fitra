@@ -63,13 +63,14 @@ mongoose
 
     const io = socketio(expressServer);
     app.post('/api/message', (req, res) => {
-      let { userId, message, sender, name } = req.body;
+      let { userId, message, sender, name, fromTrainer } = req.body;
       const newMessage = new Message({
         authorName: name,
         sender,
         receiver: userId,
         content: message,
         participants: [sender, userId],
+        fromTrainer,
       });
       newMessage
         .save()
@@ -98,6 +99,7 @@ mongoose
               userId: userId,
               socketId: socket.id,
             };
+            users = users.filter((user) => user.userId !== userId);
             users.push(currentUser);
           }
         } catch (err) {

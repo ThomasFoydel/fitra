@@ -18,6 +18,7 @@ const IntroMessage = ({ id, toggle }) => {
       message,
       sender: appState.user.id,
       name: appState.user.name,
+      fromTrainer: appState.user.type === 'trainer',
     };
 
     axios.post('/api/message', newMsg).then(({ data }) => {
