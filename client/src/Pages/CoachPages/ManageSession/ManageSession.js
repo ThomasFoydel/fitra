@@ -64,10 +64,15 @@ const ManageSession = ({
       {deleted && <Redirect to='/coachportal/schedule' />}
       {found && (
         <>
-          <img
-            className='profile-pic'
-            src={`/api/image/user/profilePic/${found.session.client}`}
-          />
+          <Link to='/coachportal/schedule'>
+            <i className='fas fa-angle-left fa-4x back-link'></i>
+          </Link>
+          <Link to={`/user/${found.client._id}`}>
+            <img
+              className='profile-pic'
+              src={`/api/image/user/profilePic/${found.session.client}`}
+            />
+          </Link>
           <Link to={`/user/${found.client._id}`}>
             <div className='name'>{found.client.name}</div>
           </Link>
@@ -75,13 +80,24 @@ const ManageSession = ({
           <div className='date'>{start && start.toDateString()}</div>
           <div className='start'>start: {start && start.toTimeString()}</div>
           <div className='end'>end: {end && end.toTimeString()}</div>
-          <button onClick={() => setOpenCancel(true)}>cancel session</button>
-          {openCancel && (
+
+          {openCancel ? (
             <div className='cancel'>
               <p>cancel this session?</p>
-              <button onClick={handleCancel}>confirm</button>
-              <button onClick={() => setOpenCancel(false)}>close</button>
+              <button
+                className='close-btn'
+                onClick={() => setOpenCancel(false)}
+              >
+                nevermind
+              </button>
+              <button className='confirm-btn' onClick={handleCancel}>
+                confirm
+              </button>
             </div>
+          ) : (
+            <button className='cancel-btn' onClick={() => setOpenCancel(true)}>
+              cancel session
+            </button>
           )}
         </>
       )}
