@@ -17,10 +17,6 @@ const SessionReview = ({
   const [redirect, setRedirect] = useState(false);
   const [firstRender, setFirstRender] = useState(true);
 
-  // useEffect(() => {
-  //   axios.get('/api/session/');
-  // }, []);
-
   const handleChange = ({ target: { value, id } }) =>
     setFormData((form) => {
       return { ...form, [id]: value };

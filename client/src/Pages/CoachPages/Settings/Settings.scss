@@ -1,5 +1,9 @@
 .trainer-settings {
   background: rgba(255, 255, 255, 0.788);
+  width: 50%;
+  min-width: 30rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
 
   .tag-editor {
     background: rgba(148, 148, 148, 0.664);

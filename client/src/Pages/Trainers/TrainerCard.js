@@ -19,17 +19,21 @@ const TrainerCard = ({ trainer }) => {
         key={trainer._id}
         style={{ textDecoration: 'inherit' }}
       >
-        <animated.div className='trainer' style={animation}>
-          <img className='coverpic' src={`/api/image/${trainer.coverPic}`} />
-          <div className='shadow' />
-          <div className='name'>{trainer.name}</div>
-          <div className='profile-container'>
-            <img
-              className='profilepic'
-              src={`/api/image/${trainer.profilePic}`}
-            />
+        <animated.div className='trainer-card' style={animation}>
+          <div className='left-section'>
+            <img className='coverpic' src={`/api/image/${trainer.coverPic}`} />
+            <div className='shadow' />
+            <div className='name'>{trainer.name}</div>
+            <div className='profile-container'>
+              <img
+                className='profilepic'
+                src={`/api/image/${trainer.profilePic}`}
+              />
+            </div>
           </div>
-          <div className='bio'>{trainer.bio}</div>
+          <div className='right-section'>
+            <div className='bio'>{trainer.bio}</div>
+          </div>
         </animated.div>
       </Link>
     </div>

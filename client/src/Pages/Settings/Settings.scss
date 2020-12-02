@@ -1,5 +1,11 @@
 .settings {
   background: rgba(255, 255, 255, 0.788);
+  width: 50%;
+  min-width: 30rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  // margin-top: 10rem;
+
   .header {
     margin-top: 8rem;
     font-size: 4rem;

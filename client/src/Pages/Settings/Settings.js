@@ -34,29 +34,31 @@ const Settings = () => {
       .catch((err) => console.log('darkmode error'));
   };
   return (
-    <div className={`settings dm-${darkmode}`}>
+    <>
       <div className='background' />
       <div className='overlay' />
-      <h2 className='header center'>Settings</h2>
+      <div className={`settings dm-${darkmode}`}>
+        <h2 className='header center'>Settings</h2>
 
-      <div className='form'>
-        <div className='setting-item'>
-          <span>darkmode</span>
-          <label className='switch' htmlFor='darkmode'>
-            <input
-              checked={darkmode}
-              type='checkbox'
-              onChange={handleDarkMode}
-              id='darkmode'
-            />
-            <span className='slider round'></span>
-          </label>
-        </div>
-        <div className='setting-item'>
-          <Link to='/terms-of-use'>terms of use</Link>
+        <div className='form'>
+          <div className='setting-item'>
+            <span>darkmode</span>
+            <label className='switch' htmlFor='darkmode'>
+              <input
+                checked={darkmode}
+                type='checkbox'
+                onChange={handleDarkMode}
+                id='darkmode'
+              />
+              <span className='slider round'></span>
+            </label>
+          </div>
+          <div className='setting-item'>
+            <Link to='/terms-of-use'>terms of use</Link>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
