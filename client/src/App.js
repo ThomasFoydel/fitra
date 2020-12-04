@@ -108,13 +108,12 @@ function App() {
             path='/'
             component={() => (isLoggedIn ? <Home /> : <LandingPage />)}
           />
-          {user.type === 'trainer' && (
-            <Route
-              exact
-              path='/coachportal'
-              component={isLoggedIn ? TrainerHome : TrainerLandingPage}
-            />
-          )}
+
+          <Route
+            exact
+            path='/coachportal'
+            component={isLoggedIn ? TrainerHome : TrainerLandingPage}
+          />
 
           <Route exact path='/terms-of-use' component={TermsOfUse} />
           <Route exact path='/trainers' component={Trainers} />

@@ -33,6 +33,13 @@ const TrainerCard = ({ trainer }) => {
           </div>
           <div className='right-section'>
             <div className='bio'>{trainer.bio}</div>
+            <div className='tags'>
+              {trainer.tags.map((tag) => (
+                <p key={tag} className='tag'>
+                  {tag}
+                </p>
+              ))}
+            </div>
           </div>
         </animated.div>
       </Link>

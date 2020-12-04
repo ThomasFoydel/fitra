@@ -121,6 +121,7 @@ router.post('/login', (req, res) => {
 // search for relevant trainers
 router.get('/trainers', async (req, res) => {
   const trainers = await Trainer.find();
+  console.log(trainers);
   res.send({ trainers });
 });
 
