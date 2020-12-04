@@ -39,6 +39,7 @@ button {
   cursor: pointer;
 }
 
+select:focus,
 button:focus,
 input:focus {
   outline: 0;

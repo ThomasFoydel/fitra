@@ -2,21 +2,24 @@
   transform: translateX(-50%);
   margin-left: 50%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 26.5rem;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 2rem;
 
   .searchbar-input {
     font-size: 2.4rem;
-    padding: 1rem 0.8rem;
+    width: 25rem;
+    padding: 0.5rem 0.8rem;
     margin-top: 2rem;
     border-radius: 1.8rem;
     border: 2px solid rgb(83, 83, 83);
     letter-spacing: 0.1rem;
+    margin-right: 0.5rem;
   }
 
   .querytype-selector {
-    width: 25%;
-    margin-top: 0.4rem;
+    margin-left: 0.5rem;
+    margin-top: 2rem;
+    border-radius: 1.4rem;
   }
 }
