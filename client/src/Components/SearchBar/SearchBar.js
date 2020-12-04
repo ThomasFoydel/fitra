@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import './SearchBar.scss';
-const SearchBar = ({ change }) => {
-  const [search, setSearch] = useState('');
-  const [err, setErr] = useState('');
-  const [queryType, setQueryType] = useState('tags');
+
+const SearchBar = ({
+  props: { search, setSearch, queryType, setQueryType },
+}) => {
   const handleChange = ({ target: { value } }) => {
     setSearch(value);
   };
-  useEffect(() => {
-    axios
-      .post(`/api/client/search/${queryType}`, { search })
-      .then(({ data: { result, err } }) => {
-        // console.log({ result });
-        if (err) return setErr(err);
-        change(result);
-      });
-  }, [search, queryType]);
+
   return (
     <div className='searchbar'>
       <input
@@ -24,6 +15,7 @@ const SearchBar = ({ change }) => {
         placeholder='search...'
         type='text'
         onChange={handleChange}
+        value={search}
       />
       <select
         className='querytype-selector'

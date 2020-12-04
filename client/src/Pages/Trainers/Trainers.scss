@@ -2,6 +2,25 @@
   width: 100vw;
   overflow: hidden;
 
+  .suggestion-tags {
+    display: flex;
+    // flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .suggestion-tag {
+      width: 20rem;
+      background: rgba(255, 255, 255, 0.247);
+      color: white;
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      &:hover {
+        color: black;
+        background: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+
   .trainers-container {
     margin-top: 3rem;
     position: absolute;

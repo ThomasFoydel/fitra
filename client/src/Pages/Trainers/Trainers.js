@@ -4,22 +4,49 @@ import SearchBar from 'Components/SearchBar/SearchBar';
 import './Trainers.scss';
 import TrainerCard from './TrainerCard';
 
+const suggestionTags = [
+  'mma',
+  'yoga',
+  'diet',
+  'pilates',
+  'boxing',
+  'cardio',
+  'calistehnics',
+];
+
 const Trainers = () => {
   const [currentTrainers, setCurrentTrainers] = useState([]);
-  useEffect(() => {
-    let subscribed = true;
-    axios.get('/api/client/trainers').then(({ data: { trainers, err } }) => {
-      if (subscribed) {
-        setCurrentTrainers(trainers);
-      }
-    });
-    return () => {
-      subscribed = false;
-    };
-  }, []);
+  const [firstLoad, setFirstLoad] = useState(true);
+  const [search, setSearch] = useState('');
+  const [err, setErr] = useState('');
+  const [queryType, setQueryType] = useState('tags');
 
-  const handleSearch = (trainers) => {
-    setCurrentTrainers(trainers);
+  // useEffect(() => {
+  //   let subscribed = true;
+  //   axios.get('/api/client/trainers').then(({ data: { trainers, err } }) => {
+  //     if (subscribed) {
+  //       setCurrentTrainers(trainers);
+  //     }
+  //   });
+  //   return () => {
+  //     subscribed = false;
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    if (queryType && search)
+      axios
+        .post(`/api/client/search/${queryType}`, { search })
+        .then(({ data: { result, err } }) => {
+          // console.log({ result });
+          if (err) return setErr(err);
+          setCurrentTrainers(result);
+        });
+  }, [search, queryType]);
+
+  const tagSearch = (tag) => {
+    setQueryType('tags');
+    setSearch(tag);
   };
 
   return (
@@ -27,10 +54,21 @@ const Trainers = () => {
       <div className='background' />
       <div className='overlay' />
       {/* <h1 className='header center'>Trainers</h1> */}
-      <SearchBar change={handleSearch} />
+      <SearchBar props={{ search, setSearch, queryType, setQueryType }} />
+      <div className='suggestion-tags'>
+        {suggestionTags.map((tag) => (
+          <div className='suggestion-tag' onClick={() => tagSearch(tag)}>
+            {tag}
+          </div>
+        ))}
+      </div>
       <div className='trainers-container'>
         {currentTrainers.map((trainer) => (
-          <TrainerCard key={trainer._id} trainer={trainer} />
+          <TrainerCard
+            key={trainer._id}
+            trainer={trainer}
+            tagSearch={tagSearch}
+          />
         ))}
       </div>
     </div>

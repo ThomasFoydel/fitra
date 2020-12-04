@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSpring, animated, config } from 'react-spring';
 
-const TrainerCard = ({ trainer }) => {
+const TrainerCard = ({ trainer, tagSearch }) => {
   const [hover, setHover] = useState(false);
 
   const animation = useSpring({
@@ -12,6 +12,15 @@ const TrainerCard = ({ trainer }) => {
       : 'rgba(255, 255, 255, 0.575)',
     config: config.wobbly,
   });
+
+  const handleTag = (e) => {
+    e.preventDefault();
+    const {
+      target: { id },
+    } = e;
+    tagSearch(id);
+  };
+
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <Link
@@ -34,10 +43,13 @@ const TrainerCard = ({ trainer }) => {
           <div className='right-section'>
             <div className='bio'>{trainer.bio}</div>
             <div className='tags'>
-              {trainer.tags.map((tag) => (
-                <p key={tag} className='tag'>
-                  {tag}
-                </p>
+              {trainer.tags.map((tag, i) => (
+                <span key={tag} id={tag} className='tag' onClick={handleTag}>
+                  # {tag}
+                  {i < trainer.tags.length - 1 &&
+                    trainer.tags.length > 1 &&
+                    ', '}
+                </span>
               ))}
             </div>
           </div>
