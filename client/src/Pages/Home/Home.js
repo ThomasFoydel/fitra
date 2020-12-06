@@ -70,7 +70,8 @@ const Session = ({ session }) => {
         {endDate.toUTCString()}
         {/* {endDate.toDateString()} {endDate.toLocaleTimeString()} */}
       </div>
-      {active && <Link to={`/connect/${_id}`}>connect</Link>}
+      {/* {active && <Link to={`/connect/${_id}`}>connect</Link>} */}
+      <Link to={`/connect/${_id}`}>connect</Link>
       {ended && status !== 'reviewed' && (
         <Link to={`/review/${_id}`}>review</Link>
       )}
