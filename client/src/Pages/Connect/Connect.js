@@ -88,40 +88,44 @@ const Connect = ({ match, socket }) => {
           //   navigator.mozGetUserMedia ||
           //   navigator.msGetUserMedia;
 
-          let getUserMedia = null;
+          let stream = null;
 
           try {
-            getUserMedia = await navigator.mediaDevices.getUserMedia();
+            stream = await navigator.mediaDevices.getUserMedia({
+              video: true,
+              audio: true,
+            });
           } catch (err) {
             console.log('connect media error: ', err);
           }
+          console.log('stream: ', stream);
 
-          getUserMedia({ video: true, audio: true }, (stream) => {
-            myVideoRef.current.srcObject = stream;
-            setMyVideoStream(stream);
+          // getUserMedia({ video: true, audio: true }, (stream) => {
+          myVideoRef.current.srcObject = stream;
+          setMyVideoStream(stream);
 
-            myPeer.on('call', function (call) {
-              call.answer(stream, { metadata: socket.id });
-              call.on('stream', function (callStream) {
-                addVideoStream(callStream, call.metadata);
-              });
-            });
-
-            socket.on('user-connected', ({ userId, mySocketId }) => {
-              if (userId) connectToNewUser(userId, stream, mySocketId);
-            });
-
-            socket.on('create-message', (message) => {
-              setMessages((messages) => [...messages, message]);
-            });
-
-            socket.on('user-disconnected', (userId) => {
-              if (peersRef.current[userId]) peersRef.current[userId].close();
-              const copy = Object.create({ ...peersRef.current });
-              delete copy[userId];
-              peersRef.current = copy;
+          myPeer.on('call', function (call) {
+            call.answer(stream, { metadata: socket.id });
+            call.on('stream', function (callStream) {
+              addVideoStream(callStream, call.metadata);
             });
           });
+
+          socket.on('user-connected', ({ userId, mySocketId }) => {
+            if (userId) connectToNewUser(userId, stream, mySocketId);
+          });
+
+          socket.on('create-message', (message) => {
+            setMessages((messages) => [...messages, message]);
+          });
+
+          socket.on('user-disconnected', (userId) => {
+            if (peersRef.current[userId]) peersRef.current[userId].close();
+            const copy = Object.create({ ...peersRef.current });
+            delete copy[userId];
+            peersRef.current = copy;
+          });
+          // });
 
           function connectToNewUser(userId, stream, userSocketId) {
             // call peer
