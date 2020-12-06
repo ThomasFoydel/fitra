@@ -63,7 +63,7 @@ const Connect = ({ match, socket }) => {
       .get(`/api/connect/client/${connectionId}`, {
         headers: { 'x-auth-token': token },
       })
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         if (data.err) {
           setErrorMessage(data.err);
         } else {
@@ -77,33 +77,24 @@ const Connect = ({ match, socket }) => {
             });
           });
 
-          navigator.getUserMedia =
-            navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia;
+          // let getUserMedia =
+          //   navigator.getUserMedia ||
+          //   navigator.webkitGetUserMedia ||
+          //   navigator.mozGetUserMedia;
 
-          if (typeof navigator.mediaDevices.getUserMedia === 'undefined') {
-            navigator.getUserMedia(
-              {
-                audio: true,
-              },
-              streamHandler,
-              errorHandler
-            );
-          } else {
-            navigator.mediaDevices
-              .getUserMedia({
-                audio: true,
-              })
-              .then(streamHandler)
-              .catch(errorHandler);
+          // navigator.getUserMedia =
+          //   navigator.getUserMedia ||
+          //   navigator.webkitGetUserMedia ||
+          //   navigator.mozGetUserMedia ||
+          //   navigator.msGetUserMedia;
+
+          let getUserMedia = null;
+
+          try {
+            getUserMedia = await navigator.mediaDevices.getUserMedia();
+          } catch (err) {
+            console.log('connect media error: ', err);
           }
-
-          let getUserMedia =
-            navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia;
 
           getUserMedia({ video: true, audio: true }, (stream) => {
             myVideoRef.current.srcObject = stream;
