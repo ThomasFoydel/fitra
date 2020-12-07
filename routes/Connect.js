@@ -41,8 +41,8 @@ router.get('/client/:connectionId', auth, async (req, res) => {
   let ended = currentTime > endDate;
   let active = started && !ended;
 
-  // if (!started) return res.send({ err: 'This session has not yet begun' });
-  // if (!active) return res.send({ err: 'This session has ended' });
+  if (!started) return res.send({ err: 'This session has not yet begun' });
+  if (!active) return res.send({ err: 'This session has ended' });
 
   // change status of session if !started or !active
   // if !started and time until session is less than 5hrs

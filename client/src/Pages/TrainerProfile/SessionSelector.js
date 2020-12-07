@@ -212,6 +212,29 @@ const SessionSelector = ({
     isLoggedIn ? setPayPalOpen(true) : showRegister();
   };
   // console.log(rate * selection.length);
+  // const lastIndex = halfHours.indexOf(selection[selection.length - 1].hour);
+  // console.log(lastIndex);
+
+  let selectionEnd = {};
+  let selectionRangeEnd = selection[selection.length - 1];
+  if (selectionRangeEnd) {
+    selectionEnd.hour =
+      halfHours[halfHours.indexOf(selectionRangeEnd.hour) + 1];
+    let today = selection[selection.length - 1].day;
+    let todayIndex = days.indexOf(today);
+    let endIsMidnight = selectionEnd.hour === '12:00 AM';
+    let tomorrow =
+      todayIndex < days.length - 1 ? days[days.indexOf(today) + 1] : days[0];
+    selectionEnd.day = endIsMidnight ? tomorrow : today;
+    let tomorrowDate = new Date(
+      selection[selection.length - 1].hourDate.getTime() + 86400000
+    );
+    let todayHourDate = selection[selection.length - 1].hourDate.toDateString();
+    selectionEnd.dateString = endIsMidnight
+      ? tomorrowDate.toDateString()
+      : todayHourDate;
+  }
+
   return (
     <div className='session-selector'>
       <div className='ctrls'>
@@ -241,9 +264,11 @@ const SessionSelector = ({
                     {selection[0].hourDate.toDateString()}
                   </div>
                   <div className='end'>
-                    {selection[selection.length - 1].day} -{' '}
-                    {selection[selection.length - 1].hour} -{' '}
-                    {selection[selection.length - 1].hourDate.toDateString()}
+                    {/* {selectionEnd.day}  - {selectionEnd.hour} - {selectionEnd.dateString}               */}
+                    {/* {selection[selection.length - 1].day} - {selectionEnd.hour}{' '}
+                    - {selection[selection.length - 1].hourDate.toDateString()} */}
+                    {selectionEnd.day} - {selectionEnd.hour} -
+                    {selectionEnd.dateString}
                   </div>
                 </>
               ) : (
