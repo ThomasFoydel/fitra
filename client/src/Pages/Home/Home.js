@@ -64,13 +64,13 @@ const Session = ({ session }) => {
       />
       <div className='start-time'>
         <strong>start: </strong>
-        {startDate.toUTCString()}
-        {/* {startDate.toDateString()} {startDate.toLocaleTimeString()} */}
+        {/* {startDate.toUTCString()} */}
+        {startDate.toDateString()} {startDate.toLocaleTimeString()}
       </div>
       <div className='end-time'>
         <strong>end: </strong>
-        {endDate.toUTCString()}
-        {/* {endDate.toDateString()} {endDate.toLocaleTimeString()} */}
+        {/* {endDate.toUTCString()} */}
+        {endDate.toDateString()} {endDate.toLocaleTimeString()}
       </div>
       {active && <Link to={`/connect/${_id}`}>connect</Link>}
       {/* <Link to={`/connect/${_id}`}>connect</Link> */}
