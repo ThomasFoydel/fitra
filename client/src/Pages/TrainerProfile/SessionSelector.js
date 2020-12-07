@@ -211,9 +211,11 @@ const SessionSelector = ({
   const handlePayPalOpen = () => {
     isLoggedIn ? setPayPalOpen(true) : showRegister();
   };
-  // console.log(rate * selection.length);
-  // const lastIndex = halfHours.indexOf(selection[selection.length - 1].hour);
-  // console.log(lastIndex);
+
+  let selectionStart = selection[0];
+  if (selectionStart) {
+    selectionStart.dateString = selectionStart.hourDate.toDateString();
+  }
 
   let selectionEnd = {};
   let selectionRangeEnd = selection[selection.length - 1];
@@ -257,17 +259,14 @@ const SessionSelector = ({
             <p>this trainer's scheduling is not set up</p>
           ) : (
             <>
-              {selection[0] ? (
+              {selectionStart ? (
                 <>
                   <div className='beginning'>
-                    {selection[0].day} - {selection[0].hour} -{' '}
-                    {selection[0].hourDate.toDateString()}
+                    {selectionStart.day} - {selectionStart.hour} -{' '}
+                    {selectionStart.dateString}
                   </div>
                   <div className='end'>
-                    {/* {selectionEnd.day}  - {selectionEnd.hour} - {selectionEnd.dateString}               */}
-                    {/* {selection[selection.length - 1].day} - {selectionEnd.hour}{' '}
-                    - {selection[selection.length - 1].hourDate.toDateString()} */}
-                    {selectionEnd.day} - {selectionEnd.hour} -
+                    {selectionEnd.day} - {selectionEnd.hour} -{' '}
                     {selectionEnd.dateString}
                   </div>
                 </>
