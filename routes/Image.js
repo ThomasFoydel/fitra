@@ -147,7 +147,7 @@ router.get('/:id', ({ params: { id } }, res) => {
   });
 });
 
-//       /api/image/user/profilePic/${id}
+// /api/image/user/profilePic/${id}
 router.get('/user/:kind/:id', async ({ params: { id, kind } }, res) => {
   if (!id || id === 'undefined') return res.send({ err: 'no image id' });
   let user = await findUser(id);

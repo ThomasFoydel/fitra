@@ -2,6 +2,7 @@ import React from 'react';
 import { Rnd } from 'react-rnd';
 import { days, halfHours } from '../../../util/util';
 import { Link } from 'react-router-dom';
+import Image from 'Components/Image/Image';
 
 const Session = ({ props: { data, inCurrentWeek } }) => {
   let invisible = !inCurrentWeek;
@@ -13,7 +14,7 @@ const Session = ({ props: { data, inCurrentWeek } }) => {
   let height = difference * 50;
   let startY = startIdx * 50;
   let xDefault = days.indexOf(data.day) * 120;
-
+  console.log({ data });
   return (
     <Rnd
       style={{
@@ -21,7 +22,7 @@ const Session = ({ props: { data, inCurrentWeek } }) => {
         zIndex: invisible ? '-1' : '5',
         opacity: invisible ? '0' : '1',
       }}
-      className={`rnd-item recurring-${false}`}
+      className={`rnd-item session recurring-${false}`}
       disableDragging={true}
       bounds='parent'
       enableResizing='false'
@@ -32,9 +33,13 @@ const Session = ({ props: { data, inCurrentWeek } }) => {
         height: `${height}px`,
       }}
     >
-      <div className='client'>{data.client}</div>
-
-      <Link to={`/coachportal/manage/${data.id}`}>manage</Link>
+      <Link className='link' to={`/coachportal/manage/${data.id}`}>
+        <Image
+          name='client-profile'
+          alt='client profile'
+          src={`/api/image/user/profilePic/${data.client}`}
+        />
+      </Link>
     </Rnd>
   );
 };
