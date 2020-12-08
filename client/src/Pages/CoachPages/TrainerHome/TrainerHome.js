@@ -28,7 +28,7 @@ const TrainerHome = () => {
       <div className='overlay' />
       <div className='trainer-home'>
         <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
-        <div className='session'>
+        <div className='sessions'>
           {foundSessions &&
             foundSessions.map((session) => (
               <Session session={session} key={session._id} />

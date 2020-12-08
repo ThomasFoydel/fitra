@@ -11,7 +11,7 @@
     letter-spacing: 0.5rem;
   }
 
-  .session {
+  .sessions {
     background: rgb(233, 233, 233);
     padding: 1.2rem;
     margin: 1rem;
@@ -22,6 +22,10 @@
       height: 3rem;
       border-radius: 25rem;
       border: 2px solid #f0f0f0;
+    }
+    .session {
+      border-radius: 1.4rem;
+      padding: 1rem;
     }
   }
   .ended {
