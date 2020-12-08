@@ -51,15 +51,13 @@ const SessionSelector = ({
     }
   };
 
-  // console.log('booked times: ', bookedTimes);
-
   const handleGridClick = (e) => {
     let { day, hour } = JSON.parse(e.target.id);
     let dayIndex = days.indexOf(day);
     let date = week[dayIndex];
     let hourDate = dateFromDateAndTime(date, hour);
 
-    // check if hourDate already in selection, if it is, remove it
+    /* check if hourDate already in selection, if it is, remove it */
     let alreadySelected = false;
     selection.forEach((s) => {
       if (s.hourDate.toString() === hourDate.toString()) alreadySelected = true;
@@ -101,11 +99,11 @@ const SessionSelector = ({
         }
       });
     } else {
-      // does not yet exist, so add this halfhour to selections
-      // check if clicked halfhour is adjacent to an item in the selection
+      /* does not yet exist, so add this halfhour to selections
+       check if clicked halfhour is adjacent to an item in the selection */
       let adjacent;
       selection.forEach((s) => {
-        // check if date is the same
+        /* check if date is the same */
         let sYear = s.hourDate.getFullYear();
         let sMonth = s.hourDate.getMonth();
         let sDate = s.hourDate.getDate();
@@ -114,7 +112,7 @@ const SessionSelector = ({
         let month = hourDate.getMonth();
         let date = hourDate.getDate();
         if (sYear === year && sMonth === month && sDate === date) {
-          // same day
+          /* same day */
           let sHour = s.hourDate.getHours();
           let sMinutes = s.hourDate.getMinutes();
           sHour *= 2;
@@ -134,7 +132,7 @@ const SessionSelector = ({
 
       if (adjacent) {
         setSelection((selections) => {
-          // sort selections by hourDate
+          /* sort selections by hourDate */
           const newArray = [...selections, newTime];
           return newArray.sort((a, b) => a.hourDate - b.hourDate);
         });
@@ -145,7 +143,6 @@ const SessionSelector = ({
   };
 
   useEffect(() => {
-    console.log({ selection });
     let subscribed = true;
     if (subscribed) setMinMet(minimum <= selection.length);
     return () => (subscribed = false);
@@ -315,7 +312,6 @@ const SessionSelector = ({
             {days.map((day) => (
               <div className='grid-day' key={day}>
                 {halfHours.map((hour, i) => {
-                  //   let selected = checkSelection(hour, hourDate, selection);
                   if (i < 48) {
                     let selected;
                     let blocked;
@@ -334,13 +330,9 @@ const SessionSelector = ({
                           blocked = true;
                       });
                     if (bookedTimes) {
-                      // var offset = new Date().getTimezoneOffset();
-                      // console.log({ offset });
                       bookedTimes.forEach((time) => {
                         let startDate = new Date(time.startTime);
                         let endDate = new Date(time.endTime);
-                        // startDate.setMinutes(startDate.getMinutes() + offset);
-                        // endDate.setMinutes(endDate.getMinutes() + offset);
                         if (hourDate >= startDate && hourDate < endDate)
                           blocked = true;
                       });

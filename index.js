@@ -18,7 +18,6 @@ const sessionRoutes = require('./routes/Session');
 const connectRoutes = require('./routes/Connect');
 const imageRoutes = require('./routes/Image');
 const userRoutes = require('./routes/User');
-// const searchRoutes = require('./routes/Search');
 
 const Message = require('./models/Message');
 
@@ -33,13 +32,12 @@ app.use('/api/session', sessionRoutes);
 app.use('/api/connect', connectRoutes);
 app.use('/api/image', imageRoutes);
 app.use('/api/user', userRoutes);
-// app.use('/api/search', searchRoutes);
 
-// static file declaration
+/* static file declaration */
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(cors());
 
-// production mode
+/* production mode */
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
   app.get('*', (req, res) => {
@@ -47,12 +45,13 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// build mode
+/* build mode */
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
 
 let users = [];
+
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -83,7 +82,7 @@ mongoose
     });
 
     io.on('connection', (socket) => {
-      // set up initial connection for chat and notifications
+      /* set up initial connection for chat and notifications */
       const token = socket.handshake.query.token;
       if (!token) {
         // console.log('no token auth denied');
@@ -92,7 +91,7 @@ mongoose
           const decoded = jwt.verify(token, process.env.SECRET);
           let current_time = Date.now() / 1000;
           if (decoded.exp < current_time) {
-            // token is expired, not authorized
+            /* token is expired, not authorized */
           } else {
             let { userId } = decoded.tokenUser;
             const currentUser = {
@@ -118,7 +117,7 @@ mongoose
           .broadcast.emit('user-connected', { mySocketId, userId: peerId });
 
         socket.on('message', (message) => {
-          //send message to the same room
+          /* send message to the same room */
           io.to(roomId).emit('create-message', message);
         });
 

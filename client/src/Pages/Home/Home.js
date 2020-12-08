@@ -42,15 +42,10 @@ const Session = ({ session }) => {
   let { startTime, endTime, _id, client, trainer, status } = session;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
-
   let currentTime = new Date(Date.now());
-  console.log({ startDate, endDate, currentTime });
-
   let started = currentTime > startDate;
   let ended = currentTime > endDate;
   let active = started && !ended;
-  console.log({ started, ended });
-
   return (
     <div
       className={`session 

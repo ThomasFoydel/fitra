@@ -10,7 +10,7 @@ import LandingPage from 'Pages/LandingPage/LandingPage';
 import Home from 'Pages/Home/Home';
 import TrainerHome from 'Pages/CoachPages/TrainerHome/TrainerHome';
 import Settings from 'Pages/Settings/Settings';
-// import Schedule from 'Pages/ScheduleCURRENTLYUNUSED/Schedule';
+
 import Trainers from 'Pages/Trainers/Trainers';
 import Messages from 'Pages/Messages/Messages';
 import TrainerProfile from 'Pages/TrainerProfile/TrainerProfile';
@@ -24,8 +24,6 @@ import SessionReview from 'Pages/SessionReview/SessionReview';
 
 import TermsOfUse from 'Pages/TermsOfUse/TermsOfUse';
 
-// import TrainerMessages from 'Pages/CoachPages/Messages/Messages';
-
 import TrainerLandingPage from 'Pages/CoachPages/TrainerLandingPage/TrainerLandingPage';
 
 import { CTX } from 'context/Store';
@@ -34,8 +32,6 @@ import './App.scss';
 function App() {
   const [appState, updateState] = useContext(CTX);
   let { isLoggedIn, user, showAuth } = appState;
-  // const [authOpen, setAuthOpen] = useState(false);
-  // const [currentShow, setCurrentShow] = useState('login');
   const [mySocket, setMySocket] = useState(null);
 
   let socket;
@@ -96,8 +92,6 @@ function App() {
     };
   }, [user.token]);
 
-  // const setAuthOpen = () => updateState({ type: 'TOGGLE_AUTH' });
-
   return (
     <div className={`App`}>
       <Router>
@@ -137,12 +131,7 @@ function App() {
                       <Connect socket={mySocket} match={match} />
                     )}
                   />
-                  <Route
-                    exact
-                    path='/messages'
-                    component={Messages}
-                    // render={() => <Messages socket={mySocket} />}
-                  />
+                  <Route exact path='/messages' component={Messages} />
                 </>
               )}
 
@@ -164,12 +153,7 @@ function App() {
                 component={TrainerSchedule}
               />
 
-              <Route
-                exact
-                path='/coachportal/messages'
-                component={Messages}
-                // component={TrainerMessages}
-              />
+              <Route exact path='/coachportal/messages' component={Messages} />
               <Route
                 exact
                 path='/coachportal/manage/:id'

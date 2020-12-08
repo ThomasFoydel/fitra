@@ -81,7 +81,6 @@ const Connect = ({ match, socket }) => {
           } catch (err) {
             console.log('connect media error: ', err);
           }
-          console.log('stream: ', stream);
 
           myVideoRef.current.srcObject = stream;
           setMyVideoStream(stream);
