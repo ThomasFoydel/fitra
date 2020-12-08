@@ -95,11 +95,15 @@ $large: 992px;
 
   .rnd-item {
     min-height: 5rem;
-    background: linear-gradient(
-      to bottom right,
-      rgb(248, 248, 248),
-      rgb(189, 189, 189)
-    );
+    // background: linear-gradient(
+    //   to bottom right,
+    //   rgb(248, 248, 248),
+    //   rgb(189, 189, 189)
+    // );
+
+    // &:hover {
+    //   display: none;
+    // }
 
     color: rgb(4, 37, 28);
     border-radius: 9px;
@@ -231,6 +235,17 @@ $large: 992px;
       position: absolute;
       left: 0;
       cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(
+        to bottom right,
+        rgb(248, 248, 248),
+        rgb(189, 189, 189)
+      );
+
+      &:hover {
+        // opacity: 0.8;
+        filter: invert(1);
+      }
     }
     .client-profile {
       max-width: 100%;

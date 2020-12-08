@@ -36,7 +36,7 @@ const Session = ({ props: { data, inCurrentWeek } }) => {
       <Link className='link' to={`/coachportal/manage/${data.id}`}>
         <Image
           name='client-profile'
-          alt='client profile'
+          alt="client's profile"
           src={`/api/image/user/profilePic/${data.client}`}
         />
       </Link>

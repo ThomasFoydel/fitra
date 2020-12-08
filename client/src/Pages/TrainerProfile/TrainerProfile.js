@@ -87,7 +87,11 @@ const TrainerProfile = ({
           }}
         >
           <div className='info'>
-            <Image src={`/api/image/${profilePic}`} name='profile-pic' />
+            <Image
+              src={`/api/image/${profilePic}`}
+              name='profile-pic'
+              alt="trainer's profile"
+            />
             <div className='section-1'>
               <div className='name'>{name}</div>
               <div className='email'>{email}</div>

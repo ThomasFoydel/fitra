@@ -46,7 +46,11 @@ const ClientProfile = ({
         }}
       >
         <div className='info'>
-          <Image src={`/api/image/${profilePic}`} name='profile-pic' />
+          <Image
+            src={`/api/image/${profilePic}`}
+            alt="user's profile"
+            name='profile-pic'
+          />
           <div className='section-1'>
             <div className='name'>{name}</div>
             <div className='bio'>{bio}</div>
