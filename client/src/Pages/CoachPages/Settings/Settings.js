@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Settings = () => {
   const [appState, updateState] = useContext(CTX);
-  const { type, id, token } = appState.user;
+  const { type, token } = appState.user;
   const { darkmode } = appState.settings || {};
 
   const handleDarkMode = ({ target: { checked } }) => {
@@ -22,7 +22,7 @@ const Settings = () => {
           payload: { darkmode },
         });
       })
-      .catch((err) => console.log('darkmode error'));
+      .catch((err) => console.log('darkmode error: ', err));
   };
 
   return (

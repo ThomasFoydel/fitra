@@ -32,10 +32,10 @@ const IntroMessage = ({ id, toggle }) => {
     if (complete) {
       setTimeout(() => {
         if (subscribed) toggle();
-      }, 2800);
+      }, 2000);
     }
     return () => (subscribed = false);
-  }, [complete]);
+  }, [complete, toggle]);
 
   /* 
 

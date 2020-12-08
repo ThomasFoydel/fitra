@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CTX } from 'context/Store';
 import hamburger from 'imgs/icons/hamburger.svg';
 import { useSpring, animated, config } from 'react-spring';
@@ -7,7 +7,7 @@ import { useSpring, animated, config } from 'react-spring';
 const MobileNavBar = ({
   props: { isLoggedIn, openLogin, trainerExt, logout, isTrainer, currentPage },
 }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState] = useContext(CTX);
   const [sideBarOpen, setSideBarOpen] = useState(false);
 
   const sideBarAnimation = useSpring({
@@ -85,6 +85,7 @@ const MobileNavBar = ({
           <h2 className='logo-title'>FITRA</h2>
         </Link>
         <img
+          alt='open navigation'
           src={hamburger}
           onClick={() => setSideBarOpen((o) => !o)}
           className='open-btn'

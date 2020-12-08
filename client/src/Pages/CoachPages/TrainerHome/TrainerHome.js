@@ -6,7 +6,7 @@ import { CTX } from 'context/Store';
 import Image from 'Components/Image/Image';
 
 const TrainerHome = () => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState] = useContext(CTX);
   const { type } = appState.user;
   const [foundSessions, setFoundSessions] = useState([]);
   let { token } = appState.user;
@@ -19,7 +19,7 @@ const TrainerHome = () => {
       })
       .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
-  }, []);
+  }, [token, type]);
 
   return (
     <>
@@ -39,7 +39,7 @@ const TrainerHome = () => {
 };
 
 const Session = ({ session }) => {
-  let { startTime, endTime, _id, client, trainer } = session;
+  let { startTime, endTime, _id, client } = session;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
   let currentTime = new Date(Date.now());

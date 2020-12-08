@@ -80,7 +80,7 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
       .get(`/api/user/${user}`, { headers: { 'x-auth-token': token } })
       .then(({ data: { user } }) => setUserInfo(user))
       .catch((err) => console.log('err: ', err));
-  }, []);
+  }, [token, user]);
 
   let current = currentThread === user;
 

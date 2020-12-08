@@ -24,7 +24,7 @@ const Video = ({ stream }) => {
 };
 
 const Connect = ({ match, socket }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState] = useContext(CTX);
   const { connectionId } = match.params;
   const [myVideoStream, setMyVideoStream] = useState(null);
   const [peers, setPeers] = useState({});

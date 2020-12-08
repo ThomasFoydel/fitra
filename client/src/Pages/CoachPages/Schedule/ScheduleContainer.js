@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import Schedule from './Schedule';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import { getHalfHourFromDate, days } from '../../../util/util';
 
 const ScheduleContainer = () => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState] = useContext(CTX);
   let { token } = appState.user;
   const [entries, setEntries] = useState(null);
   const [sessions, setSessions] = useState(null);
@@ -81,11 +81,14 @@ const ScheduleContainer = () => {
       .catch((err) => console.log({ err }));
   };
 
+  const didMountRef = useRef(false);
   useEffect(() => {
     let subscribed = true;
-    setTimeout(() => {
-      if (subscribed) setErr('');
-    }, 2700);
+    if (didMountRef.current) {
+      setTimeout(() => {
+        if (subscribed) setErr('');
+      }, 2700);
+    } else didMountRef.current = true;
     return () => (subscribed = false);
   }, [err]);
 

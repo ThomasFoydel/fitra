@@ -26,7 +26,7 @@ const ClientProfile = ({
         else if (foundUser && subscribed) setUser(foundUser);
       });
     return () => (subscribed = false);
-  }, []);
+  }, [id, token]);
 
   const didMountRef = useRef(false);
   useEffect(() => {

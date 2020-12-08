@@ -14,7 +14,7 @@ const TrainerProfile = ({
     params: { trainerId },
   },
 }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState] = useContext(CTX);
   let belongsToCurrentUser = appState.user.id === trainerId;
 
   const [currentTrainer, setCurrentTrainer] = useState({});

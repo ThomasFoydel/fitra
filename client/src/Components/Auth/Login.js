@@ -4,7 +4,7 @@ import { CTX } from 'context/Store';
 import AuthPageToggle from './AuthPageToggle';
 
 const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [, updateState] = useContext(CTX);
   const [errorMessage, setErrorMessage] = useState('');
   const [userForm, setUserForm] = useState({});
 
