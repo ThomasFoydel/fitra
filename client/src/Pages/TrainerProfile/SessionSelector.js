@@ -362,6 +362,7 @@ const SessionSelector = ({
           </div>
         </div>
       </div>
+
       {payPalOpen && (
         <PayPal
           props={{

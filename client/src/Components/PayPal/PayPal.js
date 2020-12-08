@@ -1,37 +1,20 @@
 import React, { useEffect, useRef } from 'react';
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer,
+} from '@paypal/react-paypal-js';
 import './PayPal.scss';
+import loading from 'imgs/loading/loading-dots.gif';
 
 const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
-  const paypal = useRef();
+  const handleResolve = (e) => {
+    complete(e);
+  };
+  const handleError = (e) => {
+    console.log('REJECT: ', e);
+  };
 
-  useEffect(() => {
-    window.paypal
-      .Buttons({
-        createOrder: (data, actions, err) => {
-          console.log({ data, err });
-          return actions.order.create({
-            intent: 'CAPTURE',
-            purchase_units: [
-              {
-                description: desc,
-                amount: {
-                  currency_code: 'USD',
-                  value: price,
-                },
-              },
-            ],
-          });
-        },
-        onApprove: async (data, actions) => {
-          const order = await actions.order.capture();
-          complete(order);
-        },
-        onError: (err) => {
-          console.log({ err });
-        },
-      })
-      .render(paypal.current);
-  });
   return (
     <div className='paypal-background'>
       <div className='paypal-container'>
@@ -42,7 +25,10 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
           ></i>
           <p>test email: sb-7ub213671568@personal.example.com</p>
           <p>{`test password: %)z6>&Ry`}</p>
-          <div ref={paypal}></div>
+
+          <PayPalScriptProvider options={{ 'client-id': 'sb' }}>
+            <Buttons handleResolve={handleResolve} handleError={handleError} />
+          </PayPalScriptProvider>
         </div>
       </div>
     </div>
@@ -50,3 +36,18 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
 };
 
 export default PayPal;
+
+const Buttons = ({ handleError, handleResolve }) => {
+  const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer();
+
+  return (
+    <div className=''>
+      {isPending && <img src={loading} alt='loading' />}
+      <PayPalButtons
+        style={{ layout: 'vertical' }}
+        onApprove={handleResolve}
+        onError={handleError}
+      />
+    </div>
+  );
+};
