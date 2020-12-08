@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { CTX } from 'context/Store';
@@ -10,13 +10,12 @@ const ClientProfile = ({
     params: { id },
   },
 }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState] = useContext(CTX);
   let { token } = appState.user;
   let belongsToCurrentUser = appState.user.id === id;
 
   const [user, setUser] = useState({});
   const [err, setErr] = useState('');
-  const [firstRender, setFirstRender] = useState(true);
 
   useEffect(() => {
     let subscribed = true;
@@ -28,12 +27,18 @@ const ClientProfile = ({
       });
     return () => (subscribed = false);
   }, []);
+
+  const didMountRef = useRef(false);
   useEffect(() => {
     let subscribed = true;
-    if (firstRender && subscribed) setFirstRender(false);
-    else setTimeout(() => subscribed && setErr(''), 2500);
+    if (didMountRef.current) {
+      setTimeout(() => {
+        if (subscribed) setErr('');
+      }, 2700);
+    } else didMountRef.current = true;
     return () => (subscribed = false);
   }, [err]);
+
   let { coverPic, profilePic, bio, name, email } = user;
   return (
     <div className='clientprofile'>

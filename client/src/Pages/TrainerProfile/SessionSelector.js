@@ -1,23 +1,23 @@
 import axios from 'axios';
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
-  days,
-  halfHours,
   // getOneHalfHourAhead,
-  dateFromDateAndTime,
-  setUpWeek,
   // checkBlock,
   // checkSelection,
+  days,
+  halfHours,
+  dateFromDateAndTime,
+  setUpWeek,
 } from '../../util/util';
 import { CTX } from 'context/Store';
 
 import PayPal from 'Components/PayPal/PayPal';
 
 const SessionSelector = ({
+  // setShowRegister,
   setBookingSuccess,
   bookedTimes,
   belongsToCurrentUser,
-  // setShowRegister,
   selection,
   setSelection,
   trainer: { availability, _id, minimum, rate, name },
@@ -30,7 +30,6 @@ const SessionSelector = ({
   const [mouseIsDown, setMouseIsDown] = useState(false);
   const [minMet, setMinMet] = useState(false);
   const [err, setErr] = useState('');
-  const [firstRender, setFirstRender] = useState(true);
   const [payPalOpen, setPayPalOpen] = useState(false);
 
   const mouseDown = () => setMouseIsDown(true);
@@ -82,7 +81,7 @@ const SessionSelector = ({
               halfHours.indexOf(sortedFilered[i - 1].hour);
 
             if (diff !== 1) {
-              // selections are not all adjacent, must be cut
+              /* selections are not contiguous, selection must be cut */
               lastIndex = i - 1;
               allAdjacent = false;
             }

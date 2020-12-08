@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { CTX } from 'context/Store';
@@ -8,14 +8,13 @@ const SessionReview = ({
     params: { sessionId },
   },
 }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState] = useContext(CTX);
 
   const [formData, setFormData] = useState({ rating: -1, comment: '' });
   let { rating, comment } = formData;
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [err, setErr] = useState('');
   const [redirect, setRedirect] = useState(false);
-  const [firstRender, setFirstRender] = useState(true);
 
   const handleChange = ({ target: { value, id } }) =>
     setFormData((form) => {
@@ -37,10 +36,14 @@ const SessionReview = ({
       .catch((err) => console.log({ err }));
   };
 
+  const didMountRef = useRef(false);
   useEffect(() => {
     let subscribed = true;
-    if (firstRender && subscribed) setFirstRender(false);
-    else setTimeout(() => subscribed && setErr(''), 2500);
+    if (didMountRef.current) {
+      setTimeout(() => {
+        if (subscribed) setErr('');
+      }, 2700);
+    } else didMountRef.current = true;
     return () => (subscribed = false);
   }, [err]);
 

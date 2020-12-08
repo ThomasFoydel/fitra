@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import './Settings.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
@@ -59,11 +59,9 @@ const Settings = () => {
 
 const TagEditor = ({ props: { appState, updateState } }) => {
   let maxMet = appState.user.tags && appState.user.tags.length >= 4;
-
-  const [firstRender, setFirstRender] = useState(true);
   const [inputVal, setInputVal] = useState('');
   const [err, setErr] = useState('');
-  let { token, id } = appState.user;
+  let { token } = appState.user;
 
   const handleChange = ({ target: { value } }) => {
     setInputVal(value);
@@ -111,15 +109,14 @@ const TagEditor = ({ props: { appState, updateState } }) => {
     if (charCode === 13) handleAddTag();
   };
 
+  const didMountRef = useRef(false);
   useEffect(() => {
     let subscribed = true;
-    if (firstRender) {
-      setFirstRender(false);
-    } else {
+    if (didMountRef.current) {
       setTimeout(() => {
         if (subscribed) setErr('');
-      }, 2500);
-    }
+      }, 2700);
+    } else didMountRef.current = true;
     return () => (subscribed = false);
   }, [err]);
 

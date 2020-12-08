@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
@@ -16,16 +16,16 @@ const ManageSession = ({
   const [err, setErr] = useState('');
   const [openCancel, setOpenCancel] = useState(false);
   let { token } = appState.user;
-  let [firstRender, setFirstRender] = useState(true);
   let [deleted, setDeleted] = useState(false);
 
+  const didMountRef = useRef(false);
   useEffect(() => {
     let subscribed = true;
-    if (!firstRender)
+    if (didMountRef.current) {
       setTimeout(() => {
         if (subscribed) setErr('');
       }, 2700);
-    else setFirstRender(false);
+    } else didMountRef.current = true;
     return () => (subscribed = false);
   }, [err]);
 
@@ -83,6 +83,7 @@ const ManageSession = ({
           <div className='date'>{start && start.toDateString()}</div>
           <div className='start'>start: {start && start.toTimeString()}</div>
           <div className='end'>end: {end && end.toTimeString()}</div>
+          <div className='err'>{err}</div>
 
           {openCancel ? (
             <div className='cancel'>

@@ -36,6 +36,16 @@ const Schedule = ({
   const [blockEntries, setBlockEntries] = useState(entries);
   const [firstRender, setFirstRender] = useState(true);
 
+  // todo: test this:
+  // const didMountRef = useRef(false);
+  // useEffect(() => {
+  //   let subscribed = true;
+  //   if (didMountRef.current) {
+  //    change(blockEntries);
+  //   } else didMountRef.current = true;
+  //   return () => (subscribed = false);
+  // }, [blockEntries]);
+
   useEffect(() => {
     let subscribed = true;
     if (subscribed)
