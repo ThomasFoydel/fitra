@@ -37,6 +37,7 @@ const TrainerProfile = ({
       .get(`/api/client/trainer/${trainerId}`)
       .then(
         ({ data: { trainer, err, foundSessions, foundReviews, foundAvg } }) => {
+          console.log({ foundSessions });
           if (err && subscribed) setErr(err);
           else if (subscribed) {
             setCurrentTrainer(trainer);

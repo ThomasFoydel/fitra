@@ -141,10 +141,10 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
     },
   ]);
   let foundAvg = averageAggregate[0].average;
-  let foundSession = await Session.find({
+  let foundSessions = await Session.find({
     trainer: foundTrainer._id,
   }).select('-roomId -createdAt -updatedAt -status -client -trainer -order');
-  res.send({ trainer: foundTrainer, foundSession, foundReviews, foundAvg });
+  res.send({ trainer: foundTrainer, foundSessions, foundReviews, foundAvg });
 });
 
 router.get('/profile/:id', auth, async ({ params: { id } }, res) => {
