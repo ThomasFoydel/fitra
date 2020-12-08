@@ -31,7 +31,7 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
         },
       })
       .render(paypal.current);
-  }, [complete, desc, price]);
+  });
   return (
     <div className='paypal-background'>
       <div className='paypal-container'>
