@@ -57,7 +57,11 @@ const Trainers = () => {
       <SearchBar props={{ search, setSearch, queryType, setQueryType }} />
       <div className='suggestion-tags'>
         {suggestionTags.map((tag) => (
-          <div className='suggestion-tag' onClick={() => tagSearch(tag)}>
+          <div
+            key={tag}
+            className='suggestion-tag'
+            onClick={() => tagSearch(tag)}
+          >
             {tag}
           </div>
         ))}

@@ -9,8 +9,6 @@ import Image from 'Components/Image/Image';
 import { CTX } from 'context/Store';
 import './TrainerProfile.scss';
 
-//todo: if no trainer found, redirect
-
 const TrainerProfile = ({
   match: {
     params: { trainerId },
@@ -104,7 +102,6 @@ const TrainerProfile = ({
             </div>
           </div>
           <div className='section2'>
-            {/* <div className='bio'>{bio}</div> */}
             <div className='reviews'>
               {reviews.map((review) => (
                 <Review review={review} key={review._id} />
@@ -154,7 +151,6 @@ export default TrainerProfile;
 const Review = ({ review: { rating, comment, client } }) => {
   return (
     <div className='review'>
-      {/* <img src="" className="client" alt="client profile"/> */}
       <Image
         src={`/api/image/user/profilePic/${client}`}
         name='review-profile-pic'
@@ -178,53 +174,3 @@ const Review = ({ review: { rating, comment, client } }) => {
     </div>
   );
 };
-
-/*
- <input
-          type='time'
-          onChange={(e) => setStartTime(e.target.value)}
-          id='startTime'
-          value={startTime}
-        />
-        <input
-          type='time'
-          onChange={(e) => setEndTime(e.target.value)}
-          id='endTime'
-          value={endTime}
-        />
-        <input type='date' onChange={(e) => setDay(e.target.value)}></input>
-        <button onClick={bookSession}>book session</button>
-
-
-// const bookSession = () => {
-  //   // open paypal, upon completion of payment axios post request to server
-  //   // in backend, create new session in db
-  //   let token = localStorage.getItem('fitr-token');
-  //   let start = startTime + ':00';
-  //   let end = endTime + ':00';
-  //   const startDate = new Date(day + 'T' + start);
-  //   const startUTC = startDate.toISOString();
-  //   const endDate = new Date(day + 'T' + end);
-  //   const endUTC = endDate.toISOString();
-  //   console.log(' { startTime: startUTC, endTime: endUTC,: ', {
-  //     startTime: startUTC,
-  //     endTime: endUTC,
-  //   });
-  //   axios
-  //     .post(
-  //       '/api/session/new',
-  //       { startTime: startUTC, endTime: endUTC, trainer: currentTrainer._id },
-  //       {
-  //         headers: { 'x-auth-token': token },
-  //       }
-  //     )
-  //     .then((result) => {
-  //       console.log('booking result: ', result);
-  //     });
-
-  //   // let offset = new Date().getTimezoneOffset();
-  // };
-  // console.log('thing: ', Intl.DateTimeFormat().resolvedOptions().timeZone);
-  // console.log('currentTrainer: ', currentTrainer);
-
-*/

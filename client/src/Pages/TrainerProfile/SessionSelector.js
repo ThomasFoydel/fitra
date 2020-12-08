@@ -174,7 +174,6 @@ const SessionSelector = ({
       return setErr(`minimum time for booking is ${minimum * 60} minutes`);
 
     let startTime = selection[0].hourDate.toUTCString();
-    // let endTime = selection[selection.length - 1].hourDate.toUTCString();
     let endTimeDate = new Date(
       selection[selection.length - 1].hourDate.getTime()
     );
