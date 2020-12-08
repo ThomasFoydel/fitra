@@ -41,7 +41,7 @@ const Session = ({ session }) => {
   let { startTime, endTime, _id, client, trainer, status } = session;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
-  // todo: account for dates being stored as GMT, and currentTime being in localTime
+
   let currentTime = new Date(Date.now());
   console.log({ startDate, endDate, currentTime });
 
@@ -64,16 +64,13 @@ const Session = ({ session }) => {
       />
       <div className='start-time'>
         <strong>start: </strong>
-        {/* {startDate.toUTCString()} */}
         {startDate.toDateString()} {startDate.toLocaleTimeString()}
       </div>
       <div className='end-time'>
         <strong>end: </strong>
-        {/* {endDate.toUTCString()} */}
         {endDate.toDateString()} {endDate.toLocaleTimeString()}
       </div>
       {active && <Link to={`/connect/${_id}`}>connect</Link>}
-      {/* <Link to={`/connect/${_id}`}>connect</Link> */}
       {ended && status !== 'reviewed' && (
         <Link to={`/review/${_id}`}>review</Link>
       )}

@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 const Session = ({ props: { data, inCurrentWeek } }) => {
   let invisible = !inCurrentWeek;
 
-  let t = halfHours.indexOf(data.start);
-  let e = halfHours.indexOf(data.end);
-  if (t === 47) e = 48;
-  e = e - t;
-  e *= 50;
-  t *= 50;
+  let startIdx = halfHours.indexOf(data.start);
+  let endIdx = halfHours.indexOf(data.end);
+  if (startIdx === 47 || endIdx === 0) endIdx = 48;
+  let difference = endIdx - startIdx;
+  let height = difference * 50;
+  let startY = startIdx * 50;
   let xDefault = days.indexOf(data.day) * 120;
 
   return (
@@ -27,9 +27,9 @@ const Session = ({ props: { data, inCurrentWeek } }) => {
       enableResizing='false'
       default={{
         x: xDefault,
-        y: t,
+        y: startY,
         width: 120,
-        height: `${e}px`,
+        height: `${height}px`,
       }}
     >
       <div className='client'>{data.client}</div>
