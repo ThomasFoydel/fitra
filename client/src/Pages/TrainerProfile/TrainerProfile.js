@@ -35,7 +35,6 @@ const TrainerProfile = ({
       .get(`/api/client/trainer/${trainerId}`)
       .then(
         ({ data: { trainer, err, foundSessions, foundReviews, foundAvg } }) => {
-          console.log({ foundSessions });
           if (err && subscribed) setErr(err);
           else if (subscribed) {
             setCurrentTrainer(trainer);
@@ -87,9 +86,7 @@ const TrainerProfile = ({
           }}
         >
           <div className='info'>
-            {console.log({ _id })}
             <Image
-              // src={`/api/image/${profilePic}`}
               // src={`/api/image/user/profilePic/${_id}`}
               src={`/api/image/${profilePic}`}
               name='profile-pic'
