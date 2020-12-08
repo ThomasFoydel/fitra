@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
   days,
   halfHours,
@@ -148,13 +148,14 @@ const SessionSelector = ({
     return () => (subscribed = false);
   }, [selection, minimum]);
 
+  const didMountRef = useRef(false);
   useEffect(() => {
     let subscribed = true;
-    firstRender && subscribed
-      ? setFirstRender(false)
-      : setTimeout(() => {
-          if (subscribed) setErr('');
-        }, 2700);
+    if (didMountRef.current) {
+      setTimeout(() => {
+        if (subscribed) setErr('');
+      }, 2700);
+    } else didMountRef.current = true;
     return () => (subscribed = false);
   }, [err]);
 

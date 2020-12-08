@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
+
 import yogatrainer from 'imgs/yogacoach.jpg';
 import './TrainerLandingPage.scss';
 import { CTX } from 'context/Store';
@@ -7,20 +7,7 @@ import { Redirect } from 'react-router-dom';
 
 const TrainerLandingPage = () => {
   const [appState, updateState] = useContext(CTX);
-  const { isLoggedIn, showAuth } = appState;
-
-  useEffect(() => {
-    let token = localStorage.getItem('fitr-token');
-    if (!token) return;
-    axios
-      .get('/trainer-auth', {
-        headers: {
-          'x-auth-token': token,
-        },
-      })
-      .then((res) => console.log('trainer auth res: ', res))
-      .catch((err) => console.log('err: ', err));
-  }, []);
+  const { isLoggedIn } = appState;
 
   const openAuth = () => {
     updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page: 'register' } });

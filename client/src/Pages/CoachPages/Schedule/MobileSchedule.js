@@ -3,16 +3,16 @@ import React, { useState } from 'react';
 const MobileSchedule = ({
   props: {
     days,
-    dayOfWeek,
     week,
     blockedTimes,
-    setBlockedTimes,
-    entries,
-    blockEntries,
-    setBlockEntries,
+    // dayOfWeek,
+    // setBlockedTimes,
+    // entries,
+    // blockEntries,
+    // setBlockEntries,
   },
 }) => {
-  const [dayOpen, setDayOpen] = useState(0);
+  // const [dayOpen, setDayOpen] = useState(0);
 
   return (
     <div className='mb-schedule'>
@@ -55,7 +55,8 @@ const Day = ({ props: { currentDate, day, blockedTimes } }) => {
             <div key={_id}>
               {belongsOnCurrent && (
                 <div className='mb-block'>
-                  <p>{startDate.toDateString()}</p>
+                  <p>start: {startDate.toDateString()}</p>
+                  <p>end: {endDate.toDateString()}</p>
                 </div>
               )}
             </div>

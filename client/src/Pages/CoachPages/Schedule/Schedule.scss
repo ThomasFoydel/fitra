@@ -90,6 +90,14 @@ $large: 992px;
       0rem 0rem 0.2rem rgba(246, 254, 255, 0.2);
   }
 
+  .rnd-blocked-time {
+    background: linear-gradient(
+      to bottom right,
+      rgb(248, 248, 248),
+      rgb(189, 189, 189)
+    );
+  }
+
   .recurring-true {
     background: linear-gradient(
       to bottom right,

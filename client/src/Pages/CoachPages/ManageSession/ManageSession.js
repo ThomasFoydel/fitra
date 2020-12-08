@@ -11,7 +11,7 @@ const ManageSession = ({
     params: { id },
   },
 }) => {
-  const [appState, updateState] = useContext(CTX);
+  const [appState] = useContext(CTX);
   const [found, setFound] = useState(null);
   const [err, setErr] = useState('');
   const [openCancel, setOpenCancel] = useState(false);

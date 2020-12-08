@@ -117,7 +117,7 @@ const Dnd = ({
     }
   };
 
-  const toggleRecurring = (e) => {
+  const toggleRecurring = () => {
     let dayOfWeek = startDate.getDay();
     let currentWeekDate = week[dayOfWeek];
     let newStartDate = dateFromDateAndTime(currentWeekDate, startTime);
@@ -143,7 +143,7 @@ const Dnd = ({
         zIndex: invisible ? '-1' : '1',
         opacity: invisible ? '0' : '1',
       }}
-      className={`rnd-item recurring-${recurring}`}
+      className={`rnd-item rnd-blocked-time recurring-${recurring}`}
       bounds='parent'
       resizeGrid={[0, 50]}
       dragGrid={[120, 50]}

@@ -43,7 +43,6 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
           <p>{`test password: %)z6>&Ry`}</p>
           <div ref={paypal}></div>
         </div>
-        {/* {checkout ? <PayPal/> : <button onClick={()=>setCheckOut(true)}>checkout</button> } */}
       </div>
     </div>
   );
