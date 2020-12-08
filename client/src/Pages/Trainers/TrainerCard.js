@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSpring, animated, config } from 'react-spring';
+import Image from 'Components/Image/Image';
 
 const TrainerCard = ({ trainer, tagSearch }) => {
   const [hover, setHover] = useState(false);
@@ -20,35 +21,38 @@ const TrainerCard = ({ trainer, tagSearch }) => {
     } = e;
     tagSearch(id);
   };
-
+  let { _id, coverPic, name, profilePic, bio, tags } = trainer;
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <Link
-        to={`/trainer/${trainer._id}`}
-        key={trainer._id}
+        to={`/trainer/${_id}`}
+        key={_id}
         style={{ textDecoration: 'inherit' }}
       >
         <animated.div className='trainer-card' style={animation}>
           <div className='left-section'>
-            <img className='coverpic' src={`/api/image/${trainer.coverPic}`} />
+            <Image
+              alt="trainer's cover"
+              name='coverpic'
+              src={`/api/image/${coverPic}`}
+            />
             <div className='shadow' />
-            <div className='name'>{trainer.name}</div>
+            <div className='name'>{name}</div>
             <div className='profile-container'>
-              <img
-                className='profilepic'
-                src={`/api/image/${trainer.profilePic}`}
+              <Image
+                alt="trainer's profile"
+                name='profilepic'
+                src={`/api/image/${profilePic}`}
               />
             </div>
           </div>
           <div className='right-section'>
-            <div className='bio'>{trainer.bio}</div>
+            <div className='bio'>{bio}</div>
             <div className='tags'>
-              {trainer.tags.map((tag, i) => (
+              {tags.map((tag, i) => (
                 <span key={tag} id={tag} className='tag' onClick={handleTag}>
                   # {tag}
-                  {i < trainer.tags.length - 1 &&
-                    trainer.tags.length > 1 &&
-                    ', '}
+                  {i < tags.length - 1 && tags.length > 1 && ', '}
                 </span>
               ))}
             </div>

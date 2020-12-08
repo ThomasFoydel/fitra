@@ -3,7 +3,7 @@ import loadingGif from 'imgs/loading/loading.gif';
 import defaultProfile from 'imgs/default/profile.jpg';
 
 const Image = ({ name, src, style, alt }) => {
-  let [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   let [err, setErr] = useState(false);
   if (err) src = defaultProfile;
   return (
@@ -12,7 +12,10 @@ const Image = ({ name, src, style, alt }) => {
       className={name}
       alt={alt}
       src={loading ? loadingGif : src}
-      onError={(err) => setErr(true)}
+      onError={(err) => {
+        console.log('image error: ', err);
+        setErr(true);
+      }}
       onLoad={(e) => {
         setTimeout(() => {
           setLoading(false);

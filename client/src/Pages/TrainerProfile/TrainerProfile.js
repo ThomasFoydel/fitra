@@ -49,7 +49,7 @@ const TrainerProfile = ({
     return () => (subscribed = false);
   }, []);
 
-  let { name, bio, email, profilePic, coverPic } = currentTrainer;
+  let { name, bio, email, profilePic, _id, coverPic } = currentTrainer;
 
   const toggleMessageOpen = () => {
     if (appState.messages[currentTrainer._id]) {
@@ -87,7 +87,10 @@ const TrainerProfile = ({
           }}
         >
           <div className='info'>
+            {console.log({ _id })}
             <Image
+              // src={`/api/image/${profilePic}`}
+              // src={`/api/image/user/profilePic/${_id}`}
               src={`/api/image/${profilePic}`}
               name='profile-pic'
               alt="trainer's profile"
@@ -170,7 +173,7 @@ const Review = ({ review: { rating, comment, client } }) => {
             )}, 0)
           )`,
           }}
-        ></div>
+        />
         <img className='stars' src={stars} alt='star rating' />
       </div>
       <div className='rating'>{rating}</div>

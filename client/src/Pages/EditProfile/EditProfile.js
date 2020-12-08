@@ -4,6 +4,7 @@ import axios from 'axios';
 import './EditProfile.scss';
 import { CTX } from 'context/Store';
 import ImageUploader from 'Components/ImageUploader/ImageUploader';
+import Image from 'Components/Image/Image';
 
 // TODOS
 // Replace default picture ids
@@ -73,16 +74,18 @@ const EditProfile = () => {
         <button onClick={handleSubmit}>submit</button>
         <div className='image-uploaders'>
           <div>
-            <img
-              className='edit-pic'
+            <Image
+              name='edit-pic'
               src={`/api/image/${profilePic || '5f4d8786efa2ae10b38bfe9e'}`}
+              alt='your profile'
             />
             <ImageUploader kind='profilePic' />
           </div>
           <div>
-            <img
-              className='edit-pic'
+            <Image
+              name='edit-pic'
               src={`/api/image/${coverPic || '5f4d8786efa2ae10b38bfe9e'}`}
+              alt='your cover'
             />
             <ImageUploader kind='coverPic' />
           </div>

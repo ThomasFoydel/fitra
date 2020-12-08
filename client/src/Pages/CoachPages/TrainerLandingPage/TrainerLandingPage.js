@@ -31,7 +31,6 @@ const TrainerLandingPage = () => {
   };
   return (
     <div className='trainer-landingpage'>
-      {/* <div className='landing-background'></div> */}
       <img src={yogatrainer} alt='yoga coach' className='landing-background' />
       <div className='overlay trainer-overlay'></div>
       {isLoggedIn && <Redirect to='/coachportal/home' />}

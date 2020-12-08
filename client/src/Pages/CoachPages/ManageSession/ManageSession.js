@@ -4,6 +4,8 @@ import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
 import './ManageSession.scss';
 import { Redirect } from 'react-router-dom';
+import Image from 'Components/Image/Image';
+
 const ManageSession = ({
   match: {
     params: { id },
@@ -68,8 +70,9 @@ const ManageSession = ({
             <i className='fas fa-angle-left fa-4x back-link'></i>
           </Link>
           <Link to={`/user/${found.client._id}`}>
-            <img
-              className='profile-pic'
+            <Image
+              name='profile-pic'
+              alt="client's profile"
               src={`/api/image/user/profilePic/${found.session.client}`}
             />
           </Link>

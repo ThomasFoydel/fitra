@@ -3,6 +3,7 @@ import { CTX } from 'context/Store';
 import './Schedule.scss';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Image from 'Components/Image/Image';
 
 const Schedule = () => {
   const [appState, updateState] = useContext(CTX);
@@ -56,8 +57,9 @@ const Session = ({ session }) => {
       ${!started && ' not-started '} 
       `}
     >
-      <img
-        className='profile-pic'
+      <Image
+        alt="trainer's profile"
+        name='profile-pic'
         src={`/api/image/user/profilePic/${trainer}`}
       />
       <div className='start-time'>

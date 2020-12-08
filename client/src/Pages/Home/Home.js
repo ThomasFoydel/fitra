@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import './Home.scss';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Image from 'Components/Image/Image';
 import { CTX } from 'context/Store';
+import './Home.scss';
 
 const Home = () => {
   const [appState, updateState] = useContext(CTX);
@@ -58,9 +59,10 @@ const Session = ({ session }) => {
       ${!started && ' not-started '} 
       `}
     >
-      <img
-        className='profile-pic'
+      <Image
+        name='profile-pic'
         src={`/api/image/user/profilePic/${trainer}`}
+        alt="trainer's profile"
       />
       <div className='start-time'>
         <strong>start: </strong>

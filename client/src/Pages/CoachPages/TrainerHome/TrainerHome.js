@@ -3,6 +3,7 @@ import './TrainerHome.scss';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { CTX } from 'context/Store';
+import Image from 'Components/Image/Image';
 
 const TrainerHome = () => {
   const [appState, updateState] = useContext(CTX);
@@ -57,19 +58,18 @@ const Session = ({ session }) => {
       ${!started && ' not-started '} 
       `}
     >
-      <img
-        className='profile-pic'
-        src={`/api/image/user/profilePic/${trainer}`}
+      <Image
+        name='profile-pic'
+        src={`/api/image/user/profilePic/${client}`}
+        alt="client's profile"
       />
       <div className='start-time'>
         <strong>start: </strong>
-        {startDate.toUTCString()}
-        {/* {startDate.toDateString()} {startDate.toLocaleTimeString()} */}
+        {startDate.toDateString()} {startDate.toLocaleTimeString()}
       </div>
       <div className='end-time'>
         <strong>end: </strong>
-        {endDate.toUTCString()}
-        {/* {endDate.toDateString()} {endDate.toLocaleTimeString()} */}
+        {endDate.toDateString()} {endDate.toLocaleTimeString()}
       </div>
       {active && <Link to={`/connect/${_id}`}>connect</Link>}
     </div>

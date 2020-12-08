@@ -3,6 +3,7 @@ import './Messages.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
+import Image from 'Components/Image/Image';
 
 const Messages = () => {
   const [appState, updateState] = useContext(CTX);
@@ -90,14 +91,12 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
         setCurrentThread((cUser) => (cUser === user ? null : user))
       }
     >
-      <img
-        className='profile-pic'
-        // src={`/api/image/${userInfo.profilePic}`}
+      <Image
+        name='profile-pic'
         src={`/api/image/user/profilePic/${user}`}
         alt={`profile of ${userInfo.name}`}
       />
       <span className='name'>{userInfo.name}</span>
-      {/* {!current && <button onClick={() => setCurrentThread(user)}>open</button>} */}
     </div>
   );
 };
@@ -119,8 +118,9 @@ const Thread = ({ thread, close, currentUser, refEl }) => {
                 <Link
                   to={`/${msg.fromTrainer ? 'trainer' : 'user'}/${msg.sender}`}
                 >
-                  <img
-                    className='profile-pic'
+                  <Image
+                    alt="sender's profile"
+                    name='profile-pic'
                     src={`/api/image/user/profilePic/${msg.sender}`}
                   />
                 </Link>
