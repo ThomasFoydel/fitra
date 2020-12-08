@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-// import TimeInput from 'react-time-input';
 
-// import { halfHours } from '../../../util/util';
 const MobileSchedule = ({
   props: {
     days,
@@ -14,7 +12,6 @@ const MobileSchedule = ({
     setBlockEntries,
   },
 }) => {
-  // blockedTimes = render, blockEntries = db
   const [dayOpen, setDayOpen] = useState(0);
 
   return (
@@ -33,8 +30,6 @@ export default MobileSchedule;
 const Day = ({ props: { currentDate, day, blockedTimes } }) => {
   const [addTimeOpen, setAddTimeOpen] = useState(false);
   const [timeSelection, setTimeSelection] = useState({ start: {}, end: {} });
-
-  // if (timeSelection) console.log('TIME SELECTION!');
 
   const toggleOpen = () => setAddTimeOpen((o) => !o);
 
@@ -66,20 +61,7 @@ const Day = ({ props: { currentDate, day, blockedTimes } }) => {
             </div>
           );
       })}
-      {/* {addTimeOpen ? (
-        <div className='addtime-form'>
-          <button className='close-btn' onClick={toggleOpen}>
-            <i className='fas fa-times fa-2x'></i>
-          </button>
-          <TimeInput id='start' label='start' onChange={handleTimeSelect} />
-          <TimeInput id='end' label='end' onChange={handleTimeSelect} />
-          {start && end && <button>submit</button>}
-        </div>
-      ) : (
-        <button className='addtime-btn' onClick={toggleOpen}>
-          add time
-        </button>
-      )} */}
+
       <div
         className='addtime-form'
         style={{

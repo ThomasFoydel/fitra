@@ -3,7 +3,7 @@ $medium: 768px;
 $large: 992px;
 
 .navbar,
-.mobile-navbar1 {
+.mobile-navbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -89,22 +89,11 @@ $large: 992px;
   }
 }
 
-// .mobile-navbar {
-//   display: none;
-//   @media screen and (max-width: $medium) {
-//     display: inherit;
-//   }
-//   position: relative;
-//   top: 0;
-//   left: 0;
-// }
-
-.mobile-navbar1 {
+.mobile-navbar {
   display: none;
   height: 6rem;
   z-index: 2;
   min-width: 100vw;
-  // border-bottom: 1px solid white;
 
   @media screen and (max-width: $medium) {
     display: inherit;
@@ -137,7 +126,6 @@ $large: 992px;
   background: rgba(0, 0, 0, 1);
   display: flex;
   flex-direction: column;
-  // height: 38rem;
   border-radius: 0 0 3rem 0;
   overflow: hidden;
   z-index: 1;
@@ -150,7 +138,6 @@ $large: 992px;
   }
 
   .link {
-    // color: white;
     color: #f7f7f7;
     text-decoration: none;
     letter-spacing: 0.2rem;

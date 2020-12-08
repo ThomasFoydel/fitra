@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import Schedule from './Schedule';
 import axios from 'axios';
 import { CTX } from 'context/Store';
-// import { v4 as uuidv4 } from 'uuid';
 import { getHalfHourFromDate, days } from '../../../util/util';
 
 const ScheduleContainer = () => {

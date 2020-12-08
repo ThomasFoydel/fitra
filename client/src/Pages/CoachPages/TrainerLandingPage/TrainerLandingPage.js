@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-// import IntroMessage from 'Components/IntroMessage/IntroMessage';
-// import Auth from 'Components/Auth/Auth';
 import yogatrainer from 'imgs/yogacoach.jpg';
 import './TrainerLandingPage.scss';
 import { CTX } from 'context/Store';

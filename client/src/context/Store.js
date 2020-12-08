@@ -75,7 +75,6 @@ export function reducer(state, action) {
       return { ...state, user: { ...state.user, ...res } };
     default:
       console.log('REDUCER ERROR: action: ', action);
-      // throw Error('reducer error');
       return { ...state };
   }
 }

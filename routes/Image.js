@@ -67,7 +67,7 @@ router.get('/', (req, res) => {
     process.exit(0);
   }
   gfs.find().toArray((err, files) => {
-    // check if files exist
+    /* check if files exist */
     if (!files || files.length === 0) {
       return res.send({ err: 'no files' });
     } else {
@@ -147,7 +147,7 @@ router.get('/:id', ({ params: { id } }, res) => {
   });
 });
 
-// /api/image/user/profilePic/${id}
+/* /api/image/user/profilePic/${id} */
 router.get('/user/:kind/:id', async ({ params: { id, kind } }, res) => {
   if (!id || id === 'undefined') return res.send({ err: 'no image id' });
   let user = await findUser(id);
@@ -158,7 +158,7 @@ router.get('/user/:kind/:id', async ({ params: { id, kind } }, res) => {
     const _id = new mongoose.Types.ObjectId(foundPicId);
     gfs.find({ _id }).toArray((err, files) => {
       if (!files || files.length === 0) {
-        // user has no profile or cover photo
+        /* user has no profile or cover photo */
         // TODO: send back a default
         return res.send({ err: 'No files exist' });
       }

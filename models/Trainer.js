@@ -54,5 +54,4 @@ const trainerSchema = {
   tags: [String],
 };
 
-// needs: weekly schedule
 module.exports = mongoose.model('Trainer', trainerSchema);

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// todo: change settings to its own schema
 const clientSchema = {
   name: {
     type: String,

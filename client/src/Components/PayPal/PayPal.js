@@ -2,8 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import './PayPal.scss';
 
 const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
-  // const [checkout, setCheckOut] = useState(false);
-
   const paypal = useRef();
 
   useEffect(() => {

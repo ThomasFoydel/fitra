@@ -4,11 +4,6 @@ import Peer from 'peerjs';
 import './Connect.scss';
 import { CTX } from 'context/Store';
 
-// const videoConstraints = {
-//   height: window.innerHeight / 2,
-//   width: window.innerWidth / 2,
-// };
-
 const objectFilter = function (obj, keyToFilterOut) {
   let result = {};
   let keys = Object.keys(obj);
@@ -52,7 +47,6 @@ const Connect = ({ match, socket }) => {
       ...streamsRef.current,
       [id]: { stream: userVideoStream },
     };
-    // streamsRef.current = [...streamsRef.current, {id: userVideoStream.id, stream:userVideoStream }]
   };
 
   useEffect(() => {
@@ -65,7 +59,7 @@ const Connect = ({ match, socket }) => {
       })
       .then(async ({ data }) => {
         if (data.err) {
-          setErrorMessage(data.err);
+          if (subscribed) setErrorMessage(data.err);
         } else {
           myPeer = new Peer();
           myPeer.on('open', (id) => {
@@ -76,17 +70,6 @@ const Connect = ({ match, socket }) => {
               token: token,
             });
           });
-
-          // let getUserMedia =
-          //   navigator.getUserMedia ||
-          //   navigator.webkitGetUserMedia ||
-          //   navigator.mozGetUserMedia;
-
-          // navigator.getUserMedia =
-          //   navigator.getUserMedia ||
-          //   navigator.webkitGetUserMedia ||
-          //   navigator.mozGetUserMedia ||
-          //   navigator.msGetUserMedia;
 
           let stream = null;
 
@@ -100,7 +83,6 @@ const Connect = ({ match, socket }) => {
           }
           console.log('stream: ', stream);
 
-          // getUserMedia({ video: true, audio: true }, (stream) => {
           myVideoRef.current.srcObject = stream;
           setMyVideoStream(stream);
 
@@ -125,10 +107,9 @@ const Connect = ({ match, socket }) => {
             delete copy[userId];
             peersRef.current = copy;
           });
-          // });
 
           function connectToNewUser(userId, stream, userSocketId) {
-            // call peer
+            /* call peer */
             const call = myPeer.call(userId, stream, {
               metadata: userSocketId,
             });
@@ -271,3 +252,9 @@ const Connect = ({ match, socket }) => {
 };
 
 export default Connect;
+
+/* const videoConstraints = {
+   height: window.innerHeight / 2,
+   width: window.innerWidth / 2,
+ };
+*/

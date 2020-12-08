@@ -43,7 +43,6 @@ const Session = ({ session }) => {
   let { startTime, endTime, _id, client, trainer } = session;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
-  // todo: account for dates being stored as GMT, and currentTime being in localTime
   let currentTime = new Date(Date.now());
 
   let started = currentTime > startDate;

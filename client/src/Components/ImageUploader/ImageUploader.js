@@ -13,7 +13,6 @@ const ImageUploader = ({ kind }) => {
 
   const fileHandler = (e) => {
     setFile(e.target.files[0]);
-    // setProfileInputContainsFile(true);
   };
   const handleSubmit = () => {
     if (file) {

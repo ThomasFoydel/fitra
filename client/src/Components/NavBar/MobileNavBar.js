@@ -76,7 +76,7 @@ const MobileNavBar = ({
           </>
         )}
       </animated.div>
-      <div className='mobile-navbar1'>
+      <div className='mobile-navbar'>
         <Link
           to={isLoggedIn ? `${trainerExt}/` : '/'}
           className='home-link'

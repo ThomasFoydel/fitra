@@ -8,15 +8,6 @@ const Settings = () => {
   const [appState, updateState] = useContext(CTX);
   const { type, id, token } = appState.user;
   const { darkmode } = appState.settings;
-  const [formData, setFormData] = useState({});
-  // const submit = () => {
-  //   axios.post(`/api/${type}/settings`, formData, {
-  //     headers: { 'x-auth-token': token },
-  //   });
-  // };
-  // const handleChange = ({ target: { value, id } }) => {
-  //   setFormData({ ...formData, [id]: value });
-  // };
 
   const handleDarkMode = ({ target: { checked } }) => {
     axios

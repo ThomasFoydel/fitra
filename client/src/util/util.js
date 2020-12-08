@@ -74,20 +74,20 @@ export const setUpWeek = (weekShift) => {
   const dayOfWeek = current.getDay();
   let currentTime = current.getTime();
 
-  // nowDate = the current day of the week, shifted to whatever the current week is
+  /* nowDate = the current day of the week, shifted to whatever the current week is */
   let nowDate = new Date(currentTime + mSecondsInAWeek * weekShift);
   let now = nowDate.getTime();
 
   let weekObj = {};
 
-  // fill in forwards to saturday
+  /* fill in forwards to saturday */
   for (let i = dayOfWeek; i < 7; i++) {
     const daysFromCurrent = i - dayOfWeek;
     const mSecondsPassed = daysFromCurrent * mSecondsInADay;
     const date = new Date(now + mSecondsPassed);
     weekObj[i] = date;
   }
-  // fill in backwards to monday, if day is not sunday
+  /* fill in backwards to monday, if day is not sunday */
   if (dayOfWeek > 0) {
     let count = 1;
     for (let j = dayOfWeek; j > 0; j--) {
@@ -126,17 +126,17 @@ export const checkBlock = (data, week) => {
 export const dateFromDateAndTime = (date, time, startTime) => {
   let newYear = date.getFullYear();
   let newMonth = Number(date.getMonth());
-  // if (newMonth < 10) newMonth = `0${newMonth}`;
+  /* if (newMonth < 10) newMonth = `0${newMonth}`; */
   let newDay = Number(date.getDate());
 
   let split = time.split(':');
   let newHour = Number(split[0]);
   let afterNoon = split[1].split(' ')[1] === 'PM';
   if (afterNoon && newHour !== 12) newHour += 12;
-  // if it is 12:00am
+  /* if it is 12:00am */
   if (!afterNoon && newHour === 12) newHour = 0;
   let newMin = split[1].split(' ')[0];
-  // if it is 12:00am and this is not a start time, increase day by 1 (its 12:00AM the next day)
+  /* if it is 12:00am and this is not a start time, increase day by 1 (its 12:00AM the next day) */
   if (startTime && newHour === 0) {
     let startIndex = halfHours.indexOf(startTime);
     if (startIndex > 0) {

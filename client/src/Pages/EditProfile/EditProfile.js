@@ -6,9 +6,6 @@ import { CTX } from 'context/Store';
 import ImageUploader from 'Components/ImageUploader/ImageUploader';
 import Image from 'Components/Image/Image';
 
-// TODOS
-// Replace default picture ids
-
 const EditProfile = () => {
   const [appState, updateState] = useContext(CTX);
   const { type } = appState.user;
@@ -23,9 +20,6 @@ const EditProfile = () => {
     let { id, value } = e.target;
     setFormInfo({ ...formInfo, [id]: value });
   };
-  // const resetForm = () => {
-  //   setFormInfo({name: "", bio: "", email:""})
-  // }
 
   const handleSubmit = () => {
     axios

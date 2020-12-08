@@ -118,14 +118,14 @@ router.post('/login', (req, res) => {
   );
 });
 
-// search for relevant trainers
+/* search for relevant trainers */
 router.get('/trainers', async (req, res) => {
   const trainers = await Trainer.find();
   console.log(trainers);
   res.send({ trainers });
 });
 
-// get profile info of specific trainer
+/* get profile info of specific trainer */
 router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   try {
     trainerId = new mongoose.Types.ObjectId(trainerId);

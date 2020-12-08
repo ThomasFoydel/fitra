@@ -21,24 +21,11 @@ const Trainers = () => {
   const [err, setErr] = useState('');
   const [queryType, setQueryType] = useState('tags');
 
-  // useEffect(() => {
-  //   let subscribed = true;
-  //   axios.get('/api/client/trainers').then(({ data: { trainers, err } }) => {
-  //     if (subscribed) {
-  //       setCurrentTrainers(trainers);
-  //     }
-  //   });
-  //   return () => {
-  //     subscribed = false;
-  //   };
-  // }, []);
-
   useEffect(() => {
     if (queryType && search)
       axios
         .post(`/api/client/search/${queryType}`, { search })
         .then(({ data: { result, err } }) => {
-          // console.log({ result });
           if (err) return setErr(err);
           setCurrentTrainers(result);
         });

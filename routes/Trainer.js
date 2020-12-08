@@ -122,7 +122,6 @@ router.get('/dashboard', auth, (req, res) => {
     .select('-roomId')
     .then((sessions) => res.send({ sessions }))
     .catch((err) => res.send('Database error'));
-  //res.send(result)
 });
 
 router.post('/editprofile/', auth, (req, res) => {
@@ -204,7 +203,7 @@ router.get('/session/:id', auth, async ({ params: { id } }, res) => {
   try {
     _id = new mongoose.Types.ObjectId(id);
   } catch (err) {
-    // mongo id cast error, user's using incorrect url
+    /* mongo id cast error, user's using incorrect url */
     return res.send({ err: 'No session found' });
   }
   let foundSession = await Session.findById(_id).select('-roomId');

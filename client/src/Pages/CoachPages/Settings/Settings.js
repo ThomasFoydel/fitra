@@ -8,16 +8,6 @@ const Settings = () => {
   const [appState, updateState] = useContext(CTX);
   const { type, id, token } = appState.user;
   const { darkmode } = appState.settings || {};
-  const [formData, setFormData] = useState({});
-  const [firstRender, setFirstRender] = useState(true);
-  // const submit = () => {
-  //   axios.post(`/api/${type}/settings`, formData, {
-  //     headers: { 'x-auth-token': token },
-  //   });
-  // };
-  // const handleChange = ({ target: { value, id } }) => {
-  //   setFormData({ ...formData, [id]: value });
-  // };
 
   const handleDarkMode = ({ target: { checked } }) => {
     axios
@@ -100,7 +90,6 @@ const TagEditor = ({ props: { appState, updateState } }) => {
   };
 
   const handleDelete = ({ target: { id } }) => {
-    console.log('delete!: ', id);
     axios
       .post(
         '/api/trainer/delete-tag',
@@ -113,7 +102,6 @@ const TagEditor = ({ props: { appState, updateState } }) => {
         let { err } = data;
         if (err) return setErr(err);
         updateState({ type: 'CHANGE_TAGS', payload: { tags: data } });
-        console.log({ data });
       })
       .catch((err) => {
         console.log({ err });

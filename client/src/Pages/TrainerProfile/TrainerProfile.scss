@@ -64,12 +64,6 @@ $large: 992px;
     }
   }
 
-  // .section-1 {
-  //   div {
-  //     height: 2.5rem;
-  //   }
-  // }
-
   .link {
     text-decoration: none;
     background: rgba(230, 230, 230, 0.767);
@@ -126,64 +120,6 @@ $large: 992px;
     }
   }
 }
-// .trainerprofile {
-//   color: white;
-//   text-align: center;
-//   overflow: hidden;
-//   .name {
-//     font-size: 6rem;
-//     letter-spacing: 0.5rem;
-//     line-height: 6rem;
-//     font-weight: bold;
-//     width: 50rem;
-//   }
-//   .bio {
-//     font-size: 1.4rem;
-//   }
-//   .email {
-//     font-weight: bold;
-//     font-size: 1.4rem;
-//   }
-
-//   .section1 {
-//     margin-top: 5rem;
-//     width: 80%;
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-around;
-//     margin-left: 50%;
-//     transform: translateX(-50%);
-//   }
-//   .cover-pic {
-//     width: 100vw;
-//     height: 100vh;
-//     background-position: top;
-//     background-size: cover;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     z-index: -1;
-//     padding-top: 2rem;
-//     overflow: scroll;
-//   }
-
-//   .profile-pic {
-//     min-width: 25rem;
-//     min-height: 25rem;
-//     max-width: 25rem;
-//     max-height: 25rem;
-//     border-radius: 20rem;
-//     border: 12px solid rgb(240, 240, 240);
-//     background-color: rgb(240, 240, 240);
-
-//     display: block;
-//   }
-//   // Input {
-//   //   margin-left: 50%;
-//   //   transform: translateX(-50%);
-//   //   display: block;
-//   // }
-// }
 
 .session-selector {
   .grid-time.unavailable {
@@ -205,7 +141,6 @@ $large: 992px;
   }
 
   .ctrls {
-    // background: white;
     margin-left: 50%;
     transform: translateX(-50%);
     height: 20rem;
@@ -240,12 +175,8 @@ $large: 992px;
     }
     .weekshift-btns {
     }
-    // .err {
-    //   color: red;
-    // }
   }
 
-  //////////////////////
   .relative-container {
     height: 50rem;
     overflow-y: hidden;
@@ -310,20 +241,7 @@ $large: 992px;
   }
 
   .grid-day {
-    // display: flex;
   }
-
-  // .weekshift-btns {
-  //   margin-left: 50%;
-  //   transform: translateX(-50%);
-  //   width: 840px;
-  //   display: flex;
-  //   justify-content: space-around;
-  //   button {
-  //     padding: 0.5rem;
-  //     width: 10rem;
-  //   }
-  // }
 
   .labels {
     margin-top: 1rem;
@@ -353,8 +271,3 @@ $large: 992px;
     }
   }
 }
-
-// * {
-//   background: black;
-//   border: 2px solid red;
-// }

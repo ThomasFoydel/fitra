@@ -4,7 +4,6 @@ const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
 const Client = require('../models/Client');
 
-// get user
 router.get('/:id', auth, async (req, res) => {
   let { id } = req.params;
   const foundClient = await Client.findById(id);

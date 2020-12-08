@@ -13,9 +13,6 @@ import {
 import './Schedule.scss';
 import MobileSchedule from './MobileSchedule';
 
-// todos:
-// double check values across blockentries and blocktimes for all changes
-
 let current = new Date();
 let dayOfWeek = current.getDay();
 

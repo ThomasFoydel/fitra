@@ -1,8 +1,6 @@
 const Message = require('../models/Message');
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
-// const Session = require('../models/Session');
-// const nodemailer = require('nodemailer');
 
 const messageSorter = async (userId) => {
   let sortedMessages = {};
@@ -32,7 +30,7 @@ const findUser = async (id) => {
 };
 
 const sendReminders = async () => {
-  // fine all sessions that happen between 23 and 24 hours away from current time in UTC
+  // find all sessions that happen between 23 and 24 hours away from current time in UTC
   // const foundSessions = await Sessions.findAll({})
   // for each session in array, check if status is 'pending' or 'reminder-sent'
   // if 'pending', send email and update to 'reminder-sent'
