@@ -41,7 +41,7 @@ const ManageSession = ({
           else setFound({ session: foundSession, client: foundClient });
       });
     return () => (subscribed = false);
-  }, []);
+  }, [token, id]);
 
   const handleCancel = () => {
     axios

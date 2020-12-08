@@ -8,6 +8,7 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
     window.paypal
       .Buttons({
         createOrder: (data, actions, err) => {
+          console.log({ data, err });
           return actions.order.create({
             intent: 'CAPTURE',
             purchase_units: [
@@ -30,7 +31,7 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
         },
       })
       .render(paypal.current);
-  }, []);
+  }, [complete, desc, price]);
   return (
     <div className='paypal-background'>
       <div className='paypal-container'>

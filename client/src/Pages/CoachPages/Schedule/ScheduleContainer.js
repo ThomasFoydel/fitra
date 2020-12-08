@@ -57,7 +57,7 @@ const ScheduleContainer = () => {
         }
       });
     return () => (subscribed = false);
-  }, []);
+  }, [token]);
 
   const handleMinMax = ({ target: { value, id } }) => {
     value = Number(value);

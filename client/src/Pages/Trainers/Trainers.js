@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import SearchBar from 'Components/SearchBar/SearchBar';
 import './Trainers.scss';
@@ -16,7 +16,6 @@ const suggestionTags = [
 
 const Trainers = () => {
   const [currentTrainers, setCurrentTrainers] = useState([]);
-  const [firstLoad, setFirstLoad] = useState(true);
   const [search, setSearch] = useState('');
   const [err, setErr] = useState('');
   const [queryType, setQueryType] = useState('tags');
@@ -27,7 +26,7 @@ const Trainers = () => {
         .post(`/api/client/search/${queryType}`, { search })
         .then(({ data: { result, err } }) => {
           if (err) return setErr(err);
-          setCurrentTrainers(result);
+          else setCurrentTrainers(result);
         });
   }, [search, queryType]);
 
@@ -36,11 +35,21 @@ const Trainers = () => {
     setSearch(tag);
   };
 
+  const didMountRef = useRef(false);
+  useEffect(() => {
+    let subscribed = true;
+    if (didMountRef.current) {
+      setTimeout(() => {
+        if (subscribed) setErr('');
+      }, 2700);
+    } else didMountRef.current = true;
+    return () => (subscribed = false);
+  }, [err]);
+
   return (
     <div className='trainers'>
       <div className='background' />
       <div className='overlay' />
-      {/* <h1 className='header center'>Trainers</h1> */}
       <SearchBar props={{ search, setSearch, queryType, setQueryType }} />
       <div className='suggestion-tags'>
         {suggestionTags.map((tag) => (
@@ -61,6 +70,7 @@ const Trainers = () => {
             tagSearch={tagSearch}
           />
         ))}
+        <div className='err'>{err}</div>
       </div>
     </div>
   );

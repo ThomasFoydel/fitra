@@ -50,17 +50,17 @@ const Day = ({ props: { currentDate, day, blockedTimes } }) => {
         endDate = new Date(endDate);
         let belongsOnCurrent =
           currentDate.toDateString() === startDate.toDateString();
-        if (belongsOnCurrent)
-          return (
-            <div key={_id}>
-              {belongsOnCurrent && (
-                <div className='mb-block'>
-                  <p>start: {startDate.toDateString()}</p>
-                  <p>end: {endDate.toDateString()}</p>
-                </div>
-              )}
-            </div>
-          );
+
+        return belongsOnCurrent ? (
+          <div key={_id}>
+            {belongsOnCurrent && (
+              <div className='mb-block'>
+                <p>start: {startDate.toDateString()}</p>
+                <p>end: {endDate.toDateString()}</p>
+              </div>
+            )}
+          </div>
+        ) : null;
       })}
 
       <div

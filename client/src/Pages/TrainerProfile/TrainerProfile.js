@@ -46,9 +46,9 @@ const TrainerProfile = ({
       )
       .catch((err) => console.log('trainer profile error: ', err));
     return () => (subscribed = false);
-  }, []);
+  }, [trainerId]);
 
-  let { name, bio, email, profilePic, _id, coverPic } = currentTrainer;
+  let { name, bio, email, profilePic, coverPic } = currentTrainer;
 
   const toggleMessageOpen = () => {
     if (appState.messages[currentTrainer._id]) {
