@@ -112,55 +112,71 @@ function App() {
           <Route exact path='/terms-of-use' component={TermsOfUse} />
           <Route exact path='/trainers' component={Trainers} />
           <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
-          {isLoggedIn && (
-            <>
-              {/* <Route exact path='/schedule' component={Schedule} /> */}
-              <Route exact path='/settings' component={Settings} />
-              <Route exact path='/editprofile' component={EditProfile} />
-              <Route
-                exact
-                path='/review/:sessionId'
-                component={SessionReview}
-              />
-              {mySocket && (
-                <>
-                  <Route
-                    exact
-                    path='/connect/:connectionId'
-                    component={({ match }) => (
-                      <Connect socket={mySocket} match={match} />
-                    )}
-                  />
-                  <Route exact path='/messages' component={Messages} />
-                </>
-              )}
+          <Route
+            exact
+            path='/settings'
+            component={isLoggedIn ? Settings : LandingPage}
+          />
+          <Route
+            exact
+            path='/editprofile'
+            component={isLoggedIn ? EditProfile : LandingPage}
+          />
+          {/* {isLoggedIn && (
+            <> */}
+          <Route
+            exact
+            path='/review/:sessionId'
+            // component={SessionReview}
+            component={isLoggedIn ? SessionReview : LandingPage}
+          />
+          {/* {mySocket && (
+                <> */}
+          <Route
+            exact
+            path='/connect/:connectionId'
+            component={({ match }) => (
+              <Connect socket={mySocket} match={match} />
+            )}
+          />
+          <Route
+            exact
+            path='/messages'
+            component={isLoggedIn ? Messages : LandingPage}
+          />
+          {/* </>
+              )} */}
 
-              <Route exact path='/user/:id' component={ClientProfile} />
+          <Route exact path='/user/:id' component={ClientProfile} />
 
-              <Route
-                exact
-                path='/coachportal/settings'
-                component={TrainerSettings}
-              />
-              <Route
-                exact
-                path='/coachportal/editprofile'
-                component={EditProfile}
-              />
-              <Route
-                exact
-                path='/coachportal/schedule'
-                component={TrainerSchedule}
-              />
+          <Route
+            exact
+            path='/coachportal/settings'
+            component={isLoggedIn ? TrainerSettings : LandingPage}
+          />
+          <Route
+            exact
+            path='/coachportal/editprofile'
+            component={isLoggedIn ? EditProfile : LandingPage}
+          />
+          <Route
+            exact
+            path='/coachportal/schedule'
+            component={isLoggedIn ? TrainerSchedule : LandingPage}
+          />
 
-              <Route exact path='/coachportal/messages' component={Messages} />
-              <Route
-                exact
-                path='/coachportal/manage/:id'
-                component={({ match }) => <ManageSession match={match} />}
-              />
-            </>
-          )}
+          <Route
+            exact
+            path='/coachportal/messages'
+            component={isLoggedIn ? Messages : LandingPage}
+          />
+          <Route
+            exact
+            path='/coachportal/manage/:id'
+            component={({ match }) => <ManageSession match={match} />}
+          />
+          {/* </>
+          )} */}
         </Switch>
 
         {!isLoggedIn && showAuth && <Auth trainer={false} />}
