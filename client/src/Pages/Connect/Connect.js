@@ -3,6 +3,7 @@ import axios from 'axios';
 import Peer from 'peerjs';
 import './Connect.scss';
 import { CTX } from 'context/Store';
+import { Redirect } from 'react-router-dom';
 
 const objectFilter = function (obj, keyToFilterOut) {
   let result = {};
@@ -25,6 +26,10 @@ const Video = ({ stream }) => {
 
 const Connect = ({ match, socket }) => {
   const [appState] = useContext(CTX);
+  let {
+    user: { type, name },
+    isLoggedIn,
+  } = appState;
   const { connectionId } = match.params;
   const [myVideoStream, setMyVideoStream] = useState(null);
   const [peers, setPeers] = useState({});
@@ -134,8 +139,12 @@ const Connect = ({ match, socket }) => {
 
     return () => {
       subscribed = false;
-      socket.emit('disconnect-room', socket.id);
-      if (myVideoStream) myVideoStream.srcObject.getTracks().stop();
+      if (socket) socket.emit('disconnect-room', socket.id);
+      // if (myVideoStream) myVideoStream.srcObject.getTracks().stop();
+      if (myVideoRef.current.srcObject) {
+        myVideoRef.current.srcObject.getTracks()[0].stop();
+        myVideoRef.current.srcObject.getTracks()[1].stop();
+      }
       if (myPeer) myPeer.destroy();
     };
   }, []);
@@ -159,7 +168,7 @@ const Connect = ({ match, socket }) => {
   };
 
   const handleSubmit = () => {
-    socket.emit('message', { content: chatInput, name: appState.user.name });
+    socket.emit('message', { content: chatInput, name });
     setChatInput('');
   };
   const handleChatInput = (e) => {
@@ -181,72 +190,84 @@ const Connect = ({ match, socket }) => {
   }
 
   useEffect(() => {
-    if (messages) {
+    if (messages && scrollRef.current) {
       scrollToBottom();
     }
   }, [messages]);
 
-  return (
-    <div className='connect'>
-      <div className='videochat'>
-        <video
-          ref={myVideoRef}
-          muted
-          autoPlay
-          playsInline
-          className='my-video'
-        />
-        {errorMessage && <p className='err-msg'>{errorMessage} </p>}
-        {Object.keys(videoStreams).map((userId) => {
-          return <Video stream={videoStreams[userId].stream} key={userId} />;
-        })}
+  let isTrainer = type === 'trainer';
 
-        <div className='controls'>
-          <div className='controls-block'>
-            <button onClick={playStop} className='control-btn'>
-              <i
-                className={`fas ${
-                  !icons.video ? 'fa-video' : 'fa-video-slash stop'
-                }`}
-                id='stopstart'
-              ></i>
-              <span>stop/start</span>
-            </button>
-            <button className='control-btn' onClick={muteUnmute}>
-              <i
-                className={`fas ${
-                  !icons.audio ? 'fa-microphone' : 'fa-microphone-slash unmute'
-                }`}
-                id='muteunmute'
-              ></i>
-              <span>Mute</span>
-            </button>
+  return (
+    <>
+      {socket || connectionId || isLoggedIn ? (
+        <div className='connect'>
+          <div className='videochat'>
+            <video
+              ref={myVideoRef}
+              muted
+              autoPlay
+              playsInline
+              className='my-video'
+            />
+            {errorMessage && <p className='err-msg'>{errorMessage} </p>}
+            {Object.keys(videoStreams).map((userId) => {
+              return (
+                <Video stream={videoStreams[userId].stream} key={userId} />
+              );
+            })}
+
+            <div className='controls'>
+              <div className='controls-block'>
+                <button onClick={playStop} className='control-btn'>
+                  <i
+                    className={`fas ${
+                      !icons.video ? 'fa-video' : 'fa-video-slash stop'
+                    }`}
+                    id='stopstart'
+                  ></i>
+                  <span>stop/start</span>
+                </button>
+                <button className='control-btn' onClick={muteUnmute}>
+                  <i
+                    className={`fas ${
+                      !icons.audio
+                        ? 'fa-microphone'
+                        : 'fa-microphone-slash unmute'
+                    }`}
+                    id='muteunmute'
+                  ></i>
+                  <span>Mute</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className='messenger'>
+            <div className='window'>
+              <ul className='messages'>
+                {messages.map((message, i) => (
+                  <li key={i}>
+                    <strong>{message.name}</strong>: {message.content}
+                  </li>
+                ))}
+                <div ref={scrollRef} />
+              </ul>
+            </div>
+            <div className='message_container'>
+              <input
+                onKeyPress={handleKeyDown}
+                onChange={handleChatInput}
+                value={chatInput}
+                id='chat_message'
+                type='text'
+                placeholder='message...'
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className='messenger'>
-        <div className='window'>
-          <ul className='messages'>
-            {messages.map((message, i) => (
-              <li key={i}>
-                <strong>{message.name}</strong>: {message.content}
-              </li>
-            ))}
-            <div ref={scrollRef} />
-          </ul>
-        </div>
-        <div className='message_container'>
-          <input
-            onKeyPress={handleKeyDown}
-            onChange={handleChatInput}
-            value={chatInput}
-            id='chat_message'
-            type='text'
-            placeholder='message...'
-          />
-        </div>
-      </div>
-    </div>
+      ) : (
+        <Redirect to={`/${isTrainer ? 'coachportal/' : null}`} />
+      )}
+    </>
   );
 };
 

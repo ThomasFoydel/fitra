@@ -31,31 +31,35 @@ import './App.scss';
 
 function App() {
   const [appState, updateState] = useContext(CTX);
-  let { isLoggedIn, user, showAuth } = appState;
+  let {
+    isLoggedIn,
+    user: { token, type },
+    showAuth,
+  } = appState;
   const [mySocket, setMySocket] = useState(null);
 
   let socket;
 
   useEffect(() => {
     let subscribed = true;
-    let token = localStorage.getItem('fitr-token');
+    let tokenLS = localStorage.getItem('fitr-token');
 
     let checkAuth = async () => {
       axios
         .get('/api/auth/', {
-          headers: { 'x-auth-token': token },
+          headers: { 'x-auth-token': tokenLS },
         })
         .then((result) => {
           if (subscribed) {
             updateState({
               type: 'LOGIN',
-              payload: { user: result.data, token },
+              payload: { user: result.data, token: tokenLS },
             });
           }
         });
     };
 
-    let noToken = !token || token === 'undefined';
+    let noToken = !tokenLS || tokenLS === 'undefined';
 
     noToken ? updateState({ type: 'LOGOUT' }) : checkAuth();
 
@@ -68,10 +72,10 @@ function App() {
   useEffect(() => {
     let subscribed = true;
 
-    if (user.token) {
+    if (token) {
       const urlBase =
         process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000/';
-      const ENDPOINT = urlBase + `?token=${user.token}`;
+      const ENDPOINT = urlBase + `?token=${token}`;
       socket = io(ENDPOINT);
       if (subscribed) {
         setMySocket(socket);
@@ -90,7 +94,9 @@ function App() {
         socket.off();
       }
     };
-  }, [user.token]);
+  }, [token]);
+
+  let HomeComponent = type === 'trainer' ? TrainerHome : Home;
 
   return (
     <div className={`App`}>
@@ -100,13 +106,13 @@ function App() {
           <Route
             exact
             path='/'
-            component={() => (isLoggedIn ? <Home /> : <LandingPage />)}
+            component={isLoggedIn ? HomeComponent : LandingPage}
           />
 
           <Route
             exact
             path='/coachportal'
-            component={isLoggedIn ? TrainerHome : TrainerLandingPage}
+            component={isLoggedIn ? HomeComponent : TrainerLandingPage}
           />
 
           <Route exact path='/terms-of-use' component={TermsOfUse} />
@@ -122,61 +128,64 @@ function App() {
             path='/editprofile'
             component={isLoggedIn ? EditProfile : LandingPage}
           />
-          {/* {isLoggedIn && (
-            <> */}
+
           <Route
             exact
             path='/review/:sessionId'
-            // component={SessionReview}
             component={isLoggedIn ? SessionReview : LandingPage}
           />
-          {/* {mySocket && (
-                <> */}
+
           <Route
             exact
             path='/connect/:connectionId'
-            component={({ match }) => (
-              <Connect socket={mySocket} match={match} />
-            )}
+            component={({ match }) =>
+              match && mySocket ? (
+                <Connect socket={mySocket} match={match} />
+              ) : (
+                <HomeComponent />
+              )
+            }
           />
           <Route
             exact
             path='/messages'
             component={isLoggedIn ? Messages : LandingPage}
           />
-          {/* </>
-              )} */}
 
           <Route exact path='/user/:id' component={ClientProfile} />
 
           <Route
             exact
             path='/coachportal/settings'
-            component={isLoggedIn ? TrainerSettings : LandingPage}
+            component={isLoggedIn ? TrainerSettings : TrainerLandingPage}
           />
           <Route
             exact
             path='/coachportal/editprofile'
-            component={isLoggedIn ? EditProfile : LandingPage}
+            component={isLoggedIn ? EditProfile : TrainerLandingPage}
           />
           <Route
             exact
             path='/coachportal/schedule'
-            component={isLoggedIn ? TrainerSchedule : LandingPage}
+            component={isLoggedIn ? TrainerSchedule : TrainerLandingPage}
           />
 
           <Route
             exact
             path='/coachportal/messages'
-            component={isLoggedIn ? Messages : LandingPage}
+            component={isLoggedIn ? Messages : TrainerLandingPage}
           />
           <Route
             exact
             path='/coachportal/manage/:id'
-            component={({ match }) => <ManageSession match={match} />}
+            component={({ match }) =>
+              isLoggedIn ? (
+                <ManageSession match={match} />
+              ) : (
+                <TrainerLandingPage />
+              )
+            }
           />
-          {/* </>
-          )} */}
         </Switch>
 
         {!isLoggedIn && showAuth && <Auth trainer={false} />}

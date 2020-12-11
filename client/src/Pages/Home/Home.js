@@ -12,12 +12,13 @@ const Home = () => {
   let { token } = appState.user;
   useEffect(() => {
     let subscribed = true;
-    axios
-      .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
-      .then(({ data: { sessions } }) => {
-        if (subscribed) setFoundSessions(sessions);
-      })
-      .catch((err) => console.log('connection error: ', err));
+    if (token)
+      axios
+        .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
+        .then(({ data: { sessions } }) => {
+          if (subscribed) setFoundSessions(sessions);
+        })
+        .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
   }, [token, type]);
 
