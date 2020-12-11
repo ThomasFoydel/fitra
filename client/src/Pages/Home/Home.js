@@ -55,11 +55,13 @@ const Session = ({ session }) => {
       ${!started && ' not-started '} 
       `}
     >
-      <Image
-        name='profile-pic'
-        src={`/api/image/user/profilePic/${trainer}`}
-        alt="trainer's profile"
-      />
+      <Link to={`/trainer/${trainer}`}>
+        <Image
+          name='profile-pic'
+          src={`/api/image/user/profilePic/${trainer}`}
+          alt="trainer's profile"
+        />
+      </Link>
       <div className='start-time'>
         <strong>start: </strong>
         {startDate.toDateString()} {startDate.toLocaleTimeString()}
