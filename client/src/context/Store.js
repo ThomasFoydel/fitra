@@ -12,7 +12,8 @@ export function reducer(state, action) {
     coverPic,
     kind,
     message,
-    darkmode,
+    id,
+    value,
     page,
     type,
     tags,
@@ -61,8 +62,11 @@ export function reducer(state, action) {
       let updatedThread = thread ? [...thread, message] : [message];
       let updatedMessages = { ...copy, [other]: updatedThread };
       return { ...state, messages: updatedMessages };
-    case 'TOGGLE_DARKMODE':
-      return { ...state, settings: { ...state.settings, darkmode } };
+    case 'CHANGE_DARKMODE':
+      return { ...state, settings: { ...state.settings, darkmode: value } };
+
+    case 'CHANGE_SETTING':
+      return { ...state, settings: { ...state.settings, [id]: value } };
     case 'TOGGLE_AUTH':
       return { ...state, showAuth: !state.showAuth };
     case 'CHANGE_AUTH_PAGE':

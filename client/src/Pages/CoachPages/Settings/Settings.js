@@ -3,11 +3,14 @@ import './Settings.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
+import TagEditor from './TagEditor';
 
 const Settings = () => {
   const [appState, updateState] = useContext(CTX);
+  const [rateInput, setRateInput] = useState('');
+  console.log(appState.settings);
   const { type, token } = appState.user;
-  const { darkmode } = appState.settings || {};
+  const { darkmode, rate } = appState.settings || {};
 
   const handleDarkMode = ({ target: { checked } }) => {
     axios
@@ -18,8 +21,40 @@ const Settings = () => {
       )
       .then(({ data: { darkmode } }) => {
         updateState({
-          type: 'TOGGLE_DARKMODE',
+          type: 'CHANGE_DARKMODE',
           payload: { darkmode },
+        });
+      })
+      .catch((err) => console.log('darkmode error: ', err));
+  };
+
+  const handleRate = ({ target: { value } }) => {
+    axios
+      .post(
+        `/api/user/settings/${type}/rate`,
+        { value },
+        { headers: { 'x-auth-token': token } }
+      )
+      .then(({ data: { rate } }) => {
+        updateState({
+          type: 'CHANGE_RATE',
+          payload: { rate },
+        });
+      })
+      .catch((err) => console.log('rate error: ', err));
+  };
+
+  const handleSettingChange = ({ target: { checked, id } }) => {
+    axios
+      .post(
+        `/api/user/settings/${type}/${id}`,
+        { checked, value: rateInput },
+        { headers: { 'x-auth-token': token } }
+      )
+      .then(({ data }) => {
+        updateState({
+          type: `CHANGE_${id.toUpperCase()}`,
+          payload: { id, value: data[id] },
         });
       })
       .catch((err) => console.log('darkmode error: ', err));
@@ -39,15 +74,27 @@ const Settings = () => {
               <input
                 checked={darkmode}
                 type='checkbox'
-                onChange={handleDarkMode}
+                onChange={handleSettingChange}
                 id='darkmode'
               />
               <span className='slider round'></span>
             </label>
           </div>
           <div className='setting-item'>
-            <TagEditor props={{ appState, updateState }} />
+            <TagEditor />
           </div>
+
+          <div className='setting-item'>
+            {rate ? <div>current rate: {rate}</div> : <div>rate not set</div>}
+            <input
+              type='text'
+              // onChange={handleChange}
+              placeholder='rate'
+              value={rate}
+            />
+            <button onClick={handleSettingChange}>update</button>
+          </div>
+
           <div className='setting-item'>
             <Link to='/terms-of-use'>terms of use</Link>
           </div>
@@ -57,97 +104,28 @@ const Settings = () => {
   );
 };
 
-const TagEditor = ({ props: { appState, updateState } }) => {
-  let maxMet = appState.user.tags && appState.user.tags.length >= 4;
-  const [inputVal, setInputVal] = useState('');
-  const [err, setErr] = useState('');
-  let { token } = appState.user;
+// const SettingInput = () => {
+//   const [input, setInput] = useState("");
 
-  const handleChange = ({ target: { value } }) => {
-    setInputVal(value);
-  };
+//     const handleSetting = ({ target: { checked, id, value } }) => {
+//       axios
+//         .post(
+//           `/api/user/settings/${type}/${id}`,
+//           { checked, value },
+//           { headers: { 'x-auth-token': token } }
+//         )
+//         .then(({ data: { value } }) => {
+//           updateState({
+//             type: `CHANGE_${id.toUpperCase()}`,
+//             payload: { value },
+//           });
+//         })
+//         .catch((err) => console.log('darkmode error: ', err));
+//     };
 
-  const handleAddTag = () => {
-    axios
-      .post(
-        '/api/trainer/add-tag',
-        { value: inputVal },
-        {
-          headers: { 'x-auth-token': token },
-        }
-      )
-      .then(({ data }) => {
-        let { err } = data;
-        if (err) return setErr(err);
-        updateState({ type: 'CHANGE_TAGS', payload: { tags: data } });
-        setInputVal('');
-      })
-      .catch((err) => {
-        console.log({ err });
-      });
-  };
+//     return (<div className="setting-input">
 
-  const handleDelete = ({ target: { id } }) => {
-    axios
-      .post(
-        '/api/trainer/delete-tag',
-        { value: id },
-        {
-          headers: { 'x-auth-token': token },
-        }
-      )
-      .then(({ data }) => {
-        let { err } = data;
-        if (err) return setErr(err);
-        updateState({ type: 'CHANGE_TAGS', payload: { tags: data } });
-      })
-      .catch((err) => {
-        console.log({ err });
-      });
-  };
-  const handleKeyPress = ({ charCode }) => {
-    if (charCode === 13) handleAddTag();
-  };
-
-  const didMountRef = useRef(false);
-  useEffect(() => {
-    let subscribed = true;
-    if (didMountRef.current) {
-      setTimeout(() => {
-        if (subscribed) setErr('');
-      }, 2700);
-    } else didMountRef.current = true;
-    return () => (subscribed = false);
-  }, [err]);
-
-  return (
-    <div className='tag-editor'>
-      {appState.user.tags &&
-        appState.user.tags.map((tag) => (
-          <div className='tag' key={tag}>
-            {tag}
-            <button id={tag} onClick={handleDelete}>
-              <i id={tag} onClick={handleDelete} className='fas fa-times '></i>
-            </button>
-          </div>
-        ))}
-      <input
-        type='text'
-        value={inputVal}
-        onChange={handleChange}
-        onKeyPress={handleKeyPress}
-      />
-      <button
-        className='add-btn'
-        onClick={
-          maxMet ? () => setErr('Tag list limited to 4 tags') : handleAddTag
-        }
-      >
-        add tag
-      </button>
-      <p className='err'>{err}</p>
-    </div>
-  );
-};
+//     </div>)
+// }
 
 export default Settings;
