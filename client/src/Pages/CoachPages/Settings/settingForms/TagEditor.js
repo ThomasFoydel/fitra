@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import './Settings.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 

@@ -3,61 +3,55 @@ import './Settings.scss';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
-import TagEditor from './TagEditor';
+import TagEditor from './settingForms/TagEditor';
+import RateEditor from './settingForms/RateEditor';
+import DarkMode from './settingForms/DarkMode';
 
 const Settings = () => {
   const [appState, updateState] = useContext(CTX);
   const [rateInput, setRateInput] = useState('');
   console.log(appState.settings);
-  const { type, token } = appState.user;
+  const { type, token, id } = appState.user;
   const { darkmode, rate } = appState.settings || {};
 
-  const handleDarkMode = ({ target: { checked } }) => {
-    axios
-      .post(
-        `/api/user/settings/${type}/darkmode`,
-        { checked: checked },
-        { headers: { 'x-auth-token': token } }
-      )
-      .then(({ data: { darkmode } }) => {
-        updateState({
-          type: 'CHANGE_DARKMODE',
-          payload: { darkmode },
-        });
-      })
-      .catch((err) => console.log('darkmode error: ', err));
+  // const handleRate = ({ target: { value } }) => {
+  //   axios
+  //     .post(
+  //       `/api/user/settings/${type}/rate`,
+  //       { value },
+  //       { headers: { 'x-auth-token': token } }
+  //     )
+  //     .then(({ data: { rate } }) => {
+  //       updateState({
+  //         type: 'CHANGE_RATE',
+  //         payload: { rate },
+  //       });
+  //     })
+  //     .catch((err) => console.log('rate error: ', err));
+  // };
+
+  // const handleSettingChange = () => {
+  //   axios
+  //     .post(
+  //       `/api/user/settings/${type}/${id}`,
+  //       { checked, value: rateInput },
+  //       { headers: { 'x-auth-token': token } }
+  //     )
+  //     .then(({ data }) => {
+  //       updateState({
+  //         type: `CHANGE_${id.toUpperCase()}`,
+  //         payload: { id, value: data[id] },
+  //       });
+  //     })
+  //     .catch((err) => console.log('darkmode error: ', err));
+  // };
+
+  const onComplete = ({ type, value }) => {
+    console.log('complete update state with ', type, value);
   };
 
-  const handleRate = ({ target: { value } }) => {
-    axios
-      .post(
-        `/api/user/settings/${type}/rate`,
-        { value },
-        { headers: { 'x-auth-token': token } }
-      )
-      .then(({ data: { rate } }) => {
-        updateState({
-          type: 'CHANGE_RATE',
-          payload: { rate },
-        });
-      })
-      .catch((err) => console.log('rate error: ', err));
-  };
-
-  const handleSettingChange = ({ target: { checked, id } }) => {
-    axios
-      .post(
-        `/api/user/settings/${type}/${id}`,
-        { checked, value: rateInput },
-        { headers: { 'x-auth-token': token } }
-      )
-      .then(({ data }) => {
-        updateState({
-          type: `CHANGE_${id.toUpperCase()}`,
-          payload: { id, value: data[id] },
-        });
-      })
-      .catch((err) => console.log('darkmode error: ', err));
+  const onError = ({ type, value }) => {
+    console.log('error update state with ', type, value);
   };
 
   return (
@@ -69,30 +63,14 @@ const Settings = () => {
 
         <div className='form'>
           <div className='setting-item'>
-            <span>darkmode</span>
-            <label className='switch' htmlFor='darkmode'>
-              <input
-                checked={darkmode}
-                type='checkbox'
-                onChange={handleSettingChange}
-                id='darkmode'
-              />
-              <span className='slider round'></span>
-            </label>
+            <DarkMode props={{ onError, type, onComplete, token, darkmode }} />
           </div>
           <div className='setting-item'>
             <TagEditor />
           </div>
 
           <div className='setting-item'>
-            {rate ? <div>current rate: {rate}</div> : <div>rate not set</div>}
-            <input
-              type='text'
-              // onChange={handleChange}
-              placeholder='rate'
-              value={rate}
-            />
-            <button onClick={handleSettingChange}>update</button>
+            <RateEditor props={{ id, rate, onComplete, onError }} />
           </div>
 
           <div className='setting-item'>
