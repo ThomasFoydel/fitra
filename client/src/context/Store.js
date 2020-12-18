@@ -62,9 +62,10 @@ export function reducer(state, action) {
       let updatedThread = thread ? [...thread, message] : [message];
       let updatedMessages = { ...copy, [other]: updatedThread };
       return { ...state, messages: updatedMessages };
-    case 'CHANGE_DARKMODE':
-      return { ...state, settings: { ...state.settings, darkmode: value } };
-
+    // case 'CHANGE_DARKMODE':
+    //   return { ...state, settings: { ...state.settings, darkmode: value } };
+    case 'CHANGE_SETTINGS':
+      return { ...state, settings: { ...state.settings, [type]: value } };
     case 'CHANGE_SETTING':
       return { ...state, settings: { ...state.settings, [id]: value } };
     case 'TOGGLE_AUTH':

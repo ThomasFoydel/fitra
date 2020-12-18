@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import './Settings.scss';
-import axios from 'axios';
 import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
 import TagEditor from './settingForms/TagEditor';
@@ -10,6 +9,7 @@ import DarkMode from './settingForms/DarkMode';
 const Settings = () => {
   const [appState, updateState] = useContext(CTX);
   const [rateInput, setRateInput] = useState('');
+  const [err, setErr] = useState('');
   console.log(appState.settings);
   const { type, token, id } = appState.user;
   const { darkmode, rate } = appState.settings || {};
@@ -47,11 +47,11 @@ const Settings = () => {
   // };
 
   const onComplete = ({ type, value }) => {
-    console.log('complete update state with ', type, value);
+    updateState({ type: 'CHANGE_SETTINGS', payload: { type, value } });
   };
 
-  const onError = ({ type, value }) => {
-    console.log('error update state with ', type, value);
+  const onError = ({ err }) => {
+    setErr(err);
   };
 
   return (
