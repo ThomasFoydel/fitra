@@ -154,10 +154,12 @@ export default TrainerProfile;
 const Review = ({ review: { rating, comment, client } }) => {
   return (
     <div className='review'>
-      <Image
-        src={`/api/image/user/profilePic/${client}`}
-        name='review-profile-pic'
-      />
+      <Link to={`/user/${client}`}>
+        <Image
+          src={`/api/image/user/profilePic/${client}`}
+          name='review-profile-pic'
+        />
+      </Link>
       <div className='star-rating'>
         <div
           className='rating-background'
