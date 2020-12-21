@@ -27,7 +27,11 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
           <p>{`test password: %)z6>&Ry`}</p>
 
           <PayPalScriptProvider options={{ 'client-id': 'sb' }}>
-            <Buttons handleResolve={handleResolve} handleError={handleError} />
+            <Buttons
+              price={price}
+              handleResolve={handleResolve}
+              handleError={handleError}
+            />
           </PayPalScriptProvider>
         </div>
       </div>
@@ -37,13 +41,24 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
 
 export default PayPal;
 
-const Buttons = ({ handleError, handleResolve }) => {
+const Buttons = ({ handleError, handleResolve, price }) => {
   const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer();
 
   return (
     <div className=''>
       {isPending && <img src={loading} alt='loading' />}
       <PayPalButtons
+        createOrder={(data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: price,
+                },
+              },
+            ],
+          });
+        }}
         style={{ layout: 'vertical' }}
         onApprove={handleResolve}
         onError={handleError}

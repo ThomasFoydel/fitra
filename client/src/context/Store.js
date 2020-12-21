@@ -55,7 +55,6 @@ export function reducer(state, action) {
         user: { ...state.user, [kind]: newPic },
       };
     case 'NEW_MESSAGE':
-      console.log('NEW_MESSAGE: ', message);
       let copy = { ...state.messages };
       let other = message.participants.filter((p) => p !== state.user.id)[0];
       let thread = copy[other];
@@ -92,7 +91,7 @@ export default function Store(props) {
     authType: 'client',
     user: { name: '', email: '', type: 'client', token: null, id: null },
     messages: {},
-    settings: { darkmode: false },
+    settings: { darkmode: false, rate: '30', currency: 'USD' },
   });
 
   return <CTX.Provider value={stateHook}>{props.children}</CTX.Provider>;

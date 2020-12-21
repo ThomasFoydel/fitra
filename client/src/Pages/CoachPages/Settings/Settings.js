@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useContext } from 'react';
 import './Settings.scss';
 import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
@@ -8,43 +8,9 @@ import DarkMode from './settingForms/DarkMode';
 
 const Settings = () => {
   const [appState, updateState] = useContext(CTX);
-  const [rateInput, setRateInput] = useState('');
   const [err, setErr] = useState('');
-  console.log(appState.settings);
   const { type, token, id } = appState.user;
   const { darkmode, rate } = appState.settings || {};
-
-  // const handleRate = ({ target: { value } }) => {
-  //   axios
-  //     .post(
-  //       `/api/user/settings/${type}/rate`,
-  //       { value },
-  //       { headers: { 'x-auth-token': token } }
-  //     )
-  //     .then(({ data: { rate } }) => {
-  //       updateState({
-  //         type: 'CHANGE_RATE',
-  //         payload: { rate },
-  //       });
-  //     })
-  //     .catch((err) => console.log('rate error: ', err));
-  // };
-
-  // const handleSettingChange = () => {
-  //   axios
-  //     .post(
-  //       `/api/user/settings/${type}/${id}`,
-  //       { checked, value: rateInput },
-  //       { headers: { 'x-auth-token': token } }
-  //     )
-  //     .then(({ data }) => {
-  //       updateState({
-  //         type: `CHANGE_${id.toUpperCase()}`,
-  //         payload: { id, value: data[id] },
-  //       });
-  //     })
-  //     .catch((err) => console.log('darkmode error: ', err));
-  // };
 
   const onComplete = ({ type, value }) => {
     console.log('complete', type, value);
@@ -82,29 +48,5 @@ const Settings = () => {
     </>
   );
 };
-
-// const SettingInput = () => {
-//   const [input, setInput] = useState("");
-
-//     const handleSetting = ({ target: { checked, id, value } }) => {
-//       axios
-//         .post(
-//           `/api/user/settings/${type}/${id}`,
-//           { checked, value },
-//           { headers: { 'x-auth-token': token } }
-//         )
-//         .then(({ data: { value } }) => {
-//           updateState({
-//             type: `CHANGE_${id.toUpperCase()}`,
-//             payload: { value },
-//           });
-//         })
-//         .catch((err) => console.log('darkmode error: ', err));
-//     };
-
-//     return (<div className="setting-input">
-
-//     </div>)
-// }
 
 export default Settings;

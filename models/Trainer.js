@@ -11,9 +11,15 @@ const availabilitySchema = new mongoose.Schema({
   id: String,
 });
 
-const rateSchema = new mongoose.Schema({
-  amount: Number,
+// const rateSchema = new mongoose.Schema({
+//   amount: Number,
+//   currency: String,
+// });
+
+const settingSchema = new mongoose.Schema({
+  rate: Number,
   currency: String,
+  darkmode: Boolean,
 });
 
 const trainerSchema = {
@@ -44,13 +50,12 @@ const trainerSchema = {
     type: String,
   },
   settings: {
-    type: Object,
+    type: settingSchema,
     select: false,
   },
   availability: [availabilitySchema],
   minimum: Number,
   maximum: Number,
-  rate: [rateSchema],
   tags: [String],
 };
 

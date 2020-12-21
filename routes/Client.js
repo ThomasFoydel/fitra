@@ -131,7 +131,12 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   } catch (err) {
     return res.send({ err: 'No user found' });
   }
-  let foundTrainer = await Trainer.findById(trainerId);
+  const foundTrainer = await Trainer.findById(trainerId);
+  const foundTrainerWithSettings = await Trainer.findById(trainerId).select(
+    '+ settings'
+  );
+  const rate = foundTrainerWithSettings.settings.rate;
+
   let foundReviews = await Review.find({ trainer: trainerId });
 
   let averageAggregate = await Review.aggregate([
@@ -140,10 +145,18 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
     },
   ]);
   let foundAvg = averageAggregate[0].average;
+
+  const trainer = { ...foundTrainer._doc, rate };
+
   let foundSessions = await Session.find({
     trainer: foundTrainer._id,
   }).select('-roomId -createdAt -updatedAt -status -client -trainer -order');
-  res.send({ trainer: foundTrainer, foundSessions, foundReviews, foundAvg });
+  res.send({
+    trainer,
+    foundSessions,
+    foundReviews,
+    foundAvg,
+  });
 });
 
 router.get('/profile/:id', auth, async ({ params: { id } }, res) => {

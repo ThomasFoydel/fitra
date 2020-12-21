@@ -15,10 +15,6 @@ const DarkMode = ({
       .then(({ data: { darkmode, err } }) => {
         if (err) return onError(err);
         onComplete({ type: 'darkmode', value: darkmode });
-        // updateState({
-        //   type: 'CHANGE_DARKMODE',
-        //   payload: { darkmode },
-        // });
       })
       .catch((err) => onError(err));
   };
