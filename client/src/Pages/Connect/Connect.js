@@ -81,7 +81,7 @@ const Connect = ({ match, socket }) => {
           try {
             stream = await navigator.mediaDevices.getUserMedia({
               video: true,
-              audio: true,
+              // audio: true,
             });
           } catch (err) {
             console.log('connect media error: ', err);

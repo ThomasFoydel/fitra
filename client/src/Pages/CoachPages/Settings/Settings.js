@@ -47,6 +47,7 @@ const Settings = () => {
   // };
 
   const onComplete = ({ type, value }) => {
+    console.log('complete', type, value);
     updateState({ type: 'CHANGE_SETTINGS', payload: { type, value } });
   };
 
@@ -70,7 +71,7 @@ const Settings = () => {
           </div>
 
           <div className='setting-item'>
-            <RateEditor props={{ id, rate, onComplete, onError }} />
+            <RateEditor props={{ id, rate, onComplete, onError, token }} />
           </div>
 
           <div className='setting-item'>

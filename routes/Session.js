@@ -32,7 +32,7 @@ router.post(
     let rEnd = new Date(endTime);
     availability.forEach((a) => {
       let startIsBetween =
-        rStart >= new Date(a.startDate) && rStart <= new Date(a.endDate);
+        rStart >= new Date(a.startDate) && rStart < new Date(a.endDate);
       let endIsBetween =
         rEnd >= new Date(a.startDate) && rEnd <= new Date(a.endDate);
       let blockedTimeIsBetween =
