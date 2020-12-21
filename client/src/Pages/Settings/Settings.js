@@ -18,8 +18,8 @@ const Settings = () => {
       )
       .then(({ data: { darkmode } }) => {
         updateState({
-          type: 'TOGGLE_DARKMODE',
-          payload: { darkmode },
+          type: 'CHANGE_SETTINGS',
+          payload: { type: 'darkmode', value: darkmode },
         });
       })
       .catch((err) => console.log('darkmode error: ', err));
