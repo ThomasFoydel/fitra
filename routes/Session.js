@@ -42,7 +42,7 @@ router.post(
       }
     });
     sessions.forEach((t) => {
-      let startIsBetween = rStart >= t.startTime && rStart <= t.endTime;
+      let startIsBetween = rStart >= t.startTime && rStart < t.endTime;
       let endIsBetween = rEnd >= t.startTime && rEnd <= t.endTime;
       let blockedTimeIsBetween = t.startTime >= rStart && t.endTime <= rEnd;
       if (startIsBetween || endIsBetween || blockedTimeIsBetween) {
