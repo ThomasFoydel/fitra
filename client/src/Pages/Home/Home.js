@@ -5,6 +5,8 @@ import Image from 'Components/Image/Image';
 import { CTX } from 'context/Store';
 import './Home.scss';
 
+import { config, animated, useTransition } from 'react-spring';
+
 const Home = () => {
   const [appState] = useContext(CTX);
   const { type } = appState.user;
@@ -22,6 +24,13 @@ const Home = () => {
     return () => (subscribed = false);
   }, [token, type]);
 
+  const animation = useTransition(sessions, (item) => item.key, {
+    from: { opacity: '0', transform: 'translateY(-20px)' },
+    enter: { opacity: '1', transform: 'translateY(0px)' },
+    leave: { opacity: '0', transform: 'translateY(-20px)' },
+    config: config.wobbly,
+  });
+
   return (
     <>
       <div className='background' />
@@ -29,9 +38,11 @@ const Home = () => {
       <div className='home'>
         <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
         <div className='sessions'>
-          {sessions &&
-            sessions.map((session) => (
-              <Session session={session} key={session._id} />
+          {sessions.length > 0 &&
+            animation.map(({ item, props, key }) => (
+              <animated.div style={props} key={key}>
+                <Session session={item} />
+              </animated.div>
             ))}
         </div>
       </div>
@@ -47,6 +58,7 @@ const Session = ({ session }) => {
   let started = currentTime > startDate;
   let ended = currentTime > endDate;
   let active = started && !ended;
+
   return (
     <div
       className={`session 
