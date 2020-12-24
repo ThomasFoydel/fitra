@@ -23,6 +23,7 @@ const ChatBox = ({ userId, userName, currentThread, update, isTrainer }) => {
   const handleKeyPress = ({ charCode }) => {
     if (charCode === 13) submit();
   };
+
   return (
     <>
       <input

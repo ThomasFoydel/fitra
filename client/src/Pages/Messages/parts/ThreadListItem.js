@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'Components/Image/Image';
 import axios from 'axios';
 const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {

@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import './Messages.scss';
 import { CTX } from 'context/Store';
+import { useSpring, config, animated } from 'react-spring';
 
 import ThreadListItem from './parts/ThreadListItem';
 import Thread from './parts/Thread';
 import ChatBox from './parts/ChatBox';
+
 const Messages = () => {
   const [appState, updateState] = useContext(CTX);
   let { messages } = appState;
@@ -24,6 +26,13 @@ const Messages = () => {
       scrollRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [messages, currentThread]);
   let messageKeys = Object.keys(messages);
+
+  const animation = useSpring({
+    opacity: currentThread ? 1 : 0,
+    display: currentThread ? 'inherit' : 'none',
+    config: config.smooth,
+  });
+
   return (
     <div className='messages'>
       <div className='background' />
@@ -53,17 +62,15 @@ const Messages = () => {
         </div>
       </div>
 
-      {currentThread && (
-        <div className='chat-box'>
-          <ChatBox
-            isTrainer={type === 'trainer'}
-            userId={id}
-            userName={name}
-            currentThread={currentThread}
-            update={newMessage}
-          />
-        </div>
-      )}
+      <animated.div style={animation} className='chat-box'>
+        <ChatBox
+          isTrainer={type === 'trainer'}
+          userId={id}
+          userName={name}
+          currentThread={currentThread}
+          update={newMessage}
+        />
+      </animated.div>
     </div>
   );
 };
