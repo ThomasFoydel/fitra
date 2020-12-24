@@ -111,10 +111,30 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
 const Thread = ({ thread, close, currentUser, refEl }) => {
   return (
     <div className='thread'>
-      {thread.map((msg) => {
+      {thread.map((msg, i) => {
         let ownMessage = msg.sender === currentUser;
+
+        let previousNotCurrent =
+          !thread[i - 1] || thread[i - 1].sender !== currentUser;
+        let nextNotCurrent =
+          !thread[i + 1] || thread[i + 1].sender !== currentUser;
+
+        let ownBeginning = ownMessage && previousNotCurrent;
+        let ownEnding = ownMessage && nextNotCurrent;
+
+        let sandwiched = ownBeginning && ownEnding;
+
         return (
-          <div className={`message ownmsg-${ownMessage}`} key={msg._id}>
+          <div
+            className={`
+          message 
+          ownmsg-${ownMessage}
+          sandwiched-${sandwiched}
+          beginning-${!sandwiched && ownBeginning}
+          ending-${!sandwiched && ownEnding}
+           `}
+            key={msg._id}
+          >
             {!ownMessage && (
               <>
                 <Link

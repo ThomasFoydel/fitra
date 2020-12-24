@@ -63,7 +63,7 @@ $large: 992px;
   .current-item {
     background: linear-gradient(
       to bottom right,
-      rgba(189, 0, 0, 0.63),
+      rgba(218, 59, 59, 0.63),
       rgba(10, 10, 10, 0.705)
     );
     color: rgb(250, 250, 250);
@@ -133,6 +133,15 @@ $large: 992px;
       margin-top: 0.4rem;
       margin-left: 0.7rem;
     }
+  }
+  .sandwiched-true {
+    border-radius: 1rem 0 0 1rem;
+  }
+  .beginning-true {
+    border-radius: 1rem 0 0 0;
+  }
+  .ending-true {
+    border-radius: 0 0 0 1rem;
   }
   .ownmsg-true {
     text-align: end;
