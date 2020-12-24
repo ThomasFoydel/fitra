@@ -96,7 +96,9 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
         src={`/api/image/user/profilePic/${user}`}
         alt={`profile of ${userInfo.name}`}
       />
-      <span className='name'>{userInfo.name}</span>
+      {userInfo.name && (
+        <span className='name'>{userInfo.name.split(' ')[0]}</span>
+      )}
     </div>
   );
 };
@@ -124,7 +126,7 @@ const Thread = ({ thread, close, currentUser, refEl }) => {
                     src={`/api/image/user/profilePic/${msg.sender}`}
                   />
                 </Link>
-                <strong className='name'>{msg.authorName}</strong>
+                <strong className='name'>{msg.authorName.split(' ')[0]}</strong>
               </>
             )}
             <p className='content'>{msg.content}</p>
