@@ -11,7 +11,7 @@ const suggestionTags = [
   'pilates',
   'boxing',
   'cardio',
-  'calistehnics',
+  'calisthenics',
 ];
 
 const Trainers = () => {
@@ -52,15 +52,16 @@ const Trainers = () => {
       <div className='overlay' />
       <SearchBar props={{ search, setSearch, queryType, setQueryType }} />
       <div className='suggestion-tags'>
-        {suggestionTags.map((tag) => (
-          <div
-            key={tag}
-            className='suggestion-tag'
-            onClick={() => tagSearch(tag)}
-          >
-            {tag}
-          </div>
-        ))}
+        {queryType === 'tags' &&
+          suggestionTags.map((tag) => (
+            <div
+              key={tag}
+              className='suggestion-tag'
+              onClick={() => tagSearch(tag)}
+            >
+              {tag}
+            </div>
+          ))}
       </div>
       <div className='trainers-container'>
         {currentTrainers.map((trainer) => (
