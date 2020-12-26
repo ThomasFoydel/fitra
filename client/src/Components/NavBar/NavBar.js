@@ -118,7 +118,8 @@ export default NavBar;
 
 var parsePage = (string, user) => {
   if (string.substring(0, 12) === '/coachportal') string = string.slice(12);
-  if (string === `/${user.type}/${user.id}`) return 'ownprofile';
+  if (string === `/${user.type === 'client' ? 'user' : 'trainer'}/${user.id}`)
+    return 'ownprofile';
   else if (string === '/') return 'home';
   else if (string.substring(0, 9) === '/trainer/') return 'trainer';
   else if (string.substring(0, 6) === '/user/') return 'user';
