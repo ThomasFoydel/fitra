@@ -7,11 +7,13 @@
     justify-content: center;
     align-items: center;
     .suggestion-tag {
-      width: 20rem;
-      background: rgba(255, 255, 255, 0.247);
+      width: 10rem;
+      margin: 0 0.3rem;
+      background: linear-gradient(rgb(95, 95, 95), rgb(36, 36, 36));
       color: white;
       text-align: center;
       transition: all 0.2s ease;
+      border-radius: 0.3rem;
       cursor: pointer;
       &:hover {
         color: black;
