@@ -48,33 +48,37 @@ const SessionReview = ({
   }, [err]);
 
   return (
-    <div className='session-review'>
-      {redirect && <Redirect to='/' />}
-      <h2>Session Review</h2>
-      <select onChange={handleChange} value={rating} id='rating'>
-        <option value={-1}>--</option>
-        <option value={4}>perfect</option>
-        <option value={3}>great</option>
-        <option value={2}>good</option>
-        <option value={1}>ok</option>
-        <option value={0}>bad</option>
-      </select>
-      <textarea
-        onChange={handleChange}
-        value={comment}
-        id='comment'
-        cols='30'
-        rows='10'
-      />
-      {confirmOpen ? (
-        <div className='confirm-btns'>
-          <button onClick={() => setConfirmOpen(false)}>cancel</button>
-          <button onClick={submit}>confirm</button>
-        </div>
-      ) : (
-        <button onClick={() => setConfirmOpen(true)}>submit</button>
-      )}
-      <p className='err'>{err}</p>
+    <div className='session-review-page'>
+      <div className='background' />
+      <div className='overlay' />
+      <div className='session-review'>
+        {redirect && <Redirect to='/' />}
+        <h2>Session Review</h2>
+        <select onChange={handleChange} value={rating} id='rating'>
+          <option value={-1}>--</option>
+          <option value={4}>perfect</option>
+          <option value={3}>great</option>
+          <option value={2}>good</option>
+          <option value={1}>ok</option>
+          <option value={0}>bad</option>
+        </select>
+        <textarea
+          onChange={handleChange}
+          value={comment}
+          id='comment'
+          cols='30'
+          rows='10'
+        />
+        {confirmOpen ? (
+          <div className='confirm-btns'>
+            <button onClick={() => setConfirmOpen(false)}>cancel</button>
+            <button onClick={submit}>confirm</button>
+          </div>
+        ) : (
+          <button onClick={() => setConfirmOpen(true)}>submit</button>
+        )}
+        <p className='err'>{err}</p>
+      </div>
     </div>
   );
 };
