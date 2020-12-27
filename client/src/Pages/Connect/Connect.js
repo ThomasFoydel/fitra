@@ -81,7 +81,7 @@ const Connect = ({ match, socket }) => {
           try {
             stream = await navigator.mediaDevices.getUserMedia({
               video: true,
-              // audio: true,
+              audio: true,
             });
           } catch (err) {
             console.log('connect media error: ', err);
@@ -142,8 +142,9 @@ const Connect = ({ match, socket }) => {
       if (socket) socket.emit('disconnect-room', socket.id);
       // if (myVideoStream) myVideoStream.srcObject.getTracks().stop();
       if (myVideoRef.current.srcObject) {
-        myVideoRef.current.srcObject.getTracks()[0].stop();
-        myVideoRef.current.srcObject.getTracks()[1].stop();
+        const tracks = myVideoRef.current.srcObject.getTracks();
+        if (tracks[0]) tracks[0].stop();
+        if (tracks[1]) tracks[1].stop();
       }
       if (myPeer) myPeer.destroy();
     };
@@ -161,7 +162,7 @@ const Connect = ({ match, socket }) => {
   const muteUnmute = () => {
     if (myVideoStream) {
       if (myVideoStream.getAudioTracks().length === 0) return;
-      const enabled = myVideoStream.getAudioTracks()[0].enabled;
+      const enabled = myVideoStream.getAudioTracks()[0].muted;
       setIcons({ ...icons, audio: !icons.audio });
       if (enabled) myVideoStream.getAudioTracks()[0].enabled = false;
       else myVideoStream.getAudioTracks()[0].enabled = true;
@@ -211,7 +212,6 @@ const Connect = ({ match, socket }) => {
               className='my-video'
             />
             {errorMessage && <p className='err-msg'>{errorMessage} </p>}
-            <Video />
             {Object.keys(videoStreams).map((userId) => {
               return (
                 <Video stream={videoStreams[userId].stream} key={userId} />
