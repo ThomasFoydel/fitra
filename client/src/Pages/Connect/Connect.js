@@ -211,6 +211,7 @@ const Connect = ({ match, socket }) => {
               className='my-video'
             />
             {errorMessage && <p className='err-msg'>{errorMessage} </p>}
+            <Video />
             {Object.keys(videoStreams).map((userId) => {
               return (
                 <Video stream={videoStreams[userId].stream} key={userId} />

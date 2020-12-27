@@ -1,6 +1,17 @@
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
 .connect {
   height: 100vh;
+
   display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  padding-top: 5rem;
+  overflow: hidden;
 
   .err-msg {
     color: white;
@@ -23,9 +34,14 @@
       border: 2px solid black;
       border-radius: 9px;
       bottom: 6.5rem;
+      bottom: 11.5rem;
       left: 0.5rem;
       z-index: 1;
       background: black;
+      @media screen and (max-width: $medium) {
+        width: 10.5rem;
+        height: 10.5rem;
+      }
     }
 
     .peer-video {
@@ -85,6 +101,7 @@
     justify-content: space-between;
     flex: 0.2;
     max-width: 20%;
+    background: rgba(128, 128, 128, 0.281);
 
     .window {
       overflow-y: auto;
