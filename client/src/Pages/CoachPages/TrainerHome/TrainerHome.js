@@ -44,7 +44,6 @@ const Session = ({ session }) => {
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
   let currentTime = new Date(Date.now());
-
   let started = currentTime > startDate;
   let ended = currentTime > endDate;
   let active = started && !ended;
