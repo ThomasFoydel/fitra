@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import AuthPageToggle from './AuthPageToggle';
+import Facebook from './Facebook';
 
 const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
   const [, updateState] = useContext(CTX);
@@ -47,6 +48,9 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
       handleSubmit();
     }
   };
+  const fbResponse = (res) => {
+    console.log('fbResponse res: ', res);
+  };
 
   return (
     <>
@@ -80,6 +84,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         </button>
 
         <p className='error-msg'>{errorMessage}</p>
+        <Facebook callback={fbResponse} />
         <AuthPageToggle />
       </div>
     </>

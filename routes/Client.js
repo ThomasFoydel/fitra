@@ -9,9 +9,13 @@ const Trainer = require('../models/Trainer');
 const Review = require('../models/Review');
 const Session = require('../models/Session');
 const Message = require('../models/Message');
-const util = require('../util/util');
+
 const mongoose = require('mongoose');
-const { messageSorter } = util;
+const fetch = require('node-fetch');
+
+router.post('/fblogin', async (req, res) => {
+  console.log('fb login, req body: ', req.body);
+});
 
 router.post('/register', async (req, res) => {
   let { email, name, password, confirmpassword } = req.body;

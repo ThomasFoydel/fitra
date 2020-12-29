@@ -13,6 +13,8 @@
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.7",
     "react-dom": "^16.13.1",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.2.1",
     "react-rnd": "^10.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
