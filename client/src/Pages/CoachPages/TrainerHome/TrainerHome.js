@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import './TrainerHome.scss';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { CTX } from 'context/Store';
-import Image from 'Components/Image/Image';
-
 import { config, animated, useTransition } from 'react-spring';
+import Session from './Session';
+import { CTX } from 'context/Store';
+import './TrainerHome.scss';
 
 const TrainerHome = () => {
   const [appState] = useContext(CTX);
@@ -48,43 +46,6 @@ const TrainerHome = () => {
         </div>
       </div>
     </>
-  );
-};
-
-const Session = ({ session }) => {
-  let { startTime, endTime, _id, client } = session;
-  let startDate = new Date(startTime);
-  let endDate = new Date(endTime);
-  let currentTime = new Date(Date.now());
-  let started = currentTime > startDate;
-  let ended = currentTime > endDate;
-  let active = started && !ended;
-
-  return (
-    <div
-      className={`session 
-      ${ended && ' ended '}
-      ${active && ' active '} 
-      ${!started && ' not-started '} 
-      `}
-    >
-      <Link to={`/user/${client}`}>
-        <Image
-          name='profile-pic'
-          src={`/api/image/user/profilePic/${client}`}
-          alt="client's profile"
-        />
-      </Link>
-      <div className='start-time'>
-        <strong>start: </strong>
-        {startDate.toDateString()} {startDate.toLocaleTimeString()}
-      </div>
-      <div className='end-time'>
-        <strong>end: </strong>
-        {endDate.toDateString()} {endDate.toLocaleTimeString()}
-      </div>
-      {active && <Link to={`/connect/${_id}`}>connect</Link>}
-    </div>
   );
 };
 
