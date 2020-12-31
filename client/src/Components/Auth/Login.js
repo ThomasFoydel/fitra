@@ -76,15 +76,27 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         <button className='submit-btn' onClick={handleSubmit}>
           Login
         </button>
+
+        <p className='error-msg'>{errorMessage}</p>
+        <Facebook callback={fbResponse} />
+        <p className='tos'>
+          by logging in, you agree to our{' '}
+          <a target='_blank' href='/terms-of-use'>
+            Terms Of Use
+          </a>
+        </p>
+        <p className='pp'>
+          and our{' '}
+          <a target='_blank' href='/privacy-policy'>
+            Privacy Policy
+          </a>
+        </p>
         <button
           className='signup-btn'
           onClick={() => setCurrentShow('register')}
         >
-          Sign up
+          No account? Sign up
         </button>
-
-        <p className='error-msg'>{errorMessage}</p>
-        <Facebook callback={fbResponse} />
         <AuthPageToggle />
       </div>
     </>

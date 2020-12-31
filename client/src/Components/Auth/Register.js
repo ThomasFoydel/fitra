@@ -47,7 +47,6 @@ const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
       <button className='closeauth-btn' onClick={() => setAuthOpen(false)}>
         <i className='fas fa-times fa-3x close-btn'></i>
       </button>
-
       <h2>{trainer && 'Trainer '}Register</h2>
       <input id='name' type='text' placeholder='name' onChange={handleChange} />
       <input
@@ -71,12 +70,18 @@ const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
         onChange={handleChange}
         onKeyPress={handleKeyDown}
       />
-      <p>by registering, you agree to our </p>
-
-      <a target='_blank' href='/terms-of-use'>
-        Terms Of Use
-      </a>
-
+      <p>
+        by registering, you agree to our{' '}
+        <a target='_blank' href='/terms-of-use'>
+          Terms Of Use
+        </a>
+      </p>
+      <p>
+        and our{' '}
+        <a target='_blank' href='/privacy-policy'>
+          Privacy Policy
+        </a>
+      </p>
       <button className='submit-btn' onClick={handleSubmit}>
         Submit
       </button>
