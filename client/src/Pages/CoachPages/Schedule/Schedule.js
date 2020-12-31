@@ -109,9 +109,9 @@ const Schedule = ({
   };
   return (
     <>
+      <div className='background' />
+      <div className='overlay' />
       <div className='schedule'>
-        <div className='background' />
-        <div className='overlay' />
         <div className='ctrl-panel'>
           <div className='min-and-max'>
             <div className='min-max'>
@@ -143,7 +143,12 @@ const Schedule = ({
             </button>
           </div>
         </div>
-        <p className='err'>{err}</p>
+        <p
+          className='err'
+          style={{ background: err ? 'black' : 'rgba(0,0,0,0)' }}
+        >
+          {err}
+        </p>
         <div className='schedule-spacer'></div>
 
         <div className='large-schedule'>

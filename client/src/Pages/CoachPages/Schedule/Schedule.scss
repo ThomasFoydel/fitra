@@ -47,15 +47,17 @@ $large: 992px;
   }
 
   .err {
-    color: rgb(255, 157, 157);
-    background: black;
+    color: rgb(255, 101, 101);
     width: 100%;
     text-align: center;
     position: fixed;
     top: 6rem;
     height: 4rem;
-    padding-top: 1rem;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
   }
 
   .drag-n-drop {
