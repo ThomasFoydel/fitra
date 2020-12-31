@@ -20,32 +20,58 @@ const Delete = () => {
       .catch((err) => console.log({ err }));
   };
   return (
-    <div className='delete-page'>
-      <h2>delete my account</h2>
+    <>
+      <div className='background' />
+      <div className='overlay' />
+      <div className='delete-page'>
+        <h2>delete my account</h2>
 
-      {secondConfirm ? (
-        <div>
-          <h3>Okay, this is it. Remember, it's permanent.</h3>
-          <button onClick={handleDelete}>DELETE</button>
-          <button
-            onClick={() => {
-              setOpenConfirm(false);
-              setSecondConfirm(false);
-            }}
-          >
-            nevermind
-          </button>
-        </div>
-      ) : openConfirm ? (
-        <div>
-          <h3>You sure? This cannot be undone.</h3>
-          <button onClick={() => setSecondConfirm(true)}>Yes</button>
-          <button onClick={() => setOpenConfirm(false)}>No</button>
-        </div>
-      ) : (
-        <button onClick={() => setOpenConfirm(true)}>delete my account</button>
-      )}
-    </div>
+        {secondConfirm ? (
+          <div className='flexcol'>
+            <h3>Okay, this is it. Remember, it's permanent.</h3>
+            <div className='btns'>
+              <button
+                onClick={() => {
+                  setOpenConfirm(false);
+                  setSecondConfirm(false);
+                }}
+                className='cancel-btn'
+              >
+                nevermind
+              </button>
+              <button onClick={handleDelete} className='delete-btn'>
+                DELETE
+              </button>
+            </div>
+          </div>
+        ) : openConfirm ? (
+          <div className='flexcol'>
+            <h3>You sure? This cannot be undone.</h3>
+            <div className='btns'>
+              <button
+                onClick={() => setOpenConfirm(false)}
+                className='cancel-btn'
+              >
+                No
+              </button>
+              <button
+                onClick={() => setSecondConfirm(true)}
+                className='delete-btn'
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <h3>THIS IS PERMANENT</h3>
+            <button onClick={() => setOpenConfirm(true)} className='delete-btn'>
+              delete my account
+            </button>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

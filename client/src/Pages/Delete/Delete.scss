@@ -1,2 +1,56 @@
 .delete-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.788);
+  width: 80%;
+  min-width: 30rem;
+  max-width: 60rem;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5rem;
+  border-radius: 1rem;
+  min-height: 20rem;
+
+  .flexcol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .delete-page div {
+    display: flex;
+  }
+  .btns {
+    display: flex;
+  }
+  button {
+    margin: 1rem;
+    padding: 1rem;
+    border: none;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  .delete-btn {
+    border: 1px solid rgb(19, 19, 19);
+    background: rgb(19, 19, 19);
+    color: red;
+    &:hover {
+      color: rgb(19, 19, 19);
+      border-color: rgb(255, 23, 23);
+      background: rgb(255, 23, 23);
+      box-shadow: 0rem 0rem 1.4rem rgba(0, 0, 0, 0.9);
+    }
+  }
+  .cancel-btn {
+    border: 1px solid black;
+    background: rgb(189, 189, 189);
+    color: rgb(58, 58, 58);
+    &:hover {
+      background: rgb(228, 228, 228);
+      color: rgb(26, 26, 26);
+    }
+  }
 }
