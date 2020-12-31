@@ -5,7 +5,7 @@ const TermsOfUse = () => {
     <div className='terms-of-service'>
       <h2>TERMS OF USE</h2>
 
-      <p>Last updated October 22, 2020</p>
+      <p>Last updated December 30, 2020</p>
 
       <h3>AGREEMENT TO TERMS</h3>
 
@@ -1002,6 +1002,7 @@ const TermsOfUse = () => {
         In order to resolve a complaint regarding the Site or the Marketplace
         Offerings or to receive further information regarding use of the Site or
         the Marketplace Offerings, please contact us at:
+        fitraxyzhealth@gmail.com
       </p>
       <strong>Fitra LLC</strong>
     </div>

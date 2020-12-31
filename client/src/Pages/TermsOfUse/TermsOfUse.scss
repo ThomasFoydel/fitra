@@ -1,10 +1,19 @@
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+
 .terms-of-service {
   background: #000;
   color: lightgrey;
   padding: 4rem;
   h2 {
+    text-align: center;
     font-size: 9rem;
-    line-height: 12rem;
+    line-height: 8rem;
+    @media screen and (max-width: $medium) {
+      font-size: 6rem;
+      line-height: 5rem;
+    }
   }
   h3 {
     font-size: 3rem;
