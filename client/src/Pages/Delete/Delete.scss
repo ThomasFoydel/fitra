@@ -53,4 +53,19 @@
       color: rgb(26, 26, 26);
     }
   }
+  .close-btn {
+    position: absolute;
+    right: 1.2rem;
+    top: 0.8rem;
+    background: none;
+    i {
+      transition: all 0.2s ease;
+      color: rgb(173, 0, 0);
+    }
+    &:hover {
+      i {
+        color: rgb(121, 0, 0);
+      }
+    }
+  }
 }

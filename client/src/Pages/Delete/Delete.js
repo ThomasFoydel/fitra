@@ -2,14 +2,16 @@ import React, { useState, useContext } from 'react';
 import './Delete.scss';
 import { CTX } from 'context/Store';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Delete = () => {
   const [appState, updateState] = useContext(CTX);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [secondConfirm, setSecondConfirm] = useState(false);
   const {
-    user: { id },
+    user: { id, type },
   } = appState;
+  const isTrainer = type === 'trainer';
 
   const handleDelete = () => {
     axios
@@ -70,6 +72,12 @@ const Delete = () => {
             </button>
           </>
         )}
+        <Link
+          className='close-btn'
+          to={`${isTrainer ? '/coachportal' : ''}/settings`}
+        >
+          <i className='fas fa-times fa-3x'></i>
+        </Link>
       </div>
     </>
   );
