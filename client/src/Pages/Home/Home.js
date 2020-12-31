@@ -41,14 +41,11 @@ const Home = () => {
         <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
         <div className='sessions'>
           {sessions.length > 0 &&
-            animation.map(({ item, props, key }) => {
-              // console.log({ item, props, key });
-              return (
-                <animated.div style={props} key={key}>
-                  <Session session={item} />
-                </animated.div>
-              );
-            })}
+            animation.map(({ item, props, key }) => (
+              <animated.div style={props} key={key}>
+                <Session session={item} />
+              </animated.div>
+            ))}
         </div>
       </div>
     </>

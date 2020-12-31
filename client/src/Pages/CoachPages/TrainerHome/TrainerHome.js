@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { CTX } from 'context/Store';
 import Image from 'Components/Image/Image';
 
+import { config, animated, useTransition } from 'react-spring';
+
 const TrainerHome = () => {
   const [appState] = useContext(CTX);
   const { type } = appState.user;
@@ -22,6 +24,14 @@ const TrainerHome = () => {
     return () => (subscribed = false);
   }, [token, type]);
 
+  const animation = useTransition(foundSessions, (item) => item._id, {
+    from: { opacity: '0', transform: 'translateY(-20px)' },
+    enter: { opacity: '1', transform: 'translateY(0px)' },
+    leave: { opacity: '0', transform: 'translateY(-20px)' },
+    trail: 200,
+    config: config.wobbly,
+  });
+
   return (
     <>
       <div className='background' />
@@ -29,9 +39,11 @@ const TrainerHome = () => {
       <div className='trainer-home'>
         <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
         <div className='sessions'>
-          {foundSessions &&
-            foundSessions.map((session) => (
-              <Session session={session} key={session._id} />
+          {foundSessions.length > 0 &&
+            animation.map(({ item, props, key }) => (
+              <animated.div style={props} key={key}>
+                <Session session={item} />
+              </animated.div>
             ))}
         </div>
       </div>
