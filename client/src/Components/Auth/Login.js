@@ -3,6 +3,7 @@ import axios from 'axios';
 import { CTX } from 'context/Store';
 import AuthPageToggle from './AuthPageToggle';
 import Facebook from './Facebook';
+import Google from './Google';
 
 const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
   const [, updateState] = useContext(CTX);
@@ -52,6 +53,10 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
     console.log('fbResponse res: ', res);
   };
 
+  const googleResponse = (res) => {
+    console.log('googleResponse: ', res);
+  };
+
   return (
     <>
       <div className='login'>
@@ -79,6 +84,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
 
         <p className='error-msg'>{errorMessage}</p>
         <Facebook callback={fbResponse} />
+        <Google googleResponse={googleResponse} />
         <p className='tos'>
           by logging in, you agree to our{' '}
           <a target='_blank' href='/terms-of-use'>

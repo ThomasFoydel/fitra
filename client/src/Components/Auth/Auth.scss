@@ -132,3 +132,13 @@ h2 {
     }
   }
 }
+
+/*facebook button */
+button.kep-login-facebook.metro {
+  background-color: rgb(170, 170, 170);
+  padding: 1rem;
+  font-size: 1.2rem;
+  &:hover {
+    background: gray;
+  }
+}

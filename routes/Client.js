@@ -9,6 +9,7 @@ const Trainer = require('../models/Trainer');
 const Review = require('../models/Review');
 const Session = require('../models/Session');
 const Message = require('../models/Message');
+const { messageSorter } = require('../util/util');
 
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
