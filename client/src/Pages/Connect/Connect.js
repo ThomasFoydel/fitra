@@ -160,8 +160,6 @@ const Connect = ({ match, socket }) => {
   };
 
   const muteUnmute = () => {
-    console.log({ myVideoStream });
-    console.log('TRACKS: ', myVideoStream.getAudioTracks());
     if (myVideoStream) {
       if (myVideoStream.getAudioTracks().length === 0) return;
       const enabled = myVideoStream.getAudioTracks()[0].enabled;
