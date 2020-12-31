@@ -21,6 +21,7 @@ import TrainerSettings from 'Pages/CoachPages/Settings/Settings';
 import TrainerSchedule from 'Pages/CoachPages/Schedule/ScheduleContainer';
 import ClientProfile from 'Pages/ClientProfile/ClientProfile';
 import SessionReview from 'Pages/SessionReview/SessionReview';
+import Delete from 'Pages/Delete/Delete';
 
 import TermsOfUse from 'Pages/TermsOfUse/TermsOfUse';
 import PrivacyPolicy from 'Pages/PrivacyPolicy/PrivacyPolicy';
@@ -155,6 +156,7 @@ function App() {
           />
 
           <Route exact path='/user/:id' component={ClientProfile} />
+          <Route exact path='/delete_my_account' component={Delete} />
 
           <Route
             exact
