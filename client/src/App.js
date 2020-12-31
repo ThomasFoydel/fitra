@@ -23,6 +23,7 @@ import ClientProfile from 'Pages/ClientProfile/ClientProfile';
 import SessionReview from 'Pages/SessionReview/SessionReview';
 
 import TermsOfUse from 'Pages/TermsOfUse/TermsOfUse';
+import PrivacyPolicy from 'Pages/PrivacyPolicy/PrivacyPolicy';
 
 import TrainerLandingPage from 'Pages/CoachPages/TrainerLandingPage/TrainerLandingPage';
 
@@ -116,6 +117,7 @@ function App() {
           />
 
           <Route exact path='/terms-of-use' component={TermsOfUse} />
+          <Route exact path='/privacy-policy' component={PrivacyPolicy} />
           <Route exact path='/trainers' component={Trainers} />
           <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
           <Route
