@@ -8,19 +8,28 @@ const Delete = () => {
   const [appState, updateState] = useContext(CTX);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [secondConfirm, setSecondConfirm] = useState(false);
+  const [inputVal, setInputVal] = useState('');
+
   const {
-    user: { id, type },
+    user: { id, type, token },
   } = appState;
   const isTrainer = type === 'trainer';
 
   const handleDelete = () => {
     axios
-      .post('/api/delete_my_account')
+      .post(
+        '/api/delete_my_account',
+        { id, password: inputVal },
+        { headers: { 'x-auth-token': token } }
+      )
       .then((res) => {
         console.log({ res });
       })
       .catch((err) => console.log({ err }));
   };
+
+  const handleInput = ({ target: { value } }) => setInputVal(value);
+
   return (
     <>
       <div className='background' />
@@ -30,7 +39,13 @@ const Delete = () => {
 
         {secondConfirm ? (
           <div className='flexcol'>
-            <h3>Okay, this is it. Remember, it's permanent.</h3>
+            {/* <h3>Okay, this is it. Remember, it's permanent.</h3> */}
+            <input
+              type='password'
+              onChange={handleInput}
+              value={inputVal}
+              placeholder='password'
+            />
             <div className='btns'>
               <button
                 onClick={() => {
@@ -66,7 +81,8 @@ const Delete = () => {
           </div>
         ) : (
           <>
-            <h3>THIS IS PERMANENT</h3>
+            <h3>WARNING! THIS IS PERMANENT!</h3>
+
             <button onClick={() => setOpenConfirm(true)} className='delete-btn'>
               delete my account
             </button>
