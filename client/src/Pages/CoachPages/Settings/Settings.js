@@ -43,6 +43,14 @@ const Settings = () => {
           <div className='setting-item'>
             <Link to='/terms-of-use'>terms of use</Link>
           </div>
+          <div className='setting-item'>
+            <Link to='/privacy-policy'>privacy policy</Link>
+          </div>
+          <div className='setting-item'>
+            <Link className='delete-btn' to='/delete_my_account'>
+              delete my account
+            </Link>
+          </div>
         </div>
       </div>
     </>
