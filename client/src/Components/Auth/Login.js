@@ -16,15 +16,18 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
     setUserForm({ ...userForm, [id]: value });
   };
 
+  const type = trainer ? 'trainer' : 'client';
+
   const handleSubmit = (e) => {
     axios
-      .post(`/api/${trainer ? 'trainer' : 'client'}/login`, userForm)
+      .post(`/api/${type}/login`, userForm)
       .then((result) => {
         if (result.data.err) {
           setErrorMessage(result.data.err);
         } else {
           let { user, token } = result.data.data;
-          user.userType = trainer ? 'trainer' : 'client';
+          // console.log('THE USER: ', user);
+          // user.userType = type;
           updateState({ type: 'LOGIN', payload: { user, token } });
         }
       })
@@ -51,7 +54,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
     }
   };
   const fbResponse = (res) => {
-    console.log('fbResponse res: ', res);
+    axios.post('/api/${}/');
   };
 
   const googleResponse = (res) => {

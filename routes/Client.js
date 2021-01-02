@@ -8,19 +8,15 @@ const Trainer = require('../models/Trainer');
 const Review = require('../models/Review');
 const Session = require('../models/Session');
 const Message = require('../models/Message');
-const {
-  messageSorter,
-  formatClientInfo,
-  formatToken,
-} = require('../util/util');
+const { formatClientInfo, formatToken } = require('../util/util');
 
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
 
 router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
-  const sendLogin = (client) => {
-    const clientInfo = formatClientInfo(client);
-    const token = foundToken(client);
+  const sendLogin = async (client) => {
+    const clientInfo = await formatClientInfo(client);
+    const token = formatToken(client);
     res.json({
       status: 'success',
       message: 'Login successful',
@@ -132,17 +128,7 @@ router.post('/login', (req, res) => {
         );
         if (passwordsMatch) {
           const token = formatToken(client);
-          const messages = await messageSorter(client._id.toString());
-          const clientInfo = {
-            id: client._id,
-            email: client.email,
-            name: client.name,
-            coverPic: client.coverPic,
-            profilePic: client.profilePic,
-            settings: client.settings,
-            bio: client.bio,
-            messages,
-          };
+          const clientInfo = await formatClientInfo(client);
           res.json({
             status: 'success',
             message: 'Login successful',

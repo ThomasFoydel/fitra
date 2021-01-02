@@ -41,6 +41,7 @@ const formatClientInfo = async (client) => {
     settings: client.settings,
     bio: client.bio,
     messages,
+    userType: 'client',
   };
   return clientInfo;
 };

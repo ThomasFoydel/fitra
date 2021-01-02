@@ -99,6 +99,7 @@ router.post('/login', (req, res) => {
             messages,
             id: user._id,
             tags: user.tags,
+            userType: 'trainer',
           };
           res.json({
             status: 'success',
