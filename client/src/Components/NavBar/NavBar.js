@@ -24,6 +24,7 @@ const NavBar = () => {
   };
 
   const openLogin = () => {
+    if (appState.showAuth) return;
     updateState({
       type: 'CHANGE_AUTH_TYPE',
       payload: { type: 'client' },

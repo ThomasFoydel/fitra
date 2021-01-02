@@ -6,6 +6,7 @@ import Facebook from './Facebook';
 import Google from './Google';
 
 const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
+  console.log('login!');
   const [, updateState] = useContext(CTX);
   const [errorMessage, setErrorMessage] = useState('');
   const [userForm, setUserForm] = useState({});
