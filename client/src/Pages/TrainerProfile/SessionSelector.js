@@ -234,7 +234,7 @@ const SessionSelector = ({
   let price = rate * selection.length;
   if (!rate && rate !== 0) price = 50;
   if (isNaN(price)) price = 50;
-  if (price == 0) price = 0.01;
+  if (price === 0) price = 0.01;
   return (
     <div className='session-selector'>
       <div className='ctrls'>
