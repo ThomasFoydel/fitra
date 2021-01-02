@@ -18,7 +18,7 @@ const Delete = () => {
   const handleDelete = () => {
     axios
       .post(
-        '/api/delete_my_account',
+        `/api/${type}/delete_my_account`,
         { id, password: inputVal },
         { headers: { 'x-auth-token': token } }
       )

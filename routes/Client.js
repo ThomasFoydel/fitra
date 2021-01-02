@@ -295,4 +295,9 @@ router.post(
   }
 );
 
+router.post('/delete_my_account', auth, async (req, res) => {
+  const foundUser = await User.findById(req.tokenUser.userId);
+  if (!foundUser) return res.send({ err: 'No user found' });
+});
+
 module.exports = router;
