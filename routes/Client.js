@@ -2,20 +2,66 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
 const Review = require('../models/Review');
 const Session = require('../models/Session');
 const Message = require('../models/Message');
-const { messageSorter } = require('../util/util');
+const {
+  messageSorter,
+  formatClientInfo,
+  formatToken,
+} = require('../util/util');
 
 const mongoose = require('mongoose');
 const fetch = require('node-fetch');
 
-router.post('/fblogin', async (req, res) => {
-  console.log('fb login, req body: ', req.body);
+router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
+  const sendLogin = (client) => {
+    const clientInfo = formatClientInfo(client);
+    const token = foundToken(client);
+    res.json({
+      status: 'success',
+      message: 'Login successful',
+      data: {
+        user: clientInfo,
+        token,
+      },
+    });
+  };
+
+  const userURL = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`;
+  fetch(userURL)
+    .then((res) => res.json())
+    .then(async ({ email, name }) => {
+      if (!email || !name) return res.send({ err: 'One or more fields empty' });
+      const foundClient = await Client.find({ email: email.toLowerCase() });
+      if (!foundClient) {
+        const password = email + process.env.SECRET;
+        const hashedPw = await bcrypt.hash(password, 12);
+        const newClient = new Client({
+          name: name,
+          email: email.toLowerCase(),
+          password: hashedPw,
+          settings: { darkmode: false },
+        });
+
+        newClient
+          .save()
+          .then((result) => {
+            sendLogin(result);
+          })
+          .catch((err) => {
+            res.status(400).send(err);
+          });
+      } else {
+        sendLogin(foundClient);
+      }
+    })
+    .catch((err) => {
+      console.log({ err });
+    });
 });
 
 router.post('/register', async (req, res) => {
@@ -85,17 +131,7 @@ router.post('/login', (req, res) => {
           client.password
         );
         if (passwordsMatch) {
-          const token = jwt.sign(
-            {
-              tokenUser: {
-                userId: client._id,
-                email: client.email,
-                userType: 'client',
-              },
-            },
-            process.env.SECRET,
-            { expiresIn: '1000hr' }
-          );
+          const token = formatToken(client);
           const messages = await messageSorter(client._id.toString());
           const clientInfo = {
             id: client._id,

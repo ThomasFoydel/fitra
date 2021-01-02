@@ -1,6 +1,7 @@
 const Message = require('../models/Message');
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
+const jwt = require('jsonwebtoken');
 
 const messageSorter = async (userId) => {
   let sortedMessages = {};
@@ -29,6 +30,36 @@ const findUser = async (id) => {
   else if (trainer) return trainer;
 };
 
+const formatClientInfo = async (client) => {
+  const messages = await messageSorter(client._id.toString());
+  const clientInfo = {
+    id: client._id,
+    email: client.email,
+    name: client.name,
+    coverPic: client.coverPic,
+    profilePic: client.profilePic,
+    settings: client.settings,
+    bio: client.bio,
+    messages,
+  };
+  return clientInfo;
+};
+
+const formatToken = (client) => {
+  const token = jwt.sign(
+    {
+      tokenUser: {
+        userId: client._id,
+        email: client.email,
+        userType: 'client',
+      },
+    },
+    process.env.SECRET,
+    { expiresIn: '1000hr' }
+  );
+  return token;
+};
+
 const sendReminders = async () => {
   // find all sessions that happen between 23 and 24 hours away from current time in UTC
   // const foundSessions = await Sessions.findAll({})
@@ -37,4 +68,10 @@ const sendReminders = async () => {
   console.log('timer');
 };
 
-module.exports = { messageSorter, findUser, sendReminders };
+module.exports = {
+  messageSorter,
+  findUser,
+  sendReminders,
+  formatClientInfo,
+  formatToken,
+};
