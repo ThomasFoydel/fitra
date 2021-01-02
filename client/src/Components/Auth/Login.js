@@ -6,7 +6,6 @@ import Facebook from './Facebook';
 import Google from './Google';
 
 const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
-  console.log('login!');
   const [, updateState] = useContext(CTX);
   const [errorMessage, setErrorMessage] = useState('');
   const [userForm, setUserForm] = useState({});
@@ -53,14 +52,20 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
       handleSubmit();
     }
   };
-  const fbResponse = (res) => {
-    axios.post('/api/${}/');
+  const fbResponse = ({ accessToken, userID }) => {
+    axios
+      .post(`/api/${type}/fblogin`, { accessToken, userID })
+      .then((res) => {
+        console.log({ res });
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
   };
 
   const googleResponse = (res) => {
     console.log('googleResponse: ', res);
   };
-
   return (
     <>
       <div className='login'>
