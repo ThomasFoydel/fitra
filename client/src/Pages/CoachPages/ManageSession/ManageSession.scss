@@ -11,12 +11,18 @@
   text-align: center;
   height: 28rem;
   position: relative;
+
   .profile-pic {
     height: 10rem;
     width: 10rem;
     border-radius: 10rem;
   }
-
+  .date {
+    font-size: 1.5rem;
+  }
+  .name {
+    font-size: 2rem;
+  }
   .cancel-btn,
   .confirm-btn,
   .close-btn {
@@ -25,9 +31,10 @@
     border-radius: 0.5rem;
     letter-spacing: 0.1rem;
     margin: 0.5rem;
+    margin-top: 1.7rem;
   }
   .cancel-btn {
-    margin-top: 2.3rem;
+    margin-top: 3.5rem;
   }
   .cancel-btn,
   .confirm-btn {
@@ -35,6 +42,10 @@
     &:hover {
       background: rgb(230, 10, 10);
     }
+  }
+  .close-btn,
+  .confirm-btn {
+    width: 10rem;
   }
   a {
     text-decoration: none;
@@ -51,5 +62,19 @@
     position: absolute;
     top: 1rem;
     left: 1.5rem;
+  }
+  a.connect-link {
+    color: lightgrey;
+    background: #222;
+    border-radius: 0.5rem;
+    padding: 0.3rem 3.2rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    &:hover {
+      color: rgb(238, 238, 238);
+      background: rgb(19, 19, 19);
+    }
   }
 }

@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
-import { Link } from 'react-router-dom';
 import './ManageSession.scss';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Image from 'Components/Image/Image';
 
 const ManageSession = ({
@@ -59,8 +58,15 @@ const ManageSession = ({
       .catch((err) => console.log({ err }));
   };
 
-  let start = found && new Date(found.session.startTime);
-  let end = found && new Date(found.session.endTime);
+  let { startTime, endTime, _id, client } = found ? found.session : {};
+  let { name } = found ? found.client : {};
+  let start = new Date(startTime);
+  let end = new Date(endTime);
+  let currentTime = new Date(Date.now());
+  let started = currentTime > start;
+  let ended = currentTime > end;
+  let active = started && !ended;
+
   return (
     <div className='manage-session'>
       {deleted && <Redirect to='/coachportal/schedule' />}
@@ -69,20 +75,26 @@ const ManageSession = ({
           <Link to='/coachportal/schedule'>
             <i className='fas fa-angle-left fa-4x back-link'></i>
           </Link>
-          <Link to={`/user/${found.client._id}`}>
+          <Link to={`/user/${client}`}>
             <Image
               name='profile-pic'
               alt="client's profile"
-              src={`/api/image/user/profilePic/${found.session.client}`}
+              src={`/api/image/user/profilePic/${client}`}
             />
           </Link>
-          <Link to={`/user/${found.client._id}`}>
-            <div className='name'>{found.client.name}</div>
+          <Link to={`/user/${client}`}>
+            <div className='name'>{name}</div>
           </Link>
-          <div className='email'>{found.client.email}</div>
-          <div className='date'>{start && start.toDateString()}</div>
-          <div className='start'>start: {start && start.toTimeString()}</div>
-          <div className='end'>end: {end && end.toTimeString()}</div>
+          <div className='date'>{start && start.toLocaleDateString()}</div>
+          <div className='start'>
+            start: {start && start.toLocaleTimeString()}
+          </div>
+          <div className='end'>end: {end && end.toLocaleTimeString()}</div>
+          {active && (
+            <Link className='connect-link' to={`/connect/${_id}`}>
+              connect
+            </Link>
+          )}
           <div className='err'>{err}</div>
 
           {openCancel ? (
