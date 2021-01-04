@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Dnd from './Dnd';
-import Session from './Session';
+import Dnd from './parts/Dnd';
+import Session from './parts/Session';
 import {
   days,
   halfHours,
@@ -32,8 +32,8 @@ const Schedule = ({
 }) => {
   const [weekShift, setWeekShift] = useState(0);
   const [week, setWeek] = useState(currentWeek);
-  const [blockedTimes, setBlockedTimes] = useState(entries);
-  const [blockEntries, setBlockEntries] = useState(entries);
+  const [displayBlocks, setDisplayBlocks] = useState(entries);
+  const [actualBlocks, setActualBlocks] = useState(entries);
   const [firstRender, setFirstRender] = useState(true);
 
   // todo: test this:
@@ -41,28 +41,28 @@ const Schedule = ({
   // useEffect(() => {
   //   let subscribed = true;
   //   if (didMountRef.current) {
-  //    change(blockEntries);
+  //    change(actualBlocks);
   //   } else didMountRef.current = true;
   //   return () => (subscribed = false);
-  // }, [blockEntries]);
+  // }, [actualBlocks]);
 
   useEffect(() => {
     let subscribed = true;
     if (subscribed)
       if (firstRender) setFirstRender(false);
-      else change(blockEntries);
+      else change(actualBlocks);
     return () => (subscribed = false);
-  }, [blockEntries]);
+  }, [actualBlocks]);
 
   const destroy = (id) => {
-    setBlockedTimes((blocks) => {
+    setDisplayBlocks((blocks) => {
       let block = blocks.filter((b) => b.id === id)[0];
       let index = blocks.indexOf(block);
       let copy = [...blocks];
       copy[index].invisible = true;
       return blocks;
     });
-    setBlockEntries((blocks) => blocks.filter((block) => block.id !== id));
+    setActualBlocks((blocks) => blocks.filter((block) => block.id !== id));
   };
 
   const handleGridClick = (e) => {
@@ -79,6 +79,7 @@ const Schedule = ({
     let endTime = startDate.getTime() + 1800000;
     let endDate = new Date(endTime);
     let endHour = getOneHalfHourAhead(hour);
+
     const newBlock = {
       startDate,
       endDate,
@@ -89,8 +90,8 @@ const Schedule = ({
       recurring: false,
       id: uuidv4(),
     };
-    setBlockedTimes([...blockedTimes, newBlock]);
-    setBlockEntries([...blockEntries, newBlock]);
+    setDisplayBlocks([...displayBlocks, newBlock]);
+    setActualBlocks([...actualBlocks, newBlock]);
   };
 
   const handleWeekShift = (newShift) => {
@@ -101,12 +102,6 @@ const Schedule = ({
   const newDate = new Date();
   const today = newDate.getDay();
 
-  const handleDndEntries = (e) => {
-    setBlockEntries(e);
-  };
-  const handleBlockedTimes = (e) => {
-    setBlockedTimes(e);
-  };
   return (
     <>
       <div className='background' />
@@ -122,8 +117,6 @@ const Schedule = ({
                 <option value={3}>1.5 hours</option>
                 <option value={4}>2 hours</option>
               </select>
-              {/* </div> */}
-              {/* <div className='min-max'> */}
               <h4>max</h4>
               <select onChange={handleMinMax} value={max} id='maximum'>
                 <option value={1}>30 minutes</option>
@@ -224,7 +217,7 @@ const Schedule = ({
               // drag and drop time blocks
               //////////////////////////////
             }
-            {blockedTimes.map((data) => {
+            {displayBlocks.map((data) => {
               const inCurrentWeek = checkBlock(data, week);
 
               return (
@@ -237,8 +230,8 @@ const Schedule = ({
                   currentDay={dayOfWeek}
                   days={days}
                   times={halfHours}
-                  setBlockEntries={handleDndEntries}
-                  setBlockedTimes={handleBlockedTimes}
+                  setActualBlocks={setActualBlocks}
+                  setDisplayBlocks={setDisplayBlocks}
                 />
               );
             })}
@@ -251,11 +244,11 @@ const Schedule = ({
             days,
             dayOfWeek,
             week,
-            blockedTimes,
-            setBlockedTimes,
+            displayBlocks,
+            setDisplayBlocks,
             entries,
-            blockEntries,
-            setBlockEntries,
+            actualBlocks,
+            setActualBlocks,
           }}
         />
       </div>

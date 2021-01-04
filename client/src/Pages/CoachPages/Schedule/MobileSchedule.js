@@ -4,12 +4,12 @@ const MobileSchedule = ({
   props: {
     days,
     week,
-    blockedTimes,
+    displayBlocks,
     // dayOfWeek,
-    // setBlockedTimes,
+    // setDisplayBlocks,
     // entries,
-    // blockEntries,
-    // setBlockEntries,
+    // actualBlocks,
+    // setActualBlocks,
   },
 }) => {
   // const [dayOpen, setDayOpen] = useState(0);
@@ -19,7 +19,7 @@ const MobileSchedule = ({
       <h3 className='title'>schedule</h3>
       {days.map((day, i) => {
         let currentDate = new Date(week[i]);
-        return <Day props={{ currentDate, day, blockedTimes }} key={day} />;
+        return <Day props={{ currentDate, day, displayBlocks }} key={day} />;
       })}
     </div>
   );
@@ -27,7 +27,7 @@ const MobileSchedule = ({
 
 export default MobileSchedule;
 
-const Day = ({ props: { currentDate, day, blockedTimes } }) => {
+const Day = ({ props: { currentDate, day, displayBlocks } }) => {
   const [addTimeOpen, setAddTimeOpen] = useState(false);
   const [timeSelection, setTimeSelection] = useState({ start: {}, end: {} });
 
@@ -44,8 +44,8 @@ const Day = ({ props: { currentDate, day, blockedTimes } }) => {
     <div className='mb-day'>
       <h3>{currentDate.toDateString()}</h3>
 
-      {Object.keys(blockedTimes).map((key) => {
-        let { startDate, endDate, _id } = blockedTimes[key];
+      {Object.keys(displayBlocks).map((key) => {
+        let { startDate, endDate, _id } = displayBlocks[key];
         startDate = new Date(startDate);
         endDate = new Date(endDate);
         let belongsOnCurrent =

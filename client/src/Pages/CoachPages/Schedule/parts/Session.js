@@ -1,6 +1,6 @@
 import React from 'react';
 import { Rnd } from 'react-rnd';
-import { days, halfHours } from '../../../util/util';
+import { days, halfHours } from '../../../../util/util';
 import { Link } from 'react-router-dom';
 import Image from 'Components/Image/Image';
 
@@ -14,7 +14,7 @@ const Session = ({ props: { data, inCurrentWeek } }) => {
   let height = difference * 50;
   let startY = startIdx * 50;
   let xDefault = days.indexOf(data.day) * 120;
-  console.log({ data });
+
   return (
     <Rnd
       style={{

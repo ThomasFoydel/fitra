@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
-import { dateFromDateAndTime } from '../../../util/util';
+import { dateFromDateAndTime } from '../../../../util/util';
 const Dnd = ({
   data,
   destroy,
   week,
   days,
   times,
-  setBlockedTimes,
-  setBlockEntries,
+  setDisplayBlocks,
+  setActualBlocks,
   invisible,
 }) => {
   const [day, setDay] = useState(data.day);
@@ -42,13 +42,13 @@ const Dnd = ({
       id: data.id,
       recurring,
     };
-    setBlockedTimes((times) => {
+    setDisplayBlocks((times) => {
       let index = times.findIndex((x) => x.id === data.id);
       let copy = [...times];
       copy[index] = newTime;
       return copy;
     });
-    setBlockEntries((entries) => {
+    setActualBlocks((entries) => {
       let index = entries.findIndex((x) => x.id === data.id);
       let copy = [...entries];
       copy[index] = newTime;
