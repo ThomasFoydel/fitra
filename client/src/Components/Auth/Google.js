@@ -14,8 +14,9 @@ const Google = ({ responseGoogle }) => {
           disabled={renderProps.disabled}
           className='google-btn'
         >
-          <i className='fab fa-google' />
-          <span>Sign In with Google</span>
+          {/* <i className='fab fa-google' /> */}
+          {/* <span>Sign In with Google</span> */}
+          LOGIN WITH GOOGLE
         </button>
       )}
     ></GoogleLogin>

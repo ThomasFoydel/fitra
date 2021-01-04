@@ -25,8 +25,6 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
           setErrorMessage(result.data.err);
         } else {
           let { user, token } = result.data.data;
-          // console.log('THE USER: ', user);
-          // user.userType = type;
           updateState({ type: 'LOGIN', payload: { user, token } });
         }
       })
@@ -87,13 +85,6 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
           onChange={handleChange}
           onKeyPress={handleKeyDown}
         />
-        <button className='submit-btn' onClick={handleSubmit}>
-          Login
-        </button>
-
-        <p className='error-msg'>{errorMessage}</p>
-        <Facebook callback={fbResponse} />
-        <Google googleResponse={googleResponse} />
         <p className='tos'>
           by logging in, you agree to our{' '}
           <a target='_blank' href='/terms-of-use'>
@@ -106,11 +97,19 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
             Privacy Policy
           </a>
         </p>
+        <button className='submit-btn' onClick={handleSubmit}>
+          Login
+        </button>
+
+        <p className='error-msg'>{errorMessage}</p>
+        <Facebook callback={fbResponse} />
+        <Google googleResponse={googleResponse} />
+
         <button
           className='signup-btn'
           onClick={() => setCurrentShow('register')}
         >
-          No account? Sign up
+          No account? <strong>Sign up</strong>
         </button>
         <AuthPageToggle />
       </div>

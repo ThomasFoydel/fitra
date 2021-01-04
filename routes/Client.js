@@ -14,6 +14,7 @@ const mongoose = require('mongoose');
 const fetch = require('node-fetch');
 
 router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
+  console.log({ userID, accessToken });
   const sendLogin = async (client) => {
     const clientInfo = await formatClientInfo(client);
     const token = formatToken(client);

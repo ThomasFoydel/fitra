@@ -42,29 +42,6 @@ h2 {
   border: 1px solid rgb(156, 156, 156);
   border-radius: 0 18px 0 18px;
 
-  .signup-btn {
-  }
-  .signin-btn {
-    margin-top: 2rem;
-  }
-  .submit-btn {
-    margin: 2rem 0;
-    // margin-top: 2rem;
-  }
-
-  .submit-btn {
-    padding: 0.5rem 1rem;
-    font-size: 1.8rem;
-    border: none;
-    border-radius: 5px;
-    // margin-top: 2rem;
-
-    &:hover {
-      background: rgb(184, 184, 184);
-      color: rgb(29, 29, 29);
-    }
-  }
-
   .signup-btn,
   .signin-btn {
     color: rgb(163, 163, 163);
@@ -72,16 +49,40 @@ h2 {
     border: none;
     background: none;
     position: absolute;
-    bottom: 1rem;
+    bottom: 1.5rem;
     &:hover {
       text-decoration: underline;
       color: rgb(255, 255, 255);
     }
   }
+
+  .signup-btn {
+  }
+  .signin-btn {
+  }
+  .submit-btn {
+    margin: 1rem 0;
+  }
+
+  .submit-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 5px;
+    background: rgb(233, 33, 33);
+    color: white;
+    font-weight: bold;
+    border: rgb(248, 88, 88) 1px solid;
+    transition: all 0.3s ease;
+    &:hover {
+      background: rgb(248, 88, 88);
+      border-color: rgb(233, 33, 33);
+    }
+  }
+
   input {
     height: 2.8rem;
     width: 75%;
-    margin-bottom: 0.3rem;
     border-radius: 0.2rem;
     border: 1px solid rgba(255, 0, 0, 0);
     padding-left: 0.5rem;
@@ -134,10 +135,18 @@ h2 {
 }
 
 /*facebook button */
-button.kep-login-facebook.metro {
+button.kep-login-facebook.metro,
+.google-btn {
   background-color: rgb(170, 170, 170);
   padding: 1rem;
   font-size: 1.2rem;
+  border: 1px solid grey;
+  width: 17rem;
+  font-weight: bold;
+  margin: 0.2rem;
+  border-radius: 0.2rem;
+  transform: all 0.3s ease;
+  color: black;
   &:hover {
     background: gray;
   }
