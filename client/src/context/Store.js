@@ -42,6 +42,7 @@ export function reducer(state, action) {
       };
     case 'LOGOUT':
       localStorage.removeItem('fitr-token');
+      if (window.FB) window.FB.logout();
       return {
         ...state,
         isLoggedIn: false,

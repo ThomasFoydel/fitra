@@ -51,10 +51,15 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
     }
   };
   const fbResponse = ({ accessToken, userID }) => {
+    if (!accessToken || !userID)
+      return setErrorMessage('One or more fields missing');
     axios
       .post(`/api/${type}/fblogin`, { accessToken, userID })
       .then((res) => {
-        console.log({ res });
+        let { err } = res.data;
+        if (err) return setErrorMessage(err);
+        let { user, token } = res.data.data;
+        updateState({ type: 'LOGIN', payload: { user, token } });
       })
       .catch((err) => {
         console.log({ err });

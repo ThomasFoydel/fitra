@@ -104,6 +104,7 @@ h2 {
   .close-btn {
     color: rgb(121, 0, 0);
     cursor: pointer;
+    transition: all 0.3s ease;
   }
   .error-msg {
     position: absolute;
