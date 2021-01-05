@@ -61,18 +61,21 @@ const Dnd = ({
     let { transform, height } = node.style;
 
     /* NEW DAY */
-    let elX = el.x;
-    elX -= 60;
-    let x = Math.ceil(elX / 120);
+    let elementXPosition = el.x;
+    elementXPosition -= 60;
+    let x = Math.ceil(elementXPosition / 120);
 
     /* NEW START TIME */
-    let y = transform.split(', ')[1];
-    y = y.substring(0, y.length - 3);
-    y = Number(y);
+    let elementYPosition = transform.split(', ')[1];
+    elementYPosition = elementYPosition.substring(
+      0,
+      elementYPosition.length - 3
+    );
+    elementYPosition = Number(elementYPosition);
 
-    if (y < 50 && y > -50) y = 0;
-    if (y < 0) y += 2750;
-    let startIndex = Math.ceil(y / 50);
+    if (elementYPosition < 50 && elementYPosition > -50) elementYPosition = 0;
+    if (elementYPosition < 0) elementYPosition += 2750;
+    let startIndex = Math.ceil(elementYPosition / 50);
 
     let mSecondsInADay = 86400000;
     let index = x - days.indexOf(day);
@@ -84,9 +87,9 @@ const Dnd = ({
 
     /* NEW END TIME */
     if (Number(height) < 0) height = 0;
-    let h = height.substring(0, height.length - 2);
-    h /= 50;
-    let endTime = times[startIndex + h];
+    let elementHeight = height.substring(0, height.length - 2);
+    elementHeight /= 50;
+    let endTime = times[startIndex + elementHeight];
     let newEndDate = dateFromDateAndTime(newDate, endTime, newStartTime);
 
     /* UPDATE STATE */
@@ -100,13 +103,16 @@ const Dnd = ({
 
   const handleResize = (e, dir, refToElement, d) => {
     let { transform, height } = refToElement.style;
-    let y = transform.split(', ')[1];
-    y = y.substring(0, y.length - 3);
-    let start = times[y / 50];
-    let h = height.substring(0, height.length - 2);
-    h /= 50;
+    let elementYPosition = transform.split(', ')[1];
+    elementYPosition = elementYPosition.substring(
+      0,
+      elementYPosition.length - 3
+    );
+    let start = times[elementYPosition / 50];
+    let elementHeight = height.substring(0, height.length - 2);
+    elementHeight /= 50;
     let startIndex = times.indexOf(start);
-    let newEndTime = times[startIndex + h];
+    let newEndTime = times[startIndex + elementHeight];
     if (newEndTime && newEndTime !== startTime) {
       setEndTime(newEndTime);
 
