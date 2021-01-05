@@ -19,21 +19,21 @@ const Dnd = ({
   const [recurring, setRecurring] = useState(data.recurring);
   const [firstLoad, setFirstLoad] = useState(true);
 
-  let t = times.indexOf(data.start);
-  let e = times.indexOf(data.end);
-  if (t === 47) e = 48;
-  e = e - t;
-  e *= 50;
-  t *= 50;
-  let xDefault = days.indexOf(data.day) * 120;
+  let startIdx = times.indexOf(data.start);
+  let endIdx = times.indexOf(data.end);
+  if (startIdx === 47) endIdx = 48;
+  let initialHeight = endIdx - startIdx;
+  initialHeight *= 50;
+  startIdx *= 50;
+  const xDefault = days.indexOf(data.day) * 120;
 
   const handleDestroy = () => {
     destroy(data.id);
   };
 
   const updateBlocks = (startDate, endDate, startTime, endTime, recurring) => {
-    let day = days[startDate.getDay()];
-    let newTime = {
+    const day = days[startDate.getDay()];
+    const newTime = {
       day,
       end: endTime,
       start: startTime,
@@ -43,14 +43,14 @@ const Dnd = ({
       recurring,
     };
     setDisplayBlocks((times) => {
-      let index = times.findIndex((x) => x.id === data.id);
-      let copy = [...times];
+      const index = times.findIndex((x) => x.id === data.id);
+      const copy = [...times];
       copy[index] = newTime;
       return copy;
     });
     setActualBlocks((entries) => {
-      let index = entries.findIndex((x) => x.id === data.id);
-      let copy = [...entries];
+      const index = entries.findIndex((x) => x.id === data.id);
+      const copy = [...entries];
       copy[index] = newTime;
       return copy;
     });
@@ -75,22 +75,22 @@ const Dnd = ({
 
     if (elementYPosition < 50 && elementYPosition > -50) elementYPosition = 0;
     if (elementYPosition < 0) elementYPosition += 2750;
-    let startIndex = Math.ceil(elementYPosition / 50);
+    const startIndex = Math.ceil(elementYPosition / 50);
 
-    let mSecondsInADay = 86400000;
-    let index = x - days.indexOf(day);
+    const mSecondsInADay = 86400000;
+    const index = x - days.indexOf(day);
     const timeDifference = mSecondsInADay * index;
     const prevDate = week[days.indexOf(day)];
-    let newDate = new Date(prevDate.getTime() + timeDifference);
-    let newStartTime = times[startIndex];
-    let newStartDate = dateFromDateAndTime(newDate, newStartTime);
+    const newDate = new Date(prevDate.getTime() + timeDifference);
+    const newStartTime = times[startIndex];
+    const newStartDate = dateFromDateAndTime(newDate, newStartTime);
 
     /* NEW END TIME */
     if (Number(height) < 0) height = 0;
     let elementHeight = height.substring(0, height.length - 2);
     elementHeight /= 50;
-    let endTime = times[startIndex + elementHeight];
-    let newEndDate = dateFromDateAndTime(newDate, endTime, newStartTime);
+    const endTime = times[startIndex + elementHeight];
+    const newEndDate = dateFromDateAndTime(newDate, endTime, newStartTime);
 
     /* UPDATE STATE */
     setStartTime(times[startIndex]);
@@ -108,27 +108,27 @@ const Dnd = ({
       0,
       elementYPosition.length - 3
     );
-    let start = times[elementYPosition / 50];
+    const start = times[elementYPosition / 50];
     let elementHeight = height.substring(0, height.length - 2);
     elementHeight /= 50;
-    let startIndex = times.indexOf(start);
-    let newEndTime = times[startIndex + elementHeight];
+    const startIndex = times.indexOf(start);
+    const newEndTime = times[startIndex + elementHeight];
     if (newEndTime && newEndTime !== startTime) {
       setEndTime(newEndTime);
 
-      let newEndDate = dateFromDateAndTime(endDate, newEndTime, startTime);
-      let newStartDate = dateFromDateAndTime(endDate, startTime);
+      const newEndDate = dateFromDateAndTime(endDate, newEndTime, startTime);
+      const newStartDate = dateFromDateAndTime(endDate, startTime);
       setEndDate(newEndDate);
       updateBlocks(newStartDate, newEndDate, startTime, newEndTime, recurring);
     }
   };
 
   const toggleRecurring = () => {
-    let dayOfWeek = startDate.getDay();
-    let currentWeekDate = week[dayOfWeek];
-    let newStartDate = dateFromDateAndTime(currentWeekDate, startTime);
+    const dayOfWeek = startDate.getDay();
+    const currentWeekDate = week[dayOfWeek];
+    const newStartDate = dateFromDateAndTime(currentWeekDate, startTime);
     setStartDate(newStartDate);
-    let newEndDate = dateFromDateAndTime(currentWeekDate, endTime, startTime);
+    const newEndDate = dateFromDateAndTime(currentWeekDate, endTime, startTime);
     setEndDate(newEndDate);
     setRecurring((recurring) => {
       return !recurring;
@@ -157,9 +157,9 @@ const Dnd = ({
       resizeHandleClasses={{ bottom: 'drag-bottom' }}
       default={{
         x: xDefault,
-        y: t,
+        y: startIdx,
         width: 120,
-        height: `${e}px`,
+        height: `${initialHeight}px`,
       }}
       onDragStop={handleDrag}
       onResizeStop={handleResize}
@@ -169,7 +169,7 @@ const Dnd = ({
 
         <button
           className='delete-btn'
-          onMouseDown={(e) => e.stopPropagation()}
+          onMouseDown={(event) => event.stopPropagation()}
           onClick={handleDestroy}
         >
           X
@@ -180,7 +180,7 @@ const Dnd = ({
         <button
           className='recurring-btn'
           onClick={toggleRecurring}
-          onMouseDown={(e) => e.stopPropagation()}
+          onMouseDown={(event) => event.stopPropagation()}
         >
           R
         </button>
