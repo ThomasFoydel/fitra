@@ -2,16 +2,7 @@ import React, { useState } from 'react';
 import { dateFromDateAndTime } from '../../../util/util';
 import { v4 as uuidv4 } from 'uuid';
 const MobileSchedule = ({
-  props: {
-    days,
-    week,
-    displayBlocks,
-    // dayOfWeek,
-    setDisplayBlocks,
-    // entries,
-    // actualBlocks,
-    setActualBlocks,
-  },
+  props: { days, week, displayBlocks, setDisplayBlocks, setActualBlocks },
 }) => {
   const handleSubmitTime = ({ timeSelection: { start, end }, day }) => {
     const selectedDate = week[days.indexOf(day)];

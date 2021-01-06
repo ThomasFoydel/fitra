@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Dnd from './parts/Dnd';
-import Session from './parts/Session';
 import {
   days,
   halfHours,
@@ -10,15 +8,20 @@ import {
   setUpWeek,
   checkBlock,
 } from '../../../util/util';
-import './Schedule.scss';
+
 import MobileSchedule from './MobileSchedule';
+
+import Dnd from './parts/Dnd';
+import Session from './parts/Session';
 import MinMax from './parts/MinMax';
 import Labels from './parts/Labels';
+import WeekShift from './parts/WeekShift';
+
+import './Schedule.scss';
 
 const current = new Date();
-let dayOfWeek = current.getDay();
-
-let currentWeek = setUpWeek(0);
+const dayOfWeek = current.getDay();
+const currentWeek = setUpWeek(0);
 
 const Schedule = ({
   props: {
@@ -111,15 +114,7 @@ const Schedule = ({
       <div className='schedule'>
         <div className='ctrl-panel'>
           <MinMax props={{ handleMinMax, min, max }} />
-
-          <div className='weekshift-btns'>
-            <button onClick={() => handleWeekShift(weekShift - 1)}>
-              <i className='far fa-arrow-alt-circle-left fa-4x' />
-            </button>
-            <button onClick={() => handleWeekShift(weekShift + 1)}>
-              <i className='far fa-arrow-alt-circle-right fa-4x' />
-            </button>
-          </div>
+          <WeekShift props={{ handleWeekShift, weekShift }} />
         </div>
 
         <p
