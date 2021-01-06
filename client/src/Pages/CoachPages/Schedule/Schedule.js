@@ -13,6 +13,7 @@ import {
 import './Schedule.scss';
 import MobileSchedule from './MobileSchedule';
 import MinMax from './parts/MinMax';
+import Labels from './parts/Labels';
 
 const current = new Date();
 let dayOfWeek = current.getDay();
@@ -113,44 +114,27 @@ const Schedule = ({
 
           <div className='weekshift-btns'>
             <button onClick={() => handleWeekShift(weekShift - 1)}>
-              <i className='far fa-arrow-alt-circle-left fa-4x'></i>
+              <i className='far fa-arrow-alt-circle-left fa-4x' />
             </button>
             <button onClick={() => handleWeekShift(weekShift + 1)}>
-              <i className='far fa-arrow-alt-circle-right fa-4x'></i>
+              <i className='far fa-arrow-alt-circle-right fa-4x' />
             </button>
           </div>
         </div>
+
         <p
           className='err'
           style={{ background: err ? 'black' : 'rgba(0,0,0,0)' }}
         >
           {err}
         </p>
-        <div className='schedule-spacer'></div>
+
+        <div className='schedule-spacer' />
 
         <div className='large-schedule'>
           <div className='drag-n-drop'>
-            {/*        ================================== labels ============*/}
-            <div className='labels'>
-              {Object.keys(week).map((key, i) => {
-                let day = week[key];
-                let string = day
-                  .toDateString()
-                  .substring(0, day.toDateString().length - 4);
-                return (
-                  <div
-                    className={`day-label today-${
-                      today === i && weekShift === 0
-                    }`}
-                    key={key}
-                  >
-                    {string}
-                  </div>
-                );
-              })}
-            </div>
+            <Labels props={{ week, weekShift, today }} />
 
-            {/* ==================================  background grid  =========*/}
             <div className='time-grid'>
               {days.map((day) => (
                 <div className='grid-day' key={day}>
@@ -177,10 +161,8 @@ const Schedule = ({
               ))}
             </div>
 
-            {/*        =============================  sessions ================*/}
             {sessions.map((data) => {
               const inCurrentWeek = checkBlock(data, week);
-
               return (
                 <Session
                   props={{ data, inCurrentWeek, setSessions }}
@@ -189,10 +171,8 @@ const Schedule = ({
               );
             })}
 
-            {/*        ====================== drag and drop time blocks ========*/}
             {displayBlocks.map((data) => {
               const inCurrentWeek = checkBlock(data, week);
-
               return (
                 <Dnd
                   invisible={inCurrentWeek ? data.invisible : true}
