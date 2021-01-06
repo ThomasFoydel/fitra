@@ -1,25 +1,51 @@
 import React, { useState } from 'react';
-
+import { dateFromDateAndTime } from '../../../util/util';
+import { v4 as uuidv4 } from 'uuid';
 const MobileSchedule = ({
   props: {
     days,
     week,
     displayBlocks,
     // dayOfWeek,
-    // setDisplayBlocks,
+    setDisplayBlocks,
     // entries,
     // actualBlocks,
-    // setActualBlocks,
+    setActualBlocks,
   },
 }) => {
-  // const [dayOpen, setDayOpen] = useState(0);
+  const handleSubmitTime = ({ timeSelection: { start, end }, day }) => {
+    const selectedDate = week[days.indexOf(day)];
+    const startTime = `${start.hour}:${start.minute} ${start.amOrPm}`;
+    const endTime = `${end.hour}:${end.minute} ${end.amOrPm}`;
+    const startDate = dateFromDateAndTime(selectedDate, startTime);
+    const endDate = dateFromDateAndTime(selectedDate, endTime);
+
+    const newBlock = {
+      startDate,
+      endDate,
+      start: startTime,
+      end: endTime,
+      day,
+      title: '',
+      recurring: false,
+      id: uuidv4(),
+    };
+
+    setDisplayBlocks([...displayBlocks, newBlock]);
+    setActualBlocks((actualBlocks) => [...actualBlocks, newBlock]);
+  };
 
   return (
     <div className='mb-schedule'>
       <h3 className='title'>schedule</h3>
       {days.map((day, i) => {
-        let currentDate = new Date(week[i]);
-        return <Day props={{ currentDate, day, displayBlocks }} key={day} />;
+        const currentDate = new Date(week[i]);
+        return (
+          <Day
+            props={{ currentDate, day, displayBlocks, handleSubmitTime }}
+            key={day}
+          />
+        );
       })}
     </div>
   );
@@ -27,9 +53,22 @@ const MobileSchedule = ({
 
 export default MobileSchedule;
 
-const Day = ({ props: { currentDate, day, displayBlocks } }) => {
+const Day = ({
+  props: { currentDate, day, displayBlocks, handleSubmitTime },
+}) => {
   const [addTimeOpen, setAddTimeOpen] = useState(false);
-  const [timeSelection, setTimeSelection] = useState({ start: {}, end: {} });
+  const [timeSelection, setTimeSelection] = useState({
+    start: {
+      amOrPm: 'AM',
+      hour: '1',
+      minute: '00',
+    },
+    end: {
+      amOrPm: 'PM',
+      hour: '1',
+      minute: '30',
+    },
+  });
 
   const toggleOpen = () => setAddTimeOpen((o) => !o);
 
@@ -39,20 +78,21 @@ const Day = ({ props: { currentDate, day, displayBlocks } }) => {
     });
   };
 
-  let { start, end } = timeSelection;
+  const { start, end } = timeSelection;
+
   return (
     <div className='mb-day'>
       <h3>{currentDate.toDateString()}</h3>
 
       {Object.keys(displayBlocks).map((key) => {
-        let { startDate, endDate, _id } = displayBlocks[key];
+        let { startDate, endDate, _id, id } = displayBlocks[key];
         startDate = new Date(startDate);
         endDate = new Date(endDate);
-        let belongsOnCurrent =
+        const belongsOnCurrent =
           currentDate.toDateString() === startDate.toDateString();
 
         return belongsOnCurrent ? (
-          <div key={_id}>
+          <div key={_id || id}>
             {belongsOnCurrent && (
               <div className='mb-block'>
                 <p>start: {startDate.toDateString()}</p>
@@ -74,14 +114,24 @@ const Day = ({ props: { currentDate, day, displayBlocks } }) => {
         <button className='close-btn' onClick={toggleOpen}>
           <i className='fas fa-times fa-2x'></i>
         </button>
-        <TimeInput id='start' label='start' onChange={handleTimeSelect} />
-        <TimeInput id='end' label='end' onChange={handleTimeSelect} />
+        <TimeInput
+          props={{
+            id: 'start',
+            label: 'start',
+            value: timeSelection.start,
+            handleTimeSelect,
+          }}
+        />
+        <TimeInput
+          props={{
+            id: 'end',
+            label: 'end',
+            value: timeSelection.end,
+            handleTimeSelect,
+          }}
+        />
         {start && end && (
-          <button
-            onClick={() => {
-              console.log({ timeSelection });
-            }}
-          >
+          <button onClick={() => handleSubmitTime({ timeSelection, day })}>
             submit
           </button>
         )}
@@ -98,17 +148,19 @@ const Day = ({ props: { currentDate, day, displayBlocks } }) => {
 
 const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const TimeInput = ({ onChange, label }) => {
-  const handleChange = ({ target: { value, id } }) => {
-    onChange({ value, id, label });
-  };
+const TimeInput = ({ props: { handleTimeSelect, label, value } }) => {
+  const { hour, minute, amOrPm } = value;
 
+  const handleChange = ({ target: { value, id } }) => {
+    console.log({ value });
+    handleTimeSelect({ value, id, label });
+  };
   return (
     <div className='timeinput'>
       <div className='label'>{label}</div>
       <div className='selectors'>
         <h6>hr</h6>
-        <select onChange={handleChange} id='hour'>
+        <select onChange={handleChange} id='hour' value={hour}>
           {hours.map((h) => (
             <option key={h} value={h}>
               {h}
@@ -116,12 +168,12 @@ const TimeInput = ({ onChange, label }) => {
           ))}
         </select>
         <h6>min</h6>
-        <select onChange={handleChange} id='minute'>
-          <option value={0}>00</option>
-          <option value={30}>30</option>
+        <select onChange={handleChange} id='minute' value={minute}>
+          <option value='00'>00</option>
+          <option value='30'>30</option>
         </select>
 
-        <select onChange={handleChange} id='amOrPm'>
+        <select onChange={handleChange} id='amOrPm' value={amOrPm}>
           <option value='AM'>AM</option>
           <option value='PM'>PM</option>
         </select>
