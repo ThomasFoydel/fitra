@@ -12,8 +12,9 @@ import {
 } from '../../../util/util';
 import './Schedule.scss';
 import MobileSchedule from './MobileSchedule';
+import MinMax from './parts/MinMax';
 
-let current = new Date();
+const current = new Date();
 let dayOfWeek = current.getDay();
 
 let currentWeek = setUpWeek(0);
@@ -56,9 +57,9 @@ const Schedule = ({
 
   const destroy = (id) => {
     setDisplayBlocks((blocks) => {
-      let block = blocks.filter((b) => b.id === id)[0];
-      let index = blocks.indexOf(block);
-      let copy = [...blocks];
+      const block = blocks.filter((b) => b.id === id)[0];
+      const index = blocks.indexOf(block);
+      const copy = [...blocks];
       copy[index].invisible = true;
       return blocks;
     });
@@ -66,19 +67,19 @@ const Schedule = ({
   };
 
   const handleGridClick = (e) => {
-    let { day, hour } = JSON.parse(e.target.id);
-    let dayIndex = days.indexOf(day);
-    let clicked = week[dayIndex];
-    let clickedDate = clicked.getDate();
-    let clickedMonth = Number(clicked.getMonth());
-    let clickedYear = clicked.getFullYear();
+    const { day, hour } = JSON.parse(e.target.id);
+    const dayIndex = days.indexOf(day);
+    const clicked = week[dayIndex];
+    const clickedDate = clicked.getDate();
+    const clickedMonth = clicked.getMonth();
+    const clickedYear = clicked.getFullYear();
 
-    let cDate = new Date(clickedYear, clickedMonth, clickedDate);
-    let startDate = dateFromDateAndTime(cDate, hour);
+    const cDate = new Date(clickedYear, clickedMonth, clickedDate);
+    const startDate = dateFromDateAndTime(cDate, hour);
 
-    let endTime = startDate.getTime() + 1800000;
-    let endDate = new Date(endTime);
-    let endHour = getOneHalfHourAhead(hour);
+    const endTime = startDate.getTime() + 1800000;
+    const endDate = new Date(endTime);
+    const endHour = getOneHalfHourAhead(hour);
 
     const newBlock = {
       startDate,
@@ -108,24 +109,7 @@ const Schedule = ({
       <div className='overlay' />
       <div className='schedule'>
         <div className='ctrl-panel'>
-          <div className='min-and-max'>
-            <div className='min-max'>
-              <h4>min</h4>
-              <select onChange={handleMinMax} value={min} id='minimum'>
-                <option value={1}>30 minutes</option>
-                <option value={2}>1 hour</option>
-                <option value={3}>1.5 hours</option>
-                <option value={4}>2 hours</option>
-              </select>
-              <h4>max</h4>
-              <select onChange={handleMinMax} value={max} id='maximum'>
-                <option value={1}>30 minutes</option>
-                <option value={2}>1 hour</option>
-                <option value={3}>1.5 hours</option>
-                <option value={4}>2 hours</option>
-              </select>
-            </div>
-          </div>
+          <MinMax props={{ handleMinMax, min, max }} />
 
           <div className='weekshift-btns'>
             <button onClick={() => handleWeekShift(weekShift - 1)}>
@@ -146,6 +130,7 @@ const Schedule = ({
 
         <div className='large-schedule'>
           <div className='drag-n-drop'>
+            {/*        ================================== labels ============*/}
             <div className='labels'>
               {Object.keys(week).map((key, i) => {
                 let day = week[key];
@@ -164,11 +149,8 @@ const Schedule = ({
                 );
               })}
             </div>
-            {
-              //////////////////////////
-              //   background grid
-              //////////////////////////
-            }
+
+            {/* ==================================  background grid  =========*/}
             <div className='time-grid'>
               {days.map((day) => (
                 <div className='grid-day' key={day}>
@@ -195,28 +177,19 @@ const Schedule = ({
               ))}
             </div>
 
-            {
-              //////////////////////////////
-              ///// sessions ///////////
-              //////////////////////////////
+            {/*        =============================  sessions ================*/}
+            {sessions.map((data) => {
+              const inCurrentWeek = checkBlock(data, week);
 
-              sessions.map((data) => {
-                const inCurrentWeek = checkBlock(data, week);
+              return (
+                <Session
+                  props={{ data, inCurrentWeek, setSessions }}
+                  key={data.id}
+                />
+              );
+            })}
 
-                return (
-                  <Session
-                    props={{ data, inCurrentWeek, setSessions }}
-                    key={data.id}
-                  />
-                );
-              })
-            }
-
-            {
-              //////////////////////////////
-              // drag and drop time blocks
-              //////////////////////////////
-            }
+            {/*        ====================== drag and drop time blocks ========*/}
             {displayBlocks.map((data) => {
               const inCurrentWeek = checkBlock(data, week);
 
