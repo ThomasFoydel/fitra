@@ -9,7 +9,7 @@ import {
   checkBlock,
 } from '../../../util/util';
 
-import MobileSchedule from './MobileSchedule';
+import MobileSchedule from './Mobile/MobileSchedule';
 
 import Dnd from './parts/Dnd';
 import Session from './parts/Session';
