@@ -5,7 +5,7 @@ import IntroMessage from 'Components/IntroMessage/IntroMessage';
 
 import SessionSelector from './SessionSelector';
 import Image from 'Components/Image/Image';
-import Review from './Review';
+import ReviewSlide from './ReviewSlide';
 
 import { CTX } from 'context/Store';
 import './TrainerProfile.scss';
@@ -106,11 +106,7 @@ const TrainerProfile = ({
             </div>
           </div>
           <div className='section2'>
-            <div className='reviews'>
-              {reviews.map((review) => (
-                <Review review={review} key={review._id} />
-              ))}
-            </div>
+            <ReviewSlide reviews={reviews} />
           </div>
 
           {!belongsToCurrentUser && (
