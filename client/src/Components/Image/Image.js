@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import loadingGif from 'imgs/loading/loading.gif';
+import loadingGif from 'imgs/loading/spin.gif';
 import defaultProfile from 'imgs/default/profile.jpg';
 
 const Image = ({ name, src, style, alt }) => {

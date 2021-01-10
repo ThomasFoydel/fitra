@@ -5,6 +5,8 @@ const Day = ({
   props: { currentDate, day, displayBlocks, handleSubmitTime },
 }) => {
   const [addTimeOpen, setAddTimeOpen] = useState(false);
+  const [err, setErr] = useState('');
+
   const [timeSelection, setTimeSelection] = useState({
     start: {
       amOrPm: 'AM',
@@ -60,13 +62,14 @@ const Day = ({
         }}
       >
         <button className='close-btn' onClick={toggleOpen}>
-          <i className='fas fa-times fa-2x'></i>
+          <i className='fas fa-times fa-2x' />
         </button>
+
         <TimeInput
           props={{
             id: 'start',
             label: 'start',
-            value: timeSelection.start,
+            value: start,
             handleTimeSelect,
           }}
         />
@@ -74,15 +77,13 @@ const Day = ({
           props={{
             id: 'end',
             label: 'end',
-            value: timeSelection.end,
+            value: end,
             handleTimeSelect,
           }}
         />
-        {start && end && (
-          <button onClick={() => handleSubmitTime({ timeSelection, day })}>
-            submit
-          </button>
-        )}
+        <button onClick={() => handleSubmitTime({ timeSelection, day })}>
+          submit
+        </button>
       </div>
 
       {!addTimeOpen && (
