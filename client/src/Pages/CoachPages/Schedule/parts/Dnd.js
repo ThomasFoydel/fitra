@@ -165,7 +165,7 @@ const Dnd = ({
       onResizeStop={handleResize}
     >
       <div>
-        <p>{day}</p>
+        <p className='item-day'>{day}</p>
 
         <button
           className='delete-btn'
@@ -174,7 +174,7 @@ const Dnd = ({
         >
           X
         </button>
-        <p>
+        <p className='item-time'>
           {startTime} - {endTime}
         </p>
         <button

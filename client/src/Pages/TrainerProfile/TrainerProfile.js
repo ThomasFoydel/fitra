@@ -87,6 +87,7 @@ const TrainerProfile = ({
           }}
         >
           <div className='info'>
+            {console.log({ profilePic })}
             <Image
               src={`/api/image/${profilePic}`}
               name='profile-pic'
