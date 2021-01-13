@@ -5,6 +5,8 @@ import { CTX } from 'context/Store';
 import Image from 'Components/Image/Image';
 import './ClientProfile.scss';
 
+import {loadingSpin} from "imgs/loading/spin.gif"
+
 const ClientProfile = ({
   match: {
     params: { id },
@@ -52,7 +54,7 @@ const ClientProfile = ({
       >
         <div className='info'>
           <Image
-            src={`/api/image/${profilePic}`}
+            src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
             alt="user's profile"
             name='profile-pic'
           />

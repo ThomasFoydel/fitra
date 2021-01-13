@@ -18,6 +18,8 @@ const TrainerProfile = ({
     params: { trainerId },
   },
 }) => {
+  {console.log({trainerId})}
+
   const [appState] = useContext(CTX);
   let belongsToCurrentUser = appState.user.id === trainerId;
 
@@ -90,7 +92,6 @@ const TrainerProfile = ({
           }}
         >
           <div className='info'>
-            {console.log({ profilePic })}
             <Image
               src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
               name='profile-pic'

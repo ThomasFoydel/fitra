@@ -8,7 +8,7 @@ const Image = ({ name, src, style, alt }) => {
   const [err, setErr] = useState(false);
 
   useEffect(()=> {
-    if (err && source !== defaultProfile) source = defaultProfile;
+    if (err && source !== defaultProfile) setSource(defaultProfile);
   }, [err])
 
   useEffect(()=> {
