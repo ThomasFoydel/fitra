@@ -10,6 +10,9 @@ import ReviewSlide from './ReviewSlide';
 import { CTX } from 'context/Store';
 import './TrainerProfile.scss';
 
+import {defaultImg} from "imgs/default/img.jpg"
+import {loadingSpin} from "imgs/loading/spin.gif"
+
 const TrainerProfile = ({
   match: {
     params: { trainerId },
@@ -18,7 +21,7 @@ const TrainerProfile = ({
   const [appState] = useContext(CTX);
   let belongsToCurrentUser = appState.user.id === trainerId;
 
-  const [currentTrainer, setCurrentTrainer] = useState({});
+  const [currentTrainer, setCurrentTrainer] = useState(null);
   const [sessions, setSessions] = useState([]);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [sessionSelectorOpen, setSessionSelectorOpen] = useState(true);
@@ -49,7 +52,7 @@ const TrainerProfile = ({
     return () => (subscribed = false);
   }, [trainerId]);
 
-  let { name, bio, email, profilePic, coverPic } = currentTrainer;
+  let { name, bio, email, profilePic, coverPic } = currentTrainer || {};
 
   const toggleMessageOpen = () => {
     if (appState.messages[currentTrainer._id]) {
@@ -66,7 +69,7 @@ const TrainerProfile = ({
   };
 
   return (
-    <div className='trainerprofile'>
+      <div className='trainerprofile'>
       {bookingSuccess && <Redirect to='/' />}
       {redirectToMessages && (
         <Redirect
@@ -89,7 +92,7 @@ const TrainerProfile = ({
           <div className='info'>
             {console.log({ profilePic })}
             <Image
-              src={`/api/image/${profilePic}`}
+              src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
               name='profile-pic'
               alt="trainer's profile"
             />
@@ -129,7 +132,7 @@ const TrainerProfile = ({
               {messageOpen && (
                 <IntroMessage toggle={setMessageOpen} id={trainerId} />
               )}
-              {sessionSelectorOpen && (
+              {currentTrainer && sessionSelectorOpen && (
                 <SessionSelector
                   belongsToCurrentUser={belongsToCurrentUser}
                   bookedTimes={sessions}
@@ -141,7 +144,7 @@ const TrainerProfile = ({
               )}
             </>
           )}
-        </div>
+        </div> 
       )}
     </div>
   );
