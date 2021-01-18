@@ -24,16 +24,13 @@ const Home = () => {
     return () => (subscribed = false);
   }, [token, type]);
   console.log('testing github heroku connection auto deploy');
-  const animation =
-    sessions.length > 0
-      ? useTransition(sessions, (item) => item._id, {
-          from: { opacity: '0', transform: 'translateY(-20px)' },
-          enter: { opacity: '1', transform: 'translateY(0px)' },
-          leave: { opacity: '0', transform: 'translateY(-20px)' },
-          trail: 200,
-          config: config.wobbly,
-        })
-      : [];
+  const animation = useTransition(sessions, (item) => item._id, {
+    from: { opacity: '0', transform: 'translateY(-20px)' },
+    enter: { opacity: '1', transform: 'translateY(0px)' },
+    leave: { opacity: '0', transform: 'translateY(-20px)' },
+    trail: 200,
+    config: config.wobbly,
+  });
 
   return (
     <>
