@@ -18,16 +18,13 @@ const Home = () => {
       axios
         .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
         .then(({ data: { sessions }, err }) => {
-          if (err) console.log({ err });
-
+          if (err) return console.log({ err });
           if (subscribed && sessions) setFoundSessions(sessions);
-          console.log({ axiosSessions: sessions });
         })
         .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
   }, [token, type]);
-  console.log('testing github heroku connection auto deploy');
-  console.log({ sessions });
+
   const animation = useTransition(sessions, (item) => item && item._id, {
     from: { opacity: '0', transform: 'translateY(-20px)' },
     enter: { opacity: '1', transform: 'translateY(0px)' },

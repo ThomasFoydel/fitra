@@ -51,13 +51,18 @@ function App() {
         .get('/api/auth/', {
           headers: { 'x-auth-token': tokenLS },
         })
-        .then((result) => {
+        .then(({ data }) => {
           if (subscribed) {
-            updateState({
-              type: 'LOGIN',
-              payload: { user: result.data, token: tokenLS },
-            });
+            if (data.err) return updateState({ type: 'LOGOUT' });
+            if (data)
+              updateState({
+                type: 'LOGIN',
+                payload: { user: data, token: tokenLS },
+              });
           }
+        })
+        .catch(() => {
+          updateState({ type: 'LOGOUT' });
         });
     };
 
