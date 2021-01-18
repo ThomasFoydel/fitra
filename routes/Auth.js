@@ -16,7 +16,7 @@ router.get('/', auth, async (req, res) => {
     let isClient = userType === 'client';
     let User = isClient ? Client : Trainer;
 
-    User.find(
+    User.findOne(
       { _id: userId },
       `+password settings email bio name profilePic coverPic ${
         !isClient && 'tags'
@@ -32,7 +32,7 @@ router.get('/', auth, async (req, res) => {
           settings,
           tags,
           bio,
-        } = foundUser[0];
+        } = foundUser;
         let sortedMessages = await messageSorter(userId);
         return res.send({
           name,
