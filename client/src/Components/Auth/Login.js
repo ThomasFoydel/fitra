@@ -59,6 +59,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         let { err } = res.data;
         if (err) return setErrorMessage(err);
         let { user, token } = res.data.data;
+        console.log({ user, token });
         updateState({ type: 'LOGIN', payload: { user, token } });
       })
       .catch((err) => {
