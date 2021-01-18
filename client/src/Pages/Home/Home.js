@@ -23,7 +23,7 @@ const Home = () => {
         .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
   }, [token, type]);
-  console.log('testing github heroku connection');
+  console.log('testing github heroku connection auto deploy');
   const animation =
     sessions.length > 0
       ? useTransition(sessions, (item) => item._id, {
