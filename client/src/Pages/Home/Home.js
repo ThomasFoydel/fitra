@@ -1,3 +1,5 @@
+
+
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
@@ -32,7 +34,6 @@ const Home = () => {
     config: config.wobbly,
   });
 
-  console.log(sessions);
   return (
     <>
       <div className='background' />
@@ -40,12 +41,15 @@ const Home = () => {
       <div className='home'>
         <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
         <div className='sessions'>
-          {sessions.length > 0 &&
+          {sessions.length > 0 ?
             animation.map(({ item, props, key }) => (
               <animated.div style={props} key={key}>
                 <Session session={item} />
               </animated.div>
-            ))}
+            ))
+            :
+            <h3>no recent or upcoming sessions</h3>
+            }
         </div>
       </div>
     </>
