@@ -34,7 +34,8 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
     .then(async ({ email, name }) => {
       console.log({ name, email });
       if (!email || !name) return res.send({ err: 'One or more fields empty' });
-      const foundClient = await Client.find({ email: email.toLowerCase() });
+      const foundClient = await Client.findOne({ email: email.toLowerCase() });
+      console.log({ foundClient });
       if (!foundClient) {
         const password = email + process.env.SECRET;
         console.log({ password });
