@@ -32,10 +32,12 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
   fetch(userURL)
     .then((res) => res.json())
     .then(async ({ email, name }) => {
+      console.log({ name, email });
       if (!email || !name) return res.send({ err: 'One or more fields empty' });
       const foundClient = await Client.find({ email: email.toLowerCase() });
       if (!foundClient) {
         const password = email + process.env.SECRET;
+        console.log({ password });
         const hashedPw = await bcrypt.hash(password, 12);
         const newClient = new Client({
           name: name,
@@ -46,17 +48,21 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
 
         newClient
           .save()
-          .then((result) => {
+          .then(({ result, err }) => {
+            console.log('then result: ', result, 'then err: ', err);
             sendLogin(result);
           })
           .catch((err) => {
+            console.log('catch err: ', err);
             res.status(400).send(err);
           });
       } else {
+        console.log('else, foundClient: ', foundClient);
         sendLogin(foundClient);
       }
     })
     .catch((err) => {
+      console.log('outer catch, fetch err: ', foundClient);
       console.log({ err });
     });
 });

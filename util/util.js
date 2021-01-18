@@ -31,6 +31,7 @@ const findUser = async (id) => {
 };
 
 const formatClientInfo = async (client) => {
+  if (!client || !client._id) return { err: 'invalid input' };
   const messages = await messageSorter(client._id.toString());
   const clientInfo = {
     id: client._id,
