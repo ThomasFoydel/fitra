@@ -17,8 +17,10 @@ const Home = () => {
     if (token)
       axios
         .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
-        .then(({ data: { sessions } }) => {
-          if (subscribed) setFoundSessions(sessions);
+        .then(({ data: { sessions }, err }) => {
+          if (err) console.log({ err });
+
+          if (subscribed && sessions) setFoundSessions(sessions);
           console.log({ axiosSessions: sessions });
         })
         .catch((err) => console.log('connection error: ', err));
