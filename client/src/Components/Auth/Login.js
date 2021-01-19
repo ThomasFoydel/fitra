@@ -108,8 +108,12 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         </button>
 
         <p className='error-msg'>{errorMessage}</p>
-        <Facebook callback={fbResponse} />
-        <Google googleResponse={googleResponse} />
+        {!trainer && (
+          <>
+            <Facebook callback={fbResponse} />
+            <Google googleResponse={googleResponse} />
+          </>
+        )}
 
         <button
           className='signup-btn'
