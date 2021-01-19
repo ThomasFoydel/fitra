@@ -65,18 +65,17 @@ h2 {
   }
 
   .submit-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     font-size: 1.8rem;
     border: none;
     border-radius: 5px;
     background: rgb(233, 33, 33);
     color: white;
     font-weight: bold;
-    border: rgb(248, 88, 88) 1px solid;
     transition: all 0.3s ease;
     &:hover {
       background: rgb(248, 88, 88);
-      border-color: rgb(233, 33, 33);
+      color: #222;
     }
   }
 

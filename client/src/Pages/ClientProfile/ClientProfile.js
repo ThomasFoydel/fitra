@@ -60,11 +60,11 @@ const ClientProfile = ({
           />
           <div className='section-1'>
             <div className='name'>{name}</div>
-            <div className='bio'>{bio}</div>
             <div className='email'>{displayEmail}</div>
+            <div className='bio'>{bio}</div>
             {belongsToCurrentUser && (
               <Link to={`/editprofile`} className='link'>
-                edit profile
+                Edit Profile
               </Link>
             )}
           </div>

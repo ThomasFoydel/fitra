@@ -31,7 +31,7 @@
     }
   }
   a.delete-btn {
-    color: rgb(7, 7, 7);
+    color: #ddd;
     text-decoration: none;
     background: rgb(165, 0, 0);
     padding: 0.2rem 0.5rem;
@@ -39,6 +39,7 @@
     opacity: 0.7;
     transition: all 0.2s ease;
     &:hover {
+      color: rgb(7, 7, 7);
       opacity: 1;
       text-decoration: none;
     }

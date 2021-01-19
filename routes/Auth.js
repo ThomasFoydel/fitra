@@ -18,7 +18,7 @@ router.get('/', auth, async (req, res) => {
 
     User.findOne(
       { _id: userId },
-      `+password settings email bio name profilePic coverPic ${
+      `+password settings email bio name profilePic coverPic displayEmail ${
         !isClient && 'tags'
       }`
     )
@@ -32,7 +32,9 @@ router.get('/', auth, async (req, res) => {
           settings,
           tags,
           bio,
+          displayEmail,
         } = foundUser;
+        console.log(foundUser);
         let sortedMessages = await messageSorter(userId);
         return res.send({
           name,
@@ -45,6 +47,7 @@ router.get('/', auth, async (req, res) => {
           settings,
           tags,
           bio,
+          displayEmail,
         });
       })
       .catch((err) => {

@@ -38,7 +38,7 @@ const Home = () => {
       <div className='background' />
       <div className='overlay' />
       <div className='home'>
-        <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
+        <h2>{type === 'trainer' ? 'Sessions' : 'Schedule'}</h2>
         <div className='sessions'>
           {sessions.length > 0 ? (
             animation.map(({ item, props, key }) => (

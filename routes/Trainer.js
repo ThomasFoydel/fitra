@@ -61,7 +61,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', (req, res) => {
   Trainer.findOne(
     { email: req.body.email },
-    '+password settings name email bio profilePic coverPic tags',
+    '+password settings name email bio profilePic coverPic tags displayEmail',
     async function (err, user) {
       if (err) {
         return res.json({
@@ -92,6 +92,7 @@ router.post('/login', (req, res) => {
           const userInfo = {
             userId: user._id,
             email: user.email,
+            displayEmail: user.displayEmail,
             name: user.name,
             coverPic: user.coverPic,
             profilePic: user.profilePic,

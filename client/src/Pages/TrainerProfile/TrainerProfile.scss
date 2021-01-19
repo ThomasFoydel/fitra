@@ -6,10 +6,14 @@ $large: 992px;
   .email,
   .bio {
     font-size: 1.5rem;
+    overflow: scroll;
+    height: 2.5rem;
   }
   .name {
-    height: 4rem;
+    margin-left: 0.5rem;
     font-size: 3rem;
+    margin-top: 1rem;
+    font-size: 4.5rem;
     font-weight: bold;
     letter-spacing: 0.4rem;
   }
@@ -30,7 +34,7 @@ $large: 992px;
     padding: 2rem 0;
     background: rgba(255, 255, 255, 0.39);
     text-align: center;
-    height: 40rem;
+    height: 48rem;
   }
   .profile-pic {
     width: 25rem;
@@ -70,15 +74,22 @@ $large: 992px;
     }
   }
 
+  .avg {
+    margin-bottom: 1rem;
+  }
+
   .link {
+    font-size: 1.8rem;
     text-decoration: none;
     background: rgba(230, 230, 230, 0.767);
     padding: 0.4rem;
-    border-radius: 0.3rem;
-    color: rgb(18, 65, 221);
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    background: rgb(22, 22, 22);
+    color: #ddd;
+
     &:hover {
-      color: rgb(204, 204, 204);
-      background: rgb(18, 65, 221);
+      background: rgb(51, 51, 51);
     }
   }
 
