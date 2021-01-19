@@ -49,8 +49,7 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
 
         newClient
           .save()
-          .then(({ result, err }) => {
-            console.log('then result: ', result, 'then err: ', err);
+          .then((result) => {
             sendLogin(result);
           })
           .catch((err) => {
