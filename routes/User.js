@@ -7,10 +7,12 @@ const Client = require('../models/Client');
 router.get('/:id', auth, async (req, res) => {
   let { id } = req.params;
   const foundClient = await Client.findById(id);
-  if (foundClient) res.send({ user: foundClient });
+  if (foundClient)
+    res.send({ user: { ...foundClient, email: foundClient.displayEmail } });
   else {
     const foundTrainer = await Trainer.findById(id);
-    if (foundTrainer) res.send({ user: foundTrainer });
+    if (foundTrainer)
+      res.send({ user: { ...foundTrainer, email: foundTrainer.displayEmail } });
     else res.send({ err: 'no user found' });
   }
 });

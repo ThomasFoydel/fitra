@@ -5,7 +5,7 @@ import { CTX } from 'context/Store';
 import Image from 'Components/Image/Image';
 import './ClientProfile.scss';
 
-import {loadingSpin} from "imgs/loading/spin.gif"
+import { loadingSpin } from 'imgs/loading/spin.gif';
 
 const ClientProfile = ({
   match: {
@@ -41,7 +41,7 @@ const ClientProfile = ({
     return () => (subscribed = false);
   }, [err]);
 
-  let { coverPic, profilePic, bio, name, email } = user;
+  let { coverPic, profilePic, bio, name, displayEmail } = user;
   return (
     <div className='clientprofile'>
       <div
@@ -61,7 +61,7 @@ const ClientProfile = ({
           <div className='section-1'>
             <div className='name'>{name}</div>
             <div className='bio'>{bio}</div>
-            <div className='email'>{email}</div>
+            <div className='email'>{displayEmail}</div>
             {belongsToCurrentUser && (
               <Link to={`/editprofile`} className='link'>
                 Edit Profile

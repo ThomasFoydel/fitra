@@ -31,7 +31,7 @@ export function reducer(state, action) {
           bio: user.bio,
           type: user.userType,
           name: user.name,
-          email: user.email,
+          displayEmail: user.displayEmail,
           coverPic: user.coverPic,
           profilePic: user.profilePic,
           tags: user.tags,
@@ -47,7 +47,7 @@ export function reducer(state, action) {
         ...state,
         isLoggedIn: false,
         showAuth: false,
-        user: { name: '', email: '', userType: 'client' },
+        user: { name: '', displayEmail: '', userType: 'client' },
       };
     case 'CHANGE_PIC':
       let newPic = kind === 'coverPic' ? coverPic : profilePic;
@@ -90,7 +90,7 @@ export default function Store(props) {
     showAuth: false,
     authPage: 'register',
     authType: 'client',
-    user: { name: '', email: '', type: 'client', token: null, id: null },
+    user: { name: '', displayEmail: '', type: 'client', token: null, id: null },
     messages: {},
     settings: { darkmode: false, rate: '30', currency: 'USD' },
   });

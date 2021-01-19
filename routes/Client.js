@@ -163,9 +163,11 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   try {
     trainerId = new mongoose.Types.ObjectId(trainerId);
   } catch (err) {
-    return res.send({ err: 'No user found' });
+    return res.send({ err: 'No trainer found' });
   }
   const foundTrainer = await Trainer.findById(trainerId);
+  if (!foundTrainer) return res.send({ err: 'No trainer found' });
+
   const foundTrainerWithSettings = await Trainer.findById(trainerId).select(
     '+ settings'
   );
@@ -178,7 +180,7 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
       $group: { _id: trainerId, average: { $avg: '$rating' } },
     },
   ]);
-  let foundAvg = averageAggregate[0].average;
+  let foundAvg = averageAggregate[0] ? averageAggregate[0].average : 0;
 
   const trainer = { ...foundTrainer._doc, rate };
 
@@ -200,6 +202,7 @@ router.get('/profile/:id', auth, async ({ params: { id } }, res) => {
     return res.send({ err: 'No user found' });
   }
   let foundUser = await Client.findById(id);
+  if (foundUser.email) delete foundUser.email;
   if (foundUser) return res.send({ foundUser });
   else return res.send({ err: 'No user found' });
 });

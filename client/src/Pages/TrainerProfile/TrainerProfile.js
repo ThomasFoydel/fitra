@@ -10,15 +10,17 @@ import ReviewSlide from './ReviewSlide';
 import { CTX } from 'context/Store';
 import './TrainerProfile.scss';
 
-import {defaultImg} from "imgs/default/img.jpg"
-import {loadingSpin} from "imgs/loading/spin.gif"
+// import { defaultImg } from 'imgs/default/img.jpg';
+import { loadingSpin } from 'imgs/loading/spin.gif';
 
 const TrainerProfile = ({
   match: {
     params: { trainerId },
   },
 }) => {
-  {console.log({trainerId})}
+  {
+    console.log({ trainerId });
+  }
 
   const [appState] = useContext(CTX);
   let belongsToCurrentUser = appState.user.id === trainerId;
@@ -54,8 +56,8 @@ const TrainerProfile = ({
     return () => (subscribed = false);
   }, [trainerId]);
 
-  let { name, bio, email, profilePic, coverPic } = currentTrainer || {};
-
+  let { name, bio, displayEmail, profilePic, coverPic } = currentTrainer || {};
+  console.log({ currentTrainer });
   const toggleMessageOpen = () => {
     if (appState.messages[currentTrainer._id]) {
       setRedirectToMessages(true);
@@ -71,7 +73,7 @@ const TrainerProfile = ({
   };
 
   return (
-      <div className='trainerprofile'>
+    <div className='trainerprofile'>
       {bookingSuccess && <Redirect to='/' />}
       {redirectToMessages && (
         <Redirect
@@ -99,7 +101,7 @@ const TrainerProfile = ({
             />
             <div className='section-1'>
               <div className='name'>{name}</div>
-              <div className='email'>{email}</div>
+              <div className='email'>{displayEmail}</div>
               <div className='bio'>{bio}</div>
 
               <div className='avg'>Average Rating {Math.floor(avg * 20)} %</div>
@@ -145,7 +147,7 @@ const TrainerProfile = ({
               )}
             </>
           )}
-        </div> 
+        </div>
       )}
     </div>
   );

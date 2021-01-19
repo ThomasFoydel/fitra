@@ -9,11 +9,19 @@ import Image from 'Components/Image/Image';
 const EditProfile = () => {
   const [appState, updateState] = useContext(CTX);
   const { type } = appState.user;
-  let { token, coverPic, profilePic, name, bio, email, id } = appState.user;
+  let {
+    token,
+    coverPic,
+    profilePic,
+    name,
+    bio,
+    displayEmail,
+    id,
+  } = appState.user;
   const [formInfo, setFormInfo] = useState({
     name: name || '',
     bio: bio || '',
-    email: email || '',
+    displayEmail: displayEmail || '',
   });
 
   const handleChange = (e) => {
@@ -26,10 +34,10 @@ const EditProfile = () => {
       .post(`/api/${type}/editprofile`, formInfo, {
         headers: { 'x-auth-token': token },
       })
-      .then(({ data: { bio, coverPic, email, name, profilePic } }) => {
-        let filteredRes = { bio, coverPic, email, name, profilePic };
+      .then(({ data: { bio, coverPic, displayEmail, name, profilePic } }) => {
+        let filteredRes = { bio, coverPic, displayEmail, name, profilePic };
         updateState({ type: 'EDIT_PROFILE', payload: { res: filteredRes } });
-        setFormInfo({ name: '', bio: '', email: '' });
+        setFormInfo({ name: '', bio: '', displayEmail: '' });
       })
       .catch((err) => console.log('err: ', err));
   };
@@ -59,11 +67,11 @@ const EditProfile = () => {
           value={formInfo.bio}
         />
         <input
-          type='email'
-          id='email'
+          type='displayEmail'
+          id='displayEmail'
           onChange={handleChange}
-          placeholder={email || 'email...'}
-          value={formInfo.email}
+          placeholder={displayEmail || 'display email...'}
+          value={formInfo.displayEmail}
         />
         <button onClick={handleSubmit}>submit</button>
         <div className='image-uploaders'>

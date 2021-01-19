@@ -10,6 +10,9 @@ const clientSchema = {
     unique: true,
     required: true,
   },
+  displayEmail: {
+    type: String,
+  },
   password: {
     type: String,
     required: true,
