@@ -56,7 +56,7 @@ const Trainers = () => {
           suggestionTags.map((tag) => (
             <div
               key={tag}
-              className='suggestion-tag'
+              className={`suggestion-tag ${search === tag ? 'current' : ''}`}
               onClick={() => tagSearch(tag)}
             >
               {tag}

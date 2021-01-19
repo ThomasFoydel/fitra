@@ -9,16 +9,24 @@
     .suggestion-tag {
       width: 10rem;
       margin: 0 0.3rem;
-      background: linear-gradient(rgb(95, 95, 95), rgb(36, 36, 36));
-      color: white;
+      background: linear-gradient(
+        -45deg,
+        rgb(247, 247, 247),
+        rgb(194, 194, 194)
+      );
+      color: #222;
       text-align: center;
       transition: all 0.2s ease;
-      border-radius: 0.3rem;
+      border-radius: 0.5rem;
+      font-size: 1.5rem;
       cursor: pointer;
+      padding: 0.2rem;
       &:hover {
-        color: black;
-        background: rgba(255, 255, 255, 0.9);
+        filter: invert(95%);
       }
+    }
+    .current {
+      filter: invert(75%);
     }
   }
 
