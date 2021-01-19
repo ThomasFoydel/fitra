@@ -45,7 +45,7 @@ const EditProfile = () => {
     <>
       <div className='background' />
       <div className='edit-profile'>
-        <h2>edit your profile</h2>
+        <h2>Edit your profile</h2>
         <Link
           className='link'
           to={`${type === 'trainer' ? '/trainer' : '/user'}/${id}`}
@@ -73,9 +73,11 @@ const EditProfile = () => {
           placeholder={displayEmail || 'display email...'}
           value={formInfo.displayEmail}
         />
-        <button onClick={handleSubmit}>submit</button>
+        <button className='submit-btn' onClick={handleSubmit}>
+          submit
+        </button>
         <div className='image-uploaders'>
-          <div>
+          <div className='uploader'>
             <Image
               name='edit-pic'
               src={`/api/image/${profilePic || '5f4d8786efa2ae10b38bfe9e'}`}
@@ -83,7 +85,7 @@ const EditProfile = () => {
             />
             <ImageUploader kind='profilePic' />
           </div>
-          <div>
+          <div className='uploader'>
             <Image
               name='edit-pic'
               src={`/api/image/${coverPic || '5f4d8786efa2ae10b38bfe9e'}`}

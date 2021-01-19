@@ -12,6 +12,12 @@ $large: 992px;
   margin-left: 50%;
   transform: translateX(-50%);
   padding-bottom: 2rem;
+  border-radius: 4rem;
+
+  h2 {
+    margin: 2rem 0 1rem 0;
+  }
+
   .edit-pic {
     width: 30rem;
     height: 30rem;
@@ -27,18 +33,19 @@ $large: 992px;
   Input[type='displayEmail'] {
     width: 30rem;
     margin-bottom: 0.4rem;
+    font-size: 1.8rem;
   }
 
   .link {
     text-decoration: none;
-    background: rgba(240, 240, 240, 0.767);
+    background: rgba(240, 240, 240, 0.8);
     padding: 0.4rem;
     border-radius: 0.3rem;
     color: rgb(18, 65, 221);
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
+    transition: all 0.2s ease;
     &:hover {
-      color: rgb(204, 204, 204);
-      background: rgb(18, 65, 221);
+      background: rgb(240, 240, 240);
     }
   }
 
@@ -47,6 +54,24 @@ $large: 992px;
 
     @media screen and (max-width: $medium) {
       display: block;
+    }
+
+    .uploader {
+      margin: 4rem 0;
+    }
+  }
+  .submit-btn {
+    margin-top: 1rem;
+    font-size: 2rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: rgb(22, 22, 22);
+    color: #ddd;
+    border: 1px solid #eee;
+    font-weight: bold;
+    &:hover {
+      background: rgb(51, 51, 51);
     }
   }
 }

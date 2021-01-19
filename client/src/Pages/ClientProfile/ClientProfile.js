@@ -64,7 +64,7 @@ const ClientProfile = ({
             <div className='email'>{displayEmail}</div>
             {belongsToCurrentUser && (
               <Link to={`/editprofile`} className='link'>
-                Edit Profile
+                edit profile
               </Link>
             )}
           </div>
