@@ -65,17 +65,18 @@ h2 {
   }
 
   .submit-btn {
-    padding: 0.6rem 1.2rem;
+    padding: 0.8rem 4.2rem;
     font-size: 1.8rem;
     border: none;
     border-radius: 5px;
     background: rgb(233, 33, 33);
     color: white;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     &:hover {
       background: rgb(248, 88, 88);
-      color: #222;
+      color: rgb(68, 15, 15);
+      box-shadow: 0rem 0rem 2rem rgba(255, 255, 255, 0.2);
     }
   }
 
@@ -141,13 +142,25 @@ button.kep-login-facebook.metro,
   padding: 1rem;
   font-size: 1.2rem;
   border: 1px solid grey;
+  border: none;
   width: 17rem;
   font-weight: bold;
   margin: 0.2rem;
   border-radius: 0.2rem;
   transform: all 0.3s ease;
   color: black;
+  opacity: 0.8;
   &:hover {
-    background: gray;
+    opacity: 1;
   }
+}
+
+button.kep-login-facebook.metro {
+  background: #4267b2;
+  color: white;
+}
+
+.google-btn {
+  background: white;
+  color: #4285f4;
 }
