@@ -67,7 +67,9 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
       });
   };
 
-  const googleSuccess = ({ tokenId }) => {
+  const googleSuccess = (response) => {
+    console.log({ response });
+    const { tokenId } = response;
     axios
       .post(`/api/${type}/googlelogin`, { tokenId })
       .then((res) => {
@@ -81,7 +83,9 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         console.log({ err });
       });
   };
-  const googleError = (res) => {};
+  const googleError = (res) => {
+    console.log({ err });
+  };
   return (
     <>
       <div className='login'>
