@@ -84,7 +84,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
       });
   };
   const googleError = (res) => {
-    console.log({ err });
+    console.log({ err: res });
   };
   return (
     <>
