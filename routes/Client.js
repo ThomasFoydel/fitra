@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
 const bcrypt = require('bcryptjs');
+const { OAuth2Client } = require('google-auth-library');
+const googleClient = new OAuth2Client(
+  '1034940197721-bs2c0n1opcqmdlcumn3c1bubrm3ga77k.apps.googleusercontent.com'
+);
 
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
@@ -32,16 +36,13 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
   fetch(userURL)
     .then((res) => res.json())
     .then(async ({ email, name }) => {
-      // console.log({ name, email });
       if (!email || !name) return res.send({ err: 'One or more fields empty' });
       const foundClient = await Client.findOne(
         { email: email.toLowerCase() },
         '+settings email bio name profilePic coverPic displayEmail tags'
       );
-      // console.log({ foundClient });
       if (!foundClient) {
         const password = email + process.env.SECRET;
-        // console.log({ password });
         const hashedPw = await bcrypt.hash(password, 12);
         const newClient = new Client({
           name: name,
@@ -65,9 +66,62 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
       }
     })
     .catch((err) => {
-      // console.log('outer catch, fetch err: ', foundClient);
       console.log({ err });
     });
+});
+
+router.post('/googlelogin', async ({ body: { tokenId } }, res) => {
+  const sendLogin = async (client) => {
+    const clientInfo = await formatClientInfo(client);
+    const token = formatToken(client);
+    res.json({
+      status: 'success',
+      message: 'Login successful',
+      data: {
+        user: clientInfo,
+        token,
+      },
+    });
+  };
+
+  client
+    .verifyIdToken({
+      idToken: tokenId,
+      audience:
+        '1034940197721-bs2c0n1opcqmdlcumn3c1bubrm3ga77k.apps.googleusercontent.com',
+    })
+    .then(async (response) => {
+      const { email_verified, name, email } = response.payload;
+      if (email_verified) {
+        const foundUser = await User.findOne({ email });
+        if (foundUser) {
+          // send back login ingo
+          sendLogin(foundUser);
+        } else {
+          // make new user
+          // send back login info
+          const password = email + process.env.SECRET;
+          const hashedPw = await bcrypt.hash(password, 12);
+          const newClient = new Client({
+            name: name,
+            email: email.toLowerCase(),
+            password: hashedPw,
+            settings: { darkmode: false },
+          });
+
+          newClient
+            .save()
+            .then((result) => {
+              sendLogin(result);
+            })
+            .catch((err) => {
+              console.log('catch err: ', err);
+              res.status(400).send(err);
+            });
+        }
+      }
+    })
+    .catch((err) => {});
 });
 
 router.post('/register', async (req, res) => {

@@ -67,9 +67,21 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
       });
   };
 
-  const googleResponse = (res) => {
-    console.log('googleResponse: ', res);
+  const googleSuccess = ({ tokenId }) => {
+    axios
+      .post(`/api/${type}/googlelogin`, { tokenId })
+      .then((res) => {
+        let { err } = res.data;
+        if (err) return setErrorMessage(err);
+        let { user, token } = res.data.data;
+        console.log({ user, token });
+        updateState({ type: 'LOGIN', payload: { user, token } });
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
   };
+  const googleError = (res) => {};
   return (
     <>
       <div className='login'>
@@ -111,7 +123,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         {!trainer && (
           <>
             <Facebook callback={fbResponse} />
-            <Google googleResponse={googleResponse} />
+            <Google props={{ googleSuccess, googleError }} />
           </>
         )}
 
