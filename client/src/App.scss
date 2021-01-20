@@ -51,11 +51,17 @@ input:focus {
   left: 0;
   padding: 1rem;
   border-radius: 0 1rem 0 0;
-  background: black;
-  color: white;
   text-decoration: none;
+  opacity: 0.5;
+  background: rgb(233, 33, 33);
+  color: white;
+  font-weight: bold;
+  transition: all 0.2s ease;
   &:hover {
-    text-decoration: underline;
+    opacity: 1;
+    background: rgb(248, 88, 88);
+    color: rgb(68, 15, 15);
+    box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
   }
 }
 
