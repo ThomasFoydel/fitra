@@ -16,7 +16,8 @@ const TrainerLandingPage = () => {
   };
   return (
     <div className='trainer-landingpage'>
-      <img src={yogatrainer} alt='yoga coach' className='landing-background' />
+      <div className='landing-background' />
+      <img src={yogatrainer} alt='yoga coach' className='image2' />
       <div className='overlay trainer-overlay'></div>
       {isLoggedIn && <Redirect to='/coachportal/home' />}
       <h2 className='heading'>

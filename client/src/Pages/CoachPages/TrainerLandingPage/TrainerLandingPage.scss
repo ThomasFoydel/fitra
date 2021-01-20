@@ -3,23 +3,33 @@ $medium: 768px;
 $large: 992px;
 
 .trainer-landingpage {
+  margin-top: 2rem;
   position: relative;
   height: 80vh;
   min-height: 50rem;
 
   .trainer-overlay {
-    background: linear-gradient(rgba(0, 0, 0, 0.393), rgba(0, 0, 0, 0.583));
+    background: linear-gradient(rgba(0, 0, 0, 0.393), rgba(0, 0, 0, 0.3));
   }
   .landing-background {
-    background: linear-gradient(rgba(0, 0, 0, 0.307), rgba(0, 0, 0, 0.525)),
+    background: linear-gradient(rgba(0, 0, 0, 0.307), rgba(0, 0, 0, 0.225)),
       url('../../../imgs/yogacoach.jpg');
-    object-fit: contain;
     width: 80vw;
     height: 80vh;
     background-position: center;
     background-size: cover;
     position: absolute;
-    margin-top: 0rem;
+    z-index: -1;
+    left: 50%;
+    transform: translateX(-50%);
+    min-height: 50rem;
+    filter: blur(2px);
+  }
+  .image2 {
+    object-fit: contain;
+    width: 80vw;
+    height: 80vh;
+    position: absolute;
     z-index: -1;
     left: 50%;
     transform: translateX(-50%);
@@ -31,7 +41,7 @@ $large: 992px;
     line-height: 5.5rem;
     letter-spacing: 0.2rem;
     width: 80%;
-    color: rgba(255, 255, 255, 0.671);
+    color: rgba(255, 255, 255, 0.9);
     left: 50%;
     transform: scaleY(1.15) translateX(-50%);
     position: absolute;
@@ -45,16 +55,18 @@ $large: 992px;
     margin-bottom: 5rem;
     border-radius: 0.8rem;
     border: none;
-    background: rgb(0, 0, 0);
-    color: rgb(230, 230, 230);
-    font-weight: bold;
     font-size: 2rem;
     transition: all 0.1s ease;
     letter-spacing: 0.2rem;
     margin-top: 0.4rem;
+    background: rgb(233, 33, 33);
+    color: white;
+    font-weight: bold;
+    transition: all 0.2s ease;
     &:hover {
-      background: rgb(199, 10, 10);
-      color: black;
+      background: rgb(248, 88, 88);
+      color: rgb(68, 15, 15);
+      box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
     }
   }
 }
