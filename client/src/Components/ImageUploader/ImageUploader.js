@@ -10,7 +10,7 @@ const ImageUploader = ({ kind }) => {
   const [appState, updateState] = useContext(CTX);
   const { token, type } = appState.user;
   const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(kind === 'profilePic');
+  const [uploading, setUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const Content = Keyframes.Spring(async (next) => {

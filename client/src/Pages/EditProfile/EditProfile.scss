@@ -38,15 +38,18 @@ $large: 992px;
   }
 
   .link {
-    text-decoration: none;
-    background: rgba(240, 240, 240, 0.8);
-    padding: 0.4rem;
-    border-radius: 0.3rem;
-    color: rgb(18, 65, 221);
     margin-bottom: 4rem;
+    font-size: 1.8rem;
+    text-decoration: none;
+    padding: 0.4rem;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    color: #ddd;
+    background: rgb(170, 71, 71);
     transition: all 0.2s ease;
     &:hover {
-      background: rgb(240, 240, 240);
+      background: rgb(173, 0, 0);
+      box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.466);
     }
   }
 
@@ -64,14 +67,15 @@ $large: 992px;
   .submit-btn {
     margin-top: 1rem;
     font-size: 2rem;
-    padding: 0.6rem 1.2rem;
+    padding: 0.7rem 1.4rem;
     border-radius: 0.5rem;
-    background: rgb(22, 22, 22);
+    background: rgb(170, 71, 71);
     color: #ddd;
-    border: 1px solid #eee;
-    font-weight: bold;
+    border: none;
+    transition: all 0.2s ease;
     &:hover {
-      background: rgb(51, 51, 51);
+      background: rgb(173, 0, 0);
+      box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.466);
     }
   }
 }

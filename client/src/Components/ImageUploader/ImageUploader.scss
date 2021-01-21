@@ -42,15 +42,14 @@
     width: 20rem;
     height: 3.4rem;
     border-radius: 0.3rem;
-    text-align: center;
-    background: rgb(248, 248, 248);
-
+    background: rgb(170, 71, 71);
+    color: white;
     margin-top: 0.1rem;
     display: inline-block;
-
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     transform: translateX(-50%);
     margin-left: 50%;
     transition: all 0.2s ease;
