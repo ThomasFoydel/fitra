@@ -100,6 +100,7 @@ router.post('/login', (req, res) => {
             messages,
             id: user._id,
             tags: user.tags,
+            bio: user.bio,
             userType: 'trainer',
           };
           res.json({
