@@ -10,7 +10,7 @@ const TrainerCard = ({ trainer, tagSearch }) => {
     transform: hover ? 'scale(1.03)' : 'scale(1)',
     background: hover
       ? 'rgba(255, 255, 255, 0.975)'
-      : 'rgba(255, 255, 255, 0.575)',
+      : 'rgba(255, 255, 255, 0.65)',
     config: config.wobbly,
   });
 
@@ -51,7 +51,7 @@ const TrainerCard = ({ trainer, tagSearch }) => {
             <div className='tags'>
               {tags.map((tag, i) => (
                 <span key={tag} id={tag} className='tag' onClick={handleTag}>
-                  # {tag}
+                  #{tag}
                   {i < tags.length - 1 && tags.length > 1 && ', '}
                 </span>
               ))}
