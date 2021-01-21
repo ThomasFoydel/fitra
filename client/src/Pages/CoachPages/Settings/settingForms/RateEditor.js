@@ -25,6 +25,7 @@ const RateEditor = ({ props: { id, rate, onComplete, onError, token } }) => {
     <div className='rate-editor'>
       {rate ? <div>current rate: {rate}</div> : <div>rate not set</div>}
       <input
+        className='input'
         type='number'
         onChange={({ target: { value } }) => setInput(value)}
         placeholder='rate'

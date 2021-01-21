@@ -7,6 +7,10 @@
   margin-top: 5rem;
   border-radius: 4rem;
 
+  .header {
+    padding: 1rem 0;
+  }
+
   .setting-item {
     font-size: 2rem;
     a {
@@ -32,8 +36,7 @@
 
   .tag-editor {
     background: rgba(148, 148, 148, 0.664);
-    padding: 1rem;
-    margin-top: 1rem;
+    padding-top: 3rem;
     input {
       padding: 0.5rem;
       border-radius: 1rem;
@@ -57,7 +60,7 @@
         rgb(107, 100, 100)
       );
       width: 10%;
-      min-width: 15rem;
+      min-width: 20rem;
       display: flex;
       justify-content: space-between;
       padding-left: 0.5rem;
@@ -78,7 +81,6 @@
   .form {
     text-align: center;
     background: rgba(22, 22, 22, 0.192);
-    margin-top: 4rem;
     padding: 1rem 0;
   }
   .setting-item {
@@ -86,5 +88,23 @@
   }
   a {
     color: rgb(54, 54, 54);
+  }
+
+  .rate-editor {
+    padding-top: 1rem;
+    input {
+      width: 15rem;
+    }
+    input,
+    button {
+      font-size: 1.4rem;
+      padding: 0.3rem 0.5rem;
+      margin: 0 0.2rem;
+      border-radius: 0.8rem;
+    }
+  }
+
+  .dark-mode {
+    height: 4.5rem;
   }
 }
