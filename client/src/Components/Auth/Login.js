@@ -9,6 +9,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
   const [, updateState] = useContext(CTX);
   const [errorMessage, setErrorMessage] = useState('');
   const [userForm, setUserForm] = useState({});
+  const [googleErr, setGoogleErr] = useState(false);
 
   const handleChange = (e) => {
     let { id, value } = e.target;
@@ -67,7 +68,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
       });
   };
 
-  const googleSuccess = (response) => {
+  const googleHandleSuccess = (response) => {
     console.log({ response });
     const { tokenId } = response;
     axios
@@ -83,8 +84,8 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         console.log({ err });
       });
   };
-  const googleError = (res) => {
-    console.log({ err: res });
+  const googleHandleError = (res) => {
+    setGoogleErr(true);
   };
   return (
     <>
@@ -127,7 +128,9 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         {!trainer && (
           <>
             <Facebook callback={fbResponse} />
-            <Google props={{ googleSuccess, googleError }} />
+            <Google
+              props={{ googleHandleSuccess, googleHandleError, googleErr }}
+            />
           </>
         )}
 

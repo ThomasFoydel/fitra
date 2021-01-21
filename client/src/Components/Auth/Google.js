@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GoogleLogin } from 'react-google-login';
 
-const Google = ({ props: { googleSuccess, googleError } }) => {
+const Google = ({
+  props: { googleHandleSuccess, googleHandleError, googleErr },
+}) => {
+  const [hover, setHover] = useState(false);
+
   return (
-    <GoogleLogin
-      clientId='1034940197721-bs2c0n1opcqmdlcumn3c1bubrm3ga77k.apps.googleusercontent.com'
-      onSuccess={googleSuccess}
-      onFailure={googleError}
-      cookiePolicy={'single_host_origin'}
-      render={(renderProps) => (
-        <button
-          onClick={renderProps.onClick}
-          disabled={renderProps.disabled}
-          className='google-btn'
-        >
-          <span>LOGIN WITH GOOGLE</span>
-        </button>
-      )}
-    ></GoogleLogin>
+    <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+      <GoogleLogin
+        clientId='1034940197721-bs2c0n1opcqmdlcumn3c1bubrm3ga77k.apps.googleusercontent.com'
+        onSuccess={googleHandleSuccess}
+        onFailure={googleHandleError}
+        cookiePolicy={'single_host_origin'}
+        render={(renderProps) => (
+          <button
+            onClick={googleErr ? null : renderProps.onClick}
+            disabled={renderProps.disabled}
+            className='google-btn'
+          >
+            {googleErr && hover ? (
+              <span
+                className='nocookies'
+                style={{
+                  fontSize: '1rem',
+                  lineHeight: '1.2rem',
+                  whiteSpace: 'nowrap',
+                  width: '20rem',
+                }}
+              >
+                Must enable third party cookies
+              </span>
+            ) : (
+              <span style={{ fontSize: "'1.2rem'" }}>LOGIN WITH GOOGLE</span>
+            )}
+          </button>
+        )}
+      ></GoogleLogin>
+    </div>
   );
 };
 
