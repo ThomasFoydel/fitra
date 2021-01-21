@@ -4,12 +4,40 @@ import axios from 'axios';
 import { CTX } from 'context/Store';
 import dots from 'imgs/loading/loading-dots.gif';
 
+import { Keyframes, animated, config } from 'react-spring/renderprops';
+
 const ImageUploader = ({ kind }) => {
   const [appState, updateState] = useContext(CTX);
   const { token, type } = appState.user;
   const [file, setFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(kind === 'profilePic');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const Content = Keyframes.Spring(async (next) => {
+    while (uploading) {
+      await next({
+        background: 'rgb(173, 0, 0)',
+        from: {
+          background: '#ccc',
+        },
+        config: config.molasses,
+      });
+      await next({
+        background: 'rgb(88, 0, 26)',
+        from: {
+          background: 'rgb(173, 0, 0)',
+        },
+        config: config.molasses,
+      });
+      await next({
+        background: '#ccc',
+        from: {
+          background: 'rgb(88, 0, 26)',
+        },
+        config: config.molasses,
+      });
+    }
+  });
 
   const fileHandler = (e) => {
     setFile(e.target.files[0]);
@@ -60,7 +88,20 @@ const ImageUploader = ({ kind }) => {
     <div className='image-uploader'>
       {uploading ? (
         <div className='loading-dots-container'>
-          <img src={dots} className='loading-dots' alt='upload in progress' />
+          <Content native>
+            {(props) => (
+              <animated.div
+                style={{ position: 'relative', ...props }}
+                className='animated-file'
+              >
+                <img
+                  src={dots}
+                  className='loading-dots'
+                  alt='upload in progress'
+                />
+              </animated.div>
+            )}
+          </Content>
         </div>
       ) : (
         <>
@@ -76,7 +117,7 @@ const ImageUploader = ({ kind }) => {
             htmlFor={`${kind}-file`}
             onClick={handleSubmit}
           >
-            {file ? <>confirm</> : <>{`new ${btnTxt} pic`}</>}
+            {file ? <>confirm?</> : <>{`new ${btnTxt} pic`}</>}
           </label>
         </>
       )}
