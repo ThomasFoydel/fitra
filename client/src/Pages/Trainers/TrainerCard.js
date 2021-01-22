@@ -9,8 +9,8 @@ const TrainerCard = ({ trainer, tagSearch }) => {
   const animation = useSpring({
     transform: hover ? 'scale(1.03)' : 'scale(1)',
     background: hover
-      ? 'rgba(255, 255, 255, 0.975)'
-      : 'rgba(255, 255, 255, 0.65)',
+      ? 'rgba(255, 255, 255, 0.98)'
+      : 'rgba(255, 255, 255, 0.8)',
     config: config.wobbly,
   });
 
@@ -25,7 +25,11 @@ const TrainerCard = ({ trainer, tagSearch }) => {
   let { _id, coverPic, name, profilePic, bio, tags } = trainer;
 
   return (
-    <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+    <div
+      className='card-container'
+      onMouseOver={() => setHover(true)}
+      onMouseOut={() => setHover(false)}
+    >
       <Link
         to={`/trainer/${_id}`}
         key={_id}

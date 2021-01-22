@@ -78,7 +78,11 @@ const Trainers = () => {
       </div>
       <div className='trainers-container'>
         {animation.map(({ item, props, key }) => (
-          <animated.div style={props} key={key}>
+          <animated.div
+            style={props}
+            className='trainer-animation-container'
+            key={key}
+          >
             <TrainerCard trainer={item} tagSearch={tagSearch} />
           </animated.div>
         ))}

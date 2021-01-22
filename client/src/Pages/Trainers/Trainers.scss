@@ -41,6 +41,13 @@
     }
   }
 
+  .trainer-animation-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .trainers-container {
     margin-top: 3rem;
     position: absolute;
@@ -50,10 +57,14 @@
     padding-bottom: 30rem;
   }
 
+  .card-container {
+    width: 80%;
+  }
+
   .trainer-card {
     height: 20rem;
     position: relative;
-    // margin: 4rem;
+
     border-radius: 1rem;
     display: flex;
     justify-content: space-between;
@@ -117,5 +128,6 @@
   }
   .bio {
     color: black;
+    font-weight: bold;
   }
 }
