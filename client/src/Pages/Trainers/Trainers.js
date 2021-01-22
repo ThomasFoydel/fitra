@@ -3,6 +3,7 @@ import axios from 'axios';
 import SearchBar from 'Components/SearchBar/SearchBar';
 import './Trainers.scss';
 import TrainerCard from './TrainerCard';
+import { config, animated, useTransition } from 'react-spring';
 
 const suggestionTags = [
   'mma',
@@ -46,6 +47,18 @@ const Trainers = () => {
     return () => (subscribed = false);
   }, [err]);
 
+  const animation = useTransition(currentTrainers, (item) => item._id, {
+    from: { opacity: '0', height: '0rem', transform: 'translateY(-20px)' },
+    enter: { opacity: '1', height: '22rem', transform: 'translateY(0px)' },
+    leave: {
+      opacity: '0',
+      height: '0rem',
+      transform: 'translateY(-20px)',
+    },
+    trail: 300,
+    config: config.molasses,
+  });
+
   return (
     <div className='trainers'>
       <div className='background' />
@@ -64,12 +77,10 @@ const Trainers = () => {
           ))}
       </div>
       <div className='trainers-container'>
-        {currentTrainers.map((trainer) => (
-          <TrainerCard
-            key={trainer._id}
-            trainer={trainer}
-            tagSearch={tagSearch}
-          />
+        {animation.map(({ item, props, key }) => (
+          <animated.div style={props} key={key}>
+            <TrainerCard trainer={item} tagSearch={tagSearch} />
+          </animated.div>
         ))}
         <div className='err'>{err}</div>
       </div>

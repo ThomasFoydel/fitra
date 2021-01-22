@@ -37,14 +37,15 @@ const TrainerHome = () => {
       <div className='trainer-home'>
         <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
         <div className='sessions'>
-          {foundSessions.length > 0 ?
+          {foundSessions.length > 0 ? (
             animation.map(({ item, props, key }) => (
               <animated.div style={props} key={key}>
                 <Session session={item} />
               </animated.div>
-            )) :    
+            ))
+          ) : (
             <h3>no recent or upcoming sessions</h3>
-            }
+          )}
         </div>
       </div>
     </>

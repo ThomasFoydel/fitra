@@ -21,7 +21,9 @@ const TrainerCard = ({ trainer, tagSearch }) => {
     } = e;
     tagSearch(id);
   };
+
   let { _id, coverPic, name, profilePic, bio, tags } = trainer;
+
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <Link
