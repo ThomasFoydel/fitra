@@ -53,7 +53,7 @@ const Trainers = () => {
     leave: {
       opacity: '0',
       height: '0rem',
-      transform: 'translateY(-20px)',
+      transform: 'translateY(0px)',
     },
     trail: 300,
     config: config.molasses,

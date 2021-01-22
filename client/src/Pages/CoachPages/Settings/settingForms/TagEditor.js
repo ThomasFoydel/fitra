@@ -14,6 +14,7 @@ const TagEditor = () => {
   };
 
   const handleAddTag = () => {
+    if (!inputVal) return setErr('tag cannot be empty');
     axios
       .post(
         '/api/trainer/add-tag',
