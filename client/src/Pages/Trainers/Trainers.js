@@ -85,7 +85,7 @@ const Trainers = () => {
             className='trainer-animation-container'
             key={key}
           >
-            <TrainerCard trainer={item} tagSearch={tagSearch} />
+            <TrainerCard props={{ trainer: item, tagSearch }} />
           </animated.div>
         ))}
         <div className='err'>{err}</div>

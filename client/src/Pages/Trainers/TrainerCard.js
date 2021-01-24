@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSpring, animated, config } from 'react-spring';
 import Image from 'Components/Image/Image';
+import PropTypes from 'prop-types';
 
-const TrainerCard = ({ trainer, tagSearch }) => {
+const TrainerCard = ({ props: { trainer, tagSearch } }) => {
   const [hover, setHover] = useState(false);
 
   const animation = useSpring({
@@ -67,6 +68,13 @@ const TrainerCard = ({ trainer, tagSearch }) => {
       </Link>
     </div>
   );
+};
+
+TrainerCard.propTypes = {
+  props: PropTypes.shape({
+    trainer: PropTypes.object.isRequired,
+    tagSearch: PropTypes.func.isRequired,
+  }),
 };
 
 export default TrainerCard;
