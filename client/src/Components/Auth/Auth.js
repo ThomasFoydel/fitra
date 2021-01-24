@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
+import { useSpring, animated, config } from 'react-spring';
 import Login from './Login';
 import Register from './Register';
 import { CTX } from 'context/Store';
 import './Auth.scss';
-import { useSpring, animated, config } from 'react-spring';
 
 const Auth = () => {
   const [appState, updateState] = useContext(CTX);
@@ -24,15 +24,19 @@ const Auth = () => {
     <animated.div style={animation} className='auth'>
       {authPage === 'register' ? (
         <Register
-          setCurrentShow={setCurrentShow}
-          setAuthOpen={setAuthOpen}
-          trainer={trainer}
+          props={{
+            setCurrentShow,
+            setAuthOpen,
+            trainer,
+          }}
         />
       ) : (
         <Login
-          setCurrentShow={setCurrentShow}
-          setAuthOpen={setAuthOpen}
-          trainer={trainer}
+          props={{
+            setCurrentShow,
+            setAuthOpen,
+            trainer,
+          }}
         />
       )}
     </animated.div>

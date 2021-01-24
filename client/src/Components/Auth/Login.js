@@ -4,8 +4,9 @@ import { CTX } from 'context/Store';
 import AuthPageToggle from './AuthPageToggle';
 import Facebook from './Facebook';
 import Google from './Google';
+import PropTypes from 'prop-types';
 
-const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
+const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   const [, updateState] = useContext(CTX);
   const [errorMessage, setErrorMessage] = useState('');
   const [userForm, setUserForm] = useState({});
@@ -127,7 +128,7 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
         <p className='error-msg'>{errorMessage}</p>
         {!trainer && (
           <>
-            <Facebook callback={fbResponse} />
+            <Facebook props={{ callback: fbResponse }} />
             <Google
               props={{ googleHandleSuccess, googleHandleError, googleErr }}
             />
@@ -144,6 +145,14 @@ const Login = ({ setCurrentShow, setAuthOpen, trainer }) => {
       </div>
     </>
   );
+};
+
+Login.propTypes = {
+  props: PropTypes.shape({
+    setCurrentShow: PropTypes.func.isRequired,
+    setAuthOpen: PropTypes.func.isRequired,
+    trainer: PropTypes.object.isRequired,
+  }),
 };
 
 export default Login;

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AuthPageToggle from './AuthPageToggle';
+import PropTypes from 'prop-types';
 
-const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
+const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [userForm, setUserForm] = useState({});
 
@@ -92,6 +93,14 @@ const Register = ({ setCurrentShow, setAuthOpen, trainer }) => {
       <AuthPageToggle />
     </div>
   );
+};
+
+Register.propTypes = {
+  props: PropTypes.shape({
+    setCurrentShow: PropTypes.func.isRequired,
+    setAuthOpen: PropTypes.func.isRequired,
+    trainer: PropTypes.object.isRequired,
+  }),
 };
 
 export default Register;
