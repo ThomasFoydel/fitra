@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'Components/Image/Image';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import Image from 'Components/Image/Image';
+
 const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
   const [userInfo, setUserInfo] = useState({});
   useEffect(() => {
@@ -29,6 +31,15 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
       )}
     </div>
   );
+};
+
+ThreadListItem.propTypes = {
+  props: PropTypes.shape({
+    user: PropTypes.string.isRequired,
+    setCurrentThread: PropTypes.func.isRequired,
+    currentThread: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+  }),
 };
 
 export default ThreadListItem;

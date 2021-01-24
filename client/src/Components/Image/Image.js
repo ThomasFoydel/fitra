@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import loadingGif from 'imgs/loading/spin.gif';
 import defaultProfile from 'imgs/default/profile.jpg';
- 
+
 const Image = ({ name, src, style, alt }) => {
   const [loading, setLoading] = useState(true);
   const [source, setSource] = useState(src || defaultProfile);
   const [err, setErr] = useState(false);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (err && source !== defaultProfile) setSource(defaultProfile);
-  }, [err])
+  }, [err]);
 
-  useEffect(()=> {
-    if (src && source !== src) setSource(src)
-  }, [src])
+  useEffect(() => {
+    if (src && source !== src) setSource(src);
+  }, [src]);
 
   return (
     <img
@@ -31,6 +32,13 @@ const Image = ({ name, src, style, alt }) => {
       }}
     />
   );
+};
+
+Image.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  style: PropTypes.object,
 };
 
 export default Image;

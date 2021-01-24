@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AuthPageToggle from './AuthPageToggle';
 import PropTypes from 'prop-types';
+import AuthPageToggle from './AuthPageToggle';
 
 const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   const [errorMessage, setErrorMessage] = useState('');

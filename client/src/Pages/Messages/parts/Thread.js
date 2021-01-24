@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Image from 'Components/Image/Image';
 
-const Thread = ({ thread, close, currentUser, refEl }) => {
+const Thread = ({ props: { thread, close, currentUser, refEl } }) => {
   return (
     <div className='thread'>
       {thread.map((msg, i) => {
@@ -50,6 +51,15 @@ const Thread = ({ thread, close, currentUser, refEl }) => {
       {refEl()}
     </div>
   );
+};
+
+Thread.propTypes = {
+  props: PropTypes.shape({
+    thread: PropTypes.array.isRequired,
+    close: PropTypes.func.isRequired,
+    currentUser: PropTypes.string.isRequired,
+    refEl: PropTypes.func.isRequired,
+  }),
 };
 
 export default Thread;

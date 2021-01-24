@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-const ChatBox = ({ userId, userName, currentThread, update, isTrainer }) => {
+const ChatBox = ({
+  props: { userId, userName, currentThread, update, isTrainer },
+}) => {
   const [text, setText] = useState('');
   const submit = () => {
     if (!text) return;
@@ -36,6 +39,16 @@ const ChatBox = ({ userId, userName, currentThread, update, isTrainer }) => {
       <button onClick={submit}>send</button>
     </>
   );
+};
+
+ChatBox.propTypes = {
+  props: PropTypes.shape({
+    userId: PropTypes.string.isRequired,
+    userName: PropTypes.string.isRequired,
+    currentThread: PropTypes.string,
+    update: PropTypes.func.isRequired,
+    isTrainer: PropTypes.bool.isRequired,
+  }),
 };
 
 export default ChatBox;

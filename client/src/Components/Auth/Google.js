@@ -46,7 +46,7 @@ Google.propTypes = {
   props: PropTypes.shape({
     googleHandleSuccess: PropTypes.func.isRequired,
     googleHandleError: PropTypes.func.isRequired,
-    googleErr: PropTypes.func.isRequired,
+    googleErr: PropTypes.bool.isRequired,
   }),
 };
 

@@ -151,7 +151,7 @@ Login.propTypes = {
   props: PropTypes.shape({
     setCurrentShow: PropTypes.func.isRequired,
     setAuthOpen: PropTypes.func.isRequired,
-    trainer: PropTypes.object.isRequired,
+    trainer: PropTypes.bool.isRequired,
   }),
 };
 

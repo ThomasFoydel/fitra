@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import './Messages.scss';
-import { CTX } from 'context/Store';
 import { useSpring, config, animated } from 'react-spring';
-
 import ThreadListItem from './parts/ThreadListItem';
 import Thread from './parts/Thread';
 import ChatBox from './parts/ChatBox';
+import { CTX } from 'context/Store';
+import './Messages.scss';
 
 const Messages = () => {
   const [appState, updateState] = useContext(CTX);
@@ -53,10 +52,12 @@ const Messages = () => {
         <div className='current-thread'>
           {currentThread && (
             <Thread
-              currentUser={appState.user.id}
-              thread={messages[currentThread]}
-              refEl={refEl}
-              close={() => setCurrentThread(null)}
+              props={{
+                currentUser: appState.user.id,
+                thread: messages[currentThread],
+                refEl,
+                close: () => setCurrentThread(null),
+              }}
             />
           )}
         </div>
@@ -64,11 +65,13 @@ const Messages = () => {
 
       <animated.div style={animation} className='chat-box'>
         <ChatBox
-          isTrainer={type === 'trainer'}
-          userId={id}
-          userName={name}
-          currentThread={currentThread}
-          update={newMessage}
+          props={{
+            isTrainer: type === 'trainer',
+            userId: id,
+            userName: name,
+            currentThread,
+            update: newMessage,
+          }}
         />
       </animated.div>
     </div>

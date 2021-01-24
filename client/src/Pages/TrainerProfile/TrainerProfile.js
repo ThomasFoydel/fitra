@@ -10,7 +10,6 @@ import ReviewSlide from './ReviewSlide';
 import { CTX } from 'context/Store';
 import './TrainerProfile.scss';
 
-// import { defaultImg } from 'imgs/default/img.jpg';
 import { loadingSpin } from 'imgs/loading/spin.gif';
 
 const TrainerProfile = ({
@@ -18,10 +17,6 @@ const TrainerProfile = ({
     params: { trainerId },
   },
 }) => {
-  {
-    console.log({ trainerId });
-  }
-
   const [appState] = useContext(CTX);
   let belongsToCurrentUser = appState.user.id === trainerId;
 
@@ -57,7 +52,6 @@ const TrainerProfile = ({
   }, [trainerId]);
 
   let { name, bio, displayEmail, profilePic, coverPic } = currentTrainer || {};
-  console.log({ currentTrainer });
   const toggleMessageOpen = () => {
     if (appState.messages[currentTrainer._id]) {
       setRedirectToMessages(true);
@@ -94,11 +88,13 @@ const TrainerProfile = ({
           }}
         >
           <div className='info'>
-            <Image
-              src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
-              name='profile-pic'
-              alt="trainer's profile"
-            />
+            {profilePic && (
+              <Image
+                src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
+                name='profile-pic'
+                alt="trainer's profile"
+              />
+            )}
             <div className='section-1'>
               <div className='name'>{name}</div>
               <div className='email'>{displayEmail}</div>
