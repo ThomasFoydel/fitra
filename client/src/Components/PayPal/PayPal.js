@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import {
-  PayPalScriptProvider,
-  PayPalButtons,
-  usePayPalScriptReducer,
-} from '@paypal/react-paypal-js';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import PropTypes from 'prop-types';
+import Buttons from './Buttons';
 import './PayPal.scss';
-import loading from 'imgs/loading/loading-dots.gif';
 
 const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
   const handleResolve = (e) => {
@@ -41,28 +38,11 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
 
 export default PayPal;
 
-const Buttons = ({ handleError, handleResolve, price }) => {
-  const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer();
-
-  return (
-    <div className=''>
-      {isPending && <img src={loading} alt='loading' />}
-      <PayPalButtons
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            purchase_units: [
-              {
-                amount: {
-                  value: price,
-                },
-              },
-            ],
-          });
-        }}
-        style={{ layout: 'vertical' }}
-        onApprove={handleResolve}
-        onError={handleError}
-      />
-    </div>
-  );
+PayPal.propTypes = {
+  props: PropTypes.shape({
+    complete: PropTypes.func.isRequired,
+    desc: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    setPayPalOpen: PropTypes.func.isRequired,
+  }),
 };
