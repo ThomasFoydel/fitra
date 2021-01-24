@@ -24,11 +24,7 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
           <p>{`test password: %)z6>&Ry`}</p>
 
           <PayPalScriptProvider options={{ 'client-id': 'sb' }}>
-            <Buttons
-              price={price}
-              handleResolve={handleResolve}
-              handleError={handleError}
-            />
+            <Buttons props={{ price, handleError, handleResolve }} />
           </PayPalScriptProvider>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import loading from 'imgs/loading/loading-dots.gif';
 import PropTypes from 'prop-types';
 
-const Buttons = ({ handleError, handleResolve, price }) => {
+const Buttons = ({ props: { handleError, handleResolve, price } }) => {
   const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer();
 
   return (

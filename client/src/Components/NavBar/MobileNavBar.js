@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CTX } from 'context/Store';
-import hamburger from 'imgs/icons/hamburger.svg';
 import { useSpring, animated, config } from 'react-spring';
+import PropTypes from 'prop-types';
+import hamburger from 'imgs/icons/hamburger.svg';
+import { CTX } from 'context/Store';
 
 const MobileNavBar = ({
   props: { isLoggedIn, openLogin, trainerExt, logout, isTrainer, currentPage },
@@ -96,3 +97,14 @@ const MobileNavBar = ({
 };
 
 export default MobileNavBar;
+
+MobileNavBar.propTypes = {
+  props: PropTypes.shape({
+    isLoggedIn: PropTypes.bool.isRequired,
+    openLogin: PropTypes.func.isRequired,
+    trainerExt: PropTypes.string.isRequired,
+    logout: PropTypes.func.isRequired,
+    isTrainer: PropTypes.bool.isRequired,
+    currentPage: PropTypes.string.isRequired,
+  }),
+};
