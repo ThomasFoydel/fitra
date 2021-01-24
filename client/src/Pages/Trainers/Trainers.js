@@ -63,18 +63,20 @@ const Trainers = () => {
     <div className='trainers'>
       <div className='background' />
       <div className='overlay' />
-      <SearchBar props={{ search, setSearch, queryType, setQueryType }} />
-      <div className='suggestion-tags'>
-        {queryType === 'tags' &&
-          suggestionTags.map((tag) => (
-            <div
-              key={tag}
-              className={`suggestion-tag ${search === tag ? 'current' : ''}`}
-              onClick={() => tagSearch(tag)}
-            >
-              {tag}
-            </div>
-          ))}
+      <div className='top-section'>
+        <SearchBar props={{ search, setSearch, queryType, setQueryType }} />
+        <div className='suggestion-tags'>
+          {queryType === 'tags' &&
+            suggestionTags.map((tag) => (
+              <div
+                key={tag}
+                className={`suggestion-tag ${search === tag ? 'current' : ''}`}
+                onClick={() => tagSearch(tag)}
+              >
+                {tag}
+              </div>
+            ))}
+        </div>
       </div>
       <div className='trainers-container'>
         {animation.map(({ item, props, key }) => (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { GoogleLogin } from 'react-google-login';
+import PropTypes from 'prop-types';
 
 const Google = ({
   props: { googleHandleSuccess, googleHandleError, googleErr },
@@ -39,6 +40,14 @@ const Google = ({
       ></GoogleLogin>
     </div>
   );
+};
+
+Google.propTypes = {
+  props: PropTypes.shape({
+    googleHandleSuccess: PropTypes.func.isRequired,
+    googleHandleError: PropTypes.func.isRequired,
+    googleErr: PropTypes.func.isRequired,
+  }),
 };
 
 export default Google;
