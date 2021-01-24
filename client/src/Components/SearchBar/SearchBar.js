@@ -1,5 +1,6 @@
 import React from 'react';
 import './SearchBar.scss';
+import PropTypes from 'prop-types';
 
 const SearchBar = ({
   props: { search, setSearch, queryType, setQueryType },
@@ -27,6 +28,15 @@ const SearchBar = ({
       </select>
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  props: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+    setSearch: PropTypes.func.isRequired,
+    queryType: PropTypes.string.isRequired,
+    setQueryType: PropTypes.func.isRequired,
+  }),
 };
 
 export default SearchBar;
