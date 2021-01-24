@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import io from 'socket.io-client';
@@ -38,9 +38,8 @@ function App() {
     user: { token, type },
     showAuth,
   } = appState;
-  const [mySocket, setMySocket] = useState(null);
 
-  let socket;
+  let socketRef = useRef(null);
 
   useEffect(() => {
     let subscribed = true;
@@ -71,10 +70,11 @@ function App() {
     noToken ? updateState({ type: 'LOGOUT' }) : checkAuth();
 
     return () => {
-      if (socket) socket.emit('disconnect-room', socket.id);
+      if (socketRef.current)
+        socketRef.current.emit('disconnect-room', socketRef.current.id);
       subscribed = false;
     };
-  }, []);
+  }, [updateState]);
 
   useEffect(() => {
     let subscribed = true;
@@ -83,10 +83,9 @@ function App() {
       const urlBase =
         process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000/';
       const ENDPOINT = urlBase + `?token=${token}`;
-      socket = io(ENDPOINT);
+      socketRef.current = io(ENDPOINT);
       if (subscribed) {
-        setMySocket(socket);
-        socket.on('chat-message', (message) =>
+        socketRef.current.on('chat-message', (message) =>
           updateState({ type: 'NEW_MESSAGE', payload: { message } })
         );
       }
@@ -94,14 +93,12 @@ function App() {
 
     return () => {
       subscribed = false;
-      if (socket) {
-        // socket.emit('disconnect-room', socket.id);
-        // socket.emit('disconnect', socket.id);
-        socket.removeAllListeners();
-        socket.off();
+      if (socketRef.current) {
+        socketRef.current.removeAllListeners();
+        socketRef.current.off();
       }
     };
-  }, [token]);
+  }, [token, updateState]);
 
   let HomeComponent = type === 'trainer' ? TrainerHome : Home;
 
@@ -147,8 +144,8 @@ function App() {
             exact
             path='/connect/:connectionId'
             component={({ match }) =>
-              match && mySocket ? (
-                <Connect socket={mySocket} match={match} />
+              match && socketRef.current ? (
+                <Connect socket={socketRef.current} match={match} />
               ) : (
                 <HomeComponent />
               )

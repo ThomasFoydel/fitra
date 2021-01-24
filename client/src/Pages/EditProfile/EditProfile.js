@@ -83,7 +83,7 @@ const EditProfile = () => {
               src={`/api/image/${profilePic || '5f4d8786efa2ae10b38bfe9e'}`}
               alt='your profile'
             />
-            <ImageUploader kind='profilePic' />
+            <ImageUploader props={{ kind: 'profilePic' }} />
           </div>
           <div className='uploader'>
             <Image
@@ -91,7 +91,7 @@ const EditProfile = () => {
               src={`/api/image/${coverPic || '5f4d8786efa2ae10b38bfe9e'}`}
               alt='your cover'
             />
-            <ImageUploader kind='coverPic' />
+            <ImageUploader props={{ kind: 'coverPic' }} />
           </div>
         </div>
       </div>

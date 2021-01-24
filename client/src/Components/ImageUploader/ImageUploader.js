@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import './ImageUploader.scss';
 import axios from 'axios';
-import { CTX } from 'context/Store';
-import dots from 'imgs/loading/loading-dots.gif';
-
+import PropTypes from 'prop-types';
 import { Keyframes, animated, config } from 'react-spring/renderprops';
+import dots from 'imgs/loading/loading-dots.gif';
+import { CTX } from 'context/Store';
+import './ImageUploader.scss';
 
-const ImageUploader = ({ kind }) => {
+const ImageUploader = ({ props: { kind } }) => {
   const [appState, updateState] = useContext(CTX);
   const { token, type } = appState.user;
   const [file, setFile] = useState(null);
@@ -127,3 +127,9 @@ const ImageUploader = ({ kind }) => {
 };
 
 export default ImageUploader;
+
+ImageUploader.propTypes = {
+  props: PropTypes.shape({
+    kind: PropTypes.string.isRequired,
+  }),
+};

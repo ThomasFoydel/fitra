@@ -9,11 +9,13 @@ const Image = ({ name, src, style, alt }) => {
   const [err, setErr] = useState(false);
 
   useEffect(() => {
-    if (err && source !== defaultProfile) setSource(defaultProfile);
+    // if (err && source !== defaultProfile) setSource(defaultProfile);
+    if (err) setSource(defaultProfile);
   }, [err]);
 
   useEffect(() => {
-    if (src && source !== src) setSource(src);
+    // if (src && source !== src) setSource(src);
+    if (src) setSource(src);
   }, [src]);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import PropTypes from 'prop-types';
 import Buttons from './Buttons';
