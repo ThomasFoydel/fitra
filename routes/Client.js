@@ -95,11 +95,8 @@ router.post('/googlelogin', async ({ body: { tokenId } }, res) => {
       if (email_verified) {
         const foundUser = await User.findOne({ email });
         if (foundUser) {
-          // send back login ingo
           sendLogin(foundUser);
         } else {
-          // make new user
-          // send back login info
           const password = email + process.env.SECRET;
           const hashedPw = await bcrypt.hash(password, 12);
           const newClient = new Client({

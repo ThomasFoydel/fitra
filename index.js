@@ -39,7 +39,7 @@ app.use('/api/user', userRoutes);
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 if (process.env.NODE_ENV === 'production') {
-/* production mode */
+  /* production mode */
   app.use(express.static(path.join(__dirname, 'client/build')));
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
@@ -85,7 +85,7 @@ mongoose
       /* set up initial connection for chat and notifications */
       const token = socket.handshake.query.token;
       if (!token) {
-        // console.log('no token auth denied');
+        console.log('no token auth denied');
       } else {
         try {
           const decoded = jwt.verify(token, process.env.SECRET);
@@ -107,10 +107,10 @@ mongoose
       }
 
       socket.on('join-room', ({ roomId, mySocketId, token, peerId }) => {
-        // find session in db
-        // check if user is client for this session
-        // check if session is currently happening
-        // if not, send back err and redirect or display countdown, if so, do the following
+        /* find session in db
+        check if user is client for this session
+        check if session is currently happening
+        if not, send back err and redirect or display countdown, if so, do the following */
         socket.join(roomId);
         socket
           .to(roomId)

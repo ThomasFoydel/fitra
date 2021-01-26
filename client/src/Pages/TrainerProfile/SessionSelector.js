@@ -1,9 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
-  // getOneHalfHourAhead,
-  // checkBlock,
-  // checkSelection,
   days,
   halfHours,
   dateFromDateAndTime,
