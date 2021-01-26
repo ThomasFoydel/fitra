@@ -24,6 +24,7 @@ const Delete = () => {
       )
       .then((res) => {
         console.log({ res });
+        updateState({ type: 'LOGOUT' });
       })
       .catch((err) => console.log({ err }));
   };
