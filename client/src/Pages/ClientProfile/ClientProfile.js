@@ -5,7 +5,7 @@ import { CTX } from 'context/Store';
 import Image from 'Components/Image/Image';
 import './ClientProfile.scss';
 
-import { loadingSpin } from 'imgs/loading/spin.gif';
+import loadingSpin from 'imgs/loading/spin.gif';
 
 const ClientProfile = ({
   match: {
