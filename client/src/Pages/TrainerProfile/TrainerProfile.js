@@ -10,7 +10,7 @@ import ReviewSlide from './ReviewSlide';
 import { CTX } from 'context/Store';
 import './TrainerProfile.scss';
 
-import { loadingSpin } from 'imgs/loading/spin.gif';
+import loadingSpin from 'imgs/loading/spin.gif';
 
 const TrainerProfile = ({
   match: {
@@ -88,13 +88,12 @@ const TrainerProfile = ({
           }}
         >
           <div className='info'>
-            {profilePic && (
-              <Image
-                src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
-                name='profile-pic'
-                alt="trainer's profile"
-              />
-            )}
+            <Image
+              src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
+              name='profile-pic'
+              alt="trainer's profile"
+            />
+
             <div className='section-1'>
               <div className='name'>{name}</div>
               <div className='email'>{displayEmail}</div>
