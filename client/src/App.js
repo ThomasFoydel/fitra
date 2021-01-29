@@ -52,7 +52,7 @@ function App() {
         })
         .then(({ data }) => {
           if (subscribed) {
-            if (data.err) return updateState({ type: 'LOGOUT' });
+            // if (data.err) return updateState({ type: 'LOGOUT' });
             if (data)
               updateState({
                 type: 'LOGIN',
@@ -61,7 +61,7 @@ function App() {
           }
         })
         .catch(() => {
-          updateState({ type: 'LOGOUT' });
+          // updateState({ type: 'LOGOUT' });
         });
     };
 

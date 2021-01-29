@@ -8,14 +8,14 @@ const RateEditor = ({ props: { id, rate, onComplete, onError, token } }) => {
     axios
       .post(
         `/api/user/settings/trainer/rate/`,
-        { value: input },
+        { value: Number(input) },
         {
           headers: { 'x-auth-token': token },
         }
       )
-      .then(({ data: { settings }, err }) => {
+      .then(({ data, err }) => {
         if (err) onError(err);
-        onComplete({ type: 'rate', value: settings.rate });
+        onComplete({ type: 'rate', value: data.rate });
       })
       .catch((err) => {
         onError({ err });

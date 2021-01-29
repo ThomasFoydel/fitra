@@ -19,29 +19,16 @@ router.get('/:id', auth, async (req, res) => {
 
 router.post('/settings/:type/:setting', auth, async (req, res) => {
   let { type, setting } = req.params;
-  let { checked, value } = req.body;
+  let { value } = req.body;
   let { userId } = req.tokenUser;
   let User = type === 'client' ? Client : Trainer;
-  if (setting === 'darkmode') {
-    User.findByIdAndUpdate(
-      userId,
-      { $set: { 'settings.darkmode': checked } },
-      { new: true, useFindAndModify: false, fields: { settings: 1 } }
-    )
-      .then(({ settings }) => res.send(settings))
-      .catch((err) => res.send({ err }));
-  } else if (setting === 'rate') {
-    User.findByIdAndUpdate(
-      userId,
-      { $set: { 'settings.rate': Number(value) } },
-      { new: true, useFindAndModify: false, fields: { settings: 1 } }
-    )
-      .then((user) => {
-        res.send(user);
-      })
-      .catch((err) => {
-        res.send({ err });
-      });
-  }
+
+  User.findByIdAndUpdate(
+    userId,
+    { $set: { [`settings.${setting}`]: value } },
+    { new: true, useFindAndModify: false, fields: { settings: 1 } }
+  )
+    .then(({ settings }) => res.send(settings))
+    .catch((err) => res.send({ err }));
 });
 module.exports = router;

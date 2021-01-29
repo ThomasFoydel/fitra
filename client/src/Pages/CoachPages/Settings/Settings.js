@@ -4,13 +4,14 @@ import { CTX } from 'context/Store';
 import { Link } from 'react-router-dom';
 import TagEditor from './settingForms/TagEditor';
 import RateEditor from './settingForms/RateEditor';
-import DarkMode from './settingForms/DarkMode';
+// import DarkMode from './settingForms/DarkMode';
+import Active from './settingForms/Active';
 
 const Settings = () => {
   const [appState, updateState] = useContext(CTX);
   const [err, setErr] = useState('');
   const { type, token, id } = appState.user;
-  const { darkmode, rate } = appState.settings || {};
+  const { darkmode, rate, active } = appState.settings || {};
 
   const onComplete = ({ type, value }) => {
     console.log('complete', type, value);
@@ -30,7 +31,8 @@ const Settings = () => {
 
         <div className='form'>
           <div className='setting-item'>
-            <DarkMode props={{ onError, type, onComplete, token, darkmode }} />
+            {/* <DarkMode props={{ onError, type, onComplete, token, darkmode }} /> */}
+            <Active props={{ onError, type, onComplete, token, active }} />
           </div>
           <div className='setting-item'>
             <TagEditor />

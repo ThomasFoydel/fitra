@@ -19,7 +19,7 @@ const availabilitySchema = new mongoose.Schema({
 const settingSchema = new mongoose.Schema({
   rate: Number,
   currency: String,
-  darkmode: Boolean,
+  active: Boolean,
 });
 
 const trainerSchema = {

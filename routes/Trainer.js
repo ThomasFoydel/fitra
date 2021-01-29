@@ -44,8 +44,10 @@ router.post('/register', async (req, res) => {
     name: name,
     email: email.toLowerCase(),
     password: hashedPw,
-    settings: { darkmode: false },
+    settings: { active: false },
     availability: [],
+    minimum: 1,
+    maximum: 4,
   });
 
   newTrainer
