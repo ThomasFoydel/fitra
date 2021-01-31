@@ -2,16 +2,14 @@ const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const jwt = require('jsonwebtoken');
+const socketio = require('socket.io');
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
-const jwt = require('jsonwebtoken');
-const util = require('./util/util');
-const { sendReminders } = util;
 require('dotenv').config();
 
-const socketio = require('socket.io');
-
+const util = require('./util/util');
+const { sendReminders } = util;
 const clientRoutes = require('./routes/Client');
 const trainerRoutes = require('./routes/Trainer');
 const authRoutes = require('./routes/Auth');
@@ -19,14 +17,11 @@ const sessionRoutes = require('./routes/Session');
 const connectRoutes = require('./routes/Connect');
 const imageRoutes = require('./routes/Image');
 const userRoutes = require('./routes/User');
-
 const Message = require('./models/Message');
 
 const app = express();
 app.use(cors());
-
 app.use(bodyParser.json());
-
 app.use('/api/client', clientRoutes);
 app.use('/api/trainer', trainerRoutes);
 app.use('/api/auth', authRoutes);
@@ -55,7 +50,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((res) => {
+  .then(() => {
     const expressServer = app.listen(process.env.PORT || 8000);
 
     const io = socketio(expressServer);
@@ -105,22 +100,16 @@ mongoose
       }
 
       socket.on('join-room', ({ roomId, mySocketId, token, peerId }) => {
-        /* find session in db
-        check if user is client for this session
-        check if session is currently happening
-        if not, send back err and redirect or display countdown, if so, do the following */
         socket.join(roomId);
         socket
           .to(roomId)
           .broadcast.emit('user-connected', { mySocketId, userId: peerId });
 
         socket.on('message', (message) => {
-          /* send message to the same room */
           io.to(roomId).emit('create-message', message);
         });
 
         socket.on('disconnect-room', (id) => {
-          console.log('disconnected-room, id: ', id);
           socket.to(roomId).broadcast.emit('user-disconnected', id);
         });
 
@@ -139,7 +128,6 @@ mongoose
       });
 
       socket.on('sending-signal', ({ newUser, callerId, signal }) => {
-        console.log('sending signal to new user: ', newUser);
         io.to(newUser).emit('user-joined', { callerId, signal });
       });
 
@@ -153,4 +141,7 @@ mongoose
     });
 
     setInterval(sendReminders, 3600000);
+  })
+  .catch((err) => {
+    console.log('Database connection error: ', err);
   });
