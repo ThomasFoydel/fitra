@@ -18,7 +18,6 @@ const mongoose = require('mongoose');
 const fetch = require('node-fetch');
 
 router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
-  console.log({ userID, accessToken });
   const sendLogin = async (client) => {
     const clientInfo = await formatClientInfo(client);
     const token = formatToken(client);
@@ -57,16 +56,16 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
             sendLogin(result);
           })
           .catch((err) => {
-            console.log('catch err: ', err);
-            res.status(400).send(err);
+            console.log('registration err: ', err);
+            res.status(400).send({ err: 'registration error' });
           });
       } else {
-        console.log('else, foundClient: ', foundClient);
         sendLogin(foundClient);
       }
     })
     .catch((err) => {
-      console.log({ err });
+      console.log('facebook auth error: ', err);
+      res.status(400).send({ err: 'registration error' });
     });
 });
 
@@ -93,7 +92,7 @@ router.post('/googlelogin', async ({ body: { tokenId } }, res) => {
     .then(async (response) => {
       const { email_verified, name, email } = response.payload;
       if (email_verified) {
-        const foundUser = await User.findOne({ email });
+        const foundUser = await Client.findOne({ email });
         if (foundUser) {
           sendLogin(foundUser);
         } else {
@@ -112,13 +111,16 @@ router.post('/googlelogin', async ({ body: { tokenId } }, res) => {
               sendLogin(result);
             })
             .catch((err) => {
-              console.log('catch err: ', err);
-              res.status(400).send(err);
+              console.log('registration error: ', err);
+              res.status(400).send({ err: 'registration error' });
             });
         }
       }
     })
-    .catch((err) => {});
+    .catch((err) => {
+      console.log('gooogle auth error: ', err);
+      res.status(400).send({ err: 'registration error' });
+    });
 });
 
 router.post('/register', async (req, res) => {
@@ -316,13 +318,19 @@ router.get('/info/:id', auth, async (req, res) => {
     .then((user) => {
       if (user) foundUser = user;
     })
-    .catch((err) => res.send({ err }));
+    .catch((err) => {
+      console.log('find client database error: ', err);
+      return res.send({ err: 'database error' });
+    });
 
   Trainer.findById(req.params.id)
     .then((user) => {
       if (user) foundUser = user;
     })
-    .catch((err) => res.send({ err }));
+    .catch((err) => {
+      console.log('find trainer database error: ', err);
+      return res.send({ err: 'database error' });
+    });
 
   if (foundUser) res.send({ user: foundUser });
 });
@@ -377,7 +385,10 @@ router.post(
         );
         res.send({ updatedSession, savedReview });
       })
-      .catch((err) => res.send({ err }));
+      .catch((err) => {
+        console.log('review save error: ', err);
+        return res.send({ err: 'databse error' });
+      });
   }
 );
 
@@ -387,7 +398,15 @@ router.post(
   async ({ tokenUser: { userId } }, res) => {
     const foundUser = await User.findById(userId);
     if (!foundUser) return res.send({ err: 'No user found' });
-    User.findByIdAndDelete(userId);
+    Client.findByIdAndDelete(userId)
+      .then((result) => {
+        console.log('delete client success : ', result);
+        return res.send({ message: 'deletion successful' });
+      })
+      .catch((err) => {
+        console.log('find client database error: ', err);
+        return res.send({ err: 'database error' });
+      });
   }
 );
 

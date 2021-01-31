@@ -119,10 +119,6 @@ mongoose
         });
       });
 
-      socket.on('chat-message', (message) => {
-        console.log('socket on CHAT MESSAGE: ', message);
-      });
-
       socket.on('disconnect', () => {
         users = users.filter((user) => user.socketId !== socket.id);
       });
