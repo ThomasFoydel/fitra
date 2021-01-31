@@ -1,20 +1,19 @@
 const express = require('express');
-const router = express.Router();
-const auth = require('../middlewares/auth');
-
 const crypto = require('crypto');
 const path = require('path');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 
+const auth = require('../middlewares/auth');
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
-
 const util = require('../util/util');
 const { findUser } = util;
 
 const mongoURI = process.env.MONGO_URI;
+
+const router = express.Router();
 
 const conn = mongoose.createConnection(mongoURI, {
   useNewUrlParser: true,
@@ -57,13 +56,16 @@ const deleteImage = (id) => {
   if (!id || id === 'undefined') return res.send({ err: 'no image id' });
   const _id = new mongoose.Types.ObjectId(id);
   gfs.delete(_id, (err, data) => {
-    if (err) return res.send({ err: err.message });
+    if (err) {
+      console.log('image deletion error: ', err);
+      return res.send({ err: 'image deletion error' });
+    }
   });
 };
 
 router.get('/', (req, res) => {
   if (!gfs) {
-    res.send({ err: 'Database error' });
+    res.send({ err: 'database error' });
     process.exit(0);
   }
   gfs.find().toArray((err, files) => {
@@ -111,18 +113,21 @@ router.post(
     const { id } = file;
     if (file.size > 1000000) {
       deleteImage(id);
-      return res.send({ err: 'File may not exceed 1mb' });
+      return res.send({ err: 'file may not exceed 1mb' });
     }
     const User = type === 'trainer' ? Trainer : Client;
 
     const foundUser = await User.findById(userId);
-    if (!foundUser) return res.send({ err: 'User not found' });
+    if (!foundUser) return res.send({ err: 'user not found' });
     let currentPic = foundUser[kind];
     let currentPicId = new mongoose.Types.ObjectId(currentPic);
 
     if (currentPic) {
       gfs.delete(currentPicId, (err, data) => {
-        if (err) return res.send({ err: err.message });
+        if (err) {
+          console.log('previous image delete error: ', err);
+          return res.send({ err: 'database error' });
+        }
       });
     }
 
@@ -132,7 +137,10 @@ router.post(
       { new: true, useFindAndModify: false }
     )
       .then((user) => res.send({ user }))
-      .catch((err) => res.send({ err }));
+      .catch((err) => {
+        console.log('image upload user update error: ', err);
+        return res.send({ err: 'database error' });
+      });
   }
 );
 
@@ -141,7 +149,7 @@ router.get('/:id', ({ params: { id } }, res) => {
   const _id = new mongoose.Types.ObjectId(id);
   gfs.find({ _id }).toArray((err, files) => {
     if (!files || files.length === 0) {
-      return res.send({ err: 'No files exist' });
+      return res.send({ err: 'no files exist' });
     }
     gfs.openDownloadStream(_id).pipe(res);
   });
@@ -158,9 +166,8 @@ router.get('/user/:kind/:id', async ({ params: { id, kind } }, res) => {
     const _id = new mongoose.Types.ObjectId(foundPicId);
     gfs.find({ _id }).toArray((err, files) => {
       if (!files || files.length === 0) {
-        /* user has no profile or cover photo */
-        // TODO: send back a default
-        return res.send({ err: 'No files exist' });
+        /* image doesnt exist, user has no profile or cover photo */
+        return res.send({ err: 'no files exist' });
       }
       gfs.openDownloadStream(_id).pipe(res);
     });

@@ -1,16 +1,16 @@
 const express = require('express');
-const router = express.Router();
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
 const Session = require('../models/Session');
-const mongoose = require('mongoose');
-
-const util = require('../util/util');
 const Client = require('../models/Client');
+const auth = require('../middlewares/auth');
+const util = require('../util/util');
 const { messageSorter } = util;
+
+const router = express.Router();
 
 router.post('/register', async (req, res) => {
   let { email, name, password, confirmpassword } = req.body;
@@ -21,21 +21,21 @@ router.post('/register', async (req, res) => {
   }
 
   if (password.length < 8) {
-    return res.send({ err: 'Password must be at least 6 characters' });
+    return res.send({ err: 'password must be at least 6 characters' });
   }
   if (name.length < 2 || name.length > 15) {
-    return res.send({ err: 'Name must be between 4 and 12 characters' });
+    return res.send({ err: 'name must be between 4 and 12 characters' });
   }
   if (password !== confirmpassword) {
-    return res.send({ err: 'Passwords do not match' });
+    return res.send({ err: 'passwords do not match' });
   }
   if (!email.includes('@') || !email.includes('.')) {
-    return res.send({ err: 'Valid email required' });
+    return res.send({ err: 'valid email required' });
   }
 
   const existingTrainer = await Trainer.findOne({ email: email });
   if (existingTrainer) {
-    return res.send({ err: 'Account with this email already exists' });
+    return res.send({ err: 'account with this email already exists' });
   }
 
   const hashedPw = await bcrypt.hash(password, 12);
@@ -68,11 +68,11 @@ router.post('/login', (req, res) => {
       if (err) {
         return res.json({
           err:
-            'Sorry, there is an issue with connecting to the database. We are working on fixing this.',
+            'sorry, there is an issue with connecting to the database. We are working on fixing this.',
         });
       } else {
         if (!user) {
-          return res.json({ err: 'No user found with this email' });
+          return res.json({ err: 'no user found with this email' });
         }
         const passwordsMatch = await bcrypt.compare(
           req.body.password,
@@ -107,14 +107,14 @@ router.post('/login', (req, res) => {
           };
           res.json({
             status: 'success',
-            message: 'Login successful',
+            message: 'login successful',
             data: {
               user: userInfo,
               token,
             },
           });
         } else {
-          return res.json({ err: 'Incorrect password' });
+          return res.json({ err: 'incorrect password' });
         }
       }
     }
@@ -126,7 +126,10 @@ router.get('/dashboard', auth, (req, res) => {
   Session.find({ trainer: userId })
     .select('-roomId')
     .then((sessions) => res.send({ sessions }))
-    .catch((err) => res.send('Database error'));
+    .catch((err) => {
+      console.log('trainer dashboard info fetch error: ', err);
+      return res.send('database error');
+    });
 });
 
 router.post('/editprofile/', auth, (req, res) => {
@@ -143,13 +146,16 @@ router.post('/editprofile/', auth, (req, res) => {
     useFindAndModify: false,
   })
     .then((result) => res.send(result))
-    .catch((err) => res.send({ err: 'database error' }));
+    .catch((err) => {
+      console.log('trainer profile edit error: ', err);
+      return res.send({ err: 'database error' });
+    });
 });
 
 router.get('/schedule/', auth, async (req, res) => {
   let { userId } = req.tokenUser;
   let foundTrainer = await Trainer.findById(userId);
-  if (!foundTrainer) return res.send({ err: 'No trainer found' });
+  if (!foundTrainer) return res.send({ err: 'no trainer found' });
   let entries = foundTrainer.availability || [];
 
   let foundSessions = await Session.find({ trainer: userId });
@@ -166,7 +172,10 @@ router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
     { new: true, useFindAndModify: false }
   )
     .then((user) => res.send(user.availability || []))
-    .catch((err) => res.send({ err }));
+    .catch((err) => {
+      console.log('trainer schedule update error: ', err);
+      return res.send('database error');
+    });
 });
 
 router.post(
@@ -189,7 +198,10 @@ router.post(
       .then((user) => {
         return res.send({ min: user.minimum, max: user.maximum });
       })
-      .catch((err) => res.send({ err }));
+      .catch((err) => {
+        console.log('trainer min/max update error: ', err);
+        return res.send({ err: 'database error' });
+      });
   }
 );
 
@@ -201,7 +213,10 @@ router.post('/rate/', auth, async ({ tokenUser, body }, res) => {
     { new: true, useFindAndModify: false }
   )
     .then((user) => res.send(user.rate || []))
-    .catch((err) => res.send({ err }));
+    .catch((err) => {
+      console.log('trainer rate update error: ', err);
+      return res.send({ err: 'database error' });
+    });
 });
 
 router.get('/session/:id', auth, async ({ params: { id } }, res) => {
@@ -210,10 +225,10 @@ router.get('/session/:id', auth, async ({ params: { id } }, res) => {
     _id = new mongoose.Types.ObjectId(id);
   } catch (err) {
     /* mongo id cast error, user's using incorrect url */
-    return res.send({ err: 'No session found' });
+    return res.send({ err: 'no session found' });
   }
   let foundSession = await Session.findById(_id).select('-roomId');
-  if (!foundSession) return res.send({ err: 'No session found' });
+  if (!foundSession) return res.send({ err: 'no session found' });
   let foundClient = await Client.findById(foundSession.client);
   return res.send({ foundSession, foundClient });
 });
@@ -221,7 +236,7 @@ router.get('/session/:id', auth, async ({ params: { id } }, res) => {
 router.post('/cancel-session/', auth, async ({ body: { id } }, res) => {
   let deletedSession = await Session.findByIdAndDelete(id);
   if (deletedSession) res.send({ id: deletedSession.id });
-  else res.send({ err: 'No session found' });
+  else res.send({ err: 'no session found' });
 });
 
 router.post(
@@ -229,11 +244,11 @@ router.post(
   auth,
   async ({ tokenUser: { userId }, body: { value } }, res) => {
     let foundTrainer = await Trainer.findById(userId);
-    if (!foundTrainer) return res.send({ err: 'User not found' });
+    if (!foundTrainer) return res.send({ err: 'user not found' });
     if (foundTrainer.tags.indexOf(value) > -1)
-      return res.send({ err: 'Tag duplicate' });
+      return res.send({ err: 'no tag duplicate' });
     if (foundTrainer.tags.length >= 4)
-      return res.send({ err: 'Tag list limited to 4 tags' });
+      return res.send({ err: 'tag list limited to 4 tags' });
     Trainer.findOneAndUpdate(
       { _id: userId },
       { $push: { tags: value } },
@@ -241,7 +256,7 @@ router.post(
     )
       .then((result) => res.send(result.tags))
       .catch((err) => {
-        console.log({ err });
+        console.log('trainer add tag error: ', err);
         res.send({ err: 'database error' });
       });
   }
@@ -251,7 +266,7 @@ router.post(
   auth,
   async ({ tokenUser: { userId }, body: { value } }, res) => {
     let foundTrainer = await Trainer.findById(userId);
-    if (!foundTrainer) return res.send({ err: 'User not found' });
+    if (!foundTrainer) return res.send({ err: 'user not found' });
     let tags = [...foundTrainer.tags];
     let filteredTags = tags.filter((t) => t !== value);
     Trainer.findOneAndUpdate(
@@ -263,7 +278,8 @@ router.post(
         res.send(result.tags);
       })
       .catch((err) => {
-        res.send({ err });
+        console.log('trainer tag deletion error: ', err);
+        res.send({ err: 'database error' });
       });
   }
 );

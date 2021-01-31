@@ -1,8 +1,10 @@
 const express = require('express');
-const router = express.Router();
+
 const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
 const Client = require('../models/Client');
+
+const router = express.Router();
 
 router.get('/:id', auth, async (req, res) => {
   let { id } = req.params;
@@ -12,8 +14,10 @@ router.get('/:id', auth, async (req, res) => {
   else {
     const foundTrainer = await Trainer.findById(id);
     if (foundTrainer)
-      res.send({ user: { ...foundTrainer, email: foundTrainer.displayEmail } });
-    else res.send({ err: 'no user found' });
+      return res.send({
+        user: { ...foundTrainer, email: foundTrainer.displayEmail },
+      });
+    else return res.send({ err: 'no user found' });
   }
 });
 
@@ -29,6 +33,9 @@ router.post('/settings/:type/:setting', auth, async (req, res) => {
     { new: true, useFindAndModify: false, fields: { settings: 1 } }
   )
     .then(({ settings }) => res.send(settings))
-    .catch((err) => res.send({ err }));
+    .catch((err) => {
+      console.log('setting update error: ', err);
+      return res.send({ err: 'database error' });
+    });
 });
 module.exports = router;

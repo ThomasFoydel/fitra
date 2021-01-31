@@ -164,7 +164,8 @@ router.post('/register', async (req, res) => {
       res.status(201).send(result);
     })
     .catch((err) => {
-      res.status(400).send(err);
+      console.log('client registration error: ', err);
+      res.status(400).send({ err: 'registration error' });
     });
 });
 

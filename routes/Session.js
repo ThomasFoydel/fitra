@@ -1,11 +1,12 @@
 const express = require('express');
-const router = express.Router();
+const { v4: uuidV4 } = require('uuid');
 
 const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
 const Client = require('../models/Client');
 const Session = require('../models/Session');
-const { v4: uuidV4 } = require('uuid');
+
+const router = express.Router();
 
 router.post(
   '/new',
@@ -70,7 +71,10 @@ router.post(
           newSession: { startTime, endTime, status, trainer, client },
         });
       })
-      .catch((err) => res.send({ err: 'Database error' }));
+      .catch((err) => {
+        console.log('new session creation error: ', err);
+        return res.send({ err: 'database error' });
+      });
   }
 );
 

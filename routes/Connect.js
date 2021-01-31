@@ -13,16 +13,16 @@ router.get('/client/:connectionId', auth, async (req, res) => {
   const foundTrainer = await Trainer.findById(userId);
 
   const noUserFound = !foundClient && !foundTrainer;
-  if (noUserFound) return res.send({ err: 'User info not found' });
+  if (noUserFound) return res.send({ err: 'user info not found' });
 
   let foundSession;
   try {
     foundSession = await Session.findById(connectionId);
   } catch (err) {
-    return res.send({ err: 'No session found' });
+    return res.send({ err: 'no session found' });
   }
 
-  if (!foundSession) return res.send({ err: 'No session found' });
+  if (!foundSession) return res.send({ err: 'no session found' });
   const { roomId } = foundSession;
 
   const isClient = foundSession.client === userId;
@@ -30,7 +30,7 @@ router.get('/client/:connectionId', auth, async (req, res) => {
   const userNotOnSession = !isClient && !isTrainer;
   if (userNotOnSession)
     return res.send({
-      err: 'You are not logged in as a member of this session',
+      err: 'you are not logged in as a member of this session',
     });
 
   let { startTime, endTime } = foundSession;
@@ -41,8 +41,8 @@ router.get('/client/:connectionId', auth, async (req, res) => {
   let ended = currentTime > endDate;
   let active = started && !ended;
 
-  if (!started) return res.send({ err: 'This session has not yet begun' });
-  if (!active) return res.send({ err: 'This session has ended' });
+  if (!started) return res.send({ err: 'this session has not yet begun' });
+  if (!active) return res.send({ err: 'this session has ended' });
 
   // change status of session if !started or !active
   // if !started and time until session is less than 5hrs
