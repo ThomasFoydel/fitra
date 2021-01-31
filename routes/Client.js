@@ -225,7 +225,7 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   const foundTrainerWithSettings = await Trainer.findById(trainerId).select(
     '+ settings'
   );
-  const rate = foundTrainerWithSettings.settings.rate;
+  const { rate, active } = foundTrainerWithSettings.settings;
 
   let foundReviews = await Review.find({ trainer: trainerId });
 
@@ -236,7 +236,7 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   ]);
   let foundAvg = averageAggregate[0] ? averageAggregate[0].average : 0;
 
-  const trainer = { ...foundTrainer._doc, rate };
+  const trainer = { ...foundTrainer._doc, rate, active };
 
   let foundSessions = await Session.find({
     trainer: foundTrainer._id,

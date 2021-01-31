@@ -16,7 +16,7 @@ const SessionSelector = ({
   belongsToCurrentUser,
   selection,
   setSelection,
-  trainer: { availability, _id, minimum, rate, name },
+  trainer: { availability, _id, minimum, rate, name, active },
 }) => {
   const [appState, updateState] = useContext(CTX);
   let { isLoggedIn } = appState;
@@ -30,7 +30,7 @@ const SessionSelector = ({
 
   const mouseDown = () => setMouseIsDown(true);
   const mouseUp = () => setMouseIsDown(false);
-
+  console.log({ active });
   useEffect(() => {
     window.addEventListener('mousedown', mouseDown);
     window.addEventListener('mouseup', mouseUp);
@@ -250,7 +250,7 @@ const SessionSelector = ({
           </button>
         </div>
         <div className='booking'>
-          {isNaN(minimum) ? (
+          {isNaN(minimum) || minimum <= 0 || !active ? (
             <p>this trainer's scheduling is not set up</p>
           ) : (
             <>

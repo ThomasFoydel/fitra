@@ -149,6 +149,7 @@ router.post('/editprofile/', auth, (req, res) => {
 router.get('/schedule/', auth, async (req, res) => {
   let { userId } = req.tokenUser;
   let foundTrainer = await Trainer.findById(userId);
+  if (!foundTrainer) return res.send({ err: 'No trainer found' });
   let entries = foundTrainer.availability || [];
 
   let foundSessions = await Session.find({ trainer: userId });
