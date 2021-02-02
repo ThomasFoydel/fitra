@@ -34,7 +34,6 @@ router.get('/', auth, async (req, res) => {
           bio,
           displayEmail,
         } = foundUser;
-        console.log(foundUser);
         let sortedMessages = await messageSorter(userId);
         return res.send({
           name,

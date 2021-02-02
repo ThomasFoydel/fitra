@@ -278,14 +278,17 @@ router.post('/editprofile/', auth, (req, res) => {
     useFindAndModify: false,
   })
     .then((result) => res.send(result))
-    .catch((err) => res.send({ err: 'database error' }));
+    .catch((err) => {
+      console.log('client edit profile error: ', err);
+      res.send({ err: 'database error' });
+    });
 });
 
 router.get('/dashboard', auth, async (req, res) => {
   const { userId } = req.tokenUser;
   const foundSession = await Session.find(
-    { client: userId }
-    // { sort: ['startTime', 'asc'] }
+    { client: userId },
+    { sort: ['startTime', 'asc'] }
   )
     .sort({ startTime: 1 })
     .select('-roomId');
