@@ -1,8 +1,8 @@
+const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 const Message = require('../models/Message');
 const Client = require('../models/Client');
 const Trainer = require('../models/Trainer');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 const Session = require('../models/Session');
 
 const messageSorter = async (userId) => {
@@ -65,18 +65,16 @@ const formatToken = (client) => {
 };
 
 const sendReminders = async () => {
-  // find all sessions that happen between 23 and 24 hours away from current time in UTC
-  // const foundSessions = await Sessions.findAll({})
-  // for each session in array, check if status is 'pending' or 'reminder-sent'
-  // if 'pending', send email and update to 'reminder-sent'
-  const currentTime = Date.now();
+  const tomorrow = new Date();
+  tomorrow.setMinutes(tomorrow.getMinutes() + 1440);
+
+  const tomorrowPlusHalfHour = new Date();
+  tomorrowPlusHalfHour.setMinutes(tomorrow.getMinutes() + 1470);
 
   const upcomingSessions = await Session.find({
     startTime: {
-      $gte: currentTime,
-    },
-    endTime: {
-      $lt: currentTime,
+      $gte: tomorrow.toISOString(),
+      $lt: tomorrowPlusHalfHour.toISOString(),
     },
   });
 
@@ -88,34 +86,33 @@ const sendReminders = async () => {
     },
   });
 
-  upcomingSessions.forEach((session) => {
-    let clientMailOptions = {
-      from: 'fitraxyzhealth@gmail.com',
-      to: session.clientEmail,
-      subject: 'Upcoming Fitra Session',
-    };
-
-    transporter.sendMail(clientMailOptions, function (err, data) {
+  const send = (options) => {
+    transporter.sendMail(options, function (err, data) {
       if (err) {
         console.log("client email error: ', err");
       } else {
         console.log('client email success: ', data);
       }
     });
+  };
 
-    let trainerMailOptions = {
+  upcomingSessions.forEach((session) => {
+    let foundClient = Client.findById(session.client);
+    let clientMailOptions = {
       from: 'fitraxyzhealth@gmail.com',
-      to: session.trainerEmail,
+      to: foundClient.email,
       subject: 'Upcoming Fitra Session',
     };
 
-    transporter.sendMail(trainerMailOptions, function (err, data) {
-      if (err) {
-        console.log("trainer email error: ', err");
-      } else {
-        console.log('trainer email success: ', data);
-      }
-    });
+    let foundTrainer = Trainer.findById(session.client);
+    let trainerMailOptions = {
+      from: 'fitraxyzhealth@gmail.com',
+      to: foundTrainer.email,
+      subject: 'Upcoming Fitra Session',
+    };
+
+    send(clientMailOptions);
+    send(trainerMailOptions);
   });
 };
 
