@@ -83,7 +83,7 @@ router.post('/googlelogin', async ({ body: { tokenId } }, res) => {
     });
   };
 
-  client
+  googleClient
     .verifyIdToken({
       idToken: tokenId,
       audience:
