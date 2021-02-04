@@ -136,7 +136,7 @@ mongoose
       });
     });
 
-    setInterval(sendReminders, 3600000);
+    // setInterval(sendReminders, 3600000);
   })
   .catch((err) => {
     console.log('Database connection error: ', err);
