@@ -8,8 +8,6 @@ const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 require('dotenv').config();
 
-const util = require('./util/util');
-const { sendReminders } = util;
 const clientRoutes = require('./routes/Client');
 const trainerRoutes = require('./routes/Trainer');
 const authRoutes = require('./routes/Auth');
@@ -135,8 +133,6 @@ mongoose
         });
       });
     });
-
-    // setInterval(sendReminders, 3600000);
   })
   .catch((err) => {
     console.log('Database connection error: ', err);

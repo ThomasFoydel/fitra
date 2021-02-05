@@ -15,7 +15,7 @@ describe('Trainer settings page', () => {
     );
   });
 
-  it('Should have an h2 header', () => {
+  beforeEach(() => {
     render(
       <Store>
         <Router>
@@ -23,18 +23,14 @@ describe('Trainer settings page', () => {
         </Router>
       </Store>
     );
+  });
+
+  it('Should have an h2 header', () => {
     expect(screen.getByRole('heading')).toBeInTheDocument();
     expect(screen.getByText('Settings')).toBeInTheDocument();
   });
 
   it('Should have inputs', () => {
-    render(
-      <Store>
-        <Router>
-          <Settings />
-        </Router>
-      </Store>
-    );
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 });

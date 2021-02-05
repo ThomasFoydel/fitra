@@ -9,7 +9,7 @@ import Active from './settingForms/Active';
 const Settings = () => {
   const [appState, updateState] = useContext(CTX) || [];
   const [err, setErr] = useState('');
-  const { type, token, id } = appState.user;
+  const { type, token, id } = appState.user || {};
   const { rate, active } = appState.settings || {};
 
   const onComplete = ({ type, value }) => {

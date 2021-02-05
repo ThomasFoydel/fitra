@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 const Active = ({ props: { onError, type, onComplete, token, active } }) => {
-  const handleActive = ({ target: { checked } }) => {
+  const handleActive = async ({ target: { checked } }) => {
     axios
       .post(
         `/api/user/settings/${type}/active`,
@@ -25,6 +25,7 @@ const Active = ({ props: { onError, type, onComplete, token, active } }) => {
           type='checkbox'
           onChange={handleActive}
           id='active'
+          data-testid='active-btn'
         />
         <span className='slider round'></span>
       </label>
