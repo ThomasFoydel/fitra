@@ -20,6 +20,7 @@ const Auth = () => {
     to: { opacity: 1 },
     config: config.smooth,
   });
+
   return (
     <animated.div style={animation} className='auth'>
       {authPage === 'register' ? (
