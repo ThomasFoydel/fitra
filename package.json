@@ -16,8 +16,7 @@
   "author": "Thomas Foydel",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^5.3.0",
-    "nodemon": "^2.0.4"
+    "concurrently": "^5.3.0"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -25,16 +24,17 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "google-auth-library": "^6.1.4",
+    "google-auth-library": "^6.1.6",
     "gridfs-stream": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.0",
+    "mongoose": "^5.11.15",
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^4.2.0",
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.17",
-    "socket.io": "^2.3.0",
-    "uuid": "^8.3.0"
+    "nodemon": "^2.0.7",
+    "socket.io": "^3.1.1",
+    "uuid": "^8.3.2"
   }
 }

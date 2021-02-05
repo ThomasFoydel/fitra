@@ -124,7 +124,8 @@ router.post('/login', (req, res) => {
 router.get('/dashboard', auth, (req, res) => {
   let { userId } = req.tokenUser;
   Session.find({ trainer: userId })
-    .select('-roomId')
+    .sort({ startTime: -1 })
+    .limit(12)
     .then((sessions) => res.send({ sessions }))
     .catch((err) => {
       console.log('trainer dashboard info fetch error: ', err);
@@ -227,7 +228,7 @@ router.get('/session/:id', auth, async ({ params: { id } }, res) => {
     /* mongo id cast error, user's using incorrect url */
     return res.send({ err: 'no session found' });
   }
-  let foundSession = await Session.findById(_id).select('-roomId');
+  let foundSession = await Session.findById(_id);
   if (!foundSession) return res.send({ err: 'no session found' });
   let foundClient = await Client.findById(foundSession.client);
   return res.send({ foundSession, foundClient });

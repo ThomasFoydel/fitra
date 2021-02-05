@@ -1,6 +1,6 @@
 import React from 'react';
 import Settings from './Settings';
-import { render, screen } from '@testing-library/react';
+import { render, screen, getByRole } from '@testing-library/react';
 import Store from 'context/Store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -25,8 +25,9 @@ describe('Trainer settings page', () => {
     );
   });
 
-  it('Should have an h2 header', () => {
-    expect(screen.getByRole('heading')).toBeInTheDocument();
+  it('Should have a header that says Settings', () => {
+    const heading = screen.getAllByRole('heading')[0];
+    expect(heading.textContent).toEqual('Settings');
     expect(screen.getByText('Settings')).toBeInTheDocument();
   });
 

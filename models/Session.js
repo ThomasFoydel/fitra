@@ -8,7 +8,7 @@ const sessionSchema = new Schema(
     startTime: { type: Date, required: true },
     endTime: { type: Date, required: true },
     status: { type: String, required: true },
-    roomId: { type: String, required: true },
+    roomId: { type: String, required: true, select: false },
     order: { type: Object, required: true, select: false },
   },
   { timestamps: true }

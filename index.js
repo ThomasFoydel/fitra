@@ -52,6 +52,7 @@ mongoose
     const expressServer = app.listen(process.env.PORT || 8000);
 
     const io = socketio(expressServer);
+
     app.post('/api/message', (req, res) => {
       let { userId, message, sender, name, fromTrainer } = req.body;
       const newMessage = new Message({
@@ -135,5 +136,5 @@ mongoose
     });
   })
   .catch((err) => {
-    console.log('Database connection error: ', err);
+    console.log('database connection error: ', err);
   });

@@ -17,7 +17,7 @@ router.get('/client/:connectionId', auth, async (req, res) => {
 
   let foundSession;
   try {
-    foundSession = await Session.findById(connectionId);
+    foundSession = await Session.findById(connectionId).select('+roomId');
   } catch (err) {
     return res.send({ err: 'no session found' });
   }
@@ -49,8 +49,7 @@ router.get('/client/:connectionId', auth, async (req, res) => {
   // then send back time until session starts
   // and display a countdown on the front end
   // cause page to reload when timer hits zero
-
-  res.send({ isClient, isTrainer, roomId });
+  return res.send({ isClient, isTrainer, roomId });
 });
 
 module.exports = router;

@@ -243,7 +243,7 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
 
   let foundSessions = await Session.find({
     trainer: foundTrainer._id,
-  }).select('-roomId -createdAt -updatedAt -status -client -trainer -order');
+  }).select(' -createdAt -updatedAt -status -client -trainer -order');
   res.send({
     trainer,
     foundSessions,
@@ -286,12 +286,11 @@ router.post('/editprofile/', auth, (req, res) => {
 
 router.get('/dashboard', auth, async (req, res) => {
   const { userId } = req.tokenUser;
-  const foundSession = await Session.find(
-    { client: userId },
-    { sort: ['startTime', 'asc'] }
-  )
-    .sort({ startTime: 1 })
-    .select('-roomId');
+  const foundSession = await Session.find({ client: userId })
+    .sort({
+      startTime: -1,
+    })
+    .limit(12);
   res.send({ sessions: foundSession });
 });
 router.get('/messages', auth, async (req, res) => {

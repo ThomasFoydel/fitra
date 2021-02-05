@@ -141,7 +141,7 @@ const Connect = ({ match, socket }) => {
       subscribed = false;
       if (socket) socket.emit('disconnect-room', socket.id);
       // if (myVideoStream) myVideoStream.srcObject.getTracks().stop();
-      if (myVideoRef.current.srcObject) {
+      if (myVideoRef.current && myVideoRef.current.srcObject) {
         const tracks = myVideoRef.current.srcObject.getTracks();
         if (tracks[0]) tracks[0].stop();
         if (tracks[1]) tracks[1].stop();

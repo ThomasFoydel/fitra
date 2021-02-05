@@ -52,7 +52,8 @@ function App() {
         })
         .then(({ data }) => {
           if (subscribed) {
-            // if (data.err) return updateState({ type: 'LOGOUT' });
+            if (data.err && process.env.NODE_ENV === 'production')
+              return updateState({ type: 'LOGOUT' });
             if (data)
               updateState({
                 type: 'LOGIN',
@@ -83,7 +84,11 @@ function App() {
       const urlBase =
         process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000/';
       const ENDPOINT = urlBase + `?token=${token}`;
-      socketRef.current = io(ENDPOINT);
+
+      socketRef.current = io(ENDPOINT, {
+        transports: ['websocket', 'polling', 'flashsocket'],
+      });
+
       if (subscribed) {
         socketRef.current.on('chat-message', (message) =>
           updateState({ type: 'NEW_MESSAGE', payload: { message } })
