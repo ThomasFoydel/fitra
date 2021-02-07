@@ -3,6 +3,7 @@ import Schedule from './Schedule';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import { getHalfHourFromDate, days } from '../../../util/util';
+import { act } from '@testing-library/react';
 
 const ScheduleContainer = () => {
   const [appState] = useContext(CTX);
@@ -48,12 +49,14 @@ const ScheduleContainer = () => {
             };
             sessions.push(newSession);
           });
-          setSessions(sessions);
+          act(() => setSessions(sessions));
         }
         if (subscribed) {
-          setEntries(entries);
-          setMin(min);
-          setMax(max);
+          act(() => {
+            setEntries(entries);
+            setMin(min);
+            setMax(max);
+          });
         }
       });
     return () => (subscribed = false);

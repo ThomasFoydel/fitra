@@ -7,7 +7,7 @@ const Labels = ({ props: { week, weekShift, today } }) => {
         const day = week[key];
         const dateString = day
           .toDateString()
-          .substring(0, day.toDateString().length - 4);
+          .substring(0, day.toDateString().length - 5);
         return (
           <div
             className={`day-label today-${today === i && weekShift === 0}`}

@@ -314,30 +314,6 @@ router.get('/messages', auth, async (req, res) => {
   res.send({ messages: sortedMessages });
 });
 
-router.get('/info/:id', auth, async (req, res) => {
-  let foundUser;
-
-  Client.findById(req.params.id)
-    .then((user) => {
-      if (user) foundUser = user;
-    })
-    .catch((err) => {
-      console.log('find client database error: ', err);
-      return res.send({ err: 'database error' });
-    });
-
-  Trainer.findById(req.params.id)
-    .then((user) => {
-      if (user) foundUser = user;
-    })
-    .catch((err) => {
-      console.log('find trainer database error: ', err);
-      return res.send({ err: 'database error' });
-    });
-
-  if (foundUser) res.send({ user: foundUser });
-});
-
 router.post(
   '/search/:queryType',
   async ({ body: { search }, params: { queryType } }, res) => {

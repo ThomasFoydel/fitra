@@ -5,7 +5,6 @@ const Day = ({
   props: { currentDate, day, displayBlocks, handleSubmitTime },
 }) => {
   const [addTimeOpen, setAddTimeOpen] = useState(false);
-  const [err, setErr] = useState('');
 
   const [timeSelection, setTimeSelection] = useState({
     start: {

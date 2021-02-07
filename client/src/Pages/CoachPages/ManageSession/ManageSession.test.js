@@ -1,5 +1,4 @@
 import React from 'react';
-// import Settings from './Settings';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Store from 'context/Store';
