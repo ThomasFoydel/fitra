@@ -92,6 +92,10 @@
 
   .rate-editor {
     padding-top: 1rem;
+    h3 {
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
     input {
       width: 15rem;
     }
@@ -109,7 +113,7 @@
     height: 4.5rem;
     h3 {
       display: inline-block;
-      margin-right: 0.2rem;
+      margin-right: 0.5rem;
     }
   }
 }

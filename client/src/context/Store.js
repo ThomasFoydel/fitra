@@ -19,7 +19,6 @@ export function reducer(state, action) {
     tags,
     res,
   } = payload || {};
-  console.log('action: ', action);
   switch (action.type) {
     case 'LOGIN':
       localStorage.setItem('fitr-token', token);

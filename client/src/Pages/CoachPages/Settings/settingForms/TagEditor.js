@@ -69,12 +69,12 @@ const TagEditor = () => {
 
   return (
     <div className='tag-editor'>
-      {appState.user.tags &&
+      {Array.isArray(appState.user.tags) &&
         appState.user.tags.map((tag) => (
           <div className='tag' key={tag}>
-            {tag}
+            <span data-testid='tag'>{tag}</span>
             <button id={tag} onClick={handleDelete}>
-              <i id={tag} onClick={handleDelete} className='fas fa-times '></i>
+              <i id={tag} onClick={handleDelete} className='fas fa-times'></i>
             </button>
           </div>
         ))}
@@ -83,9 +83,11 @@ const TagEditor = () => {
         value={inputVal}
         onChange={handleChange}
         onKeyPress={handleKeyPress}
+        data-testid='tag-editor-input'
       />
       <button
         className='add-btn'
+        data-testid='add-tag-btn'
         onClick={
           maxMet ? () => setErr('Tag list limited to 4 tags') : handleAddTag
         }

@@ -23,15 +23,24 @@ const RateEditor = ({ props: { id, rate, onComplete, onError, token } }) => {
   };
   return (
     <div className='rate-editor'>
-      {rate ? <div>current rate: {rate}</div> : <div>rate not set</div>}
+      {rate ? (
+        <div>
+          <h3>Current Rate:</h3> <span data-testid='rate-display'>${rate}</span>
+        </div>
+      ) : (
+        <div>rate not set</div>
+      )}
       <input
         className='input'
+        data-testid='rate-editor-input'
         type='number'
         onChange={({ target: { value } }) => setInput(value)}
         placeholder='rate'
         value={input}
       />
-      <button onClick={handleSubmit}>update</button>
+      <button onClick={handleSubmit} data-testid='rate-editor-btn'>
+        update
+      </button>
     </div>
   );
 };
