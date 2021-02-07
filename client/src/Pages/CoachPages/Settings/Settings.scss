@@ -104,9 +104,11 @@
     }
   }
 
-  .dark-mode {
+  .dark-mode,
+  .active {
     height: 4.5rem;
-    span {
+    h3 {
+      display: inline-block;
       margin-right: 0.2rem;
     }
   }

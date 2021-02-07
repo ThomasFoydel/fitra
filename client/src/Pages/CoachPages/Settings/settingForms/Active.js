@@ -17,11 +17,11 @@ const Active = ({ props: { onError, type, onComplete, token, active } }) => {
   };
 
   return (
-    <div className='dark-mode'>
+    <div className='active'>
       <h3>Active</h3>
       <label className='switch' htmlFor='active'>
         <input
-          checked={active}
+          checked={active || false}
           type='checkbox'
           onChange={handleActive}
           id='active'

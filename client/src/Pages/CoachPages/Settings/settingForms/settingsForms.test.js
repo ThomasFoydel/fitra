@@ -13,6 +13,9 @@ import {
 } from '@testing-library/react';
 import axios from '__mocks__/axios';
 
+import Store from 'context/Store';
+import { BrowserRouter as Router } from 'react-router-dom';
+
 describe('Trainer settings active form', () => {
   const defaultProps = {
     onError: () => {},
@@ -41,7 +44,6 @@ describe('Trainer settings active form', () => {
     const checkbox = screen.getByTestId('active-btn');
     jest.spyOn(mockedAxios, 'post');
 
-    jest.mock('axios');
     axios.post.mockReturnValue(
       Promise.resolve({
         data: {
@@ -51,6 +53,52 @@ describe('Trainer settings active form', () => {
     );
 
     userEvent.click(checkbox);
+    await waitFor(() => expect(mockedAxios.post).toHaveBeenCalledTimes(1));
+    expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Trainer settings rate form', () => {
+  const defaultProps = {
+    id: '123',
+    rate: 40,
+    onComplete: jest.fn,
+    onError: jest.fn,
+    token: '123',
+  };
+  beforeEach(() =>
+    render(
+      <Store>
+        <Router>
+          <RateEditor props={defaultProps} />
+        </Router>
+      </Store>
+    )
+  );
+  it('Should have a controlled number input', () => {
+    const numberInput = screen.getByRole('spinbutton');
+    expect(numberInput.value).toEqual('40');
+  });
+
+  it('Should have a button that says "update"', () => {
+    const btn = screen.getByRole('button');
+    expect(btn.textContent).toEqual('update');
+  });
+
+  it('Should fire a post request when the button is clicked', async () => {
+    jest.mock('axios');
+    const btn = screen.getByRole('button');
+    jest.spyOn(mockedAxios, 'post');
+
+    axios.post.mockReturnValue(
+      Promise.resolve({
+        data: {
+          rate: 50,
+        },
+      })
+    );
+
+    userEvent.click(btn);
     await waitFor(() => expect(mockedAxios.post).toHaveBeenCalledTimes(1));
     expect(mockedAxios.post).toHaveBeenCalledTimes(1);
   });
