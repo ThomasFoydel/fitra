@@ -28,11 +28,15 @@ const Session = ({ session }) => {
       </Link>
       <div className='start-time'>
         <strong>start: </strong>
-        {startDate.toDateString()} {startDate.toLocaleTimeString()}
+        <span data-testid='trainer-home-session-start'>
+          {startDate.toDateString()} {startDate.toLocaleTimeString()}
+        </span>
       </div>
       <div className='end-time'>
         <strong>end: </strong>
-        {endDate.toDateString()} {endDate.toLocaleTimeString()}
+        <span data-testid='trainer-home-session-end'>
+          {endDate.toDateString()} {endDate.toLocaleTimeString()}
+        </span>
       </div>
       {active && <Link to={`/connect/${_id}`}>connect</Link>}
     </div>

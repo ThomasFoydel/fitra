@@ -1,13 +1,12 @@
 import React from 'react';
-import Active from './Active';
+import { render, screen, cleanup, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import axios from '__mocks__/axios';
+import Store from 'context/Store';
 import RateEditor from './RateEditor';
 import TagEditor from './TagEditor';
-import userEvent from '@testing-library/user-event';
-import mockedAxios from '__mocks__/axios';
-import { render, screen, cleanup, waitFor } from '@testing-library/react';
-import axios from '__mocks__/axios';
-
-import Store from 'context/Store';
+import Active from './Active';
 
 describe('Trainer settings active form', () => {
   const defaultProps = {
@@ -35,7 +34,7 @@ describe('Trainer settings active form', () => {
   it('Should send axios post request when checkbox clicked', async () => {
     jest.mock('axios');
     const checkbox = screen.getByTestId('active-btn');
-    jest.spyOn(mockedAxios, 'post');
+    jest.spyOn(axios, 'post');
 
     axios.post.mockReturnValue(
       Promise.resolve({
@@ -46,8 +45,8 @@ describe('Trainer settings active form', () => {
     );
 
     userEvent.click(checkbox);
-    await waitFor(() => expect(mockedAxios.post).toHaveBeenCalledTimes(1));
-    expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(axios.post).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -71,7 +70,7 @@ describe('Trainer settings tag form', () => {
     const btn = screen.getByRole('button');
     const input = screen.getByRole('textbox');
     userEvent.type(input, 'newtag');
-    jest.spyOn(mockedAxios, 'post');
+    jest.spyOn(axios, 'post');
 
     axios.post.mockReturnValue(
       Promise.resolve({
@@ -82,14 +81,14 @@ describe('Trainer settings tag form', () => {
     );
 
     userEvent.click(btn);
-    await waitFor(() => expect(mockedAxios.post).toHaveBeenCalledTimes(1));
-    expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(axios.post).toHaveBeenCalledTimes(1);
   });
 
   it('Should NOT fire a post request when the button is clicked and input has no value', async () => {
     jest.mock('axios');
     const btn = screen.getByRole('button');
-    jest.spyOn(mockedAxios, 'post');
+    jest.spyOn(axios, 'post');
 
     axios.post.mockReturnValue(
       Promise.resolve({
@@ -100,8 +99,8 @@ describe('Trainer settings tag form', () => {
     );
 
     userEvent.click(btn);
-    // await waitFor(() => expect(mockedAxios.post).toHaveBeenCalledTimes(0));
-    expect(mockedAxios.post).toHaveBeenCalledTimes(0);
+    // await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(0));
+    expect(axios.post).toHaveBeenCalledTimes(0);
   });
 });
 
@@ -134,7 +133,7 @@ describe('Trainer settings rate form', () => {
   it('Should fire a post request when the button is clicked', async () => {
     jest.mock('axios');
     const btn = screen.getByRole('button');
-    jest.spyOn(mockedAxios, 'post');
+    jest.spyOn(axios, 'post');
 
     axios.post.mockReturnValue(
       Promise.resolve({
@@ -145,7 +144,7 @@ describe('Trainer settings rate form', () => {
     );
 
     userEvent.click(btn);
-    await waitFor(() => expect(mockedAxios.post).toHaveBeenCalledTimes(1));
-    expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(axios.post).toHaveBeenCalledTimes(1);
   });
 });

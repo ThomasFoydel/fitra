@@ -4,21 +4,22 @@ import { config, animated, useTransition } from 'react-spring';
 import Session from './Session';
 import { CTX } from 'context/Store';
 import './TrainerHome.scss';
+import { act } from '@testing-library/react';
 
 const TrainerHome = () => {
   const [appState] = useContext(CTX);
   const { type } = appState.user;
   const [foundSessions, setFoundSessions] = useState([]);
   let { token } = appState.user;
+
   useEffect(() => {
     let subscribed = true;
-    if (token)
-      axios
-        .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
-        .then(({ data: { sessions } }) => {
-          if (subscribed) setFoundSessions(sessions);
-        })
-        .catch((err) => console.log('connection error: ', err));
+    axios
+      .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
+      .then(({ data: { sessions } }) => {
+        if (subscribed) act(() => setFoundSessions(sessions));
+      })
+      .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
   }, [token, type]);
 
@@ -35,7 +36,7 @@ const TrainerHome = () => {
       <div className='background' />
       <div className='overlay' />
       <div className='trainer-home'>
-        <h2>{type === 'trainer' ? 'sessions' : 'schedule'}</h2>
+        <h2>Sessions</h2>
         <div className='sessions'>
           {foundSessions.length > 0 ? (
             animation.map(({ item, props, key }) => (

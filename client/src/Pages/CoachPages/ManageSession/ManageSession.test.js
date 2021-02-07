@@ -1,10 +1,10 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Store from 'context/Store';
-import { BrowserRouter as Router } from 'react-router-dom';
-import mockedAxios from '__mocks__/axios';
+
 import axios from '__mocks__/axios';
+import Store from 'context/Store';
 import ManageSession from './ManageSession';
 
 describe('Trainer settings page', () => {
@@ -38,7 +38,7 @@ describe('Trainer settings page', () => {
         </Router>
       </Store>
     );
-    await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
   });
   afterEach(cleanup);
 
@@ -55,13 +55,13 @@ describe('Trainer settings page', () => {
   it('Should make a post request when cancel and confirm buttons are clicked"', async () => {
     const btn = screen.getByRole('button');
 
-    jest.spyOn(mockedAxios, 'post');
+    jest.spyOn(axios, 'post');
 
     userEvent.click(btn);
     const secondSetOfBtns = screen.getAllByRole('button');
     const confirmBtn = secondSetOfBtns[1];
     userEvent.click(confirmBtn);
-    await waitFor(() => expect(mockedAxios.post).toHaveBeenCalledTimes(1));
-    expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(axios.post).toHaveBeenCalledTimes(1);
   });
 });
