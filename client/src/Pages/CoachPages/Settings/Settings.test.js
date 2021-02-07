@@ -1,12 +1,6 @@
 import React from 'react';
 import Settings from './Settings';
-import {
-  render,
-  screen,
-  getByRole,
-  waitFor,
-  cleanup,
-} from '@testing-library/react';
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Store from 'context/Store';
 import { BrowserRouter as Router } from 'react-router-dom';

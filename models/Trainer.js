@@ -11,11 +11,6 @@ const availabilitySchema = new mongoose.Schema({
   id: String,
 });
 
-// const rateSchema = new mongoose.Schema({
-//   amount: Number,
-//   currency: String,
-// });
-
 const settingSchema = new mongoose.Schema({
   rate: Number,
   currency: String,

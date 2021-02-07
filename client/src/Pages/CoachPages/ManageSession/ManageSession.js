@@ -4,6 +4,7 @@ import { CTX } from 'context/Store';
 import './ManageSession.scss';
 import { Redirect, Link } from 'react-router-dom';
 import Image from 'Components/Image/Image';
+import { act } from '@testing-library/react';
 
 const ManageSession = ({
   match: {
@@ -37,7 +38,8 @@ const ManageSession = ({
       .then(({ data: { foundSession, err, foundClient } }) => {
         if (subscribed)
           if (err) setErr(err);
-          else setFound({ session: foundSession, client: foundClient });
+          else
+            act(() => setFound({ session: foundSession, client: foundClient }));
       });
     return () => (subscribed = false);
   }, [token, id]);
