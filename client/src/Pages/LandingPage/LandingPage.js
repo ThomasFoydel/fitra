@@ -16,7 +16,7 @@ const LandingPage = () => {
       </Link>
 
       <Link to='/coachportal' className='coachportal-btn'>
-        coach portal
+        Coach Portal
       </Link>
     </div>
   );
