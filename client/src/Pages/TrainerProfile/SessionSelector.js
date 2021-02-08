@@ -30,7 +30,7 @@ const SessionSelector = ({
 
   const mouseDown = () => setMouseIsDown(true);
   const mouseUp = () => setMouseIsDown(false);
-  console.log({ active });
+
   useEffect(() => {
     window.addEventListener('mousedown', mouseDown);
     window.addEventListener('mouseup', mouseUp);
@@ -237,12 +237,14 @@ const SessionSelector = ({
       <div className='ctrls'>
         <div className='weekshift-btns'>
           <button
+            data-testid='back-btn'
             className='weekshift-btn'
             onClick={() => shiftWeek(weekShift - 1)}
           >
             <i className='far fa-arrow-alt-circle-left fa-4x'></i>
           </button>
           <button
+            data-testid='forward-btn'
             className='weekshift-btn'
             onClick={() => shiftWeek(weekShift + 1)}
           >

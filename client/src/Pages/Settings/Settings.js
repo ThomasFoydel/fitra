@@ -36,6 +36,7 @@ const Settings = () => {
             <span>darkmode</span>
             <label className='switch' htmlFor='darkmode'>
               <input
+                data-testid='darkmode-btn'
                 checked={darkmode}
                 type='checkbox'
                 onChange={handleDarkMode}
