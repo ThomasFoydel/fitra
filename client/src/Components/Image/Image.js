@@ -24,9 +24,10 @@ const Image = ({ name, src, style, alt }) => {
       alt={alt}
       src={loading ? loadingGif : source}
       onError={(err) => {
+        console.log({ err });
         setErr(true);
       }}
-      onLoad={(e) => {
+      onLoad={() => {
         setTimeout(() => {
           setLoading(false);
         }, 200);

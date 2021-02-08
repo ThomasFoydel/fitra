@@ -16,7 +16,7 @@ const ClientProfile = ({
   let { token } = appState.user;
   let belongsToCurrentUser = appState.user.id === id;
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [err, setErr] = useState('');
 
   useEffect(() => {
@@ -41,37 +41,40 @@ const ClientProfile = ({
     return () => (subscribed = false);
   }, [err]);
 
-  let { coverPic, profilePic, bio, name, displayEmail } = user;
+  let { coverPic, profilePic, bio, name, displayEmail } = user || {};
   return (
     <div className='clientprofile'>
-      <div
-        className='cover-pic'
-        style={{
-          backgroundImage: coverPic
-            ? ` linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.9)), url("/api/image/${coverPic}")`
-            : '',
-        }}
-      >
-        <div className='info'>
-          <Image
-            src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
-            alt="user's profile"
-            name='profile-pic'
-          />
-          <div className='section-1'>
-            <div className='name'>{name}</div>
-            <div className='email'>{displayEmail}</div>
-            <div className='bio'>{bio}</div>
-            {belongsToCurrentUser && (
-              <Link to={`/editprofile`} className='link'>
-                Edit Profile
-              </Link>
-            )}
+      {user && (
+        <>
+          <div
+            className='cover-pic'
+            style={{
+              backgroundImage: coverPic
+                ? ` linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.9)), url("/api/image/${coverPic}")`
+                : '',
+            }}
+          >
+            <div className='info'>
+              <Image
+                src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
+                alt={profilePic ? "user's profile" : 'loading profile'}
+                name='profile-pic'
+              />
+              <div className='section-1'>
+                <div className='name'>{name}</div>
+                <div className='email'>{displayEmail}</div>
+                {bio && <div className='bio'>{bio}</div>}
+                {belongsToCurrentUser && (
+                  <Link to={`/editprofile`} className='link'>
+                    Edit Profile
+                  </Link>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div className='err'>{err}</div>
+          <div className='err'>{err}</div>
+        </>
+      )}
     </div>
   );
 };

@@ -252,7 +252,7 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   });
 });
 
-router.get('/profile/:id', auth, async ({ params: { id } }, res) => {
+router.get('/profile/:id', async ({ params: { id } }, res) => {
   try {
     id = new mongoose.Types.ObjectId(id);
   } catch (err) {
