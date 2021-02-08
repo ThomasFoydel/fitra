@@ -6,22 +6,23 @@ import './Home.scss';
 import { config, animated, useTransition } from 'react-spring';
 
 import Session from './Session';
+import { act } from '@testing-library/react';
 
 const Home = () => {
   const [appState] = useContext(CTX);
   const { type } = appState.user;
   const [sessions, setFoundSessions] = useState([]);
   let { token } = appState.user;
+
   useEffect(() => {
     let subscribed = true;
-    if (token)
-      axios
-        .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
-        .then(({ data: { sessions }, err }) => {
-          if (err) return console.log({ err });
-          if (subscribed && sessions) setFoundSessions(sessions);
-        })
-        .catch((err) => console.log('connection error: ', err));
+    axios
+      .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
+      .then(({ data: { sessions }, err }) => {
+        if (err) return console.log({ err });
+        if (subscribed && sessions) act(() => setFoundSessions(sessions));
+      })
+      .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
   }, [token, type]);
 
@@ -38,7 +39,7 @@ const Home = () => {
       <div className='background' />
       <div className='overlay' />
       <div className='home'>
-        <h2>{type === 'trainer' ? 'Sessions' : 'Schedule'}</h2>
+        <h2>Sessions</h2>
         <div className='sessions'>
           {sessions.length > 0 ? (
             animation.map(({ item, props, key }) => (

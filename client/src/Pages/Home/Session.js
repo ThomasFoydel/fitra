@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Image from 'Components/Image/Image';
 
 const Session = ({ session }) => {
-  console.log({ session });
   let { startTime, endTime, _id, trainer, status } = session;
   let startDate = new Date(startTime);
   let endDate = new Date(endTime);
@@ -29,11 +28,15 @@ const Session = ({ session }) => {
       </Link>
       <div className='start-time'>
         <strong>start: </strong>
-        {startDate.toDateString()} {startDate.toLocaleTimeString()}
+        <span data-testid='client-home-session-start'>
+          {startDate.toDateString()} {startDate.toLocaleTimeString()}
+        </span>
       </div>
       <div className='end-time'>
         <strong>end: </strong>
-        {endDate.toDateString()} {endDate.toLocaleTimeString()}
+        <span data-testid='client-home-session-end'>
+          {endDate.toDateString()} {endDate.toLocaleTimeString()}
+        </span>
       </div>
       {active && <Link to={`/connect/${_id}`}>connect</Link>}
       {ended && status !== 'reviewed' && (
