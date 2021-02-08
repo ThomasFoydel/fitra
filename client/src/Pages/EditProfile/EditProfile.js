@@ -5,6 +5,7 @@ import './EditProfile.scss';
 import { CTX } from 'context/Store';
 import ImageUploader from 'Components/ImageUploader/ImageUploader';
 import Image from 'Components/Image/Image';
+import { act } from '@testing-library/react';
 
 const EditProfile = () => {
   const [appState, updateState] = useContext(CTX);
@@ -36,8 +37,10 @@ const EditProfile = () => {
       })
       .then(({ data: { bio, coverPic, displayEmail, name, profilePic } }) => {
         let filteredRes = { bio, coverPic, displayEmail, name, profilePic };
-        updateState({ type: 'EDIT_PROFILE', payload: { res: filteredRes } });
-        setFormInfo({ name: '', bio: '', displayEmail: '' });
+        act(() => {
+          updateState({ type: 'EDIT_PROFILE', payload: { res: filteredRes } });
+          setFormInfo({ name: '', bio: '', displayEmail: '' });
+        });
       })
       .catch((err) => console.log('err: ', err));
   };

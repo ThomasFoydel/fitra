@@ -7,17 +7,17 @@ import ClientProfile from './ClientProfile';
 
 const exampleUser = {
   name: 'bert',
-  displayEmail: 'beart@bertmail.com',
+  displayEmail: 'bert@bertmail.com',
   bio: 'i am bert',
   profilePic: '12345678',
   coverPic: 'abcdefg',
   _id: '123',
 };
 
-describe('Trainer home page', () => {
+describe('Client profile page', () => {
   jest.mock('axios');
   beforeEach(async () => {
-    axios.get = jest.fn((url, body) => {
+    axios.get = jest.fn((url) => {
       if (url === `/api/client/profile/${exampleUser._id}`) {
         return Promise.resolve({
           data: {
