@@ -22,8 +22,7 @@ const Delete = () => {
         { id, password: inputVal },
         { headers: { 'x-auth-token': token } }
       )
-      .then((res) => {
-        console.log({ res });
+      .then(() => {
         updateState({ type: 'LOGOUT' });
       })
       .catch((err) => console.log({ err }));
@@ -40,8 +39,8 @@ const Delete = () => {
 
         {secondConfirm ? (
           <div className='flexcol'>
-            {/* <h3>Okay, this is it. Remember, it's permanent.</h3> */}
             <input
+              data-testid='delete-password-input'
               type='password'
               onChange={handleInput}
               value={inputVal}
