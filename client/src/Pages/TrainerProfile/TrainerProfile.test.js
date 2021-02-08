@@ -18,7 +18,7 @@ const exampleUser = {
   active: true,
 };
 
-describe('Client profile page', () => {
+describe('Trainer profile page', () => {
   jest.mock('axios');
   beforeEach(async () => {
     axios.get = jest.fn((url) => {
