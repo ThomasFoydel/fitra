@@ -43,8 +43,8 @@ const ChatBox = ({
 
 ChatBox.propTypes = {
   props: PropTypes.shape({
-    userId: PropTypes.string.isRequired,
-    userName: PropTypes.string.isRequired,
+    userId: PropTypes.string,
+    userName: PropTypes.string,
     currentThread: PropTypes.string,
     update: PropTypes.func.isRequired,
     isTrainer: PropTypes.bool.isRequired,

@@ -54,7 +54,12 @@ const SessionReview = ({
       <div className='session-review'>
         {redirect && <Redirect to='/' />}
         <h2>Session Review</h2>
-        <select onChange={handleChange} value={rating} id='rating'>
+        <select
+          data-testid='select'
+          onChange={handleChange}
+          value={rating}
+          id='rating'
+        >
           <option value={-1}>--</option>
           <option value={4}>perfect</option>
           <option value={3}>great</option>
@@ -68,6 +73,7 @@ const SessionReview = ({
           id='comment'
           cols='30'
           rows='10'
+          placeholder='Leave your comments here...'
         />
         {confirmOpen ? (
           <div className='confirm-btns'>
