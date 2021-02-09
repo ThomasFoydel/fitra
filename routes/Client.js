@@ -161,6 +161,8 @@ router.post('/register', async (req, res) => {
   newClient
     .save()
     .then((result) => {
+      result = { ...result._doc };
+      delete result.password;
       res.status(201).send(result);
     })
     .catch((err) => {
