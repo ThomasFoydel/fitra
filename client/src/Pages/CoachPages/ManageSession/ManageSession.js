@@ -38,8 +38,11 @@ const ManageSession = ({
       .then(({ data: { foundSession, err, foundClient } }) => {
         if (subscribed)
           if (err) setErr(err);
-          else
+          else if (process.env.NODE_ENV === 'production') {
+            setFound({ session: foundSession, client: foundClient });
+          } else {
             act(() => setFound({ session: foundSession, client: foundClient }));
+          }
       });
     return () => (subscribed = false);
   }, [token, id]);

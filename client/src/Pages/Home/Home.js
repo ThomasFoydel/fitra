@@ -20,7 +20,10 @@ const Home = () => {
       .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
       .then(({ data: { sessions }, err }) => {
         if (err) return console.log({ err });
-        if (subscribed && sessions) act(() => setFoundSessions(sessions));
+        if (subscribed && sessions)
+          process.env.NODE_ENV === 'production'
+            ? setFoundSessions(sessions)
+            : act(() => setFoundSessions(sessions));
       })
       .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);

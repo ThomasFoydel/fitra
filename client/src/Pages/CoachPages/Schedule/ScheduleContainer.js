@@ -49,14 +49,24 @@ const ScheduleContainer = () => {
             };
             sessions.push(newSession);
           });
-          act(() => setSessions(sessions));
+          if (process.env.NODE_ENV === 'production') {
+            setSessions(sessions);
+          } else {
+            act(() => setSessions(sessions));
+          }
         }
         if (subscribed) {
-          act(() => {
+          if (process.env.NODE_ENV === 'production') {
             setEntries(entries);
             setMin(min);
             setMax(max);
-          });
+          } else {
+            act(() => {
+              setEntries(entries);
+              setMin(min);
+              setMax(max);
+            });
+          }
         }
       });
     return () => (subscribed = false);

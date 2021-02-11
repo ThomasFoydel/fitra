@@ -37,10 +37,21 @@ const EditProfile = () => {
       })
       .then(({ data: { bio, coverPic, displayEmail, name, profilePic } }) => {
         let filteredRes = { bio, coverPic, displayEmail, name, profilePic };
-        act(() => {
-          updateState({ type: 'EDIT_PROFILE', payload: { res: filteredRes } });
+        if (process.env.NODE_ENV === 'production') {
+          updateState({
+            type: 'EDIT_PROFILE',
+            payload: { res: filteredRes },
+          });
           setFormInfo({ name: '', bio: '', displayEmail: '' });
-        });
+        } else {
+          act(() => {
+            updateState({
+              type: 'EDIT_PROFILE',
+              payload: { res: filteredRes },
+            });
+            setFormInfo({ name: '', bio: '', displayEmail: '' });
+          });
+        }
       })
       .catch((err) => console.log('err: ', err));
   };

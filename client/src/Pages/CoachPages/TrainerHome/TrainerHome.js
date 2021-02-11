@@ -17,7 +17,10 @@ const TrainerHome = () => {
     axios
       .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
       .then(({ data: { sessions } }) => {
-        if (subscribed) act(() => setFoundSessions(sessions));
+        if (subscribed)
+          process.env.NODE_ENV === 'production'
+            ? setFoundSessions(sessions)
+            : act(() => setFoundSessions(sessions));
       })
       .catch((err) => console.log('connection error: ', err));
     return () => (subscribed = false);
