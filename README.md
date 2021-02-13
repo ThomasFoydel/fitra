@@ -6,8 +6,8 @@
 <p align='center'><a href='#questions'>Questions</a></p>
 <h2 >Description</h2>
 <p >A realtime videochat app for personal trainers and clients</p>
-<p align="center" ><img  width="100%"  src="assets/imgs/mainSetup.png" alt="a diagram of a fullstack application"></p>
-<p align="center"><img  width="100%" src="assets/imgs/apiRoutes.png" alt="a tree of api routes"></p>
+<p align="center"><img width="100%" src="assets/imgs/mainSetup.png" alt="a diagram of a fullstack application"></p>
+<p align="center"><img width="100%" src="assets/imgs/apiRoutes.png" alt="a tree of api routes"></p>
 <h2 >Installation</h2>
 <p >Download the repo and run npm i and npm run client-install. Also needed is a .env file in the root directory with a MONGO_URI set to a mongoDB connection string and SECRET set to whatever you want your secret to be, any long random string will do</p>
 <h2 >Usage</h2>

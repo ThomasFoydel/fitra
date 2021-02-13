@@ -16,17 +16,17 @@ const Review = ({ review: { rating, comment, client } }) => {
         <div
           className='rating-background'
           style={{
-            width: `${Math.floor(rating * 20)}%`,
+            width: `${Math.floor((rating + 1) * 20)}%`,
             background: `linear-gradient(
             to right, rgb(245, 220, 0), rgb(255, ${Math.floor(
-              255 - rating * 51
+              255 - (rating + 1) * 51
             )}, 0)
           )`,
           }}
         />
         <img className='stars' src={stars} alt='star rating' />
       </div>
-      <div className='rating'>{rating}</div>
+      <div className='rating'>{rating + 1}</div>
       <div className='comment'>{comment}</div>
     </div>
   );
