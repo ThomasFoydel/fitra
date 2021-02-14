@@ -266,7 +266,7 @@ router.get('/profile/:id', async ({ params: { id } }, res) => {
   else return res.send({ err: 'No user found' });
 });
 
-router.post('/editprofile/', auth, (req, res) => {
+router.put('/editprofile/', auth, (req, res) => {
   let { userId } = req.tokenUser;
   let formInfo = req.body;
   let update = {};
@@ -316,22 +316,24 @@ router.get('/messages', auth, async (req, res) => {
   res.send({ messages: sortedMessages });
 });
 
-router.post(
-  '/search/:queryType',
-  async ({ body: { search }, params: { queryType } }, res) => {
-    let searchArray = search.split(' ');
-    let filteredArray = searchArray.filter(Boolean);
-    let queryFilter = [];
-    filteredArray.forEach((term) =>
-      queryFilter.push({ [queryType]: { $regex: `${term}`, $options: '$i' } })
-    );
-    if (queryFilter.length < 1)
-      return res.send({ err: 'requires at least one term' });
-    Trainer.find({ $or: queryFilter }).then((result) => {
+router.get('/search', async ({ query: { search, type } }, res) => {
+  let searchArray = search.split(' ');
+  let filteredArray = searchArray.filter(Boolean);
+  let queryFilter = [];
+  filteredArray.forEach((term) =>
+    queryFilter.push({ [type]: { $regex: `${term}`, $options: '$i' } })
+  );
+  if (queryFilter.length < 1)
+    return res.send({ err: 'requires at least one term' });
+  Trainer.find({ $or: queryFilter })
+    .then((result) => {
       res.send({ result });
+    })
+    .catch((err) => {
+      console.log('trainer search error: ', err);
+      res.send({ err: 'database is down, please try again later' });
     });
-  }
-);
+});
 
 router.post(
   '/review/:sessionId',

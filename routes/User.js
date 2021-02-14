@@ -21,7 +21,7 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-router.post('/settings/:type/:setting', auth, async (req, res) => {
+router.put('/settings/:type/:setting', auth, async (req, res) => {
   let { type, setting } = req.params;
   let { value } = req.body;
   let { userId } = req.tokenUser;

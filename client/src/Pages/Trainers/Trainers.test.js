@@ -25,8 +25,8 @@ const exampleSearch = 'a';
 describe('Trainers search page', () => {
   jest.mock('axios');
   beforeEach(async () => {
-    axios.post = jest.fn((url, body) => {
-      if (url.includes('/api/client/search/') && body.search === exampleSearch)
+    axios.get = jest.fn((url, body) => {
+      if (url.includes('/api/client/search/'))
         return Promise.resolve({
           data: {
             result: [exampleTrainer],
@@ -47,16 +47,16 @@ describe('Trainers search page', () => {
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
-  it('Should send a post request to the /api/client/search routes with the search input included in the body', async () => {
+  it('Should send a get request to the /api/client/search routes with the search input included in the body', async () => {
     const input = screen.getByRole('textbox');
     userEvent.type(input, exampleSearch);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
   });
 
   it('Should display trainers info after server response', async () => {
     const input = screen.getByRole('textbox');
     userEvent.type(input, exampleSearch);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
     expect(screen.getByText(exampleTrainer.name)).toBeInTheDocument();
     expect(screen.getByText(exampleTrainer.bio)).toBeInTheDocument();
     expect(screen.getByText(exampleTrainer.tags[0])).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('Trainers search page', () => {
   it('Should have links to trainer profiles after server response', async () => {
     const input = screen.getByRole('textbox');
     userEvent.type(input, exampleSearch);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
     const link = screen.getByRole('link');
     expect(link).toBeInTheDocument();
     expect(link.href).toContain(`trainer/${exampleTrainer._id}`);

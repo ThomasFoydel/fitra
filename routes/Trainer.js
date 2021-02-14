@@ -135,7 +135,7 @@ router.get('/dashboard', auth, (req, res) => {
     });
 });
 
-router.post('/editprofile/', auth, (req, res) => {
+router.put('/editprofile/', auth, (req, res) => {
   let { userId } = req.tokenUser;
   let formInfo = req.body;
   let update = {};
@@ -167,7 +167,7 @@ router.get('/schedule/', auth, async (req, res) => {
   res.send({ entries, min: minimum, max: maximum, foundSessions });
 });
 
-router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
+router.put('/schedule/', auth, async ({ tokenUser, body }, res) => {
   let { userId } = tokenUser;
   Trainer.findOneAndUpdate(
     { _id: userId },
@@ -181,7 +181,7 @@ router.post('/schedule/', auth, async ({ tokenUser, body }, res) => {
     });
 });
 
-router.post(
+router.put(
   '/minmax/:type',
   auth,
   async ({ params: { type }, tokenUser, body: { value } }, res) => {
@@ -208,20 +208,6 @@ router.post(
   }
 );
 
-router.post('/rate/', auth, async ({ tokenUser, body }, res) => {
-  let { userId } = tokenUser;
-  Trainer.findOneAndUpdate(
-    { _id: userId },
-    { rate: body },
-    { new: true, useFindAndModify: false }
-  )
-    .then((user) => res.send(user.rate || []))
-    .catch((err) => {
-      console.log('trainer rate update error: ', err);
-      return res.send({ err: 'database error' });
-    });
-});
-
 router.get('/session/:id', auth, async ({ params: { id } }, res) => {
   let _id;
   try {
@@ -242,7 +228,7 @@ router.post('/cancel-session/', auth, async ({ body: { id } }, res) => {
   else res.send({ err: 'no session found' });
 });
 
-router.post(
+router.put(
   '/add-tag',
   auth,
   async ({ tokenUser: { userId }, body: { value } }, res) => {
