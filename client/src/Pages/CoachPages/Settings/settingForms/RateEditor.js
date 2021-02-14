@@ -6,7 +6,7 @@ const RateEditor = ({ props: { id, rate, onComplete, onError, token } }) => {
 
   const handleSubmit = () => {
     axios
-      .post(
+      .put(
         `/api/user/settings/trainer/rate/`,
         { value: Number(input) },
         {

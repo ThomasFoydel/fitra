@@ -17,7 +17,7 @@ describe('Edit Profile page', () => {
   jest.mock('axios');
 
   beforeEach(async () => {
-    axios.post = jest.fn((url, body) => {
+    axios.put = jest.fn((url, body) => {
       if (url === '/api/client/editprofile') {
         return Promise.resolve({
           data: body,
@@ -45,23 +45,23 @@ describe('Edit Profile page', () => {
     expect(btn.textContent).toEqual('submit');
   });
 
-  it('Should send post requests when changes are submitted and update state after response from server', async () => {
+  it('Should send put requests when changes are submitted and update state after response from server', async () => {
     const inputs = screen.getAllByRole('textbox');
     const btn = screen.getByRole('button');
 
     userEvent.type(inputs[0], exampleData.name);
     userEvent.click(btn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
     expect(inputs[0].placeholder).toEqual(exampleData.name);
 
     userEvent.type(inputs[1], exampleData.bio);
     userEvent.click(btn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(2));
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(2));
     expect(inputs[1].placeholder).toEqual(exampleData.bio);
 
     userEvent.type(inputs[2], exampleData.displayEmail);
     userEvent.click(btn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(3));
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(3));
     expect(inputs[2].placeholder).toEqual(exampleData.displayEmail);
   });
 

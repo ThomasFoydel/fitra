@@ -16,7 +16,7 @@ const ScheduleContainer = () => {
 
   const handleChange = (e) => {
     axios
-      .post('/api/trainer/schedule/', e, {
+      .put('/api/trainer/schedule/', e, {
         headers: { 'x-auth-token': token },
       })
       .then(({ data }) => setEntries(data))
@@ -79,7 +79,7 @@ const ScheduleContainer = () => {
     if (id === 'minimum' && value > max)
       return setErr('minimum cannot be greater than maximum');
     axios
-      .post(
+      .put(
         `/api/trainer/minmax/${id}/`,
         { value },
         {

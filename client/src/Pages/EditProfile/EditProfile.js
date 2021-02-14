@@ -32,7 +32,7 @@ const EditProfile = () => {
 
   const handleSubmit = () => {
     axios
-      .post(`/api/${type}/editprofile`, formInfo, {
+      .put(`/api/${type}/editprofile`, formInfo, {
         headers: { 'x-auth-token': token },
       })
       .then(({ data: { bio, coverPic, displayEmail, name, profilePic } }) => {

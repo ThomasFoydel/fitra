@@ -31,12 +31,12 @@ describe('Trainer settings active form', () => {
     const heading = screen.getByRole('heading');
     expect(heading.textContent).toEqual('Active');
   });
-  it('Should send axios post request when checkbox clicked', async () => {
+  it('Should send axios put request when checkbox clicked', async () => {
     jest.mock('axios');
     const checkbox = screen.getByTestId('active-btn');
-    jest.spyOn(axios, 'post');
+    jest.spyOn(axios, 'put');
 
-    axios.post.mockReturnValue(
+    axios.put.mockReturnValue(
       Promise.resolve({
         data: {
           active: defaultProps.active,
@@ -45,8 +45,8 @@ describe('Trainer settings active form', () => {
     );
 
     userEvent.click(checkbox);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
+    expect(axios.put).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -65,14 +65,14 @@ describe('Trainer settings tag form', () => {
     expect(btn.textContent).toEqual('add tag');
   });
 
-  it('Should fire a post request when the button is clicked and input has value', async () => {
+  it('Should fire a put request when the button is clicked and input has value', async () => {
     jest.mock('axios');
     const btn = screen.getByRole('button');
     const input = screen.getByRole('textbox');
     userEvent.type(input, 'newtag');
-    jest.spyOn(axios, 'post');
+    jest.spyOn(axios, 'put');
 
-    axios.post.mockReturnValue(
+    axios.put.mockReturnValue(
       Promise.resolve({
         data: {
           rate: 50,
@@ -81,16 +81,16 @@ describe('Trainer settings tag form', () => {
     );
 
     userEvent.click(btn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
+    expect(axios.put).toHaveBeenCalledTimes(1);
   });
 
-  it('Should NOT fire a post request when the button is clicked and input has no value', async () => {
+  it('Should NOT fire a put request when the button is clicked and input has no value', async () => {
     jest.mock('axios');
     const btn = screen.getByRole('button');
-    jest.spyOn(axios, 'post');
+    jest.spyOn(axios, 'put');
 
-    axios.post.mockReturnValue(
+    axios.put.mockReturnValue(
       Promise.resolve({
         data: {
           tags: ['mma', 'boxing', 'yoga'],
@@ -133,9 +133,9 @@ describe('Trainer settings rate form', () => {
   it('Should fire a post request when the button is clicked', async () => {
     jest.mock('axios');
     const btn = screen.getByRole('button');
-    jest.spyOn(axios, 'post');
+    jest.spyOn(axios, 'put');
 
-    axios.post.mockReturnValue(
+    axios.put.mockReturnValue(
       Promise.resolve({
         data: {
           rate: 40,
@@ -144,7 +144,7 @@ describe('Trainer settings rate form', () => {
     );
 
     userEvent.click(btn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
+    expect(axios.put).toHaveBeenCalledTimes(1);
   });
 });

@@ -41,9 +41,9 @@ describe('Trainer settings page', () => {
   it('Should change checkbox checked to true in response to API call when active button is clicked', async () => {
     jest.mock('axios');
     const checkbox = screen.getByTestId('active-btn');
-    jest.spyOn(axios, 'post');
+    jest.spyOn(axios, 'put');
 
-    axios.post.mockReturnValue(
+    axios.put.mockReturnValue(
       Promise.resolve({
         data: {
           active: true,
@@ -51,8 +51,8 @@ describe('Trainer settings page', () => {
       })
     );
     userEvent.click(checkbox);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
+    expect(axios.put).toHaveBeenCalledTimes(1);
     expect(checkbox.checked).toEqual(true);
   });
 
@@ -67,9 +67,9 @@ describe('Trainer settings page', () => {
     jest.mock('axios');
     const input = screen.getByTestId('tag-editor-input');
     const addTagBtn = screen.getByTestId('add-tag-btn');
-    jest.spyOn(axios, 'post');
+    jest.spyOn(axios, 'put');
 
-    axios.post.mockReturnValue(
+    axios.put.mockReturnValue(
       Promise.resolve({
         data: ['yoga'],
       })
@@ -77,8 +77,8 @@ describe('Trainer settings page', () => {
 
     userEvent.type(input, 'yoga');
     userEvent.click(addTagBtn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
+    expect(axios.put).toHaveBeenCalledTimes(1);
     const tags = screen.getAllByTestId('tag');
     expect(tags.length).toEqual(1);
     expect(tags[0].textContent).toEqual('yoga');
@@ -88,9 +88,9 @@ describe('Trainer settings page', () => {
     jest.mock('axios');
     const input = screen.getByTestId('rate-editor-input');
     const btn = screen.getByTestId('rate-editor-btn');
-    jest.spyOn(axios, 'post');
+    jest.spyOn(axios, 'put');
 
-    axios.post.mockReturnValue(
+    axios.put.mockReturnValue(
       Promise.resolve({
         data: {
           rate: 39,
@@ -100,8 +100,8 @@ describe('Trainer settings page', () => {
 
     userEvent.type(input, '39');
     userEvent.click(btn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
+    expect(axios.put).toHaveBeenCalledTimes(1);
     const display = screen.getByTestId('rate-display');
     expect(display.textContent).toEqual('$39');
   });

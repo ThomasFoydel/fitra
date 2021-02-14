@@ -4,7 +4,7 @@ import axios from 'axios';
 const Active = ({ props: { onError, type, onComplete, token, active } }) => {
   const handleActive = async ({ target: { checked } }) => {
     axios
-      .post(
+      .put(
         `/api/user/settings/${type}/active`,
         { value: checked },
         { headers: { 'x-auth-token': token } }
