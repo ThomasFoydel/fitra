@@ -75,11 +75,10 @@ describe('Trainer settings tag form', () => {
     axios.put.mockReturnValue(
       Promise.resolve({
         data: {
-          rate: 50,
+          tags: ['mma', 'boxing', 'yoga'],
         },
       })
     );
-
     userEvent.click(btn);
     await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
     expect(axios.put).toHaveBeenCalledTimes(1);
@@ -99,8 +98,7 @@ describe('Trainer settings tag form', () => {
     );
 
     userEvent.click(btn);
-    // await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(0));
-    expect(axios.post).toHaveBeenCalledTimes(0);
+    expect(axios.put).toHaveBeenCalledTimes(0);
   });
 });
 

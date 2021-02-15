@@ -59,7 +59,7 @@ const Connect = ({ match, socket }) => {
     const token = localStorage.getItem('fitr-token');
     let myPeer;
     axios
-      .get(`/api/connect/client/${connectionId}`, {
+      .get(`/api/connect/${connectionId}`, {
         headers: { 'x-auth-token': token },
       })
       .then(async ({ data }) => {
@@ -137,18 +137,18 @@ const Connect = ({ match, socket }) => {
         }
       });
 
-    return () => {
+    return async () => {
       subscribed = false;
       if (socket) socket.emit('disconnect-room', socket.id);
-      // if (myVideoStream) myVideoStream.srcObject.getTracks().stop();
-      if (myVideoRef.current && myVideoRef.current.srcObject) {
-        const tracks = myVideoRef.current.srcObject.getTracks();
-        if (tracks[0]) tracks[0].stop();
-        if (tracks[1]) tracks[1].stop();
-      }
       if (myPeer) myPeer.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    return () =>
+      myVideoStream &&
+      myVideoStream.getTracks().forEach((track) => track.stop());
+  }, [myVideoStream]);
 
   const playStop = () => {
     if (myVideoStream) {

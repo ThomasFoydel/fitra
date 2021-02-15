@@ -49,13 +49,9 @@ const ManageSession = ({
 
   const handleCancel = () => {
     axios
-      .post(
-        `/api/trainer/cancel-session/`,
-        { id },
-        {
-          headers: { 'x-auth-token': token },
-        }
-      )
+      .delete(`/api/trainer/cancel-session/`, {
+        headers: { 'x-auth-token': token, id },
+      })
       .then(({ data: { id, err } }) => {
         if (err) setErr(err);
         else if (id) setDeleted(true);

@@ -8,15 +8,15 @@ import Delete from './Delete';
 import userEvent from '@testing-library/user-event';
 
 const mockReq = {
-  url: '/api/client/delete_my_account',
+  url: '/api/user/delete_my_account/client',
   password: 'passwordString',
 };
 
 describe('Delete account page', () => {
   jest.mock('axios');
   beforeEach(async () => {
-    axios.post = jest.fn((url, body) => {
-      if (url === mockReq.url && body.password === mockReq.password)
+    axios.delete = jest.fn((url, body) => {
+      if (url === mockReq.url && body.headers.pass === mockReq.password)
         return Promise.resolve({
           data: {
             success: true,
@@ -33,7 +33,7 @@ describe('Delete account page', () => {
   });
   afterEach(cleanup);
 
-  it('Should send a post request with password when delete flow is completed', async () => {
+  it('Should send a delete request with password when delete flow is completed', async () => {
     const deleteBtn = screen.getByRole('button');
     userEvent.click(deleteBtn);
     const [, confirmBtn] = screen.getAllByRole('button');
@@ -42,7 +42,7 @@ describe('Delete account page', () => {
     const input = await screen.getByTestId('delete-password-input');
     userEvent.type(input, mockReq.password);
     userEvent.click(realDeleteBtn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(axios.delete).toHaveBeenCalledTimes(1));
   });
 
   it('Should contain a link to /settings', () => {

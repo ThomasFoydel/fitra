@@ -7,6 +7,8 @@ import axios from '__mocks__/axios';
 import Store from 'context/Store';
 import ManageSession from './ManageSession';
 
+const exampleUser = { id: '123' };
+
 describe('Trainer settings page', () => {
   jest.mock('axios');
 
@@ -23,18 +25,22 @@ describe('Trainer settings page', () => {
         },
       })
     );
-    axios.post.mockReturnValue(
-      Promise.resolve({
-        data: {
-          id: '123',
-        },
-      })
-    );
+
+    axios.delete = jest.fn((url, req) => {
+      if (
+        req.headers.id === exampleUser.id &&
+        url === '/api/trainer/cancel-session/'
+      ) {
+        return Promise.resolve({
+          data: { success: true },
+        });
+      }
+    });
 
     render(
       <Store>
         <Router>
-          <ManageSession match={{ params: { id: '123' } }} />
+          <ManageSession match={{ params: { id: exampleUser.id } }} />
         </Router>
       </Store>
     );
@@ -52,16 +58,16 @@ describe('Trainer settings page', () => {
     expect(btn.textContent).toEqual('cancel session');
   });
 
-  it('Should make a post request when cancel and confirm buttons are clicked"', async () => {
+  it('Should make a delete request when cancel and confirm buttons are clicked"', async () => {
     const btn = screen.getByRole('button');
 
-    jest.spyOn(axios, 'post');
+    jest.spyOn(axios, 'delete');
 
     userEvent.click(btn);
     const secondSetOfBtns = screen.getAllByRole('button');
     const confirmBtn = secondSetOfBtns[1];
     userEvent.click(confirmBtn);
-    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(axios.delete).toHaveBeenCalledTimes(1));
+    expect(axios.delete).toHaveBeenCalledTimes(1);
   });
 });

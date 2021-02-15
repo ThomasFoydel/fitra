@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 
 const auth = require('../middlewares/auth');
 const Trainer = require('../models/Trainer');
@@ -38,4 +39,32 @@ router.put('/settings/:type/:setting', auth, async (req, res) => {
       return res.send({ err: 'database error' });
     });
 });
+
+router.delete(
+  '/delete_my_account/:type',
+  auth,
+  async (
+    { tokenUser: { userId }, params: { type }, headers: { pass } },
+    res
+  ) => {
+    let User = type === 'client' ? Client : Trainer;
+    const foundUser = await User.findById(userId);
+    if (!foundUser) return res.send({ err: 'No user found' });
+
+    const passwordsMatch = await bcrypt.compare(pass, foundUser.password);
+    if (passwordsMatch) {
+      User.findByIdAndDelete(userId)
+        .then((result) => {
+          console.log('delete client success : ', result);
+          return res.send({ message: 'deletion successful' });
+        })
+        .catch((err) => {
+          console.log('find client database error: ', err);
+          return res.send({ err: 'database error' });
+        });
+    } else {
+      return res.json({ err: 'Incorrect password' });
+    }
+  }
+);
 module.exports = router;

@@ -213,7 +213,6 @@ router.get('/session/:id', auth, async ({ params: { id } }, res) => {
   try {
     _id = new mongoose.Types.ObjectId(id);
   } catch (err) {
-    /* mongo id cast error, user's using incorrect url */
     return res.send({ err: 'no session found' });
   }
   let foundSession = await Session.findById(_id);
@@ -222,7 +221,7 @@ router.get('/session/:id', auth, async ({ params: { id } }, res) => {
   return res.send({ foundSession, foundClient });
 });
 
-router.post('/cancel-session/', auth, async ({ body: { id } }, res) => {
+router.delete('/cancel-session/', auth, async ({ headers: { id } }, res) => {
   let deletedSession = await Session.findByIdAndDelete(id);
   if (deletedSession) res.send({ id: deletedSession.id });
   else res.send({ err: 'no session found' });
@@ -250,10 +249,11 @@ router.put(
       });
   }
 );
-router.post(
+
+router.delete(
   '/delete-tag',
   auth,
-  async ({ tokenUser: { userId }, body: { value } }, res) => {
+  async ({ tokenUser: { userId }, headers: { value } }, res) => {
     let foundTrainer = await Trainer.findById(userId);
     if (!foundTrainer) return res.send({ err: 'user not found' });
     let tags = [...foundTrainer.tags];

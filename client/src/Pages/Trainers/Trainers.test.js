@@ -25,8 +25,11 @@ const exampleSearch = 'a';
 describe('Trainers search page', () => {
   jest.mock('axios');
   beforeEach(async () => {
-    axios.get = jest.fn((url, body) => {
-      if (url.includes('/api/client/search/'))
+    axios.get = jest.fn((url) => {
+      if (
+        url.includes('/api/client/search') &&
+        url.includes(`search=${exampleSearch}`)
+      )
         return Promise.resolve({
           data: {
             result: [exampleTrainer],

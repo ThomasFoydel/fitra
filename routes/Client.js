@@ -375,22 +375,4 @@ router.post(
   }
 );
 
-router.post(
-  '/delete_my_account',
-  auth,
-  async ({ tokenUser: { userId } }, res) => {
-    const foundUser = await User.findById(userId);
-    if (!foundUser) return res.send({ err: 'No user found' });
-    Client.findByIdAndDelete(userId)
-      .then((result) => {
-        console.log('delete client success : ', result);
-        return res.send({ message: 'deletion successful' });
-      })
-      .catch((err) => {
-        console.log('find client database error: ', err);
-        return res.send({ err: 'database error' });
-      });
-  }
-);
-
 module.exports = router;

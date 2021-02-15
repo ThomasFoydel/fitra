@@ -36,13 +36,9 @@ const TagEditor = () => {
 
   const handleDelete = ({ target: { id } }) => {
     axios
-      .post(
-        '/api/trainer/delete-tag',
-        { value: id },
-        {
-          headers: { 'x-auth-token': token },
-        }
-      )
+      .delete('/api/trainer/delete-tag', {
+        headers: { 'x-auth-token': token, value: id },
+      })
       .then(({ data }) => {
         let { err } = data;
         if (err) return setErr(err);

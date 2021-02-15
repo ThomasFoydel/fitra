@@ -6,7 +6,7 @@ const Client = require('../models/Client');
 const Session = require('../models/Session');
 const Trainer = require('../models/Trainer');
 
-router.get('/client/:connectionId', auth, async (req, res) => {
+router.get('/:connectionId', auth, async (req, res) => {
   const { connectionId } = req.params;
   const { userId } = req.tokenUser;
   const foundClient = await Client.findById(userId);

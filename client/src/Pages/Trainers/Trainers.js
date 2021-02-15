@@ -24,7 +24,7 @@ const Trainers = () => {
   useEffect(() => {
     if (queryType && search)
       axios
-        .get(`/api/client/search/?type=${queryType}&search=${search}`)
+        .get(`/api/client/search?type=${queryType}&search=${search}`)
         .then(({ data: { result, err } }) => {
           if (err) return setErr(err);
           else setCurrentTrainers(result);
