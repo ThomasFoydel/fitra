@@ -62,7 +62,8 @@ function App() {
           }
         })
         .catch(() => {
-          // updateState({ type: 'LOGOUT' });
+          if (process.env.NODE_ENV === 'production')
+            updateState({ type: 'LOGOUT' });
         });
     };
 
