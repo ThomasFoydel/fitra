@@ -14,7 +14,7 @@
 <p>Tests are written with Jest and React Testing Library. The front-end state is managed with React Context. Payment relies on a Paypal integration. Facebook and Google one-click login can be used to register/login for clients, though the Google login currently requires turning on third party cookies in browser settings.</p>
 <p>The trainer schedule manager is based on a previous project, react-rnd-schedule, which uses a resize and drag-and-drop package called react-rnd to make a weekview schedule with resizable and dragable appointment times.</p>
 <p align="center"><img width="80%" src="assets/imgs/mainSetup.png" alt="a diagram of a fullstack application"></p>
-<p align="center"><img width="80%" src="assets/imgs/apiRoutes.png" alt="a tree of api routes"></p>
+<p align="center"><img width="80%" src="assets/imgs/apiRoutes.jpg" alt="a tree of api routes"></p>
 <hr/>
 <h2 >Installation</h2>
 <p >Download the repo and run npm i and npm run client-install. Also needed is a .env file in the root directory with a MONGO_URI set to a mongoDB connection string and SECRET set to whatever you want your secret to be, any long random string will do</p>
