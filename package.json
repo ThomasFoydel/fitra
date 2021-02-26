@@ -1,7 +1,7 @@
 {
-  "name": "ReactWebRTC",
+  "name": "FITRA",
   "version": "1.0.0",
-  "description": "A Scheduler and RealTime Communication Platform for Trainers, built with MERN and WebRTC",
+  "description": "A Scheduler and VideoChat Platform for Trainers, built with MERN and WebRTC",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
