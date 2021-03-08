@@ -132,7 +132,7 @@ router.post('/register', async (req, res) => {
   }
 
   if (password.length < 8) {
-    return res.send({ err: 'Password must be at least 6 characters' });
+    return res.send({ err: 'Password must be at least 8 characters' });
   }
   if (name.length < 4 || name.length > 12) {
     return res.send({ err: 'Name must be between 4 and 12 characters' });

@@ -1,7 +1,7 @@
 {
   "name": "FITRA",
   "version": "1.0.0",
-  "description": "A Scheduler and VideoChat Platform for Trainers, built with MERN and WebRTC",
+  "description": "A scheduler and video-chat platform for trainers, built with MERN and WebRTC",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -20,7 +20,6 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

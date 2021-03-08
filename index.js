@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const socketio = require('socket.io');
 const mongoose = require('mongoose');
@@ -19,7 +18,8 @@ const Message = require('./models/Message');
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use('/api/client', clientRoutes);
 app.use('/api/trainer', trainerRoutes);
 app.use('/api/auth', authRoutes);
