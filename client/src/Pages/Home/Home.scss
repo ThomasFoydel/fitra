@@ -1,21 +1,22 @@
 .home {
   margin-top: 5rem;
   margin-left: 50%;
-  transform: translateX(-50%);
   text-align: center;
+  transform: translateX(-50%);
+
   h2 {
-    background: rgb(233, 233, 233);
     font-size: 2rem;
-    border-radius: 0.4rem;
     padding: 0.8rem 0;
+    border-radius: 0.4rem;
     letter-spacing: 0.5rem;
+    background: rgb(233, 233, 233);
   }
 
   .sessions {
-    background: rgb(233, 233, 233);
-    padding: 1.2rem;
     margin: 1rem;
+    padding: 1.2rem;
     border-radius: 1rem;
+    background: rgb(233, 233, 233);
 
     .profile-pic {
       width: 3rem;
@@ -23,35 +24,43 @@
       border-radius: 25rem;
       border: 2px solid #f0f0f0;
     }
+
     .session {
-      border-radius: 1.4rem;
       padding: 1rem;
       margin: 0.5rem;
+      border-radius: 1.4rem;
+
       a {
-        font-size: 1.8rem;
         color: #111;
+        font-size: 1.8rem;
         transition: 0.3s ease all;
+
         &:hover {
           color: #9d0b0b;
         }
       }
     }
   }
+
   .ended {
     background: rgba(218, 186, 186, 0.705);
   }
+
   .session.active {
-    background: rgb(15, 15, 15);
     color: #ffb3b3;
+    background: rgb(15, 15, 15);
     border: solid 1px rgb(199, 0, 0);
+
     a {
       color: rgb(248, 30, 30);
       transition: 0.3s ease all;
+
       &:hover {
         color: #ff7d7d;
       }
     }
   }
+
   .not-started {
     background: rgb(155, 223, 206);
   }
