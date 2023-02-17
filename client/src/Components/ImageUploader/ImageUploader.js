@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Keyframes, animated, config } from 'react-spring/renderprops';
+import { Keyframes, animated, config } from 'react-spring';
 import dots from 'imgs/loading/loading-dots.gif';
 import { CTX } from 'context/Store';
 import './ImageUploader.scss';

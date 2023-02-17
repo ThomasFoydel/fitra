@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import yogatrainer from 'imgs/yogacoach.jpg';
 import './TrainerLandingPage.scss';
 import { CTX } from 'context/Store';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const TrainerLandingPage = () => {
   const [appState, updateState] = useContext(CTX);
@@ -19,7 +19,7 @@ const TrainerLandingPage = () => {
       <div className='landing-background' />
       <img src={yogatrainer} alt='yoga coach' className='image2' />
       <div className='overlay trainer-overlay'></div>
-      {isLoggedIn && <Redirect to='/coachportal/home' />}
+      {isLoggedIn && <Navigate to='/coachportal/home' />}
       <h2 className='heading'>
         STREAMLINE
         <br />

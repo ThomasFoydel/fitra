@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import IntroMessage from 'Components/IntroMessage/IntroMessage';
 
@@ -68,9 +68,9 @@ const TrainerProfile = ({
 
   return (
     <div className='trainerprofile'>
-      {bookingSuccess && <Redirect to='/' />}
+      {bookingSuccess && <Navigate to='/' />}
       {redirectToMessages && (
-        <Redirect
+        <Navigate
           to={`${
             appState.user.type === 'trainer' ? 'coachportal' : ''
           }/messages`}

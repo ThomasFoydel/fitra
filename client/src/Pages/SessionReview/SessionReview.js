@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { CTX } from 'context/Store';
 import './SessionReview.scss';
 const SessionReview = ({
@@ -52,7 +52,7 @@ const SessionReview = ({
       <div className='background' />
       <div className='overlay' />
       <div className='session-review'>
-        {redirect && <Redirect to='/' />}
+        {redirect && <Navigate to='/' />}
         <h2>Session Review</h2>
         <select
           data-testid='select'

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { CTX } from 'context/Store';
 import './ManageSession.scss';
-import { Redirect, Link } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import Image from 'Components/Image/Image';
 import { act } from '@testing-library/react';
 
@@ -70,7 +70,7 @@ const ManageSession = ({
 
   return (
     <div className='manage-session'>
-      {deleted && <Redirect to='/coachportal/schedule' />}
+      {deleted && <Navigate to='/coachportal/schedule' />}
       {found && (
         <>
           <Link to='/coachportal/schedule'>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import './NavBar.scss';
 import { CTX } from 'context/Store';
@@ -38,7 +38,7 @@ const NavBar = () => {
 
   return (
     <>
-      {redirect && <Redirect to='/' />}
+      {redirect && <Navigate to='/' />}
       <div className='navbar'>
         <Link
           to={isLoggedIn ? `${trainerExt}/` : '/'}

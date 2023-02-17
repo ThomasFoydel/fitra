@@ -3,7 +3,7 @@ import axios from 'axios';
 import Peer from 'peerjs';
 import './Connect.scss';
 import { CTX } from 'context/Store';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const objectFilter = function (obj, keyToFilterOut) {
   let result = {};
@@ -267,7 +267,7 @@ const Connect = ({ match, socket }) => {
           </div>
         </div>
       ) : (
-        <Redirect to={`/${isTrainer ? 'coachportal/' : null}`} />
+        <Navigate to={`/${isTrainer ? 'coachportal/' : null}`} />
       )}
     </>
   );
