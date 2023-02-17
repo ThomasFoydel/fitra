@@ -1,77 +1,90 @@
 .manage-session {
-  background: #eee;
-  border-radius: 1rem;
+  width: 40%;
+  padding: 1rem;
+  height: 28rem;
   margin-top: 5rem;
   min-width: 30rem;
-  padding: 1rem;
-  width: 40%;
-  transform: translateX(-50%);
   margin-left: 50%;
   font-size: 1.1rem;
   text-align: center;
-  height: 28rem;
   position: relative;
+  background: #eee;
+  border-radius: 1rem;
+  transform: translateX(-50%);
 
   .profile-pic {
-    height: 10rem;
     width: 10rem;
+    height: 10rem;
     border-radius: 10rem;
   }
+
   .date {
     font-size: 1.5rem;
   }
+
   .name {
     font-size: 2rem;
   }
+
   .cancel-btn,
   .confirm-btn,
   .close-btn {
-    padding: 0.8rem 1.4rem;
     border: none;
-    border-radius: 0.5rem;
-    letter-spacing: 0.1rem;
     margin: 0.5rem;
     margin-top: 1.7rem;
+    border-radius: 0.5rem;
+    letter-spacing: 0.1rem;
+    padding: 0.8rem 1.4rem;
   }
+
   .cancel-btn {
     margin-top: 3.5rem;
   }
+
   .cancel-btn,
   .confirm-btn {
     background: rgb(255, 33, 33);
+
     &:hover {
       background: rgb(230, 10, 10);
     }
   }
+
   .close-btn,
   .confirm-btn {
     width: 10rem;
   }
+
   a {
-    text-decoration: none;
     color: black;
     font-weight: bold;
+    text-decoration: none;
+
     &:hover {
       color: grey;
     }
   }
+
   .close-btn {
     background: rgb(136, 136, 136);
   }
+
   .back-link {
-    position: absolute;
     top: 1rem;
     left: 1.5rem;
+    position: absolute;
   }
+
   a.connect-link {
+    left: 50%;
+    font-size: 1.5rem;
     color: lightgrey;
     background: #222;
+    position: absolute;
     border-radius: 0.5rem;
     padding: 0.3rem 3.2rem;
-    position: absolute;
-    left: 50%;
     transform: translateX(-50%);
-    font-size: 1.5rem;
+
     &:hover {
       color: rgb(238, 238, 238);
       background: rgb(19, 19, 19);
