@@ -1,26 +1,25 @@
-import React, { useContext } from 'react';
-
-import yogatrainer from 'imgs/yogacoach.jpg';
-import './TrainerLandingPage.scss';
-import { CTX } from 'context/Store';
-import { Navigate } from 'react-router-dom';
+import React, { useContext } from 'react'
+import { Navigate } from 'react-router-dom'
+import yogatrainer from 'imgs/yogacoach.jpg'
+import { CTX } from 'context/Store'
+import './TrainerLandingPage.scss'
 
 const TrainerLandingPage = () => {
-  const [appState, updateState] = useContext(CTX);
-  const { isLoggedIn } = appState;
+  const [{ isLoggedIn }, updateState] = useContext(CTX)
 
   const openAuth = () => {
-    updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page: 'register' } });
-    updateState({ type: 'CHANGE_AUTH_TYPE', payload: { type: 'trainer' } });
-    updateState({ type: 'TOGGLE_AUTH' });
-  };
+    updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page: 'register' } })
+    updateState({ type: 'CHANGE_AUTH_TYPE', payload: { type: 'trainer' } })
+    updateState({ type: 'TOGGLE_AUTH' })
+  }
+
   return (
-    <div className='trainer-landingpage'>
-      <div className='landing-background' />
-      <img src={yogatrainer} alt='yoga coach' className='image2' />
-      <div className='overlay trainer-overlay'></div>
-      {isLoggedIn && <Navigate to='/coachportal/home' />}
-      <h2 className='heading'>
+    <div className="trainer-landingpage">
+      <div className="landing-background" />
+      <img src={yogatrainer} alt="yoga coach" className="image2" />
+      <div className="overlay trainer-overlay"></div>
+      {isLoggedIn && <Navigate to="/coachportal/home" />}
+      <h2 className="heading">
         STREAMLINE
         <br />
         YOUR
@@ -29,7 +28,7 @@ const TrainerLandingPage = () => {
         <button onClick={openAuth}>Get Started</button>
       </h2>
     </div>
-  );
-};
+  )
+}
 
-export default TrainerLandingPage;
+export default TrainerLandingPage
