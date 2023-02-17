@@ -1,45 +1,45 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import axios from 'axios'
+import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 
-const ChatBox = ({
-  props: { userId, userName, currentThread, update, isTrainer },
-}) => {
-  const [text, setText] = useState('');
+const ChatBox = ({ props: { userId, userName, currentThread, update, isTrainer } }) => {
+  const [text, setText] = useState('')
+
   const submit = () => {
-    if (!text) return;
-    let message = {
-      userId: currentThread,
+    if (!text) return
+
+    const message = {
       message: text,
-      sender: userId,
       name: userName,
+      sender: userId,
+      userId: currentThread,
       fromTrainer: isTrainer,
-    };
+    }
+
     axios
       .post('/api/message/', message)
       .then(({ data }) => {
-        update(data);
-        setText('');
+        update(data)
+        setText('')
       })
-      .catch((err) => console.log('chatbox err: ', err));
-  };
-  const handleKeyPress = ({ charCode }) => {
-    if (charCode === 13) submit();
-  };
+      .catch((err) => console.error('chatbox err: ', err))
+  }
+
+  const handleKeyPress = ({ charCode }) => charCode === 13 && submit()
 
   return (
     <>
       <input
-        onChange={(e) => setText(e.target.value)}
-        type='text'
-        className='input'
+        type="text"
         value={text}
+        className="input"
         onKeyPress={handleKeyPress}
+        onChange={(e) => setText(e.target.value)}
       />
       <button onClick={submit}>send</button>
     </>
-  );
-};
+  )
+}
 
 ChatBox.propTypes = {
   props: PropTypes.shape({
@@ -49,6 +49,6 @@ ChatBox.propTypes = {
     update: PropTypes.func.isRequired,
     isTrainer: PropTypes.bool.isRequired,
   }),
-};
+}
 
-export default ChatBox;
+export default ChatBox
