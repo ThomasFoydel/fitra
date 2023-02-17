@@ -18,10 +18,10 @@ html {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   line-height: 1.7;
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .flex {
@@ -31,8 +31,8 @@ body {
 
 .center {
   margin-left: 50%;
-  transform: translateX(-50%);
   text-align: center;
+  transform: translateX(-50%);
 }
 
 button {
@@ -46,32 +46,33 @@ input:focus {
 }
 
 .coachportal-btn {
-  position: absolute;
-  bottom: 0;
   left: 0;
-  padding: 1rem;
-  border-radius: 0 1rem 0 0;
-  text-decoration: none;
+  bottom: 0;
   opacity: 0.5;
-  background: rgb(233, 33, 33);
+  padding: 1rem;
   color: white;
   font-weight: bold;
+  position: absolute;
+  text-decoration: none;
   transition: all 0.2s ease;
+  border-radius: 0 1rem 0 0;
+  background: rgb(233, 33, 33);
+
   &:hover {
     opacity: 1;
-    background: rgb(248, 88, 88);
     color: rgb(68, 15, 15);
+    background: rgb(248, 88, 88);
     box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
   }
 }
 
 .overlay {
-  width: 100%;
-  height: 100%;
   top: 0;
   right: 0;
-  position: fixed;
   z-index: -1;
+  width: 100%;
+  height: 100%;
+  position: fixed;
   background: linear-gradient(rgba(0, 0, 0, 0.273), rgba(0, 0, 0, 0.433));
 }
 
@@ -82,61 +83,66 @@ input:focus {
 }
 
 .background {
-  background: url('./imgs/sweat.jpg');
-  width: 100vw;
-  height: 100vh;
-  background-position: center;
-  background-size: 100%;
-  position: fixed;
   top: 0;
   right: 0;
   z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-size: 100%;
+  background-position: center;
+  background: url('./imgs/sweat.jpg');
 }
 
 /* SWITCH */
 .switch {
-  position: relative;
-  display: inline-block;
   width: 60px;
   height: 34px;
+  position: relative;
+  display: inline-block;
+
   /* Hide default HTML checkbox */
   input {
-    opacity: 0;
     width: 0;
     height: 0;
+    opacity: 0;
+
     &:checked + .slider {
       background-color: #000000;
     }
+
     &:checked + .slider {
       background-color: #000000;
     }
+
     &:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
       transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      -webkit-transform: translateX(26px);
     }
   }
 
   .slider {
-    position: absolute;
-    cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    cursor: pointer;
+    transition: 0.4s;
+    position: absolute;
     background-color: #ccc;
     -webkit-transition: 0.4s;
-    transition: 0.4s;
+
     &:before {
-      position: absolute;
-      content: '';
-      height: 26px;
-      width: 26px;
       left: 4px;
       bottom: 4px;
+      width: 26px;
+      content: '';
+      height: 26px;
+      transition: 0.4s;
+      position: absolute;
       background-color: white;
       -webkit-transition: 0.4s;
-      transition: 0.4s;
     }
   }
 
