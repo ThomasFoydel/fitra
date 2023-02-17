@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Peer from 'peerjs'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { CTX } from 'context/Store'
 import './Connect.scss'

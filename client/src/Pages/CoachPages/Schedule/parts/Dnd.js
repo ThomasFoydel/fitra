@@ -100,7 +100,7 @@ const Dnd = ({
     updateBlocks(newStartDate, newEndDate, newStartTime, endTime, recurring)
   }
 
-  const handleResize = (_, _, refToElement) => {
+  const handleResize = ({}, {}, refToElement) => {
     let { transform, height } = refToElement.style
     let elementYPosition = transform.split(', ')[1]
     elementYPosition = elementYPosition.substring(0, elementYPosition.length - 3)
