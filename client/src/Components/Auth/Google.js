@@ -8,24 +8,24 @@ const Google = ({ props: { googleHandleSuccess, googleHandleError, googleErr } }
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <GoogleLogin
-        clientId="1034940197721-bs2c0n1opcqmdlcumn3c1bubrm3ga77k.apps.googleusercontent.com"
-        onSuccess={googleHandleSuccess}
         onFailure={googleHandleError}
+        onSuccess={googleHandleSuccess}
         cookiePolicy={'single_host_origin'}
+        clientId="1034940197721-bs2c0n1opcqmdlcumn3c1bubrm3ga77k.apps.googleusercontent.com"
         render={renderProps => (
           <button
-            onClick={googleErr ? null : renderProps.onClick}
-            disabled={renderProps.disabled}
             className="google-btn"
+            disabled={renderProps.disabled}
+            onClick={googleErr ? null : renderProps.onClick}
           >
             {googleErr && hover ? (
               <span
                 className="nocookies"
                 style={{
+                  width: '20rem',
                   fontSize: '1rem',
                   lineHeight: '1.2rem',
                   whiteSpace: 'nowrap',
-                  width: '20rem',
                 }}
               >
                 Must enable third party cookies
@@ -35,16 +35,16 @@ const Google = ({ props: { googleHandleSuccess, googleHandleError, googleErr } }
             )}
           </button>
         )}
-      ></GoogleLogin>
+      />
     </div>
   )
 }
 
 Google.propTypes = {
   props: PropTypes.shape({
-    googleHandleSuccess: PropTypes.func.isRequired,
-    googleHandleError: PropTypes.func.isRequired,
     googleErr: PropTypes.bool.isRequired,
+    googleHandleError: PropTypes.func.isRequired,
+    googleHandleSuccess: PropTypes.func.isRequired,
   }),
 }
 

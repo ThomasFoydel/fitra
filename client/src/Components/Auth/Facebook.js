@@ -7,9 +7,7 @@ const Facebook = ({ props: { callback } }) => {
 }
 
 Facebook.propTypes = {
-  props: PropTypes.shape({
-    callback: PropTypes.func.isRequired,
-  }),
+  props: PropTypes.shape({ callback: PropTypes.func.isRequired }),
 }
 
 export default Facebook
