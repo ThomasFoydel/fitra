@@ -40,7 +40,7 @@ const Trainers = () => {
     return () => (subscribed = false)
   }, [err])
 
-  const transition = useTransition(currentTrainers, {
+  const trainerCards = useTransition(currentTrainers, {
     trail: 300,
     config: config.molasses,
     from: { opacity: '0', height: '0rem', transform: 'translateY(-20px)' },
@@ -68,7 +68,7 @@ const Trainers = () => {
         </div>
       </div>
       <div className="trainers-container">
-        {transition((style, item) => (
+        {trainerCards((style, item) => (
           <animated.div style={style}>
             <TrainerCard props={{ trainer: item, tagSearch }} />
           </animated.div>
