@@ -1,28 +1,28 @@
 .searchbar {
-  transform: translateX(-50%);
-  margin-left: 50%;
-  display: flex;
   width: 100%;
-  justify-content: center;
+  display: flex;
+  margin-left: 50%;
   margin-bottom: 2rem;
+  justify-content: center;
+  transform: translateX(-50%);
 
   .searchbar-input {
     z-index: 1;
-    font-size: 2.4rem;
     width: 25rem;
-    padding: 0.5rem 0.8rem;
     margin-top: 2rem;
-    border-radius: 1.8rem;
-    border: 2px solid rgb(83, 83, 83);
-    letter-spacing: 0.1rem;
+    font-size: 2.4rem;
     margin-right: 0.5rem;
+    border-radius: 1.8rem;
+    letter-spacing: 0.1rem;
+    padding: 0.5rem 0.8rem;
+    border: 2px solid rgb(83, 83, 83);
   }
 
   .querytype-selector {
     z-index: 1;
-    margin-left: 0.5rem;
     margin-top: 2rem;
-    border-radius: 1.4rem;
     padding: 0 0.5rem;
+    margin-left: 0.5rem;
+    border-radius: 1.4rem;
   }
 }

@@ -1,34 +1,26 @@
-import React from 'react';
-import './SearchBar.scss';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import './SearchBar.scss'
 
-const SearchBar = ({
-  props: { search, setSearch, queryType, setQueryType },
-}) => {
-  const handleChange = ({ target: { value } }) => {
-    setSearch(value);
-  };
-
+const SearchBar = ({ props: { search, setSearch, queryType, setQueryType } }) => {
+  const handleInput = ({ target: { value } }) => setSearch(value)
+  const handleType = ({ target: { value } }) => setQueryType(value)
   return (
-    <div className='searchbar'>
+    <div className="searchbar">
       <input
-        className='searchbar-input'
-        placeholder='search...'
-        type='text'
-        onChange={handleChange}
+        type="text"
         value={search}
+        placeholder="search..."
+        onChange={handleInput}
+        className="searchbar-input"
       />
-      <select
-        className='querytype-selector'
-        value={queryType}
-        onChange={({ target: { value } }) => setQueryType(value)}
-      >
-        <option value='tags'>tags</option>
-        <option value='name'>name</option>
+      <select value={queryType} className="querytype-selector" onChange={handleType}>
+        <option value="tags">tags</option>
+        <option value="name">name</option>
       </select>
     </div>
-  );
-};
+  )
+}
 
 SearchBar.propTypes = {
   props: PropTypes.shape({
@@ -37,6 +29,6 @@ SearchBar.propTypes = {
     queryType: PropTypes.string.isRequired,
     setQueryType: PropTypes.func.isRequired,
   }),
-};
+}
 
-export default SearchBar;
+export default SearchBar
