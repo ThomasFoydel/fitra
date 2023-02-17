@@ -5,69 +5,69 @@ $large: 992px;
 .trainerprofile {
   .email,
   .bio {
-    font-size: 1.5rem;
-    overflow: scroll;
     height: 2.5rem;
+    overflow: scroll;
+    font-size: 1.5rem;
   }
 
   .name {
-    margin-left: 0.5rem;
+    height: 7.6rem;
     margin-top: 1rem;
     font-size: 4.5rem;
     font-weight: bold;
+    margin-left: 0.5rem;
     letter-spacing: 0.4rem;
-    height: 7.6rem;
   }
 
   .cover-pic {
-    width: 100vw;
-    height: 100%;
-    background-position: top;
-    background-size: cover;
-    position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
-    padding-top: 2rem;
+    height: 100%;
+    width: 100vw;
     overflow: scroll;
+    padding-top: 2rem;
+    position: absolute;
+    background-size: cover;
+    background-position: top;
   }
 
   .info {
-    margin-top: 10rem;
-    padding: 2rem 0;
-    background: rgba(255, 255, 255, 0.39);
-    text-align: center;
     height: 48rem;
+    padding: 2rem 0;
+    margin-top: 10rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.39);
   }
 
   .profile-pic {
     width: 25rem;
     height: 25rem;
-    border-radius: 20rem;
-    border: 12px solid hsl(0, 0%, 94%);
-    margin-left: 50%;
-    transform: translateX(-50%);
     display: block;
+    margin-left: 50%;
+    border-radius: 20rem;
+    transform: translateX(-50%);
     background: rgb(240, 240, 240);
+    border: 12px solid hsl(0, 0%, 94%);
   }
 
   .btns {
+    width: 20rem;
     margin-left: 50%;
     transform: translateX(-50%);
-    width: 20rem;
   }
 
   .msg-btn,
   .book-btn,
   .weekshift-btn {
-    background-color: rgba(255, 255, 255, 0.596);
-    border: none;
-    padding: 1rem;
-    margin: 1rem;
-    border-radius: 1rem;
-    transition: all 0.3s ease;
     width: 8rem;
     height: 8rem;
+    margin: 1rem;
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.596);
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.849);
@@ -87,14 +87,14 @@ $large: 992px;
   }
 
   .link {
-    font-size: 1.8rem;
-    text-decoration: none;
-    background: rgba(230, 230, 230, 0.767);
+    color: #ddd;
     padding: 0.4rem;
+    font-size: 1.8rem;
     padding: 0.6rem 1rem;
+    text-decoration: none;
     border-radius: 0.5rem;
     background: rgb(22, 22, 22);
-    color: #ddd;
+    background: rgba(230, 230, 230, 0.767);
 
     &:hover {
       background: rgb(51, 51, 51);
@@ -102,43 +102,43 @@ $large: 992px;
   }
 
   .review-slide {
-    display: flex;
     width: 100%;
+    display: flex;
     overflow-x: scroll;
   }
 
   .review {
-    border: 2px solid rgb(29, 29, 29);
-    border-radius: 1rem;
-    margin: 0.5rem;
-    background: #eee;
     width: 20rem;
     height: 20rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 1rem;
+    margin: 0.5rem;
+    background: #eee;
+    align-items: center;
+    border-radius: 1rem;
+    flex-direction: column;
+    border: 2px solid rgb(29, 29, 29);
 
     .review-profile-pic {
       width: 6rem;
       height: 6rem;
       border-radius: 90rem;
-      border: 3px solid rgb(240, 240, 240);
       background: rgb(240, 240, 240);
+      border: 3px solid rgb(240, 240, 240);
     }
 
     .star-rating {
-      position: relative;
       width: 12rem;
       height: 2rem;
+      position: relative;
       background: black;
 
       .rating-background,
       .stars {
-        position: absolute;
         top: 0;
         left: 0;
         height: 100%;
+        position: absolute;
       }
 
       .stars {
@@ -150,8 +150,8 @@ $large: 992px;
 
 .session-selector {
   .grid-time.unavailable {
-    background: black !important;
     cursor: default;
+    background: black !important;
 
     &:hover {
       background: black !important;
@@ -166,37 +166,38 @@ $large: 992px;
       background: #97c8df !important;
     }
   }
+
   .selected-true {
     background: #139c91 !important;
   }
 
   .ctrls {
-    margin-left: 50%;
-    transform: translateX(-50%);
     height: 20rem;
+    margin-left: 50%;
     text-align: center;
+    transform: translateX(-50%);
 
     .booking {
       height: 10rem;
       padding: 1rem;
-      background: #ddd;
-      border-radius: 0 2rem 0 2rem;
       display: flex;
+      background: #ddd;
+      align-items: center;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
+      border-radius: 0 2rem 0 2rem;
     }
 
     .booking-btn {
-      padding: 0.4rem;
+      border: none;
       width: 15rem;
-      background: rgb(211, 0, 0);
       color: white;
+      padding: 0.4rem;
       font-size: 2.6rem;
       font-weight: bold;
-      transition: all 0.3s ease;
       border-radius: 1rem;
-      border: none;
+      transition: all 0.3s ease;
+      background: rgb(211, 0, 0);
 
       &:hover {
         background-color: rgb(122, 0, 0);
@@ -204,8 +205,8 @@ $large: 992px;
     }
 
     .minmet-false {
-      background: rgb(126, 126, 126);
       opacity: 0.6;
+      background: rgb(126, 126, 126);
     }
 
     .weekshift-btns {
@@ -220,26 +221,26 @@ $large: 992px;
 
   .err {
     height: 2rem;
-    color: rgb(255, 157, 157);
     text-align: center;
+    color: rgb(255, 157, 157);
   }
 
   .drag-n-drop {
-    display: grid;
-    width: 840px;
-    grid-template-columns: repeat(7, 110px);
-    margin-left: 50%;
     top: 4rem;
-    text-align: center;
+    z-index: 2;
     z-index: -1;
-    background: black;
+    width: 840px;
+    display: grid;
+    height: 40rem;
+    margin-left: 50%;
+    overflow-y: scroll;
+    text-align: center;
     border-radius: 8px;
     position: absolute;
-    overflow-y: scroll;
-    height: 40rem;
-    z-index: 2;
-
+    background: black;
     transform: translateX(-50%) scale(1);
+    grid-template-columns: repeat(7, 110px);
+
     @media screen and (max-width: $medium) {
       top: -4rem;
       transform: translateX(-50%) scale(0.65);
@@ -251,59 +252,61 @@ $large: 992px;
   }
 
   .time-grid {
-    display: flex;
     width: 84rem;
+    display: flex;
   }
-  
+
   .grid-time {
     width: 12rem;
     height: 50px;
-    border: 3px solid black;
-    border-radius: 8px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.425);
-    font-weight: bold;
     user-select: none;
+    font-weight: bold;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid black;
+    color: rgba(255, 255, 255, 0.425);
+
     @media screen and (max-width: $medium) {
-      font-size: 1.4rem;
       height: 80px;
+      font-size: 1.4rem;
     }
+
     @media screen and (max-width: $small) {
       height: 120px;
       font-size: 1.7rem;
     }
   }
 
-  .grid-day {
-  }
-
   .labels {
-    margin-top: 1rem;
-    display: flex;
     width: 840px;
-    transform: translateX(-50%);
+    display: flex;
     margin-left: 50%;
+    margin-top: 1rem;
+    transform: translateX(-50%);
+
     .day-label {
       width: 150px;
       text-align: center;
       color: rgb(196, 196, 196);
     }
+
     .today-true {
-      color: rgb(255, 255, 255);
       font-weight: bold;
+      color: rgb(255, 255, 255);
     }
 
     @media screen and (max-width: $medium) {
+      font-size: 1.3rem;
+      font-weight: bold;
       transform: translateX(-50%) scale(0.65);
-      font-size: 1.3rem;
-      font-weight: bold;
     }
+
     @media screen and (max-width: $small) {
-      transform: translateX(-50%) scale(0.4);
       font-size: 1.3rem;
       font-weight: bold;
+      transform: translateX(-50%) scale(0.4);
     }
   }
 }
