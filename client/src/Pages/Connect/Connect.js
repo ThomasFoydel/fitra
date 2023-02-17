@@ -1,251 +1,212 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import axios from 'axios';
-import Peer from 'peerjs';
-import './Connect.scss';
-import { CTX } from 'context/Store';
-import { Navigate } from 'react-router-dom';
+import axios from 'axios'
+import Peer from 'peerjs'
+import { Navigate } from 'react-router-dom'
+import React, { useState, useEffect, useRef, useContext } from 'react'
+import { CTX } from 'context/Store'
+import './Connect.scss'
 
 const objectFilter = function (obj, keyToFilterOut) {
-  let result = {};
-  let keys = Object.keys(obj);
-  keys.forEach((key) => {
+  let result = {}
+  Object.keys(obj).forEach((key) => {
     if (key !== keyToFilterOut) {
-      result[key] = obj[keyToFilterOut];
+      result[key] = obj[keyToFilterOut]
     }
-  });
-  return result;
-};
+  })
+  return result
+}
 
 const Video = ({ stream }) => {
-  const ref = useRef();
+  const ref = useRef()
   useEffect(() => {
-    ref.current.srcObject = stream;
-  }, []);
-  return <video playsInline autoPlay ref={ref} className='peer-video' />;
-};
+    ref.current.srcObject = stream
+  }, [])
+  return <video playsInline autoPlay ref={ref} className="peer-video" />
+}
 
-const Connect = ({ match, socket }) => {
-  const [appState] = useContext(CTX);
-  let {
-    user: { type, name },
-    isLoggedIn,
-  } = appState;
-  const { connectionId } = match.params;
-  const [myVideoStream, setMyVideoStream] = useState(null);
-  const [peers, setPeers] = useState({});
-  const peersRef = useRef({});
-  const streamsRef = useRef({});
-  const [videoStreams, setVideoStreams] = useState({});
-  const [icons, setIcons] = useState({ video: false, audio: false });
-  const [chatInput, setChatInput] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
+const Connect = ({ socket }) => {
+  const [{ user, isLoggedIn }] = useContext(CTX)
+  const { type, name } = user
+  const [icons, setIcons] = useState({ video: false, audio: false })
+  const [myVideoStream, setMyVideoStream] = useState(null)
+  const [videoStreams, setVideoStreams] = useState({})
+  const [errorMessage, setErrorMessage] = useState('')
+  const [chatInput, setChatInput] = useState('')
+  const [messages, setMessages] = useState([])
+  const [peers, setPeers] = useState({})
+  const { connectionId } = useParams()
+  const streamsRef = useRef({})
+  const peersRef = useRef({})
+  const myVideoRef = useRef()
+  const scrollRef = useRef()
 
-  const myVideoRef = useRef();
-  const scrollRef = useRef();
   const addVideoStream = (userVideoStream, id) => {
-    setVideoStreams({
-      ...videoStreams,
-      [id]: { stream: userVideoStream },
-    });
-    streamsRef.current = {
-      ...streamsRef.current,
-      [id]: { stream: userVideoStream },
-    };
-  };
-
-  useEffect(() => {
-    let subscribed = true;
-    const token = localStorage.getItem('fitr-token');
-    let myPeer;
-    axios
-      .get(`/api/connect/${connectionId}`, {
-        headers: { 'x-auth-token': token },
-      })
-      .then(async ({ data }) => {
-        if (data.err) {
-          if (subscribed) setErrorMessage(data.err);
-        } else {
-          myPeer = new Peer();
-          myPeer.on('open', (id) => {
-            socket.emit('join-room', {
-              peerId: id,
-              mySocketId: socket.id,
-              roomId: data.roomId,
-              token: token,
-            });
-          });
-
-          let stream = null;
-
-          try {
-            stream = await navigator.mediaDevices.getUserMedia({
-              video: true,
-              audio: true,
-            });
-          } catch (err) {
-            console.log('connect media error: ', err);
-          }
-
-          myVideoRef.current.srcObject = stream;
-          setMyVideoStream(stream);
-
-          myPeer.on('call', function (call) {
-            call.answer(stream, { metadata: socket.id });
-            call.on('stream', function (callStream) {
-              addVideoStream(callStream, call.metadata);
-            });
-          });
-
-          socket.on('user-connected', ({ userId, mySocketId }) => {
-            if (userId) connectToNewUser(userId, stream, mySocketId);
-          });
-
-          socket.on('create-message', (message) => {
-            setMessages((messages) => [...messages, message]);
-          });
-
-          socket.on('user-disconnected', (userId) => {
-            if (peersRef.current[userId]) peersRef.current[userId].close();
-            const copy = Object.create({ ...peersRef.current });
-            delete copy[userId];
-            peersRef.current = copy;
-          });
-
-          function connectToNewUser(userId, stream, userSocketId) {
-            /* call peer */
-            const call = myPeer.call(userId, stream, {
-              metadata: userSocketId,
-            });
-            if (call) {
-              call.on('stream', (userVideoStream) => {
-                addVideoStream(userVideoStream, call.metadata);
-              });
-              call.on('close', () => {
-                call.removeAllListeners();
-                call.close();
-                peersRef.current[userSocketId].close();
-                peersRef.current[userSocketId].removeAllListeners();
-                const copy = Object.assign({ ...videoStreams });
-                const filtered = objectFilter(copy, userSocketId);
-                setVideoStreams(filtered);
-              });
-              setPeers({ ...peers, [userSocketId]: call });
-              peersRef.current = { ...peersRef.current, [userSocketId]: call };
-            }
-          }
-        }
-      });
-
-    return async () => {
-      subscribed = false;
-      if (socket) socket.emit('disconnect-room', socket.id);
-      if (myPeer) myPeer.destroy();
-    };
-  }, []);
-
-  useEffect(() => {
-    return () =>
-      myVideoStream &&
-      myVideoStream.getTracks().forEach((track) => track.stop());
-  }, [myVideoStream]);
-
-  const playStop = () => {
-    if (myVideoStream) {
-      let enabled = myVideoStream.getVideoTracks()[0].enabled;
-      setIcons({ ...icons, video: !icons.video });
-      if (enabled) myVideoStream.getVideoTracks()[0].enabled = false;
-      else myVideoStream.getVideoTracks()[0].enabled = true;
-    }
-  };
-
-  const muteUnmute = () => {
-    if (myVideoStream) {
-      if (myVideoStream.getAudioTracks().length === 0) return;
-      const enabled = myVideoStream.getAudioTracks()[0].enabled;
-      setIcons({ ...icons, audio: !icons.audio });
-      if (enabled) myVideoStream.getAudioTracks()[0].enabled = false;
-      else myVideoStream.getAudioTracks()[0].enabled = true;
-    }
-  };
-
-  const handleSubmit = () => {
-    socket.emit('message', { content: chatInput, name });
-    setChatInput('');
-  };
-  const handleChatInput = (e) => {
-    let { value } = e.target;
-    setChatInput(value);
-  };
-  const handleKeyDown = (e) => {
-    if (e.charCode === 13) {
-      handleSubmit();
-    }
-  };
-
-  function scrollToBottom() {
-    scrollRef.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'start',
-    });
+    setVideoStreams({ ...videoStreams, [id]: { stream: userVideoStream } })
+    streamsRef.current = { ...streamsRef.current, [id]: { stream: userVideoStream } }
   }
 
   useEffect(() => {
-    if (messages && scrollRef.current) {
-      scrollToBottom();
-    }
-  }, [messages]);
+    let subscribed = true
+    const token = localStorage.getItem('fitr-token')
+    let myPeer
+    axios
+      .get(`/api/connect/${connectionId}`, { headers: { 'x-auth-token': token } })
+      .then(async ({ data }) => {
+        if (!subscribed) return
+        if (data.err) return setErrorMessage(data.err)
 
-  let isTrainer = type === 'trainer';
+        myPeer = new Peer()
+        myPeer.on('open', (id) => {
+          socket.emit('join-room', {
+            peerId: id,
+            mySocketId: socket.id,
+            roomId: data.roomId,
+            token: token,
+          })
+        })
+
+        let stream = null
+
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        } catch (err) {
+          console.log('connect media error: ', err)
+        }
+
+        myVideoRef.current.srcObject = stream
+        setMyVideoStream(stream)
+
+        myPeer.on('call', function (call) {
+          call.answer(stream, { metadata: socket.id })
+          call.on('stream', function (callStream) {
+            addVideoStream(callStream, call.metadata)
+          })
+        })
+
+        socket.on('user-connected', ({ userId, mySocketId }) => {
+          if (userId) connectToNewUser(userId, stream, mySocketId)
+        })
+
+        socket.on('create-message', (message) => {
+          setMessages((messages) => [...messages, message])
+        })
+
+        socket.on('user-disconnected', (userId) => {
+          if (peersRef.current[userId]) peersRef.current[userId].close()
+          const copy = Object.create({ ...peersRef.current })
+          delete copy[userId]
+          peersRef.current = copy
+        })
+
+        function connectToNewUser(userId, stream, userSocketId) {
+          /* call peer */
+          const call = myPeer.call(userId, stream, { metadata: userSocketId })
+          if (call) {
+            call.on('stream', (userVideoStream) => addVideoStream(userVideoStream, call.metadata))
+            call.on('close', () => {
+              call.removeAllListeners()
+              call.close()
+              peersRef.current[userSocketId].close()
+              peersRef.current[userSocketId].removeAllListeners()
+              const copy = Object.assign({ ...videoStreams })
+              const filtered = objectFilter(copy, userSocketId)
+              setVideoStreams(filtered)
+            })
+            setPeers({ ...peers, [userSocketId]: call })
+            peersRef.current = { ...peersRef.current, [userSocketId]: call }
+          }
+        }
+      })
+
+    return async () => {
+      subscribed = false
+      if (socket) socket.emit('disconnect-room', socket.id)
+      if (myPeer) myPeer.destroy()
+    }
+  }, [])
+
+  useEffect(() => {
+    return () => myVideoStream && myVideoStream.getTracks().forEach((track) => track.stop())
+  }, [myVideoStream])
+
+  const playStop = () => {
+    if (myVideoStream) {
+      const enabled = myVideoStream.getVideoTracks()[0].enabled
+      setIcons({ ...icons, video: !icons.video })
+      if (enabled) myVideoStream.getVideoTracks()[0].enabled = false
+      else myVideoStream.getVideoTracks()[0].enabled = true
+    }
+  }
+
+  const muteUnmute = () => {
+    if (myVideoStream) {
+      if (myVideoStream.getAudioTracks().length === 0) return
+      const enabled = myVideoStream.getAudioTracks()[0].enabled
+      setIcons({ ...icons, audio: !icons.audio })
+      if (enabled) myVideoStream.getAudioTracks()[0].enabled = false
+      else myVideoStream.getAudioTracks()[0].enabled = true
+    }
+  }
+
+  const handleSubmit = () => {
+    setChatInput('')
+    socket.emit('message', { content: chatInput, name })
+  }
+
+  const handleChatInput = ({ target: { value } }) => setChatInput(value)
+
+  const handleKeyDown = (e) => {
+    if (e.charCode === 13) {
+      handleSubmit()
+    }
+  }
+
+  function scrollToBottom() {
+    scrollRef.current.scrollIntoView({
+      inline: 'start',
+      block: 'nearest',
+      behavior: 'smooth',
+    })
+  }
+
+  useEffect(() => {
+    if (messages && scrollRef.current) scrollToBottom()
+  }, [messages])
 
   return (
     <>
       {socket || connectionId || isLoggedIn ? (
-        <div className='connect'>
-          <div className='videochat'>
-            <video
-              ref={myVideoRef}
-              muted
-              autoPlay
-              playsInline
-              className='my-video'
-            />
-            {errorMessage && <p className='err-msg'>{errorMessage} </p>}
+        <div className="connect">
+          <div className="videochat">
+            <video ref={myVideoRef} muted autoPlay playsInline className="my-video" />
+            {errorMessage && <p className="err-msg">{errorMessage} </p>}
             {Object.keys(videoStreams).map((userId) => {
-              return (
-                <Video stream={videoStreams[userId].stream} key={userId} />
-              );
+              return <Video stream={videoStreams[userId].stream} key={userId} />
             })}
 
-            <div className='controls'>
-              <div className='controls-block'>
-                <button onClick={playStop} className='control-btn'>
+            <div className="controls">
+              <div className="controls-block">
+                <button onClick={playStop} className="control-btn">
                   <i
-                    className={`fas ${
-                      !icons.video ? 'fa-video' : 'fa-video-slash stop'
-                    }`}
-                    id='stopstart'
+                    id="stopstart"
+                    className={`fas ${!icons.video ? 'fa-video' : 'fa-video-slash stop'}`}
                   ></i>
                   <span>stop/start</span>
                 </button>
-                <button className='control-btn' onClick={muteUnmute}>
+                <button className="control-btn" onClick={muteUnmute}>
                   <i
+                    id="muteunmute"
                     className={`fas ${
-                      !icons.audio
-                        ? 'fa-microphone'
-                        : 'fa-microphone-slash unmute'
+                      !icons.audio ? 'fa-microphone' : 'fa-microphone-slash unmute'
                     }`}
-                    id='muteunmute'
-                  ></i>
+                  />
                   <span>Mute</span>
                 </button>
               </div>
             </div>
           </div>
-          <div className='messenger'>
-            <div className='window'>
-              <ul className='messages'>
+          <div className="messenger">
+            <div className="window">
+              <ul className="messages">
                 {messages.map((message, i) => (
                   <li key={i}>
                     <strong>{message.name}</strong>: {message.content}
@@ -254,29 +215,23 @@ const Connect = ({ match, socket }) => {
                 <div ref={scrollRef} />
               </ul>
             </div>
-            <div className='message_container'>
+            <div className="message_container">
               <input
                 onKeyPress={handleKeyDown}
                 onChange={handleChatInput}
                 value={chatInput}
-                id='chat_message'
-                type='text'
-                placeholder='message...'
+                id="chat_message"
+                type="text"
+                placeholder="message..."
               />
             </div>
           </div>
         </div>
       ) : (
-        <Navigate to={`/${isTrainer ? 'coachportal/' : null}`} />
+        <Navigate to={`/${type === 'trainer' ? 'coachportal/' : null}`} />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Connect;
-
-/* const videoConstraints = {
-   height: window.innerHeight / 2,
-   width: window.innerWidth / 2,
- };
-*/
+export default Connect
