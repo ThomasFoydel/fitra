@@ -1,54 +1,61 @@
 .settings {
-  background: rgba(255, 255, 255, 0.788);
   width: 50%;
-  min-width: 30rem;
   margin-left: 50%;
-  transform: translateX(-50%);
+  min-width: 30rem;
   margin-top: 5rem;
   border-radius: 4rem;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.788);
 
   .header {
-    margin-top: 8rem;
     font-size: 4rem;
+    margin-top: 8rem;
   }
+
   .form {
-    margin-top: 4rem;
-    background: rgba(22, 22, 22, 0.192);
-    text-align: center;
     padding: 1rem 0;
+    margin-top: 4rem;
+    text-align: center;
+    background: rgba(22, 22, 22, 0.192);
   }
+
   a {
     color: rgb(54, 54, 54);
   }
 
   .setting-item {
     font-size: 2rem;
+
     a {
       text-decoration: none;
+
       &:hover {
         text-decoration: underline;
       }
     }
   }
+
   a.delete-btn {
+    opacity: 0.7;
     color: #ddd;
     text-decoration: none;
-    background: rgb(165, 0, 0);
-    padding: 0.2rem 0.5rem;
     border-radius: 0.5rem;
-    opacity: 0.7;
+    padding: 0.2rem 0.5rem;
     transition: all 0.2s ease;
+    background: rgb(165, 0, 0);
+
     &:hover {
-      color: rgb(7, 7, 7);
       opacity: 1;
+      color: rgb(7, 7, 7);
       text-decoration: none;
     }
   }
 }
 
 .settings.dm-true {
-  background: black;
   color: #888;
+  background: black;
+
   h1,
   div {
     color: #888;
