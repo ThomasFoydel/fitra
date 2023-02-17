@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import Image from 'Components/Image/Image'
 import loadingSpin from 'imgs/loading/spin.gif'
+import Image from 'Components/Image/Image'
 import { CTX } from 'context/Store'
 import './ClientProfile.scss'
 
@@ -52,9 +52,9 @@ const ClientProfile = () => {
           >
             <div className="info">
               <Image
-                src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
-                alt={profilePic ? "user's profile" : 'loading profile'}
                 name="profile-pic"
+                alt={profilePic ? "user's profile" : 'loading profile'}
+                src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
               />
               <div className="section-1">
                 <div className="name">{name}</div>
