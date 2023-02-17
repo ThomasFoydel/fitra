@@ -1,23 +1,5 @@
 export default {
-  post: jest.fn((url, body) => {
-    return Promise.resolve({
-      data: {
-        active: body.value,
-      },
-    });
-  }),
-  put: jest.fn((url, body) => {
-    return Promise.resolve({
-      data: {
-        active: body.value,
-      },
-    });
-  }),
-  get: jest.fn((url, body) => {
-    return Promise.resolve({
-      data: {
-        active: body.value,
-      },
-    });
-  }),
-};
+  post: jest.fn((_, body) => Promise.resolve({ data: { active: body.value } })),
+  put: jest.fn((_, body) => Promise.resolve({ data: { active: body.value } })),
+  get: jest.fn((_, body) => Promise.resolve({ data: { active: body.value } })),
+}
