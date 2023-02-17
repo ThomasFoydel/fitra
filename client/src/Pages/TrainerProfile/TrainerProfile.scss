@@ -1,6 +1,4 @@
-$small: 576px;
-$medium: 850px;
-$large: 992px;
+@import "variables";
 
 .trainerprofile {
   .email,
@@ -215,8 +213,8 @@ $large: 992px;
 
   .relative-container {
     height: 50rem;
-    overflow-y: hidden;
     position: relative;
+    overflow-y: hidden;
   }
 
   .err {
@@ -233,10 +231,10 @@ $large: 992px;
     display: grid;
     height: 40rem;
     margin-left: 50%;
-    overflow-y: scroll;
-    text-align: center;
     border-radius: 8px;
     position: absolute;
+    overflow-y: scroll;
+    text-align: center;
     background: black;
     transform: translateX(-50%) scale(1);
     grid-template-columns: repeat(7, 110px);
