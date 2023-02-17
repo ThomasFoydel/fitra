@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
-import SearchBar from 'Components/SearchBar/SearchBar'
-import './Trainers.scss'
-import TrainerCard from './TrainerCard'
+import React, { useState, useEffect, useRef } from 'react'
 import { config, animated, useTransition } from 'react-spring'
+import SearchBar from 'Components/SearchBar/SearchBar'
+import TrainerCard from './TrainerCard'
+import './Trainers.scss'
 
 const suggestionTags = ['mma', 'yoga', 'diet', 'pilates', 'boxing', 'cardio', 'calisthenics']
 
@@ -29,6 +29,7 @@ const Trainers = () => {
   }
 
   const didMountRef = useRef(false)
+
   useEffect(() => {
     let subscribed = true
     if (didMountRef.current) {
@@ -39,28 +40,12 @@ const Trainers = () => {
     return () => (subscribed = false)
   }, [err])
 
-  // const animation = useTransition(currentTrainers, (item) => item._id, {
-  //   from: { opacity: '0', height: '0rem', transform: 'translateY(-20px)' },
-  //   enter: { opacity: '1', height: '22rem', transform: 'translateY(0px)' },
-  //   leave: {
-  //     opacity: '0',
-  //     height: '0rem',
-  //     transform: 'translateY(0px)',
-  //   },
-  //   trail: 300,
-  //   config: config.molasses,
-  // });
-
   const transition = useTransition(currentTrainers, {
-    from: { opacity: '0', height: '0rem', transform: 'translateY(-20px)' },
-    enter: { opacity: '1', height: '22rem', transform: 'translateY(0px)' },
-    leave: {
-      opacity: '0',
-      height: '0rem',
-      transform: 'translateY(0px)',
-    },
     trail: 300,
     config: config.molasses,
+    from: { opacity: '0', height: '0rem', transform: 'translateY(-20px)' },
+    enter: { opacity: '1', height: '22rem', transform: 'translateY(0px)' },
+    leave: { opacity: '0', height: '0rem', transform: 'translateY(0px)' },
   })
 
   return (
@@ -88,15 +73,6 @@ const Trainers = () => {
             <TrainerCard props={{ trainer: item, tagSearch }} />
           </animated.div>
         ))}
-        {/* {animation.map(({ item, props, key }) => (
-          <animated.div
-            style={props}
-            className='trainer-animation-container'
-            key={key}
-          >
-            <TrainerCard props={{ trainer: item, tagSearch }} />
-          </animated.div>
-        ))} */}
         <div className="err">{err}</div>
       </div>
     </div>

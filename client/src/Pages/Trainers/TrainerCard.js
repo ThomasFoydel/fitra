@@ -8,9 +8,9 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
   const [hover, setHover] = useState(false)
 
   const animation = useSpring({
+    config: config.wobbly,
     transform: hover ? 'scale(1.03)' : 'scale(1)',
     background: hover ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.8)',
-    config: config.wobbly,
   })
 
   const handleTag = ({ target }) => tagSearch(target.id)
@@ -18,12 +18,8 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
   const { _id, coverPic, name, profilePic, bio, tags } = trainer
 
   return (
-    <div
-      className="card-container"
-      onMouseOver={() => setHover(true)}
-      onMouseOut={() => setHover(false)}
-    >
-      <Link to={`/trainer/${_id}`} key={_id} style={{ textDecoration: 'inherit' }}>
+    <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
+      <Link to={`/trainer/${_id}`} key={_id} className="link">
         <animated.div className="trainer-card" style={animation}>
           <div className="left-section">
             <Image alt="trainer's cover" name="coverpic" src={`/api/image/${coverPic}`} />
