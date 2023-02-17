@@ -63,7 +63,7 @@ export function reducer(state, action) {
     case 'EDIT_PROFILE':
       return { ...state, user: { ...state.user, ...res } }
     default:
-      console.log('REDUCER ERROR: action: ', action)
+      console.error('REDUCER ERROR: action: ', action)
       return { ...state }
   }
 }
