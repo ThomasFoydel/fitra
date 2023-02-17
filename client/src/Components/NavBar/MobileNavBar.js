@@ -1,40 +1,34 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSpring, animated, config } from 'react-spring';
-import PropTypes from 'prop-types';
-import hamburger from 'imgs/icons/hamburger.svg';
-import { CTX } from 'context/Store';
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { useSpring, animated, config } from 'react-spring'
+import hamburger from 'imgs/icons/hamburger.svg'
+import { CTX } from 'context/Store'
 
 const MobileNavBar = ({
   props: { isLoggedIn, openLogin, trainerExt, logout, isTrainer, currentPage },
 }) => {
-  const [appState] = useContext(CTX);
-  const [sideBarOpen, setSideBarOpen] = useState(false);
+  const [{ user }] = useContext(CTX)
+  const [sideBarOpen, setSideBarOpen] = useState(false)
 
-  const sideBarAnimation = useSpring({
-    left: sideBarOpen ? 0 : -280,
-    config: config.smooth,
-  });
+  const sideBarAnimation = useSpring({ config: config.smooth, left: sideBarOpen ? 0 : -280 })
 
   return (
     <div>
-      <div className='white-border'></div>
+      <div className="white-border"></div>
       <animated.div
-        className='mobile-sidebar'
         style={sideBarAnimation}
+        className="mobile-sidebar"
         onClick={() => setSideBarOpen(false)}
       >
         {!isTrainer && (
-          <Link
-            to='/trainers'
-            className={`link ${currentPage === 'trainers' && 'current-nav'}`}
-          >
+          <Link to="/trainers" className={`link ${currentPage === 'trainers' && 'current-nav'}`}>
             Trainers
           </Link>
         )}
         {!isLoggedIn && (
           <>
-            <button onClick={openLogin} className='link login-btn'>
+            <button onClick={openLogin} className="link login-btn">
               Login
             </button>
           </>
@@ -44,9 +38,7 @@ const MobileNavBar = ({
             {isTrainer && (
               <Link
                 to={`${trainerExt}/schedule`}
-                className={`link ${
-                  currentPage === 'schedule' && 'current-nav'
-                }`}
+                className={`link ${currentPage === 'schedule' && 'current-nav'}`}
               >
                 Schedule
               </Link>
@@ -58,10 +50,8 @@ const MobileNavBar = ({
               Messages
             </Link>
             <Link
-              to={`/${isTrainer ? 'trainer' : 'user'}/${appState.user.id}`}
-              className={`link ${
-                currentPage === 'ownprofile' && 'current-nav'
-              }`}
+              to={`/${isTrainer ? 'trainer' : 'user'}/${user.id}`}
+              className={`link ${currentPage === 'ownprofile' && 'current-nav'}`}
             >
               Profile
             </Link>
@@ -71,40 +61,40 @@ const MobileNavBar = ({
             >
               Settings
             </Link>
-            <button className='logout-btn' onClick={logout}>
-              <div className='link'>Logout</div>
+            <button className="logout-btn" onClick={logout}>
+              <div className="link">Logout</div>
             </button>
           </>
         )}
       </animated.div>
-      <div className='mobile-navbar'>
+      <div className="mobile-navbar">
         <Link
-          to={isLoggedIn ? `${trainerExt}/` : '/'}
-          className='home-link'
+          className="home-link"
           onClick={() => setSideBarOpen(false)}
+          to={isLoggedIn ? `${trainerExt}/` : '/'}
         >
-          <h2 className='logo-title'>FITRA</h2>
+          <h2 className="logo-title">FITRA</h2>
         </Link>
         <img
-          alt='open navigation'
           src={hamburger}
+          className="open-btn"
+          alt="open navigation"
           onClick={() => setSideBarOpen((o) => !o)}
-          className='open-btn'
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MobileNavBar;
+export default MobileNavBar
 
 MobileNavBar.propTypes = {
   props: PropTypes.shape({
-    isLoggedIn: PropTypes.bool.isRequired,
-    openLogin: PropTypes.func.isRequired,
-    trainerExt: PropTypes.string.isRequired,
     logout: PropTypes.func.isRequired,
+    openLogin: PropTypes.func.isRequired,
     isTrainer: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+    trainerExt: PropTypes.string.isRequired,
     currentPage: PropTypes.string.isRequired,
   }),
-};
+}

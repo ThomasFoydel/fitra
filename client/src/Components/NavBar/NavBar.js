@@ -1,57 +1,45 @@
-import React, { useContext, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-
-import './NavBar.scss';
-import { CTX } from 'context/Store';
-import MobileNavBar from './MobileNavBar';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import MobileNavBar from './MobileNavBar'
+import { CTX } from 'context/Store'
+import './NavBar.scss'
 
 const NavBar = () => {
-  const location = useLocation();
-  const [appState, updateState] = useContext(CTX);
-  const { isLoggedIn, user } = appState;
-  const currentPage = parsePage(location.pathname, appState.user || {});
-  const [redirect, setRedirect] = useState(false);
+  const location = useLocation()
+  const [{ isLoggedIn, user, showAuth }, updateState] = useContext(CTX)
 
-  const isTrainer = user.type === 'trainer';
-  const trainerExt = isTrainer ? '/coachportal' : '';
+  const currentPage = parsePage(location.pathname, user || {})
+  const [redirect, setRedirect] = useState(false)
+
+  const isTrainer = user.type === 'trainer'
+  const trainerExt = isTrainer ? '/coachportal' : ''
 
   const logout = () => {
-    updateState({ type: 'LOGOUT' });
-    setTimeout(() => {
-      setRedirect(true);
-    }, 700);
-  };
+    updateState({ type: 'LOGOUT' })
+    setTimeout(() => setRedirect(true), 700)
+  }
 
   const openLogin = () => {
-    if (appState.showAuth) return;
-    updateState({
-      type: 'CHANGE_AUTH_TYPE',
-      payload: { type: 'client' },
-    });
-    updateState({
-      type: 'CHANGE_AUTH_PAGE',
-      payload: { page: 'login' },
-    });
-    updateState({ type: 'TOGGLE_AUTH' });
-  };
+    if (showAuth) return
+    updateState({ type: 'CHANGE_AUTH_TYPE', payload: { type: 'client' } })
+    updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page: 'login' } })
+    updateState({ type: 'TOGGLE_AUTH' })
+  }
 
   return (
     <>
-      {redirect && <Navigate to='/' />}
-      <div className='navbar'>
+      {redirect && <Navigate to="/" />}
+      <div className="navbar">
         <Link
           to={isLoggedIn ? `${trainerExt}/` : '/'}
           className={`home-link ${currentPage === 'home' && 'current-nav'}`}
         >
-          <h2 className='logo-title'>FITRA</h2>
+          <h2 className="logo-title">FITRA</h2>
         </Link>
 
         {!isTrainer && (
-          <Link
-            to='/trainers'
-            className={`link ${currentPage === 'trainers' && 'current-nav'}`}
-          >
+          <Link to="/trainers" className={`link ${currentPage === 'trainers' && 'current-nav'}`}>
             Trainers
           </Link>
         )}
@@ -61,9 +49,7 @@ const NavBar = () => {
             {isTrainer && (
               <Link
                 to={`${trainerExt}/schedule`}
-                className={`link ${
-                  currentPage === 'schedule' && 'current-nav'
-                }`}
+                className={`link ${currentPage === 'schedule' && 'current-nav'}`}
               >
                 Schedule
               </Link>
@@ -75,10 +61,8 @@ const NavBar = () => {
               Messages
             </Link>
             <Link
-              to={`/${isTrainer ? 'trainer' : 'user'}/${appState.user.id}`}
-              className={`link ${
-                currentPage === 'ownprofile' && 'current-nav'
-              }`}
+              to={`/${isTrainer ? 'trainer' : 'user'}/${user.id}`}
+              className={`link ${currentPage === 'ownprofile' && 'current-nav'}`}
             >
               Profile
             </Link>
@@ -88,54 +72,40 @@ const NavBar = () => {
             >
               Settings
             </Link>
-            <button className='logout-btn' onClick={logout}>
-              <div className='link'>Logout</div>
+            <button className="logout-btn" onClick={logout}>
+              <div className="link">Logout</div>
             </button>
           </>
         )}
 
         {!isLoggedIn && (
-          <button onClick={openLogin} className='link login-btn'>
+          <button onClick={openLogin} className="link login-btn">
             Login
           </button>
         )}
       </div>
       <MobileNavBar
         props={{
-          isLoggedIn,
+          logout,
           openLogin,
           isTrainer,
+          isLoggedIn,
           trainerExt,
-          logout,
           currentPage,
         }}
       />
       <div style={{ height: '6rem' }} />
     </>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar
 
 var parsePage = (string, user) => {
-  if (string.substring(0, 12) === '/coachportal') string = string.slice(12);
-  if (string === `/${user.type === 'client' ? 'user' : 'trainer'}/${user.id}`)
-    return 'ownprofile';
-  else if (string === '/') return 'home';
-  else if (string.substring(0, 9) === '/trainer/') return 'trainer';
-  else if (string.substring(0, 6) === '/user/') return 'user';
-  else return string.substring(1, string.length);
-};
-
-/* 
-pages: 
-/settings
-/trainer/:id
-/user/:id
-/editprofile
-/messages
-/schedule
-/trainers
-/
-/terms-of-use
-*/
+  if (string.substring(0, 12) === '/coachportal') string = string.slice(12)
+  if (string === `/${user.type === 'client' ? 'user' : 'trainer'}/${user.id}`) return 'ownprofile'
+  else if (string === '/') return 'home'
+  else if (string.substring(0, 9) === '/trainer/') return 'trainer'
+  else if (string.substring(0, 6) === '/user/') return 'user'
+  else return string.substring(1, string.length)
+}
