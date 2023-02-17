@@ -1,8 +1,8 @@
 import axios from 'axios'
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { days, halfHours, setUpWeek, dateFromDateAndTime } from '../../util/util'
-import { CTX } from 'context/Store'
 import PayPal from 'Components/PayPal/PayPal'
+import { CTX } from 'context/Store'
 
 const SessionSelector = ({
   selection,
