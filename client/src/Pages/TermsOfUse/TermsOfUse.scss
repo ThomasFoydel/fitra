@@ -1,26 +1,31 @@
-@import "variables";
+@import 'variables';
 
 .terms-of-service {
+  padding: 4rem;
   background: #000;
   color: lightgrey;
-  padding: 4rem;
+
   h2 {
-    text-align: center;
     font-size: 9rem;
     line-height: 8rem;
+    text-align: center;
+
     @media screen and (max-width: $medium) {
       font-size: 6rem;
       line-height: 5rem;
     }
   }
+
   h3 {
     font-size: 3rem;
-    line-height: 4rem;
     margin-top: 5rem;
+    line-height: 4rem;
   }
+
   p {
     padding: 1rem;
   }
+
   li {
     list-style: none;
     margin-left: 1rem;
