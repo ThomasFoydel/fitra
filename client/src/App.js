@@ -1,5 +1,7 @@
 import axios from 'axios'
 import io from 'socket.io-client'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 import React, { useEffect, useContext, useRef } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import TrainerLandingPage from 'Pages/CoachPages/TrainerLandingPage/TrainerLandingPage'
@@ -162,6 +164,7 @@ function App() {
         </Routes>
 
         {!isLoggedIn && showAuth && <Auth trainer={false} />}
+        <ToastContainer position="bottom-right" theme="dark" limit={5} />
       </Router>
     </div>
   )
