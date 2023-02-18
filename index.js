@@ -5,7 +5,6 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const socketio = require('socket.io')
-
 const trainerRoutes = require('./routes/Trainer')
 const sessionRoutes = require('./routes/Session')
 const connectRoutes = require('./routes/Connect')
@@ -27,16 +26,13 @@ app.use('/api/session', sessionRoutes)
 app.use('/api/connect', connectRoutes)
 app.use('/api/client', clientRoutes)
 app.use('/api/image', imageRoutes)
-app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/auth', authRoutes)
 
 let users = []
 
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     const expressServer = app.listen(process.env.PORT || 8000)
 
@@ -65,19 +61,16 @@ mongoose
     io.on('connection', (socket) => {
       /* set up initial connection for chat and notifications */
       const token = socket.handshake.query.token
-      if (!token) return console.log('No token, auth denied')
+      if (!token) return console.error('No token, auth denied')
 
       try {
         const decoded = jwt.verify(token, process.env.SECRET)
-        let current_time = Date.now() / 1000
-        if (decoded.exp < current_time) {
+        const currentTime = Date.now() / 1000
+        if (decoded.exp >= currentTime) {
           /* token is expired, not authorized */
         } else {
-          let { userId } = decoded.tokenUser
-          const currentUser = {
-            userId: userId,
-            socketId: socket.id,
-          }
+          const { userId } = decoded.tokenUser
+          const currentUser = { userId: userId, socketId: socket.id }
           users = users.filter((user) => user.userId !== userId)
           users.push(currentUser)
         }
@@ -111,18 +104,16 @@ mongoose
 
       socket.on('returning signal', ({ callerId, signal, returningPeer }) => {
         io.to(callerId).emit('receiving returned signal', {
-          signal: signal,
           id: socket.id,
           returningPeer,
+          signal: signal,
         })
       })
     })
 
     if (process.env.NODE_ENV === 'production') {
       app.use(express.static(path.join(__dirname, 'client/build')))
-      app.get('*', (_, res) => {
-        res.sendFile(path.join(__dirname + '/client/build/index.html'))
-      })
+      app.get('*', (_, res) => res.sendFile(path.join(__dirname + '/client/build/index.html')))
     }
   })
   .catch((err) => console.error('Database connection error: ', err))
