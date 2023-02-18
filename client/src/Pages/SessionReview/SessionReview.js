@@ -25,7 +25,7 @@ const SessionReview = () => {
         headers: { 'x-auth-token': appState.user.token },
       })
       .then(() => setRedirect(true))
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
 
   return (

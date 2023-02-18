@@ -23,7 +23,7 @@ const Settings = () => {
           payload: { type: 'darkmode', value: settings.darkmode },
         })
       })
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
 
   return (

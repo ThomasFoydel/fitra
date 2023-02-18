@@ -38,8 +38,9 @@ const EditProfile = () => {
           })
         }
       })
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
+
   return (
     <>
       <div className="background" />

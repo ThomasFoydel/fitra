@@ -13,7 +13,7 @@ const RateEditor = ({ props: { rate, onComplete, token } }) => {
         { headers: { 'x-auth-token': token } }
       )
       .then(({ data: { settings } }) => onComplete({ type: 'rate', value: settings.rate }))
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
 
   return (

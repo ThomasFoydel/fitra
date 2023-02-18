@@ -18,7 +18,7 @@ const Delete = () => {
         headers: { 'x-auth-token': token, pass: inputVal },
       })
       .then(() => updateState({ type: 'LOGOUT' }))
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
 
   const handleInput = ({ target: { value } }) => setInputVal(value)

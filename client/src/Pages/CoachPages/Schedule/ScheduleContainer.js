@@ -18,7 +18,7 @@ const ScheduleContainer = () => {
     axios
       .put('/api/trainer/schedule/', e, { headers: { 'x-auth-token': token } })
       .then(({ data: { updatedSchedule } }) => setEntries(updatedSchedule))
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const ScheduleContainer = () => {
         setMin(min)
         setMax(max)
       })
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
 
   return (

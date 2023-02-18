@@ -13,7 +13,7 @@ const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     axios
       .post(`/api/${trainer ? 'trainer' : 'client'}/register`, userForm)
       .then(() => setCurrentShow('login'))
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
 
   const handleKeyDown = (e) => e.charCode === 13 && handleSubmit()

@@ -34,7 +34,7 @@ const ManageSession = () => {
     axios
       .delete(`/api/trainer/cancel-session/`, { headers: { 'x-auth-token': token, id } })
       .then(() => setDeleted(true))
-      .catch(({ data: { message } }) => toast.error(message))
+      .catch(({ data: { response } }) => toast.error(response.message))
   }
 
   const { startTime, endTime, _id, client } = found ? found.session : {}
