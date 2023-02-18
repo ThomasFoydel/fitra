@@ -75,6 +75,9 @@
       padding: 1rem;
       font-size: 1.4rem;
       text-align: center;
+      border-top-right-radius: 0.8rem;
+      border-bottom-right-radius: 0.8rem;
+      background: rgba(255, 255, 255, 0.8);
     }
 
     .name {
@@ -113,7 +116,8 @@
       width: 20rem;
       height: 20rem;
       position: absolute;
-      border-radius: 0.8rem;
+      border-top-left-radius: 0.8rem;
+      border-bottom-left-radius: 0.8rem;
     }
 
     .shadow {
@@ -122,7 +126,6 @@
       width: 20rem;
       height: 20rem;
       position: absolute;
-      border-radius: 0.8rem;
       background: rgba(0, 0, 0, 0.4);
     }
   }

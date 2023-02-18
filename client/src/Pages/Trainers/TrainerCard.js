@@ -7,9 +7,13 @@ import PropTypes from 'prop-types'
 const TrainerCard = ({ props: { trainer, tagSearch } }) => {
   const [hover, setHover] = useState(false)
 
-  const animation = useSpring({
+  const cardAnimation = useSpring({
     config: config.wobbly,
     transform: hover ? 'scale(1.03)' : 'scale(1)',
+  })
+
+  const rightSectionAnimation = useSpring({
+    config: config.wobbly,
     background: hover ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.8)',
   })
 
@@ -20,7 +24,7 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <Link to={`/trainer/${_id}`} key={_id} className="link">
-        <animated.div className="trainer-card" style={animation}>
+        <animated.div className="trainer-card" style={cardAnimation}>
           <div className="left-section">
             <Image alt="trainer's cover" name="coverpic" src={`/api/image/${coverPic}`} />
             <div className="shadow" />
@@ -29,7 +33,7 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
               <Image alt="trainer's profile" name="profilepic" src={`/api/image/${profilePic}`} />
             </div>
           </div>
-          <div className="right-section">
+          <animated.div className="right-section" style={rightSectionAnimation}>
             <div className="bio">{bio}</div>
             <div className="tags">
               {tags.map((tag, i) => (
@@ -39,7 +43,7 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
                 </span>
               ))}
             </div>
-          </div>
+          </animated.div>
         </animated.div>
       </Link>
     </div>
