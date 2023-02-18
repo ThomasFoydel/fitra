@@ -29,34 +29,34 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
   }
 
   const userURL = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`
-  fetch(userURL)
-    .then((res) => res.json())
-    .then(async ({ email, name }) => {
-      if (!email || !name) {
-        return res.status(400).send({ status: 'error', message: 'One or more fields empty' })
-      }
-      const foundClient = await Client.findOne(
-        { email: email.toLowerCase() },
-        '+settings email bio name profilePic coverPic displayEmail tags'
-      )
+  const result = await fetch(userURL)
+  const { email, name } = await result.json()
 
-      if (foundClient) return sendLogin(foundClient)
+  if (!email || !name) {
+    return res.status(400).send({ status: 'error', message: 'One or more fields empty' })
+  }
+  const foundClient = await Client.findOne(
+    { email: email.toLowerCase() },
+    '+settings email bio name profilePic coverPic displayEmail tags'
+  )
 
-      const password = email + process.env.SECRET
-      const hashedPw = await bcrypt.hash(password, 12)
-      const newClient = new Client({
-        name: name,
-        password: hashedPw,
-        email: email.toLowerCase(),
-        settings: { darkmode: false },
-      })
+  if (foundClient) return sendLogin(foundClient)
 
-      newClient
-        .save()
-        .then((result) => sendLogin(result))
-        .catch(() => res.status(500).send({ status: 'error', message: 'Authentication error' }))
-    })
-    .catch(() => res.status(500).send({ status: 'error', message: 'Authentication error' }))
+  const password = email + process.env.SECRET
+  const hashedPw = await bcrypt.hash(password, 12)
+  const newClient = new Client({
+    name: name,
+    password: hashedPw,
+    email: email.toLowerCase(),
+    settings: { darkmode: false },
+  })
+
+  try {
+    const savedClient = await newClient.save()
+    return sendLogin(savedClient)
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Authentication error' })
+  }
 })
 
 router.post('/googlelogin', async ({ body: { tokenId } }, res) => {
@@ -92,13 +92,11 @@ router.post('/googlelogin', async ({ body: { tokenId } }, res) => {
 
         newClient
           .save()
-          .then((result) => {
-            sendLogin(result)
-          })
-          .catch(() => res.status(400).send({ err: 'registration error' }))
+          .then((result) => sendLogin(result))
+          .catch(() => res.status(400).send({ status: 'error', message: 'Registration error' }))
       }
     })
-    .catch(() => res.status(400).send({ err: 'registration error' }))
+    .catch(() => res.status(400).send({ status: 'error', message: 'Registration error' }))
 })
 
 router.post('/register', async (req, res) => {

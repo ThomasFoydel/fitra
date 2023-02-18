@@ -23,7 +23,7 @@ router.get('/', auth, async ({ tokenUser }, res) => {
       return res.status(200).send({
         status: 'success',
         message: 'Auth success',
-        userData: {
+        user: {
           bio,
           tags,
           name,

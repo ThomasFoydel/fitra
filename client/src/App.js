@@ -40,16 +40,8 @@ function App() {
         .get('/api/auth/', {
           headers: { 'x-auth-token': tokenLS },
         })
-        .then(({ data }) => {
-          if (subscribed) {
-            if (data.err && process.env.NODE_ENV === 'production')
-              return updateState({ type: 'LOGOUT' })
-            if (data)
-              updateState({
-                type: 'LOGIN',
-                payload: { user: data, token: tokenLS },
-              })
-          }
+        .then(({ data: { user } }) => {
+          if (subscribed && user) updateState({ type: 'LOGIN', payload: { user, token: tokenLS } })
         })
         .catch(() => {
           if (process.env.NODE_ENV === 'production') updateState({ type: 'LOGOUT' })
@@ -73,9 +65,7 @@ function App() {
       const urlBase = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000/'
       const ENDPOINT = urlBase + `?token=${token}`
 
-      socketRef.current = io(ENDPOINT, {
-        transports: ['websocket', 'polling', 'flashsocket'],
-      })
+      socketRef.current = io(ENDPOINT, { transports: ['websocket', 'polling', 'flashsocket'] })
 
       if (subscribed) {
         socketRef.current.on('chat-message', (message) =>
