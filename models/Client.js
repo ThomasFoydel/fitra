@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const clientSchema = {
   name: {
@@ -10,28 +10,20 @@ const clientSchema = {
     unique: true,
     required: true,
   },
-  displayEmail: {
-    type: String,
-  },
   password: {
     type: String,
     required: true,
     select: false,
   },
-  profilePic: {
-    type: String,
-  },
-  coverPic: {
-    type: String,
-  },
-  timeZone: {
-    type: String,
-  },
   settings: {
     type: Object,
     select: false,
   },
+  displayEmail: String,
+  profilePic: String,
+  coverPic: String,
+  timeZone: String,
   bio: String,
-};
+}
 
-module.exports = mongoose.model('Client', clientSchema);
+module.exports = mongoose.model('Client', clientSchema)
