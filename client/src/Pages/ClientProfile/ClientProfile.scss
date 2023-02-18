@@ -52,7 +52,7 @@
     border: 12px solid hsl(0, 0%, 94%);
   }
 
-  .link {
+  .edit-link {
     color: #ddd;
     padding: 0.4rem;
     font-size: 1.8rem;
@@ -60,7 +60,6 @@
     text-decoration: none;
     border-radius: 0.5rem;
     background: rgb(22, 22, 22);
-    background: rgba(230, 230, 230, 0.767);
 
     &:hover {
       background: rgb(51, 51, 51);

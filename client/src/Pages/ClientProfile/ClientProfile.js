@@ -50,7 +50,7 @@ const ClientProfile = () => {
               <div className="email">{displayEmail}</div>
               {bio && <div className="bio">{bio}</div>}
               {belongsToCurrentUser && (
-                <Link to={`/editprofile`} className="link">
+                <Link to={`/editprofile`} className="edit-link">
                   Edit Profile
                 </Link>
               )}
