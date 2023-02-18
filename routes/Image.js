@@ -99,7 +99,9 @@ router.post('/upload/:type/:kind', auth, upload.single('image'), async (req, res
       { new: true, useFindAndModify: false }
     )
     if (!user) return res.status(500).send({ status: 'error', message: 'User update failed' })
-    return res.status().send({ status: 'success', message: 'Image uploaded, user updated', user })
+    return res
+      .status(200)
+      .send({ status: 'success', message: 'Image uploaded, user updated', user })
   } catch (err) {
     return res
       .status(500)
