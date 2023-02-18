@@ -1,4 +1,7 @@
 .image-uploader {
+  height: 3rem;
+  display: flex;
+
   .loading-dots {
     width: 14rem;
     height: 14rem;
@@ -49,7 +52,6 @@
     margin-top: 0.1rem;
     text-align: center;
     align-items: center;
-    display: inline-block;
     border-radius: 0.3rem;
     justify-content: center;
     transition: all 0.2s ease;

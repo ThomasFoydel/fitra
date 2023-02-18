@@ -1,8 +1,7 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import { toast } from 'react-toastify'
-import React, { useState, useContext, useEffect } from 'react'
-import { Keyframes, animated, config } from 'react-spring'
+import React, { useState, useContext } from 'react'
 import dots from 'imgs/loading/loading-dots.gif'
 import { CTX } from 'context/Store'
 import './ImageUploader.scss'
@@ -13,30 +12,9 @@ const ImageUploader = ({ props: { kind } }) => {
   const [file, setFile] = useState(null)
   const [uploading, setUploading] = useState(false)
 
-  const Content = Keyframes.Spring(async (next) => {
-    while (uploading) {
-      await next({
-        background: 'rgb(173, 0, 0)',
-        from: { background: '#ccc' },
-        config: config.molasses,
-      })
-      await next({
-        background: 'rgb(88, 0, 26)',
-        from: { background: 'rgb(173, 0, 0)' },
-        config: config.molasses,
-      })
-      await next({
-        background: '#ccc',
-        from: { background: 'rgb(88, 0, 26)' },
-        config: config.molasses,
-      })
-    }
-  })
-
   const fileHandler = (e) => setFile(e.target.files[0])
 
   const handleSubmit = () => {
-    if (!file) return toast.error('File is missing')
     if (file.size > 1000000) return toast.error('File size cannot exceed 1MB')
     setUploading(true)
     const fd = new FormData()
@@ -49,7 +27,7 @@ const ImageUploader = ({ props: { kind } }) => {
         setUploading(false)
         updateState({ type: 'CHANGE_PIC', payload: { kind, coverPic, profilePic } })
       })
-      .catch(({ data }) => {
+      .catch(({ response: { data } }) => {
         setUploading(false)
         toast.error(data.message)
       })
@@ -61,13 +39,7 @@ const ImageUploader = ({ props: { kind } }) => {
     <div className="image-uploader">
       {uploading ? (
         <div className="loading-dots-container">
-          <Content native>
-            {(props) => (
-              <animated.div style={{ position: 'relative', ...props }} className="animated-file">
-                <img src={dots} className="loading-dots" alt="upload in progress" />
-              </animated.div>
-            )}
-          </Content>
+          <img src={dots} className="loading-dots" alt="upload in progress" />
         </div>
       ) : (
         <>
@@ -79,8 +51,8 @@ const ImageUploader = ({ props: { kind } }) => {
             onChange={fileHandler}
           />
           <label
-            onClick={handleSubmit}
             htmlFor={`${kind}-file`}
+            onClick={file ? handleSubmit : () => {}}
             className={`file-label ${file && ' file-exists '}`}
           >
             {file ? <>confirm?</> : <>{`new ${btnTxt} pic`}</>}
