@@ -28,15 +28,11 @@ const EditProfile = () => {
       .then(({ data: { updatedProfile } }) => {
         const { bio, coverPic, displayEmail, name, profilePic } = updatedProfile
         const filteredRes = { bio, coverPic, displayEmail, name, profilePic }
-        if (process.env.NODE_ENV === 'production') {
+        act(() => {
           updateState({ type: 'EDIT_PROFILE', payload: { res: filteredRes } })
+          toast.success('Updated profile')
           setFormInfo(initFormData)
-        } else {
-          act(() => {
-            updateState({ type: 'EDIT_PROFILE', payload: { res: filteredRes } })
-            setFormInfo(initFormData)
-          })
-        }
+        })
       })
       .catch(({ data: { response } }) => toast.error(response.message))
   }
