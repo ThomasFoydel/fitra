@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import { act } from '@testing-library/react'
 import React, { useState, useContext } from 'react'
@@ -37,7 +38,7 @@ const EditProfile = () => {
           })
         }
       })
-      .catch((err) => console.error('err: ', err))
+      .catch(({ data }) => toast.error(data.message))
   }
   return (
     <>

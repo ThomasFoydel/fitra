@@ -1,5 +1,6 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
 import React, { useEffect, useState } from 'react'
 import Image from 'Components/Image/Image'
 
@@ -10,7 +11,7 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
     axios
       .get(`/api/user/${user}`, { headers: { 'x-auth-token': token } })
       .then(({ data: { user } }) => setUserInfo(user))
-      .catch((err) => console.error('err: ', err))
+      .catch(({ data }) => toast.error(data.message))
   }, [token, user])
 
   const current = currentThread === user

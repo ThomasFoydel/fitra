@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { Navigate, useParams } from 'react-router-dom'
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { CTX } from 'context/Store'
@@ -7,9 +8,8 @@ import './SessionReview.scss'
 const SessionReview = () => {
   const { sessionId } = useParams()
   const [appState] = useContext(CTX)
-
   const [formData, setFormData] = useState({ rating: -1, comment: '' })
-  let { rating, comment } = formData
+  const { rating, comment } = formData
   const [err, setErr] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -26,7 +26,7 @@ const SessionReview = () => {
         headers: { 'x-auth-token': appState.user.token },
       })
       .then(() => setRedirect(true))
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const didMountRef = useRef(false)

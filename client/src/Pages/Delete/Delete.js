@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import React, { useState, useContext } from 'react'
 import { CTX } from 'context/Store'
@@ -17,7 +18,7 @@ const Delete = () => {
         headers: { 'x-auth-token': token, pass: inputVal },
       })
       .then(() => updateState({ type: 'LOGOUT' }))
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const handleInput = ({ target: { value } }) => setInputVal(value)

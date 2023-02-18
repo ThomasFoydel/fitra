@@ -1,5 +1,6 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { toast } from 'react-toastify'
 import { dateFromDateAndTime } from '../../../../util/util'
 import Day from './parts/Day'
 
@@ -14,7 +15,7 @@ const MobileSchedule = ({
     const endDate = dateFromDateAndTime(selectedDate, endTime)
 
     if (startDate.getTime() > endDate.getTime()) {
-      return console.error('error: start time cannot be after end time')
+      return toast.error('Start time cannot be after end time')
     }
 
     const newBlock = {

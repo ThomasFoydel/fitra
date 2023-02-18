@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { act } from '@testing-library/react'
 import { config, animated, useTransition } from 'react-spring'
 import React, { useContext, useEffect, useState } from 'react'
@@ -22,7 +23,7 @@ const Home = () => {
             : act(() => setFoundSessions(sessions))
         }
       })
-      .catch((err) => console.error('connection error: ', err))
+      .catch(({ data }) => toast.error(data.message))
     return () => (subscribed = false)
   }, [token, type])
 

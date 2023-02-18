@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import Buttons from './Buttons'
 import './PayPal.scss'
@@ -7,7 +8,7 @@ import './PayPal.scss'
 const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
   const handleResolve = (e) => complete(e)
 
-  const handleError = (e) => console.error('REJECT: ', e)
+  const handleError = (e) => toast.error(e)
 
   return (
     <div className="paypal-background">

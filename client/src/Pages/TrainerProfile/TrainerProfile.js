@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { Navigate, Link, useParams } from 'react-router-dom'
 import React, { useState, useEffect, useContext } from 'react'
 import IntroMessage from 'Components/IntroMessage/IntroMessage'
@@ -38,7 +39,7 @@ const TrainerProfile = () => {
           setCurrentTrainer(trainer)
         }
       })
-      .catch((err) => console.error('trainer profile error: ', err))
+      .catch(({ data }) => toast.error(data.message))
     return () => (subscribed = false)
   }, [trainerId])
 

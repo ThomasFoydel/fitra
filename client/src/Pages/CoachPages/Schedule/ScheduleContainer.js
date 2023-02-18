@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { act } from '@testing-library/react'
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { getHalfHourFromDate, days } from '../../../util/util'
@@ -18,7 +19,7 @@ const ScheduleContainer = () => {
     axios
       .put('/api/trainer/schedule/', e, { headers: { 'x-auth-token': token } })
       .then(({ data: { updatedSchedule } }) => setEntries(updatedSchedule))
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   useEffect(() => {
@@ -77,7 +78,7 @@ const ScheduleContainer = () => {
         setMin(min)
         setMax(max)
       })
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const didMountRef = useRef(false)

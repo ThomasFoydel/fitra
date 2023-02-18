@@ -1,10 +1,10 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import React, { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
+import React, { useState } from 'react'
 import AuthPageToggle from './AuthPageToggle'
 
 const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
-  const [errorMessage, setErrorMessage] = useState('')
   const [userForm, setUserForm] = useState({})
 
   const handleChange = ({ target: { id, value } }) => setUserForm({ ...userForm, [id]: value })
@@ -13,14 +13,8 @@ const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     axios
       .post(`/api/${trainer ? 'trainer' : 'client'}/register`, userForm)
       .then(() => setCurrentShow('login'))
-      .catch((err) => console.error('register error: ', err))
+      .catch(({ data }) => toast.error(data.message))
   }
-
-  useEffect(() => {
-    let subscribed = true
-    setTimeout(() => subscribed && setErrorMessage(''), 3400)
-    return () => (subscribed = false)
-  }, [errorMessage])
 
   const handleKeyDown = (e) => e.charCode === 13 && handleSubmit()
 
@@ -70,7 +64,6 @@ const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
       <button className="signin-btn" onClick={() => setCurrentShow('login')}>
         I already have an account
       </button>
-      <p className="error-msg">{errorMessage}</p>
       <AuthPageToggle />
     </div>
   )

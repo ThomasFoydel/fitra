@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { CTX } from 'context/Store'
 
@@ -19,7 +20,7 @@ const TagEditor = () => {
         updateState({ type: 'CHANGE_TAGS', payload: { tags } })
         setInputVal('')
       })
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const handleDelete = ({ target: { id } }) => {
@@ -28,7 +29,7 @@ const TagEditor = () => {
         headers: { 'x-auth-token': token, value: id },
       })
       .then(({ data: { tags } }) => updateState({ type: 'CHANGE_TAGS', payload: { tags } }))
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const handleKeyPress = ({ charCode }) => {

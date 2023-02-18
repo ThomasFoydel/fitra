@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import React, { useContext } from 'react'
 import { CTX } from 'context/Store'
@@ -22,7 +23,7 @@ const Settings = () => {
           payload: { type: 'darkmode', value: settings.darkmode },
         })
       })
-      .catch((err) => console.error('darkmode error: ', err))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   return (

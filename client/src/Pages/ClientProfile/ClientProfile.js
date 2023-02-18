@@ -5,6 +5,7 @@ import loadingSpin from 'imgs/loading/spin.gif'
 import Image from 'Components/Image/Image'
 import { CTX } from 'context/Store'
 import './ClientProfile.scss'
+import { toast } from 'react-toastify'
 
 const ClientProfile = () => {
   const { id } = useParams()
@@ -19,7 +20,7 @@ const ClientProfile = () => {
     axios
       .get(`/api/client/profile/${id}`, { headers: { 'x-auth-token': token } })
       .then(({ data: { foundUser } }) => foundUser && subscribed && setUserData(foundUser))
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
     return () => (subscribed = false)
   }, [id, token])
 

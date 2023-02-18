@@ -1,6 +1,7 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import React, { useState, useEffect, useContext } from 'react'
+import { toast } from 'react-toastify'
+import React, { useState, useContext } from 'react'
 import AuthPageToggle from './AuthPageToggle'
 import { CTX } from 'context/Store'
 import Facebook from './Facebook'
@@ -10,7 +11,6 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   const [, updateState] = useContext(CTX)
   const [userForm, setUserForm] = useState({})
   const [googleErr, setGoogleErr] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = ({ target: { id, value } }) => setUserForm({ ...userForm, [id]: value })
 
@@ -20,23 +20,17 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     axios
       .post(`/api/${type}/login`, userForm)
       .then(({ data: { user, token } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
-      .catch((err) => console.error('register error: ', err))
+      .catch(({ data }) => toast.error(data.message))
   }
-
-  useEffect(() => {
-    let subscribed = true
-    if (errorMessage) setTimeout(() => subscribed && setErrorMessage(''), 3000)
-    return () => (subscribed = false)
-  }, [errorMessage])
 
   const handleKeyDown = (e) => e.charCode === 13 && handleSubmit()
 
   const fbResponse = ({ accessToken, userID }) => {
-    if (!accessToken || !userID) return setErrorMessage('One or more fields missing')
+    if (!accessToken || !userID) return toast.error('One or more fields missing')
     axios
       .post(`/api/${type}/fblogin`, { accessToken, userID })
       .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const googleHandleSuccess = (response) => {
@@ -44,7 +38,7 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     axios
       .post(`/api/${type}/googlelogin`, { tokenId })
       .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const googleHandleError = () => setGoogleErr(true)
@@ -86,7 +80,6 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
           Login
         </button>
 
-        <p className="error-msg">{errorMessage}</p>
         {!trainer && (
           <>
             <Facebook props={{ callback: fbResponse }} />

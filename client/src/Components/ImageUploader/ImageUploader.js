@@ -1,5 +1,6 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
 import React, { useState, useContext, useEffect } from 'react'
 import { Keyframes, animated, config } from 'react-spring'
 import dots from 'imgs/loading/loading-dots.gif'
@@ -49,9 +50,9 @@ const ImageUploader = ({ props: { kind } }) => {
         setUploading(false)
         updateState({ type: 'CHANGE_PIC', payload: { kind, coverPic, profilePic } })
       })
-      .catch((err) => {
+      .catch(({ data }) => {
         setUploading(false)
-        console.error('err: ', err)
+        toast.error(data.message)
       })
   }
 

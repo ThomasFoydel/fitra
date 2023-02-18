@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { act } from '@testing-library/react'
 import { Navigate, Link, useParams } from 'react-router-dom'
 import React, { useEffect, useState, useContext, useRef } from 'react'
@@ -45,7 +46,7 @@ const ManageSession = () => {
     axios
       .delete(`/api/trainer/cancel-session/`, { headers: { 'x-auth-token': token, id } })
       .then(() => setDeleted(true))
-      .catch((err) => console.error({ err }))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const { startTime, endTime, _id, client } = found ? found.session : {}

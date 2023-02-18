@@ -1,12 +1,13 @@
 import axios from 'axios'
 import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 
 const ChatBox = ({ props: { userId, userName, currentThread, update, isTrainer } }) => {
   const [text, setText] = useState('')
 
   const submit = () => {
-    if (!text) return
+    if (!text) return toast.error('Message must contain content')
 
     const message = {
       message: text,
@@ -22,7 +23,7 @@ const ChatBox = ({ props: { userId, userName, currentThread, update, isTrainer }
         update(newMessage)
         setText('')
       })
-      .catch((err) => console.error('chatbox err: ', err))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   const handleKeyPress = ({ charCode }) => charCode === 13 && submit()
