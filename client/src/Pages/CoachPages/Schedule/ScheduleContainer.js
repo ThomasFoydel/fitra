@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { act } from '@testing-library/react'
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { getHalfHourFromDate, days } from '../../../util/util'
 import { CTX } from 'context/Store'
 import Schedule from './Schedule'
@@ -13,7 +13,6 @@ const ScheduleContainer = () => {
   const [sessions, setSessions] = useState(null)
   const [min, setMin] = useState(1)
   const [max, setMax] = useState(3)
-  const [err, setErr] = useState('')
 
   const handleChange = (e) => {
     axios
@@ -70,8 +69,12 @@ const ScheduleContainer = () => {
 
   const handleMinMax = ({ target: { value, id } }) => {
     value = Number(value)
-    if (id === 'maximum' && value < min) return setErr('maximum must be greater than minimum')
-    if (id === 'minimum' && value > max) return setErr('minimum cannot be greater than maximum')
+    if (id === 'maximum' && value < min) {
+      return toast.error('Maximum must be greater than minimum')
+    }
+    if (id === 'minimum' && value > max) {
+      return toast.error('Minimum cannot be greater than maximum')
+    }
     axios
       .put(`/api/trainer/minmax/${id}/`, { value }, { headers: { 'x-auth-token': token } })
       .then(({ data: { min, max } }) => {
@@ -81,17 +84,6 @@ const ScheduleContainer = () => {
       .catch(({ data }) => toast.error(data.message))
   }
 
-  const didMountRef = useRef(false)
-  useEffect(() => {
-    let subscribed = true
-    if (didMountRef.current) {
-      setTimeout(() => {
-        if (subscribed) setErr('')
-      }, 2700)
-    } else didMountRef.current = true
-    return () => (subscribed = false)
-  }, [err])
-
   return (
     <div className="schedule-container">
       {entries && (
@@ -99,7 +91,6 @@ const ScheduleContainer = () => {
           props={{
             min,
             max,
-            err,
             entries,
             sessions,
             setSessions,

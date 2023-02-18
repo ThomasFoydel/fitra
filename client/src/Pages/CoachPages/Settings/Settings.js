@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import TagEditor from './settingForms/TagEditor'
 import RateEditor from './settingForms/RateEditor'
 import Active from './settingForms/Active'
@@ -9,14 +9,11 @@ import './Settings.scss'
 const Settings = () => {
   const [{ user, settings }, updateState] = useContext(CTX) || []
   const { rate, active } = settings || {}
-  const { type, token, id } = user || {}
-  const [err, setErr] = useState('')
+  const { type, token } = user || {}
 
   const onComplete = ({ type, value }) => {
     updateState({ type: 'CHANGE_SETTINGS', payload: { type, value } })
   }
-
-  const onError = ({ err }) => setErr(err)
 
   return (
     <>
@@ -27,14 +24,14 @@ const Settings = () => {
 
         <div className="form">
           <div className="setting-item">
-            <Active props={{ onError, type, onComplete, token, active }} />
+            <Active props={{ type, onComplete, token, active }} />
           </div>
           <div className="setting-item">
             <TagEditor />
           </div>
 
           <div className="setting-item">
-            <RateEditor props={{ id, rate, onComplete, onError, token }} />
+            <RateEditor props={{ rate, onComplete, token }} />
           </div>
 
           <div className="setting-item">

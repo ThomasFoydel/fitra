@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Peer from 'peerjs'
+import { toast } from 'react-toastify'
 import { Navigate, useParams } from 'react-router-dom'
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { CTX } from 'context/Store'
@@ -29,7 +30,6 @@ const Connect = ({ socket }) => {
   const [icons, setIcons] = useState({ video: false, audio: false })
   const [myVideoStream, setMyVideoStream] = useState(null)
   const [videoStreams, setVideoStreams] = useState({})
-  const [errorMessage, setErrorMessage] = useState('')
   const [chatInput, setChatInput] = useState('')
   const [messages, setMessages] = useState([])
   const [peers, setPeers] = useState({})
@@ -115,6 +115,7 @@ const Connect = ({ socket }) => {
           }
         }
       })
+      .catch(({ data: { message } }) => toast.error(message))
 
     return async () => {
       subscribed = false
@@ -177,7 +178,6 @@ const Connect = ({ socket }) => {
         <div className="connect">
           <div className="videochat">
             <video ref={myVideoRef} muted autoPlay playsInline className="my-video" />
-            {errorMessage && <p className="err-msg">{errorMessage} </p>}
             {Object.keys(videoStreams).map((userId) => {
               return <Video stream={videoStreams[userId].stream} key={userId} />
             })}

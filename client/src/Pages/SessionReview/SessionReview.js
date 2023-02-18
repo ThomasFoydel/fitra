@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import React, { useState, useContext } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
-import React, { useState, useEffect, useContext, useRef } from 'react'
 import { CTX } from 'context/Store'
 import './SessionReview.scss'
 
@@ -10,7 +10,6 @@ const SessionReview = () => {
   const [appState] = useContext(CTX)
   const [formData, setFormData] = useState({ rating: -1, comment: '' })
   const { rating, comment } = formData
-  const [err, setErr] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
 
@@ -19,8 +18,8 @@ const SessionReview = () => {
   }
 
   const submit = () => {
-    if (rating < 0) return setErr('Must select a rating')
-    if (comment.length < 20) return setErr('Comment must be at least 20 characters')
+    if (rating < 0) return toast.error('Must select a rating')
+    if (comment.length < 20) return toast.error('Comment must be at least 20 characters')
     axios
       .post(`/api/client/review/${sessionId}`, formData, {
         headers: { 'x-auth-token': appState.user.token },
@@ -28,17 +27,6 @@ const SessionReview = () => {
       .then(() => setRedirect(true))
       .catch(({ data }) => toast.error(data.message))
   }
-
-  const didMountRef = useRef(false)
-  useEffect(() => {
-    let subscribed = true
-    if (didMountRef.current) {
-      setTimeout(() => {
-        if (subscribed) setErr('')
-      }, 2700)
-    } else didMountRef.current = true
-    return () => (subscribed = false)
-  }, [err])
 
   return (
     <div className="session-review-page">
@@ -71,7 +59,6 @@ const SessionReview = () => {
         ) : (
           <button onClick={() => setConfirmOpen(true)}>submit</button>
         )}
-        <p className="err">{err}</p>
       </div>
     </div>
   )

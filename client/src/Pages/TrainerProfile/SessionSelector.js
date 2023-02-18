@@ -1,5 +1,6 @@
 import axios from 'axios'
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import { toast } from 'react-toastify'
+import React, { useState, useEffect, useContext } from 'react'
 import { days, halfHours, setUpWeek, dateFromDateAndTime } from '../../util/util'
 import PayPal from 'Components/PayPal/PayPal'
 import { CTX } from 'context/Store'
@@ -15,12 +16,9 @@ const SessionSelector = ({
   const [{ isLoggedIn }, updateState] = useContext(CTX)
   const [weekShift, setWeekShift] = useState(0)
   const [week, setWeek] = useState(setUpWeek(0))
-
   const [mouseIsDown, setMouseIsDown] = useState(false)
   const [payPalOpen, setPayPalOpen] = useState(false)
   const [minMet, setMinMet] = useState(false)
-  const [err, setErr] = useState('')
-
   const mouseDown = () => setMouseIsDown(true)
   const mouseUp = () => setMouseIsDown(false)
 
@@ -118,17 +116,6 @@ const SessionSelector = ({
     return () => (subscribed = false)
   }, [selection, minimum])
 
-  const didMountRef = useRef(false)
-  useEffect(() => {
-    let subscribed = true
-    if (didMountRef.current) {
-      setTimeout(() => {
-        if (subscribed) setErr('')
-      }, 2700)
-    } else didMountRef.current = true
-    return () => (subscribed = false)
-  }, [err])
-
   const shiftWeek = (n) => {
     setWeek(setUpWeek(n))
     setWeekShift(n)
@@ -137,8 +124,8 @@ const SessionSelector = ({
   const handleBooking = (order) => {
     setPayPalOpen(false)
 
-    if (belongsToCurrentUser) return setErr("you can't book yourself!")
-    if (!minMet) return setErr(`minimum time for booking is ${minimum * 60} minutes`)
+    if (belongsToCurrentUser) return toast.error("you can't book yourself!")
+    if (!minMet) return toast.error(`minimum time for booking is ${minimum * 60} minutes`)
 
     const startTime = selection[0].hourDate.toUTCString()
     const endTimeDate = new Date(selection[selection.length - 1].hourDate.getTime())
@@ -234,8 +221,6 @@ const SessionSelector = ({
               )}
             </>
           )}
-
-          {err && <p className="err">{err}</p>}
         </div>
       </div>
 

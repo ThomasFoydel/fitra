@@ -14,7 +14,6 @@ const TrainerProfile = () => {
   const { trainerId } = useParams()
   const [{ user, messages }] = useContext(CTX)
   const belongsToCurrentUser = user.id === trainerId
-
   const [sessionSelectorOpen, setSessionSelectorOpen] = useState(true)
   const [redirectToMessages, setRedirectToMessages] = useState(false)
   const [bookingSuccess, setBookingSuccess] = useState(false)
@@ -24,8 +23,6 @@ const TrainerProfile = () => {
   const [sessions, setSessions] = useState([])
   const [reviews, setReviews] = useState([])
   const [avg, setAvg] = useState('')
-
-  const [err, setErr] = useState('')
 
   useEffect(() => {
     let subscribed = true
@@ -48,14 +45,14 @@ const TrainerProfile = () => {
   const toggleMessageOpen = () => {
     if (messages[currentTrainer._id]) setRedirectToMessages(true)
     else {
-      setMessageOpen((o) => !o)
       setSessionSelectorOpen(false)
+      setMessageOpen((o) => !o)
     }
   }
 
   const toggleSelectorOpen = () => {
-    setMessageOpen(false)
     setSessionSelectorOpen((o) => !o)
+    setMessageOpen(false)
   }
 
   return (
@@ -64,72 +61,69 @@ const TrainerProfile = () => {
       {redirectToMessages && (
         <Navigate to={`${user.type === 'trainer' ? 'coachportal' : ''}/messages`} />
       )}
-      {err ? (
-        <p>{err}</p>
-      ) : (
-        <div
-          className="cover-pic"
-          style={{
-            backgroundImage: coverPic
-              ? ` linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.9)), url("/api/image/${coverPic}")`
-              : '',
-          }}
-        >
-          <div className="info">
-            <Image
-              name="profile-pic"
-              alt="trainer's profile"
-              src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
-            />
 
-            <div className="section-1">
-              <div className="name">{name}</div>
-              <div className="email">{displayEmail}</div>
-              <div className="bio">{bio}</div>
+      <div
+        className="cover-pic"
+        style={{
+          backgroundImage: coverPic
+            ? ` linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.9)), url("/api/image/${coverPic}")`
+            : '',
+        }}
+      >
+        <div className="info">
+          <Image
+            name="profile-pic"
+            alt="trainer's profile"
+            src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
+          />
 
-              <div className="avg">Average Rating {Math.floor(avg * 20)} %</div>
-              {belongsToCurrentUser && (
-                <Link to={`/coachportal/editprofile`} className="link ">
-                  Edit Profile
-                </Link>
-              )}
-            </div>
+          <div className="section-1">
+            <div className="name">{name}</div>
+            <div className="email">{displayEmail}</div>
+            <div className="bio">{bio}</div>
+
+            <div className="avg">Average Rating {Math.floor(avg * 20)} %</div>
+            {belongsToCurrentUser && (
+              <Link to={`/coachportal/editprofile`} className="link ">
+                Edit Profile
+              </Link>
+            )}
           </div>
-          <div className="section2">
-            <ReviewSlide reviews={reviews} />
-          </div>
-
-          {!belongsToCurrentUser && (
-            <>
-              <div className="btns">
-                <button
-                  onClick={toggleMessageOpen}
-                  className={`msg-btn ${messageOpen ? 'current' : ''}`}
-                >
-                  <i className="far fa-envelope fa-4x"></i>
-                </button>
-                <button
-                  onClick={toggleSelectorOpen}
-                  className={`book-btn ${sessionSelectorOpen ? 'current' : ''}`}
-                >
-                  <i className="fa fa-calendar fa-4x" aria-hidden="true"></i>
-                </button>
-              </div>
-              {messageOpen && <IntroMessage toggle={setMessageOpen} id={trainerId} />}
-              {currentTrainer && sessionSelectorOpen && (
-                <SessionSelector
-                  selection={selection}
-                  bookedTimes={sessions}
-                  trainer={currentTrainer}
-                  setSelection={setSelection}
-                  setBookingSuccess={setBookingSuccess}
-                  belongsToCurrentUser={belongsToCurrentUser}
-                />
-              )}
-            </>
-          )}
         </div>
-      )}
+        <div className="section2">
+          <ReviewSlide reviews={reviews} />
+        </div>
+
+        {!belongsToCurrentUser && (
+          <>
+            <div className="btns">
+              <button
+                onClick={toggleMessageOpen}
+                className={`msg-btn ${messageOpen ? 'current' : ''}`}
+              >
+                <i className="far fa-envelope fa-4x"></i>
+              </button>
+              <button
+                onClick={toggleSelectorOpen}
+                className={`book-btn ${sessionSelectorOpen ? 'current' : ''}`}
+              >
+                <i className="fa fa-calendar fa-4x" aria-hidden="true"></i>
+              </button>
+            </div>
+            {messageOpen && <IntroMessage toggle={setMessageOpen} id={trainerId} />}
+            {currentTrainer && sessionSelectorOpen && (
+              <SessionSelector
+                selection={selection}
+                bookedTimes={sessions}
+                trainer={currentTrainer}
+                setSelection={setSelection}
+                setBookingSuccess={setBookingSuccess}
+                belongsToCurrentUser={belongsToCurrentUser}
+              />
+            )}
+          </>
+        )}
+      </div>
     </div>
   )
 }

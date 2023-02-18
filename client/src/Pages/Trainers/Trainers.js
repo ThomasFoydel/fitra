@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { config, animated, useTransition } from 'react-spring'
 import SearchBar from 'Components/SearchBar/SearchBar'
 import TrainerCard from './TrainerCard'
@@ -11,7 +11,6 @@ const Trainers = () => {
   const [currentTrainers, setCurrentTrainers] = useState([])
   const [queryType, setQueryType] = useState('tags')
   const [search, setSearch] = useState('')
-  const [err, setErr] = useState('')
 
   useEffect(() => {
     let subscribed = true
@@ -26,18 +25,6 @@ const Trainers = () => {
     setQueryType('tags')
     setSearch(tag)
   }
-
-  const didMountRef = useRef(false)
-
-  useEffect(() => {
-    let subscribed = true
-    if (didMountRef.current) {
-      setTimeout(() => {
-        if (subscribed) setErr('')
-      }, 2700)
-    } else didMountRef.current = true
-    return () => (subscribed = false)
-  }, [err])
 
   const trainerCards = useTransition(currentTrainers, {
     trail: 300,
@@ -72,7 +59,6 @@ const Trainers = () => {
             <TrainerCard props={{ trainer: item, tagSearch }} />
           </animated.div>
         ))}
-        <div className="err">{err}</div>
       </div>
     </div>
   )

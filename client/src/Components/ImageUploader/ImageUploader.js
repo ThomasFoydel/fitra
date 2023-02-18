@@ -12,7 +12,6 @@ const ImageUploader = ({ props: { kind } }) => {
   const { token, type } = user
   const [file, setFile] = useState(null)
   const [uploading, setUploading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
 
   const Content = Keyframes.Spring(async (next) => {
     while (uploading) {
@@ -37,8 +36,8 @@ const ImageUploader = ({ props: { kind } }) => {
   const fileHandler = (e) => setFile(e.target.files[0])
 
   const handleSubmit = () => {
-    if (!file) return
-    if (file.size > 1000000) return setErrorMessage('File size cannot exceed 1mb')
+    if (!file) return toast.error('File is missing')
+    if (file.size > 1000000) return toast.error('File size cannot exceed 1MB')
     setUploading(true)
     const fd = new FormData()
     fd.append('image', file, file.name)
@@ -55,12 +54,6 @@ const ImageUploader = ({ props: { kind } }) => {
         toast.error(data.message)
       })
   }
-
-  useEffect(() => {
-    let subscribed = true
-    if (errorMessage) setTimeout(() => subscribed && setErrorMessage(''), 3000)
-    return () => (subscribed = false)
-  }, [errorMessage])
 
   const btnTxt = kind === 'profilePic' ? 'profile' : 'cover'
 
@@ -94,7 +87,6 @@ const ImageUploader = ({ props: { kind } }) => {
           </label>
         </>
       )}
-      <div className="err">{errorMessage}</div>
     </div>
   )
 }

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
-const RateEditor = ({ props: { id, rate, onComplete, onError, token } }) => {
+const RateEditor = ({ props: { rate, onComplete, token } }) => {
   const [input, setInput] = useState(rate || 0)
 
   const handleSubmit = () => {
@@ -12,7 +13,7 @@ const RateEditor = ({ props: { id, rate, onComplete, onError, token } }) => {
         { headers: { 'x-auth-token': token } }
       )
       .then(({ data: { settings } }) => onComplete({ type: 'rate', value: settings.rate }))
-      .catch((err) => onError({ err }))
+      .catch(({ data: { message } }) => toast.error(message))
   }
 
   return (

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { act } from '@testing-library/react'
 import { Navigate, Link, useParams } from 'react-router-dom'
-import React, { useEffect, useState, useContext, useRef } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Image from 'Components/Image/Image'
 import { CTX } from 'context/Store'
 import './ManageSession.scss'
@@ -14,18 +14,6 @@ const ManageSession = () => {
   const [openCancel, setOpenCancel] = useState(false)
   const [deleted, setDeleted] = useState(false)
   const [found, setFound] = useState(null)
-  const [err, setErr] = useState('')
-  const didMountRef = useRef(false)
-
-  useEffect(() => {
-    let subscribed = true
-    if (didMountRef.current) {
-      setTimeout(() => {
-        if (subscribed) setErr('')
-      }, 2700)
-    } else didMountRef.current = true
-    return () => (subscribed = false)
-  }, [err])
 
   useEffect(() => {
     let subscribed = true
@@ -84,7 +72,6 @@ const ManageSession = () => {
               connect
             </Link>
           )}
-          <div className="err">{err}</div>
 
           {openCancel ? (
             <div className="cancel">

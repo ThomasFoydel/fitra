@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
-const Active = ({ props: { onError, type, onComplete, token, active } }) => {
+const Active = ({ props: { type, onComplete, token, active } }) => {
   const handleActive = async ({ target: { checked } }) => {
     axios
       .put(
@@ -10,7 +11,7 @@ const Active = ({ props: { onError, type, onComplete, token, active } }) => {
         { headers: { 'x-auth-token': token } }
       )
       .then(({ data: { settings } }) => onComplete({ type: 'active', value: settings.active }))
-      .catch((err) => onError(err))
+      .catch(({ data }) => toast.error(data.message))
   }
 
   return (

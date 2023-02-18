@@ -46,20 +46,6 @@
     }
   }
 
-  .err {
-    top: 6rem;
-    width: 100%;
-    height: 4rem;
-    display: flex;
-    position: fixed;
-    font-weight: bold;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    color: rgb(255, 101, 101);
-  }
-
   .drag-n-drop {
     z-index: 1;
     display: grid;
