@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Link, useParams } from 'react-router-dom'
 import React, { useState, useEffect, useContext } from 'react'
+import defaultProfile from 'imgs/default/profile.jpg'
 import loadingSpin from 'imgs/loading/spin.gif'
 import Image from 'Components/Image/Image'
 import { toast } from 'react-toastify'
@@ -40,7 +41,9 @@ const ClientProfile = () => {
             <Image
               name="profile-pic"
               alt={profilePic ? "user's profile" : 'loading profile'}
-              src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
+              src={
+                profilePic ? `/api/image/${profilePic}` : userData ? defaultProfile : loadingSpin
+              }
             />
             <div className="section-1">
               <div className="name">{name}</div>
