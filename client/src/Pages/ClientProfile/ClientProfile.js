@@ -19,7 +19,7 @@ const ClientProfile = () => {
     axios
       .get(`/api/client/profile/${id}`, { headers: { 'x-auth-token': token } })
       .then(({ data: { foundUser } }) => foundUser && subscribed && setUserData(foundUser))
-      .catch(({ data }) => toast.error(data.message))
+      .catch(({ data: { message } }) => toast.error(message))
     return () => (subscribed = false)
   }, [id, token])
 

@@ -36,7 +36,7 @@ const TrainerProfile = () => {
           setCurrentTrainer(trainer)
         }
       })
-      .catch(({ data }) => toast.error(data.message))
+      .catch(({ data: { message } }) => toast.error(message))
     return () => (subscribed = false)
   }, [trainerId])
 

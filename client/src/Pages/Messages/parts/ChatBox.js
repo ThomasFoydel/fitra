@@ -23,7 +23,7 @@ const ChatBox = ({ props: { userId, userName, currentThread, update, isTrainer }
         update(newMessage)
         setText('')
       })
-      .catch(({ data }) => toast.error(data.message))
+      .catch(({ data: { message } }) => toast.error(message))
   }
 
   const handleKeyPress = ({ charCode }) => charCode === 13 && submit()

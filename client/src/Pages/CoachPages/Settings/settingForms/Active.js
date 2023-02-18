@@ -11,7 +11,7 @@ const Active = ({ props: { type, onComplete, token, active } }) => {
         { headers: { 'x-auth-token': token } }
       )
       .then(({ data: { settings } }) => onComplete({ type: 'active', value: settings.active }))
-      .catch(({ data }) => toast.error(data.message))
+      .catch(({ data: { message } }) => toast.error(message))
   }
 
   return (
