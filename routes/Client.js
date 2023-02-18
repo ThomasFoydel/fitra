@@ -22,9 +22,10 @@ router.post('/fblogin', async ({ body: { userID, accessToken } }, res) => {
     const clientInfo = await formatClientInfo(client)
     const token = formatToken(client)
     res.status(200).send({
+      token,
+      user: clientInfo,
       status: 'success',
       message: 'Login successful',
-      data: { user: clientInfo, token },
     })
   }
 
@@ -64,9 +65,10 @@ router.post('/googlelogin', async ({ body: { tokenId } }, res) => {
     const clientInfo = await formatClientInfo(client)
     const token = formatToken(client)
     res.status(200).send({
+      token,
+      user: clientInfo,
       status: 'success',
       message: 'Login successful',
-      data: { user: clientInfo, token },
     })
   }
 
@@ -173,9 +175,10 @@ router.post('/login', async (req, res) => {
     const token = formatToken(client)
     const clientInfo = await formatClientInfo(client)
     return res.status(200).send({
+      token,
+      user: clientInfo,
       status: 'success',
       message: 'Login successful',
-      data: { user: clientInfo, token },
     })
   } catch (err) {
     res.status(500).send({
@@ -312,7 +315,7 @@ router.get('/search', async ({ query: { search, type } }, res) => {
     queryFilter.push({ [type]: { $regex: `${term}`, $options: '$i' } })
   )
   if (queryFilter.length < 1) {
-    return res.status(400).send({ status: 'error', message: 'Requires at least one term' })
+    return res.status(400).send({ status: 'error', message: 'At least one search term required' })
   }
   try {
     const trainers = await Trainer.find({ $or: queryFilter })

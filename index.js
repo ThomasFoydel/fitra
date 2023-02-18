@@ -53,9 +53,9 @@ mongoose
         .then((result) => {
           const receiver = users.filter((user) => user.userId === userId)[0]
           if (receiver) io.to(receiver.socketId).emit('chat-message', result)
-          res
+          return res
             .status(200)
-            .send({ status: 'success', message: 'mMessage created', newMessage: result })
+            .send({ status: 'success', message: 'Message created', newMessage: result })
         })
         .catch(() => res.status(500).send({ status: 'error', message: 'Message error' }))
     })

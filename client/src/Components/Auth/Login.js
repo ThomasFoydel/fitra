@@ -19,13 +19,7 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   const handleSubmit = (e) => {
     axios
       .post(`/api/${type}/login`, userForm)
-      .then((result) => {
-        if (result.data.err) setErrorMessage(result.data.err)
-        else {
-          const { user, token } = result.data.data
-          updateState({ type: 'LOGIN', payload: { user, token } })
-        }
-      })
+      .then(({ data: { user, token } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
       .catch((err) => console.error('register error: ', err))
   }
 
@@ -41,12 +35,7 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     if (!accessToken || !userID) return setErrorMessage('One or more fields missing')
     axios
       .post(`/api/${type}/fblogin`, { accessToken, userID })
-      .then((res) => {
-        const { err } = res.data
-        if (err) return setErrorMessage(err)
-        const { user, token } = res.data.data
-        updateState({ type: 'LOGIN', payload: { user, token } })
-      })
+      .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
       .catch((err) => console.error({ err }))
   }
 
@@ -54,12 +43,7 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     const { tokenId } = response
     axios
       .post(`/api/${type}/googlelogin`, { tokenId })
-      .then(({ data }) => {
-        const { err } = data
-        if (err) return setErrorMessage(err)
-        const { user, token } = data.data
-        updateState({ type: 'LOGIN', payload: { user, token } })
-      })
+      .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
       .catch((err) => console.error({ err }))
   }
 

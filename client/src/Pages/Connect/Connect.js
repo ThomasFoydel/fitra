@@ -50,17 +50,16 @@ const Connect = ({ socket }) => {
     let myPeer
     axios
       .get(`/api/connect/${connectionId}`, { headers: { 'x-auth-token': token } })
-      .then(async ({ data }) => {
+      .then(async ({ data: { roomId } }) => {
         if (!subscribed) return
-        if (data.err) return setErrorMessage(data.err)
 
         myPeer = new Peer()
         myPeer.on('open', (id) => {
           socket.emit('join-room', {
+            token,
+            roomId,
             peerId: id,
             mySocketId: socket.id,
-            roomId: data.roomId,
-            token: token,
           })
         })
 

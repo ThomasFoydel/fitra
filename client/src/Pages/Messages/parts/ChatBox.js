@@ -18,8 +18,8 @@ const ChatBox = ({ props: { userId, userName, currentThread, update, isTrainer }
 
     axios
       .post('/api/message/', message)
-      .then(({ data }) => {
-        update(data)
+      .then(({ data: { newMessage } }) => {
+        update(newMessage)
         setText('')
       })
       .catch((err) => console.error('chatbox err: ', err))

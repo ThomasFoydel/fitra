@@ -16,10 +16,10 @@ const Settings = () => {
         { checked },
         { headers: { 'x-auth-token': token } }
       )
-      .then(({ data: { darkmode } }) => {
+      .then(({ data: { settings } }) => {
         updateState({
           type: 'CHANGE_SETTINGS',
-          payload: { type: 'darkmode', value: darkmode },
+          payload: { type: 'darkmode', value: settings.darkmode },
         })
       })
       .catch((err) => console.error('darkmode error: ', err))

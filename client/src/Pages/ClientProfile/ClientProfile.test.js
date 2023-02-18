@@ -19,9 +19,7 @@ describe('Client profile page', () => {
     axios.get = jest.fn((url) => {
       if (url === `/api/client/profile/${exampleUser._id}`) {
         return Promise.resolve({
-          data: {
-            foundUser: exampleUser,
-          },
+          data: { foundUser: exampleUser },
         })
       }
     })
@@ -33,7 +31,7 @@ describe('Client profile page', () => {
 
     await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1))
   })
-  
+
   afterEach(cleanup)
 
   it('Should display client info after GET request', () => {

@@ -15,19 +15,15 @@ describe('Trainer settings page', () => {
     axios.get.mockReturnValue(
       Promise.resolve({
         data: {
-          foundSession: {
-            id: '222',
-            endTime: new Date(),
-            startTime: new Date(),
-          },
           foundClient: { id: '111', name: 'john doe' },
+          foundSession: { id: '222', endTime: new Date(), startTime: new Date() },
         },
       })
     )
 
     axios.delete = jest.fn((url, req) => {
       if (req.headers.id === exampleUser.id && url === '/api/trainer/cancel-session/') {
-        return Promise.resolve({ data: { success: true } })
+        return Promise.resolve({ data: { status: 'success', id: req.headers.id } })
       }
     })
 
@@ -40,7 +36,7 @@ describe('Trainer settings page', () => {
     )
     await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1))
   })
-  
+
   afterEach(cleanup)
 
   it('Should have three links ', async () => {

@@ -18,9 +18,7 @@ describe('Edit Profile page', () => {
   beforeEach(async () => {
     axios.put = jest.fn((url, body) => {
       if (url === '/api/client/editprofile') {
-        return Promise.resolve({
-          data: body,
-        })
+        return Promise.resolve({ data: { updatedProfile: body } })
       }
     })
 
@@ -32,7 +30,7 @@ describe('Edit Profile page', () => {
       </Store>
     )
   })
-  
+
   afterEach(cleanup)
 
   it('Should have three text inputs', () => {

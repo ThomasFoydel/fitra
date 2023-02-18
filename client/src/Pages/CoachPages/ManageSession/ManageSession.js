@@ -30,9 +30,8 @@ const ManageSession = () => {
     let subscribed = true
     axios
       .get(`/api/trainer/session/${id}`, { headers: { 'x-auth-token': token } })
-      .then(({ data: { foundSession, err, foundClient } }) => {
+      .then(({ data: { foundSession, foundClient } }) => {
         if (!subscribed) return
-        if (err) setErr(err)
         else if (process.env.NODE_ENV === 'production') {
           setFound({ session: foundSession, client: foundClient })
         } else {
@@ -45,10 +44,7 @@ const ManageSession = () => {
   const handleCancel = () => {
     axios
       .delete(`/api/trainer/cancel-session/`, { headers: { 'x-auth-token': token, id } })
-      .then(({ data: { id, err } }) => {
-        if (err) setErr(err)
-        else if (id) setDeleted(true)
-      })
+      .then(() => setDeleted(true))
       .catch((err) => console.error({ err }))
   }
 

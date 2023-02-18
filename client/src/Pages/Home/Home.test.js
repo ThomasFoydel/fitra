@@ -21,12 +21,9 @@ describe('Client home page', () => {
   beforeEach(async () => {
     axios.get = jest.fn((url) => {
       if (url === '/api/client/dashboard')
-        return Promise.resolve({
-          data: {
-            sessions: [exampleSession],
-          },
-        })
+        return Promise.resolve({ data: { sessions: [exampleSession] } })
     })
+    
     render(
       <Store>
         <Router>

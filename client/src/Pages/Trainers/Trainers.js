@@ -9,18 +9,17 @@ const suggestionTags = ['mma', 'yoga', 'diet', 'pilates', 'boxing', 'cardio', 'c
 
 const Trainers = () => {
   const [currentTrainers, setCurrentTrainers] = useState([])
+  const [queryType, setQueryType] = useState('tags')
   const [search, setSearch] = useState('')
   const [err, setErr] = useState('')
-  const [queryType, setQueryType] = useState('tags')
 
   useEffect(() => {
+    let subscribed = true
     if (queryType && search)
       axios
         .get(`/api/client/search?type=${queryType}&search=${search}`)
-        .then(({ data: { result, err } }) => {
-          if (err) return setErr(err)
-          else setCurrentTrainers(result)
-        })
+        .then(({ data: { trainers } }) => subscribed && setCurrentTrainers(trainers))
+    return () => (subscribed = false)
   }, [search, queryType])
 
   const tagSearch = (tag) => {

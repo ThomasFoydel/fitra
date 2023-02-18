@@ -26,11 +26,7 @@ describe('Trainers search page', () => {
   beforeEach(async () => {
     axios.get = jest.fn((url) => {
       if (url.includes('/api/client/search') && url.includes(`search=${exampleSearch}`))
-        return Promise.resolve({
-          data: {
-            result: [exampleTrainer],
-          },
-        })
+        return Promise.resolve({ data: { result: [exampleTrainer] } })
     })
     render(
       <Store>

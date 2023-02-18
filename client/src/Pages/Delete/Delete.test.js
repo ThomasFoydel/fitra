@@ -16,11 +16,7 @@ describe('Delete account page', () => {
   beforeEach(async () => {
     axios.delete = jest.fn((url, body) => {
       if (url === mockReq.url && body.headers.pass === mockReq.password)
-        return Promise.resolve({
-          data: {
-            success: true,
-          },
-        })
+        return Promise.resolve({ data: { status: 'success' } })
     })
     render(
       <Store>

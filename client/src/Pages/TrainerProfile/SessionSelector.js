@@ -152,11 +152,8 @@ const SessionSelector = ({
         { startTime, endTime, order, trainer: _id },
         { headers: { 'x-auth-token': token } }
       )
-      .then(({ data: { err, newSession } }) => {
-        if (err) {
-          setErr(err)
-          setSelection([])
-        } else if (newSession) setBookingSuccess(true)
+      .then(({ data: { newSession } }) => {
+        if (newSession) setBookingSuccess(true)
       })
   }
 

@@ -73,17 +73,14 @@ router.get('/', (_, res) => {
 
 router.post('/upload/:type/:kind', auth, upload.single('image'), async (req, res) => {
   try {
-    const {
-      file,
-      tokenUser: { userId },
-      params: { type, kind },
-    } = req
-
+    const { file, tokenUser, params } = req
+    const { type, kind } = params
+    const { userId } = tokenUser
     const { id } = file
 
     if (file.size > 1000000) {
       await await deleteImage(id)
-      return res.status(400).send({ status: 'error', message: 'File may not exceed 1mb' })
+      return res.status(400).send({ status: 'error', message: 'File may not exceed 1MB' })
     }
 
     const User = type === 'trainer' ? Trainer : Client

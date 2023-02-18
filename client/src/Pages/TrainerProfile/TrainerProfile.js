@@ -11,16 +11,16 @@ import './TrainerProfile.scss'
 
 const TrainerProfile = () => {
   const { trainerId } = useParams()
-  const [appState] = useContext(CTX)
-  let belongsToCurrentUser = appState.user.id === trainerId
+  const [{ user, messages }] = useContext(CTX)
+  const belongsToCurrentUser = user.id === trainerId
 
-  const [currentTrainer, setCurrentTrainer] = useState(null)
-  const [sessions, setSessions] = useState([])
-  const [bookingSuccess, setBookingSuccess] = useState(false)
   const [sessionSelectorOpen, setSessionSelectorOpen] = useState(true)
+  const [redirectToMessages, setRedirectToMessages] = useState(false)
+  const [bookingSuccess, setBookingSuccess] = useState(false)
+  const [currentTrainer, setCurrentTrainer] = useState(null)
   const [messageOpen, setMessageOpen] = useState(false)
   const [selection, setSelection] = useState([])
-  const [redirectToMessages, setRedirectToMessages] = useState(false)
+  const [sessions, setSessions] = useState([])
   const [reviews, setReviews] = useState([])
   const [avg, setAvg] = useState('')
 
@@ -30,26 +30,25 @@ const TrainerProfile = () => {
     let subscribed = true
     axios
       .get(`/api/client/trainer/${trainerId}`)
-      .then(({ data: { trainer, err, foundSessions, foundReviews, foundAvg } }) => {
-        if (err && subscribed) setErr(err)
-        else if (subscribed) {
-          setCurrentTrainer(trainer)
-          setSessions(foundSessions)
-          setReviews(foundReviews)
+      .then(({ data: { trainer, foundSessions, foundReviews, foundAvg } }) => {
+        if (subscribed) {
           setAvg(foundAvg)
+          setReviews(foundReviews)
+          setSessions(foundSessions)
+          setCurrentTrainer(trainer)
         }
       })
-      .catch((err) => console.log('trainer profile error: ', err))
+      .catch((err) => console.error('trainer profile error: ', err))
     return () => (subscribed = false)
   }, [trainerId])
 
-  let { name, bio, displayEmail, profilePic, coverPic } = currentTrainer || {}
+  const { name, bio, displayEmail, profilePic, coverPic } = currentTrainer || {}
+
   const toggleMessageOpen = () => {
-    if (appState.messages[currentTrainer._id]) {
-      setRedirectToMessages(true)
-    } else {
-      setSessionSelectorOpen(false)
+    if (messages[currentTrainer._id]) setRedirectToMessages(true)
+    else {
       setMessageOpen((o) => !o)
+      setSessionSelectorOpen(false)
     }
   }
 
@@ -62,7 +61,7 @@ const TrainerProfile = () => {
     <div className="trainerprofile">
       {bookingSuccess && <Navigate to="/" />}
       {redirectToMessages && (
-        <Navigate to={`${appState.user.type === 'trainer' ? 'coachportal' : ''}/messages`} />
+        <Navigate to={`${user.type === 'trainer' ? 'coachportal' : ''}/messages`} />
       )}
       {err ? (
         <p>{err}</p>
@@ -77,9 +76,9 @@ const TrainerProfile = () => {
         >
           <div className="info">
             <Image
-              src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
               name="profile-pic"
               alt="trainer's profile"
+              src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
             />
 
             <div className="section-1">
@@ -103,14 +102,14 @@ const TrainerProfile = () => {
             <>
               <div className="btns">
                 <button
-                  className={`msg-btn ${messageOpen ? 'current' : ''}`}
                   onClick={toggleMessageOpen}
+                  className={`msg-btn ${messageOpen ? 'current' : ''}`}
                 >
                   <i className="far fa-envelope fa-4x"></i>
                 </button>
                 <button
-                  className={`book-btn ${sessionSelectorOpen ? 'current' : ''}`}
                   onClick={toggleSelectorOpen}
+                  className={`book-btn ${sessionSelectorOpen ? 'current' : ''}`}
                 >
                   <i className="fa fa-calendar fa-4x" aria-hidden="true"></i>
                 </button>
@@ -118,12 +117,12 @@ const TrainerProfile = () => {
               {messageOpen && <IntroMessage toggle={setMessageOpen} id={trainerId} />}
               {currentTrainer && sessionSelectorOpen && (
                 <SessionSelector
-                  belongsToCurrentUser={belongsToCurrentUser}
+                  selection={selection}
                   bookedTimes={sessions}
                   trainer={currentTrainer}
-                  setBookingSuccess={setBookingSuccess}
-                  selection={selection}
                   setSelection={setSelection}
+                  setBookingSuccess={setBookingSuccess}
+                  belongsToCurrentUser={belongsToCurrentUser}
                 />
               )}
             </>

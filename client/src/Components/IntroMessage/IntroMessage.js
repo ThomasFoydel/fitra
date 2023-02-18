@@ -22,8 +22,8 @@ const IntroMessage = ({ id, toggle }) => {
       fromTrainer: user.type === 'trainer',
     }
 
-    axios.post('/api/message', newMsg).then(({ data }) => {
-      updateState({ type: 'NEW_MESSAGE', payload: { message: data } })
+    axios.post('/api/message', newMsg).then(({ data: { newMessage } }) => {
+      updateState({ type: 'NEW_MESSAGE', payload: { message: newMessage } })
       setComplete(true)
     })
   }

@@ -15,12 +15,12 @@ const Home = () => {
     let subscribed = true
     axios
       .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
-      .then(({ data: { sessions }, err }) => {
-        if (err) return console.log({ err })
-        if (subscribed && sessions)
+      .then(({ data: { sessions } }) => {
+        if (subscribed && sessions) {
           process.env.NODE_ENV === 'production'
             ? setFoundSessions(sessions)
             : act(() => setFoundSessions(sessions))
+        }
       })
       .catch((err) => console.error('connection error: ', err))
     return () => (subscribed = false)

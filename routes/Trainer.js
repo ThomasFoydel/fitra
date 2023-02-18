@@ -107,9 +107,10 @@ router.post('/login', async (req, res) => {
       displayEmail: user.displayEmail,
     }
     res.status(200).send({
+      token,
+      user: userInfo,
       status: 'success',
       message: 'Login successful',
-      data: { user: userInfo, token },
     })
   } catch (err) {
     return res.status(500).send({ status: 'error', message: 'Database is down' })

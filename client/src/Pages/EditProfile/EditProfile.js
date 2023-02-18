@@ -24,7 +24,8 @@ const EditProfile = () => {
   const handleSubmit = () => {
     axios
       .put(`/api/${type}/editprofile`, formInfo, { headers: { 'x-auth-token': token } })
-      .then(({ data: { bio, coverPic, displayEmail, name, profilePic } }) => {
+      .then(({ data: { updatedProfile } }) => {
+        const { bio, coverPic, displayEmail, name, profilePic } = updatedProfile
         const filteredRes = { bio, coverPic, displayEmail, name, profilePic }
         if (process.env.NODE_ENV === 'production') {
           updateState({ type: 'EDIT_PROFILE', payload: { res: filteredRes } })

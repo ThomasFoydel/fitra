@@ -12,13 +12,8 @@ const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   const handleSubmit = () => {
     axios
       .post(`/api/${trainer ? 'trainer' : 'client'}/register`, userForm)
-      .then((result) => {
-        if (result.data.err) setErrorMessage(result.data.err)
-        else setCurrentShow('login')
-      })
-      .catch((err) => {
-        console.error('register error: ', err)
-      })
+      .then(() => setCurrentShow('login'))
+      .catch((err) => console.error('register error: ', err))
   }
 
   useEffect(() => {

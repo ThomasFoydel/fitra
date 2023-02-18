@@ -21,8 +21,8 @@ const Session = ({ session: { startTime, endTime, _id, trainer, status } }) => {
       <Link to={`/trainer/${trainer}`}>
         <Image
           name="profile-pic"
-          src={`/api/image/user/profilePic/${trainer}`}
           alt="trainer's profile"
+          src={`/api/image/user/profilePic/${trainer}`}
         />
       </Link>
       <div className="start-time">

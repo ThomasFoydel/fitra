@@ -25,10 +25,7 @@ const SessionReview = () => {
       .post(`/api/client/review/${sessionId}`, formData, {
         headers: { 'x-auth-token': appState.user.token },
       })
-      .then(({ data: { savedReview, err } }) => {
-        if (err) return setErr(err)
-        else if (savedReview) setRedirect(true)
-      })
+      .then(() => setRedirect(true))
       .catch((err) => console.error({ err }))
   }
 

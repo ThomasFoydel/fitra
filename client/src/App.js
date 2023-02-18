@@ -33,22 +33,20 @@ function App() {
 
   useEffect(() => {
     let subscribed = true
-    const tokenLS = localStorage.getItem('fitr-token')
+    const token = localStorage.getItem('fitr-token')
 
     const checkAuth = async () => {
       axios
-        .get('/api/auth/', {
-          headers: { 'x-auth-token': tokenLS },
-        })
+        .get('/api/auth/', { headers: { 'x-auth-token': token } })
         .then(({ data: { user } }) => {
-          if (subscribed && user) updateState({ type: 'LOGIN', payload: { user, token: tokenLS } })
+          if (subscribed && user) updateState({ type: 'LOGIN', payload: { user, token } })
         })
         .catch(() => {
           if (process.env.NODE_ENV === 'production') updateState({ type: 'LOGOUT' })
         })
     }
 
-    const noToken = !tokenLS || tokenLS === 'undefined'
+    const noToken = !token || token === 'undefined'
 
     noToken ? updateState({ type: 'LOGOUT' }) : checkAuth()
 
@@ -99,10 +97,15 @@ function App() {
           />
 
           <Route exact path="/terms-of-use" element={<TermsOfUse />} />
+
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
+
           <Route exact path="/trainers" element={<Trainers />} />
+
           <Route exact path="/trainer/:trainerId" element={<TrainerProfile />} />
+
           <Route exact path="/settings" element={isLoggedIn ? <Settings /> : <LandingPage />} />
+
           <Route
             exact
             path="/editprofile"
@@ -120,9 +123,11 @@ function App() {
             path="/connect/:connectionId"
             element={socketRef.current ? <Connect socket={socketRef.current} /> : <HomeComponent />}
           />
+
           <Route exact path="/messages" element={isLoggedIn ? <Messages /> : <LandingPage />} />
 
           <Route exact path="/user/:id" element={<ClientProfile />} />
+
           <Route exact path="/delete_my_account" element={<Delete />} />
 
           <Route
@@ -130,11 +135,13 @@ function App() {
             path="/coachportal/settings"
             element={isLoggedIn ? <TrainerSettings /> : <TrainerLandingPage />}
           />
+
           <Route
             exact
             path="/coachportal/editprofile"
             element={isLoggedIn ? <EditProfile /> : <TrainerLandingPage />}
           />
+
           <Route
             exact
             path="/coachportal/schedule"
@@ -146,6 +153,7 @@ function App() {
             path="/coachportal/messages"
             element={isLoggedIn ? <Messages /> : <TrainerLandingPage />}
           />
+
           <Route
             exact
             path="/coachportal/manage/:id"

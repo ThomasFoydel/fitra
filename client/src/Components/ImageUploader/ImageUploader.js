@@ -43,9 +43,8 @@ const ImageUploader = ({ props: { kind } }) => {
     fd.append('image', file, file.name)
     axios
       .post(`/api/image/upload/${type}/${kind}`, fd, { headers: { 'x-auth-token': token } })
-      .then(({ data }) => {
-        if (data.err) return setErrorMessage(data.err)
-        const { coverPic, profilePic } = data.user
+      .then(({ data: { user } }) => {
+        const { coverPic, profilePic } = user
         setFile(null)
         setUploading(false)
         updateState({ type: 'CHANGE_PIC', payload: { kind, coverPic, profilePic } })
