@@ -26,6 +26,7 @@ const ScheduleContainer = () => {
     axios
       .get('/api/trainer/schedule/', { headers: { 'x-auth-token': token } })
       .then(({ data: { entries, min, max, foundSessions } }) => {
+        if (!subscribed) return
         if (foundSessions) {
           const sessions = []
           foundSessions.forEach(({ client, startTime, endTime, _id }) => {
@@ -47,22 +48,13 @@ const ScheduleContainer = () => {
             }
             sessions.push(newSession)
           })
-          if (!subscribed) return
-          if (process.env.NODE_ENV === 'production') setSessions(sessions)
-          else act(() => setSessions(sessions))
+          act(() => setSessions(sessions))
         }
-        if (!subscribed) return
-        if (process.env.NODE_ENV === 'production') {
+        act(() => {
           setEntries(entries)
           setMin(min)
           setMax(max)
-        } else {
-          act(() => {
-            setEntries(entries)
-            setMin(min)
-            setMax(max)
-          })
-        }
+        })
       })
     return () => (subscribed = false)
   }, [token])

@@ -17,10 +17,7 @@ const TrainerHome = () => {
     axios
       .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
       .then(({ data: { sessions } }) => {
-        if (subscribed)
-          process.env.NODE_ENV === 'production'
-            ? setFoundSessions(sessions)
-            : act(() => setFoundSessions(sessions))
+        if (subscribed) act(() => setFoundSessions(sessions))
       })
       .catch(({ data: { response } }) => toast.error(response.message))
     return () => (subscribed = false)

@@ -20,12 +20,7 @@ const ManageSession = () => {
     axios
       .get(`/api/trainer/session/${id}`, { headers: { 'x-auth-token': token } })
       .then(({ data: { foundSession, foundClient } }) => {
-        if (!subscribed) return
-        else if (process.env.NODE_ENV === 'production') {
-          setFound({ session: foundSession, client: foundClient })
-        } else {
-          act(() => setFound({ session: foundSession, client: foundClient }))
-        }
+        if (subscribed) act(() => setFound({ session: foundSession, client: foundClient }))
       })
     return () => (subscribed = false)
   }, [token, id])
