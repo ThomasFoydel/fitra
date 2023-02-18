@@ -7,46 +7,60 @@ const Client = require('../models/Client')
 const router = express.Router()
 
 router.get('/:id', auth, async ({ params: { id } }, res) => {
-  const foundClient = await Client.findById(id)
-  if (foundClient) {
-    return res.send({ user: { ...foundClient, email: foundClient.displayEmail } })
+  try {
+    const foundClient = await Client.findById(id)
+    if (foundClient) {
+      return res.status(200).send({ user: { ...foundClient, email: foundClient.displayEmail } })
+    }
+    const foundTrainer = await Trainer.findById(id)
+    if (foundTrainer) {
+      return res.status(200).send({ user: { ...foundTrainer, email: foundTrainer.displayEmail } })
+    }
+    return res.status(404).send({ status: 'error', message: 'User not found' })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
   }
-  const foundTrainer = await Trainer.findById(id)
-  if (foundTrainer) {
-    return res.send({ user: { ...foundTrainer, email: foundTrainer.displayEmail } })
-  } else return res.send({ err: 'no user found' })
 })
 
-router.put('/settings/:type/:setting', auth, async (req, res) => {
-  const { type, setting } = req.params
-  const { value } = req.body
-  const { userId } = req.tokenUser
-  const User = type === 'client' ? Client : Trainer
+router.put('/settings/:type/:setting', auth, async ({ params, body, tokenUser }, res) => {
+  try {
+    const { value } = body
+    const { userId } = tokenUser
+    const { type, setting } = params
+    const User = type === 'client' ? Client : Trainer
 
-  User.findByIdAndUpdate(
-    userId,
-    { $set: { [`settings.${setting}`]: value } },
-    { new: true, useFindAndModify: false, fields: { settings: 1 } }
-  )
-    .then(({ settings }) => res.send(settings))
-    .catch(() => res.send({ err: 'database error' }))
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: { [`settings.${setting}`]: value } },
+      { new: true, useFindAndModify: false, fields: { settings: 1 } }
+    )
+    return res
+      .status(200)
+      .send({ status: 'success', message: 'User updated', settings: updatedUser.settings })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
 })
 
 router.delete(
   '/delete_my_account/:type',
   auth,
   async ({ tokenUser: { userId }, params: { type }, headers: { pass } }, res) => {
-    const User = type === 'client' ? Client : Trainer
-    const foundUser = await User.findById(userId)
-    if (!foundUser) return res.send({ err: 'No user found' })
+    try {
+      const User = type === 'client' ? Client : Trainer
+      const foundUser = await User.findById(userId)
+      if (!foundUser) return res.status(404).send({ status: 'error', message: 'User not found' })
 
-    const passwordsMatch = await bcrypt.compare(pass, foundUser.password)
-    if (!passwordsMatch) {
-      return res.json({ err: 'Incorrect password' })
+      const passwordsMatch = bcrypt.compare(pass, foundUser.password)
+      if (!passwordsMatch) {
+        return res.status(401).send({ status: 'error', message: 'Incorrect password' })
+      }
+
+      await User.findByIdAndDelete(userId)
+      return res.status(200).send({ status: 'success', message: 'Account deleted' })
+    } catch (err) {
+      return res.status(500).send({ status: 'error', message: 'Database is down' })
     }
-    User.findByIdAndDelete(userId)
-      .then(() => res.send({ message: 'deletion successful' }))
-      .catch(() => res.send({ err: 'database error' }))
   }
 )
 module.exports = router

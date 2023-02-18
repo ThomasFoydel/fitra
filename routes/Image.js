@@ -43,20 +43,19 @@ const storage = new GridFsStorage({
 const upload = multer({ storage })
 
 const deleteImage = async (id, res) => {
-  if (!id || id === 'undefined') return res.send({ err: 'no image id' })
+  if (!id || id === 'undefined') {
+    return res.status(400).send({ status: 'error', message: 'No image id' })
+  }
   const _id = new mongoose.Types.ObjectId(id)
   await gfs.delete(_id)
 }
 
 router.get('/', (_, res) => {
-  if (!gfs) {
-    res.send({ err: 'database error' })
-    process.exit(0)
-  }
-  gfs.find().toArray((err, files) => {
-    /* check if files exist */
+  if (!gfs) return res.status(500).send({ status: 'error', message: 'Database error' })
+
+  gfs.find().toArray((_rr, files) => {
     if (!files || files.length === 0) {
-      return res.send({ err: 'no files' })
+      return res.status(404).send({ status: 'error', message: 'Files not found' })
     } else {
       const f = files
         .map((file) => {
@@ -67,75 +66,95 @@ router.get('/', (_, res) => {
         })
         .sort((a, b) => new Date(b['uploadDate']).getTime() - new Date(a['uploadDate']).getTime())
 
-      return res.render('index', { files: f })
+      return res.status(200).send({ status: 'success', message: 'Files found', files: f })
     }
   })
 })
 
 router.post('/upload/:type/:kind', auth, upload.single('image'), async (req, res) => {
-  const {
-    file,
-    tokenUser: { userId },
-    params: { type, kind },
-  } = req
+  try {
+    const {
+      file,
+      tokenUser: { userId },
+      params: { type, kind },
+    } = req
 
-  const { id } = file
+    const { id } = file
 
-  if (file.size > 1000000) {
-    await await deleteImage(id)
-    return res.send({ err: 'file may not exceed 1mb' })
+    if (file.size > 1000000) {
+      await await deleteImage(id)
+      return res.status(400).send({ status: 'error', message: 'File may not exceed 1mb' })
+    }
+
+    const User = type === 'trainer' ? Trainer : Client
+
+    const foundUser = await User.findById(userId)
+    if (!foundUser) return res.status(404).send({ status: 'error', message: 'user not found' })
+
+    const currentPic = foundUser[kind]
+    const currentPicId = new mongoose.Types.ObjectId(currentPic)
+
+    if (currentPic) gfs.delete(currentPicId, (err) => err && console.error(err))
+
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      { [kind]: id },
+      { new: true, useFindAndModify: false }
+    )
+    if (!user) return res.status(500).send({ status: 'error', message: 'User update failed' })
+    return res.status().send({ status: 'success', message: 'Image uploaded, user updated', user })
+  } catch (err) {
+    return res
+      .status(500)
+      .send({ status: 'error', message: 'Database is down. We are working to fix this.' })
   }
-
-  const User = type === 'trainer' ? Trainer : Client
-
-  const foundUser = await User.findById(userId)
-  if (!foundUser) return res.send({ err: 'user not found' })
-  const currentPic = foundUser[kind]
-  const currentPicId = new mongoose.Types.ObjectId(currentPic)
-
-  if (currentPic) {
-    gfs.delete(currentPicId, (err) => {
-      if (err) {
-        return res.send({ err: 'database error' })
-      }
-    })
-  }
-
-  User.findOneAndUpdate({ _id: userId }, { [kind]: id }, { new: true, useFindAndModify: false })
-    .then((user) => res.send({ user }))
-    .catch(() => {
-      return res.send({ err: 'database error' })
-    })
 })
 
 router.get('/:id', ({ params: { id } }, res) => {
-  if (!id || id === 'undefined') return res.send({ err: 'no image id' })
-  const _id = new mongoose.Types.ObjectId(id)
-  gfs.find({ _id }).toArray((err, files) => {
-    if (!files || files.length === 0) {
-      return res.send({ err: 'no files exist' })
+  try {
+    if (!id || id === 'undefined') {
+      return res.status(400).send({ status: 'error', message: 'No image id' })
     }
-    gfs.openDownloadStream(_id).pipe(res)
-  })
+    let _id
+    try {
+      _id = new mongoose.Types.ObjectId(id)
+    } catch (err) {
+      return res.status(400).send({ status: 'error', message: 'Invalid image id' })
+    }
+    gfs.find({ _id }).toArray((_, files) => {
+      if (!files || files.length === 0) {
+        return res.status(404).send({ status: 'error', message: 'Files not found' })
+      }
+      gfs.openDownloadStream(_id).pipe(res)
+    })
+  } catch (err) {
+    return res
+      .status(500)
+      .send({ status: 'error', message: 'Database is down. We are working to fix this.' })
+  }
 })
 
 /* /api/image/user/profilePic/${id} */
 router.get('/user/:kind/:id', async ({ params: { id, kind } }, res) => {
-  if (!id || id === 'undefined') return res.send({ err: 'no image id' })
-  let user = await findUser(id)
-  if (user) {
-    const foundPicId = user[kind] || new mongoose.Types.ObjectId('5f470368cabb0abdebe0c9e4')
+  try {
+    if (!id || id === 'undefined') {
+      return res.status(400).send({ status: 'error', message: 'No image id' })
+    }
+    const user = await findUser(id)
+    if (!user) return res.status(404).send({ status: 'error', message: 'User not found' })
 
+    const foundPicId = user[kind] || new mongoose.Types.ObjectId('5f470368cabb0abdebe0c9e4')
     const _id = new mongoose.Types.ObjectId(foundPicId)
     gfs.find({ _id }).toArray((err, files) => {
       if (!files || files.length === 0) {
-        /* image doesnt exist, user has no profile or cover photo */
-        return res.send({ err: 'no files exist' })
+        return res.status(404).send({ status: 'error', message: 'Files not found' })
       }
       gfs.openDownloadStream(_id).pipe(res)
     })
-  } else {
-    res.send({ err: 'no user found' })
+  } catch (err) {
+    return res
+      .status(500)
+      .send({ status: 'error', message: 'Database is down. We are working to fix this.' })
   }
 })
 
@@ -145,7 +164,7 @@ router.delete('/:id', async ({ params: { id } }, res) => {
   } catch (err) {
     return res.status(500).json({ status: 'error', message: 'Image deletion failed' })
   }
-  return res.status(200).json({ status: 'success', message: 'Image deleted', id: id })
+  return res.status(200).json({ status: 'success', message: 'Image deleted', id })
 })
 
 module.exports = router

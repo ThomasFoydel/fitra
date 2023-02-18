@@ -7,17 +7,23 @@ const Client = require('../models/Client')
 
 const router = express.Router()
 
-router.post(
-  '/new',
-  auth,
-  async ({ body: { trainer, startTime, endTime, order }, tokenUser: { userId } }, res) => {
-    if (userId === trainer) return res.send({ err: 'you cannot book yourself!' })
+router.post('/new', auth, async ({ body, tokenUser: { userId } }, res) => {
+  try {
+    const { trainer, startTime, endTime, order } = body
+    if (userId === trainer) {
+      return res.status(400).send({ status: 'error', message: 'You cannot book yourself!' })
+    }
 
     const errTrainer = await Trainer.findById(userId)
-    if (errTrainer) return res.send({ err: 'only clients can book trainers' })
+    if (errTrainer) {
+      return res.status(400).send({ status: 'error', message: 'Only clients can book trainers' })
+    }
 
     const foundClient = await Client.findById(userId)
-    if (!foundClient) return res.send({ err: 'user info not found' })
+    if (!foundClient) {
+      return res.status(404).send({ status: 'error', message: 'User info not found' })
+    }
+
     const foundTrainer = await Trainer.findById(trainer)
 
     const { availability } = foundTrainer
@@ -41,7 +47,9 @@ router.post(
       if (startIsBetween || endIsBetween || blockedTimeIsBetween) timeBlocked = true
     })
 
-    if (timeBlocked) return res.send({ err: 'selected time is unavailable' })
+    if (timeBlocked) {
+      return res.status(400).send({ status: 'error', message: 'Selected time is unavailable' })
+    }
 
     const roomId = uuidV4()
 
@@ -55,13 +63,21 @@ router.post(
       trainer: foundTrainer._id,
     })
 
-    newSession
-      .save()
-      .then(({ startTime, endTime, status, trainer, client }) => {
-        res.send({ newSession: { startTime, endTime, status, trainer, client } })
-      })
-      .catch(() => res.send({ err: 'database error' }))
+    const result = await newSession.save()
+    if (!result) {
+      return res.status(500).send({ status: 'error', message: 'Session creation failed' })
+    }
+
+    return res.status(200).send({
+      status: 'success',
+      newSession: result,
+      message: 'Session created',
+    })
+  } catch (err) {
+    return res
+      .status(500)
+      .send({ status: 'error', message: 'Database is down. We are working to fix this.' })
   }
-)
+})
 
 module.exports = router
