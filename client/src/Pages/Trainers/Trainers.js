@@ -26,7 +26,7 @@ const Trainers = () => {
     setSearch(tag)
   }
 
-  const trainerCards = useTransition(currentTrainers, {
+  const animatedTrainers = useTransition(currentTrainers, {
     trail: 300,
     config: config.molasses,
     from: { opacity: '0', height: '0rem', transform: 'translateY(-20px)' },
@@ -54,8 +54,8 @@ const Trainers = () => {
         </div>
       </div>
       <div className="trainers-container">
-        {trainerCards((style, item) => (
-          <animated.div style={style}>
+        {animatedTrainers((style, item, key) => (
+          <animated.div style={style} key={key}>
             <TrainerCard props={{ trainer: item, tagSearch }} />
           </animated.div>
         ))}

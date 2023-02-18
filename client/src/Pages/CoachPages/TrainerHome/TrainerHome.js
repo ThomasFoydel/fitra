@@ -26,7 +26,7 @@ const TrainerHome = () => {
     return () => (subscribed = false)
   }, [token, type])
 
-  const animation = useTransition(foundSessions, (item) => item._id, {
+  const animatedSessions = useTransition(foundSessions, {
     trail: 200,
     config: config.wobbly,
     from: { opacity: '0', transform: 'translateY(-20px)' },
@@ -42,7 +42,7 @@ const TrainerHome = () => {
         <h2>Sessions</h2>
         <div className="sessions">
           {foundSessions.length > 0 ? (
-            animation.map(({ item, props, key }) => (
+            animatedSessions.map((props, item, key) => (
               <animated.div style={props} key={key}>
                 <Session session={item} />
               </animated.div>

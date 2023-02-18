@@ -27,7 +27,7 @@ const Home = () => {
     return () => (subscribed = false)
   }, [token, type])
 
-  const animation = useTransition(sessions, (item) => item && item._id, {
+  const animatedSessions = useTransition(sessions, {
     trail: 200,
     config: config.wobbly,
     from: { opacity: '0', transform: 'translateY(-20px)' },
@@ -42,10 +42,10 @@ const Home = () => {
       <div className="home">
         <h2>Sessions</h2>
         <div className="sessions">
-          {sessions.length > 0 ? (
-            animation.map(({ item, props, key }) => (
+          {animatedSessions.length > 0 ? (
+            animatedSessions.map((props, session, key) => (
               <animated.div style={props} key={key}>
-                <Session session={item} />
+                <Session session={session} />
               </animated.div>
             ))
           ) : (

@@ -14,8 +14,8 @@ const ReviewSlide = ({ reviews }) => {
 
   return (
     <div className="review-slide">
-      {animatedReviews((style, review) => (
-        <animated.div style={style} key={review._id}>
+      {animatedReviews((style, review, key) => (
+        <animated.div style={style} key={key}>
           <Review review={review} />
         </animated.div>
       ))}
