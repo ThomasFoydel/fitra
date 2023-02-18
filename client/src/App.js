@@ -118,13 +118,7 @@ function App() {
           <Route
             exact
             path="/connect/:connectionId"
-            element={({ match }) =>
-              match && socketRef.current ? (
-                <Connect socket={socketRef.current} match={match} />
-              ) : (
-                <HomeComponent />
-              )
-            }
+            element={socketRef.current ? <Connect socket={socketRef.current} /> : <HomeComponent />}
           />
           <Route exact path="/messages" element={isLoggedIn ? <Messages /> : <LandingPage />} />
 
@@ -155,9 +149,7 @@ function App() {
           <Route
             exact
             path="/coachportal/manage/:id"
-            element={({ match }) =>
-              isLoggedIn ? <ManageSession match={match} /> : <TrainerLandingPage />
-            }
+            element={isLoggedIn ? <ManageSession /> : <TrainerLandingPage />}
           />
         </Routes>
 
