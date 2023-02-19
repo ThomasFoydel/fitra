@@ -1,3 +1,5 @@
+@import 'variables';
+
 .trainers {
   width: 100vw;
   overflow: hidden;
@@ -16,29 +18,42 @@
     align-items: center;
     justify-content: center;
 
+    @media screen and (max-width: $small) {
+      display: none;
+    }
+
     .suggestion-tag {
       z-index: 1;
       width: 10rem;
-      color: #222;
       cursor: pointer;
-      padding: 0.2rem;
       margin: 0 0.3rem;
       font-size: 1.5rem;
       text-align: center;
       border-radius: 0.5rem;
-      transition: all 0.2s ease;
-      border: 1px solid rgba(211, 211, 211, 0);
-      background: linear-gradient(-45deg, rgb(247, 247, 247), rgb(194, 194, 194));
+      padding: 0.8rem 0.2rem;
+      transition: all 0.3s ease;
+      background: rgb(44 44 44);
+      color: rgb(203, 203, 203);
+      border: 1px solid rgb(153, 153, 153);
+      background: linear-gradient(135deg, #676767, #454545);
 
       &:hover {
-        filter: invert(95%);
-        border: 1px solid rgb(0, 0, 0);
+        color: white;
+        border: 1px solid rgb(190, 11, 11);
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.824);
+        background: linear-gradient(135deg, #4a4a4a, #1a1a1a);
       }
     }
 
     .current {
-      filter: invert(75%);
-      border: 1px solid rgb(0, 0, 0);
+      cursor: default;
+      color: rgb(237, 237, 237);
+      background: linear-gradient(135deg, #434343, #151515);
+      border: 1px solid rgb(190, 11, 11);
+      &:hover {
+        color: rgb(237, 237, 237);
+        background: linear-gradient(135deg, #434343, #151515);
+      }
     }
   }
 

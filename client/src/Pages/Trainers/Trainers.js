@@ -43,13 +43,13 @@ const Trainers = () => {
         <div className="suggestion-tags">
           {queryType === 'tags' &&
             suggestionTags.map((tag) => (
-              <div
+              <button
                 key={tag}
                 className={`suggestion-tag ${search === tag ? 'current' : ''}`}
                 onClick={() => tagSearch(tag)}
               >
                 {tag}
-              </div>
+              </button>
             ))}
         </div>
       </div>
