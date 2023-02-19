@@ -6,7 +6,8 @@ import React, { useState } from 'react'
 const ChatBox = ({ props: { userId, userName, currentThread, update, isTrainer } }) => {
   const [text, setText] = useState('')
 
-  const submit = () => {
+  const submit = (e) => {
+    e.preventDefault()
     if (!text) return toast.error('Message must contain content')
 
     const message = {
@@ -26,19 +27,11 @@ const ChatBox = ({ props: { userId, userName, currentThread, update, isTrainer }
       .catch(({ response: { data } }) => toast.error(data.message))
   }
 
-  const handleKeyPress = ({ charCode }) => charCode === 13 && submit()
-
   return (
-    <>
-      <input
-        type="text"
-        value={text}
-        className="input"
-        onKeyPress={handleKeyPress}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <button onClick={submit}>send</button>
-    </>
+    <form onSubmit={submit}>
+      <input type="text" value={text} className="input" onChange={(e) => setText(e.target.value)} />
+      <button type="submit">send</button>
+    </form>
   )
 }
 
