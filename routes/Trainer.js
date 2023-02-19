@@ -87,24 +87,24 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { tokenUser: { userId: user._id, email: user.email, userType: 'trainer' } },
+      { tokenUser: { userId: trainer._id, email: trainer.email, userType: 'trainer' } },
       process.env.SECRET,
       { expiresIn: '1000hr' }
     )
-    const messages = await messageSorter(user._id.toString())
+    const messages = await messageSorter(trainer._id.toString())
     const userInfo = {
       messages,
-      id: user._id,
-      bio: user.bio,
-      name: user.name,
-      tags: user.tags,
-      userId: user._id,
-      email: user.email,
+      id: trainer._id,
+      bio: trainer.bio,
+      name: trainer.name,
+      tags: trainer.tags,
+      userId: trainer._id,
+      email: trainer.email,
       userType: 'trainer',
-      settings: user.settings,
-      coverPic: user.coverPic,
-      profilePic: user.profilePic,
-      displayEmail: user.displayEmail,
+      settings: trainer.settings,
+      coverPic: trainer.coverPic,
+      profilePic: trainer.profilePic,
+      displayEmail: trainer.displayEmail,
     }
     res.status(200).send({
       token,

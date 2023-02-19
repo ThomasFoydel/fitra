@@ -20,7 +20,10 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     e.preventDefault()
     axios
       .post(`/api/${type}/login`, userForm)
-      .then(({ data: { user, token } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
+      .then(({ data: { user, token } }) => {
+        updateState({ type: 'LOGIN', payload: { user, token } })
+        setAuthOpen(false)
+      })
       .catch(({ response: { data } }) => toast.error(data.message))
   }
 
