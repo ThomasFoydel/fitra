@@ -5,11 +5,12 @@ import Image from 'Components/Image/Image'
 import PropTypes from 'prop-types'
 
 const TrainerCard = ({ props: { trainer, tagSearch } }) => {
+  const { _id, coverPic, name, profilePic, bio, tags } = trainer
   const [hover, setHover] = useState(false)
 
   const scaleAnimation = useSpring({
     config: config.wobbly,
-    transform: hover ? 'scale(1.03)' : 'scale(1)',
+    transform: hover ? 'scale(1.05)' : 'scale(1)',
   })
 
   const backgroundAnimation = useSpring({
@@ -19,13 +20,11 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
 
   const sizeAnimation = useSpring({
     config: config.stiff,
-    width: hover ? '10rem' : '8rem',
-    height: hover ? '10rem' : '8rem',
+    width: hover ? '11rem' : '8rem',
+    height: hover ? '11rem' : '8rem',
   })
 
   const handleTag = ({ target }) => tagSearch(target.id)
-
-  const { _id, coverPic, name, profilePic, bio, tags } = trainer
 
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
