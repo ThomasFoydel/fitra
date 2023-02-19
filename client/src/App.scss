@@ -89,12 +89,11 @@ input:focus {
   width: 100vw;
   height: 100vh;
   position: fixed;
-  background-size: 100%;
   background-position: center;
+  background-size: cover !important;
   background: url('./imgs/sweat.jpg');
 }
 
-/* SWITCH */
 .switch {
   width: 60px;
   height: 34px;
@@ -146,7 +145,6 @@ input:focus {
     }
   }
 
-  /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
   }
