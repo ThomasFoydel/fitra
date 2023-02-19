@@ -39,9 +39,10 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   //     .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
   //     .catch(({ response: { data } }) => toast.error(data.message))
   // }
+  const stopBubble = (e) => e.stopPropagation()
 
   return (
-    <form className="login" onSubmit={handleSubmit}>
+    <form className="login" onSubmit={handleSubmit} onClick={stopBubble}>
       <button type="button" className="closeauth-btn" onClick={() => setAuthOpen(false)}>
         <i className="fas fa-times fa-3x close-btn"></i>
       </button>

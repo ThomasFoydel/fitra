@@ -17,8 +17,10 @@ const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
       .catch(({ response: { data } }) => toast.error(data.message))
   }
 
+  const stopBubble = (e) => e.stopPropagation()
+
   return (
-    <form className="register" onSubmit={handleSubmit}>
+    <form className="register" onSubmit={handleSubmit} onClick={stopBubble}>
       <button type="button" className="closeauth-btn" onClick={() => setAuthOpen(false)}>
         <i className="fas fa-times fa-3x close-btn"></i>
       </button>

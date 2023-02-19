@@ -6,39 +6,47 @@ import Login from './Login'
 import './Auth.scss'
 
 const Auth = () => {
-  const [appState, updateState] = useContext(CTX)
-  const { authPage, authType } = appState
+  const [{ authPage, authType, showAuth }, updateState] = useContext(CTX)
+
   const trainer = authType === 'trainer'
 
   const setCurrentShow = (page) => updateState({ type: 'CHANGE_AUTH_PAGE', payload: { page } })
 
   const setAuthOpen = () => updateState({ type: 'TOGGLE_AUTH' })
 
-  const animation = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
+  const backgroundAnimation = useSpring({
     config: config.smooth,
+    from: { opacity: 0, pointerEvents: 'none' },
+    to: { opacity: showAuth ? 1 : 0, pointerEvents: showAuth ? 'auto' : 'none' },
+  })
+
+  const modalAnimation = useSpring({
+    config: config.smooth,
+    from: { transform: 'translateY(-500px)' },
+    to: { transform: showAuth ? 'translateY(0px)' : 'translateY(-500px)' },
   })
 
   return (
-    <animated.div style={animation} className="auth">
-      {authPage === 'register' ? (
-        <Register
-          props={{
-            trainer,
-            setAuthOpen,
-            setCurrentShow,
-          }}
-        />
-      ) : (
-        <Login
-          props={{
-            trainer,
-            setAuthOpen,
-            setCurrentShow,
-          }}
-        />
-      )}
+    <animated.div style={backgroundAnimation} className="auth" onClick={setAuthOpen}>
+      <animated.div style={modalAnimation}>
+        {authPage === 'register' ? (
+          <Register
+            props={{
+              trainer,
+              setAuthOpen,
+              setCurrentShow,
+            }}
+          />
+        ) : (
+          <Login
+            props={{
+              trainer,
+              setAuthOpen,
+              setCurrentShow,
+            }}
+          />
+        )}
+      </animated.div>
     </animated.div>
   )
 }

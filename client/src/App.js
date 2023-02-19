@@ -28,7 +28,7 @@ import Home from 'Pages/Home/Home'
 import './App.scss'
 
 function App() {
-  const [{ isLoggedIn, user, showAuth }, updateState] = useContext(CTX)
+  const [{ isLoggedIn, user }, updateState] = useContext(CTX)
   const { token, type } = user
 
   const socketRef = useRef(null)
@@ -163,7 +163,7 @@ function App() {
           />
         </Routes>
 
-        {!isLoggedIn && showAuth && <Auth trainer={false} />}
+        <Auth trainer={false} />
         <ToastContainer position="bottom-right" theme="dark" limit={5} />
       </Router>
     </div>
