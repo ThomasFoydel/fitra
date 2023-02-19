@@ -9,41 +9,27 @@ const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
 
   const handleChange = ({ target: { id, value } }) => setUserForm({ ...userForm, [id]: value })
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     axios
       .post(`/api/${trainer ? 'trainer' : 'client'}/register`, userForm)
       .then(() => setCurrentShow('login'))
       .catch(({ response: { data } }) => toast.error(data.message))
   }
 
-  const handleKeyDown = (e) => e.charCode === 13 && handleSubmit()
-
   return (
-    <div className="register">
-      <button className="closeauth-btn" onClick={() => setAuthOpen(false)}>
+    <form className="register" onSubmit={handleSubmit}>
+      <button type="button" className="closeauth-btn" onClick={() => setAuthOpen(false)}>
         <i className="fas fa-times fa-3x close-btn"></i>
       </button>
       <h2>{trainer && 'Trainer '}Register</h2>
       <input id="name" type="text" placeholder="name" onChange={handleChange} />
-      <input
-        id="email"
-        type="text"
-        placeholder="email"
-        onChange={handleChange}
-        onKeyPress={handleKeyDown}
-      />
-      <input
-        id="password"
-        type="password"
-        placeholder="password"
-        onChange={handleChange}
-        onKeyPress={handleKeyDown}
-      />
+      <input id="email" type="text" placeholder="email" onChange={handleChange} />
+      <input id="password" type="password" placeholder="password" onChange={handleChange} />
       <input
         type="password"
         id="confirmpassword"
         onChange={handleChange}
-        onKeyPress={handleKeyDown}
         placeholder="confirm password"
       />
       <p>
@@ -58,20 +44,20 @@ const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
           Privacy Policy
         </a>
       </p>
-      <button className="submit-btn" onClick={handleSubmit}>
+      <button className="submit-btn" type="submit">
         Submit
       </button>
-      <button className="signin-btn" onClick={() => setCurrentShow('login')}>
+      <button type="button" className="signin-btn" onClick={() => setCurrentShow('login')}>
         I already have an account
       </button>
       <AuthPageToggle />
-    </div>
+    </form>
   )
 }
 
 Register.propTypes = {
   props: PropTypes.shape({
-    trainer: PropTypes.object.isRequired,
+    trainer: PropTypes.bool.isRequired,
     setAuthOpen: PropTypes.func.isRequired,
     setCurrentShow: PropTypes.func.isRequired,
   }),

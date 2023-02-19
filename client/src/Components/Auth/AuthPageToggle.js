@@ -10,7 +10,7 @@ const AuthPageToggle = () => {
   const toggle = () => updateState({ type: 'CHANGE_AUTH_TYPE', payload: { type } })
 
   return (
-    <button onClick={toggle} className="auth-pagetoggle">
+    <button onClick={toggle} className="auth-pagetoggle" type="button">
       {text}
     </button>
   )

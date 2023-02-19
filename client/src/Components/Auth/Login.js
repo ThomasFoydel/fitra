@@ -4,13 +4,13 @@ import { toast } from 'react-toastify'
 import React, { useState, useContext } from 'react'
 import AuthPageToggle from './AuthPageToggle'
 import { CTX } from 'context/Store'
-import Facebook from './Facebook'
-import Google from './Google'
+// import Facebook from './Facebook'
+// import Google from './Google'
 
 const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   const [, updateState] = useContext(CTX)
   const [userForm, setUserForm] = useState({})
-  const [googleErr, setGoogleErr] = useState(false)
+  // const [googleErr, setGoogleErr] = useState(false)
 
   const handleChange = ({ target: { id, value } }) => setUserForm({ ...userForm, [id]: value })
 
@@ -24,27 +24,25 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
       .catch(({ response: { data } }) => toast.error(data.message))
   }
 
-  const fbResponse = ({ accessToken, userID }) => {
-    if (!accessToken || !userID) return toast.error('One or more fields missing')
-    axios
-      .post(`/api/${type}/fblogin`, { accessToken, userID })
-      .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
-      .catch(({ response: { data } }) => toast.error(data.message))
-  }
+  // const fbResponse = ({ accessToken, userID }) => {
+  //   if (!accessToken || !userID) return toast.error('One or more fields missing')
+  //   axios
+  //     .post(`/api/${type}/fblogin`, { accessToken, userID })
+  //     .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
+  //     .catch(({ response: { data } }) => toast.error(data.message))
+  // }
 
-  const googleHandleSuccess = (response) => {
-    const { tokenId } = response
-    axios
-      .post(`/api/${type}/googlelogin`, { tokenId })
-      .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
-      .catch(({ response: { data } }) => toast.error(data.message))
-  }
-
-  const googleHandleError = () => setGoogleErr(true)
+  // const googleHandleSuccess = (response) => {
+  //   const { tokenId } = response
+  //   axios
+  //     .post(`/api/${type}/googlelogin`, { tokenId })
+  //     .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
+  //     .catch(({ response: { data } }) => toast.error(data.message))
+  // }
 
   return (
     <form className="login" onSubmit={handleSubmit}>
-      <button className="closeauth-btn" onClick={() => setAuthOpen(false)}>
+      <button type="button" className="closeauth-btn" onClick={() => setAuthOpen(false)}>
         <i className="fas fa-times fa-3x close-btn"></i>
       </button>
       <h2>{trainer && 'Trainer '}Login</h2>
@@ -66,14 +64,14 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
         Login
       </button>
 
-      {!trainer && (
+      {/* {!trainer && (
         <>
           <Facebook props={{ callback: fbResponse }} />
-          <Google props={{ googleHandleSuccess, googleHandleError, googleErr }} />
+          <Google props={{ googleHandleSuccess, googleHandleError:() => setGoogleErr(true), googleErr }} />
         </>
-      )}
+      )} */}
 
-      <button onClick={() => setCurrentShow('register')}>
+      <button className="signup-btn" type="button" onClick={() => setCurrentShow('register')}>
         No account? <strong>Sign up</strong>
       </button>
       <AuthPageToggle />
