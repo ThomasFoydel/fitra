@@ -147,18 +147,13 @@ const Connect = ({ socket }) => {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     setChatInput('')
     socket.emit('message', { content: chatInput, name })
   }
 
   const handleChatInput = ({ target: { value } }) => setChatInput(value)
-
-  const handleKeyDown = (e) => {
-    if (e.charCode === 13) {
-      handleSubmit()
-    }
-  }
 
   function scrollToBottom() {
     scrollRef.current.scrollIntoView({
@@ -178,20 +173,20 @@ const Connect = ({ socket }) => {
         <div className="connect">
           <div className="videochat">
             <video ref={myVideoRef} muted autoPlay playsInline className="my-video" />
-            {Object.keys(videoStreams).map((userId) => {
-              return <Video stream={videoStreams[userId].stream} key={userId} />
-            })}
+            {Object.keys(videoStreams).map((userId) => (
+              <Video stream={videoStreams[userId].stream} key={userId} />
+            ))}
 
             <div className="controls">
               <div className="controls-block">
-                <button onClick={playStop} className="control-btn">
+                <button type="button" onClick={playStop} className="control-btn">
                   <i
                     id="stopstart"
                     className={`fas ${!icons.video ? 'fa-video' : 'fa-video-slash stop'}`}
-                  ></i>
+                  />
                   <span>stop/start</span>
                 </button>
-                <button className="control-btn" onClick={muteUnmute}>
+                <button type="button" className="control-btn" onClick={muteUnmute}>
                   <i
                     id="muteunmute"
                     className={`fas ${
@@ -214,16 +209,15 @@ const Connect = ({ socket }) => {
                 <div ref={scrollRef} />
               </ul>
             </div>
-            <div className="message_container">
+            <form onSubmit={handleSubmit} className="message_container">
               <input
-                onKeyPress={handleKeyDown}
-                onChange={handleChatInput}
+                type="text"
                 value={chatInput}
                 id="chat_message"
-                type="text"
                 placeholder="message..."
+                onChange={handleChatInput}
               />
-            </div>
+            </form>
           </div>
         </div>
       ) : (
