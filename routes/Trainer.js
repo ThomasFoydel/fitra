@@ -126,7 +126,7 @@ router.get('/dashboard', auth, async ({ tokenUser: { userId } }, res) => {
   }
 })
 
-router.put('/editprofile/', auth, async ({ tokenUser, body }, res) => {
+router.put('/profiles', auth, async ({ tokenUser, body }, res) => {
   try {
     const { userId } = tokenUser
     const formInfo = body
@@ -180,7 +180,7 @@ router.put('/schedule/', auth, async ({ tokenUser: { userId }, body }, res) => {
       { new: true, useFindAndModify: false }
     )
 
-    return res.status().send({
+    return res.status(200).send({
       status: 'success',
       message: 'Schedule updated',
       updatedSchedule: updatedTrainer.availability,

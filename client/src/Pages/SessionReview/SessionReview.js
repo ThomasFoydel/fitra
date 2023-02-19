@@ -21,7 +21,7 @@ const SessionReview = () => {
     if (rating < 0) return toast.error('Must select a rating')
     if (comment.length < 20) return toast.error('Comment must be at least 20 characters')
     axios
-      .post(`/api/client/review/${sessionId}`, formData, {
+      .post(`/api/client/reviews/${sessionId}`, formData, {
         headers: { 'x-auth-token': appState.user.token },
       })
       .then(() => setRedirect(true))

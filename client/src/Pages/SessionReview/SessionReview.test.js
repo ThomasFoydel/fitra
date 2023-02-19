@@ -19,7 +19,7 @@ describe('Session review page', () => {
   beforeEach(() => {
     axios.post = jest.fn((url, body) => {
       if (
-        url === `/api/client/review/${exampleSession.id}` &&
+        url === `/api/client/reviews/${exampleSession.id}` &&
         body.rating === exampleReview.rating &&
         body.comment === exampleReview.comment
       )

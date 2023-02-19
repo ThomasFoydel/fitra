@@ -17,7 +17,7 @@ describe('Client profile page', () => {
   jest.mock('axios')
   beforeEach(async () => {
     axios.get = jest.fn((url) => {
-      if (url === `/api/client/profile/${exampleUser._id}`) {
+      if (url === `/api/client/profiles/${exampleUser._id}`) {
         return Promise.resolve({
           data: { foundUser: exampleUser },
         })

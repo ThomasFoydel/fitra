@@ -25,7 +25,7 @@ const EditProfile = () => {
 
   const handleSubmit = () => {
     axios
-      .put(`/api/${type}/editprofile`, formInfo, { headers: { 'x-auth-token': token } })
+      .put(`/api/${type}/profile`, formInfo, { headers: { 'x-auth-token': token } })
       .then(({ data: { updatedProfile } }) => {
         const { bio, coverPic, displayEmail, name, profilePic } = updatedProfile
         const filteredRes = { bio, coverPic, displayEmail, name, profilePic }

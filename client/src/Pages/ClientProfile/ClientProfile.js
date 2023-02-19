@@ -18,7 +18,7 @@ const ClientProfile = () => {
   useEffect(() => {
     let subscribed = true
     axios
-      .get(`/api/client/profile/${id}`, { headers: { 'x-auth-token': token } })
+      .get(`/api/client/profiles/${id}`, { headers: { 'x-auth-token': token } })
       .then(({ data: { foundUser } }) => foundUser && subscribed && setUserData(foundUser))
       .catch(({ data: { response } }) => toast.error(response.message))
     return () => (subscribed = false)

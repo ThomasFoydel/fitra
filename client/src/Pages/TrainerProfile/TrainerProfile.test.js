@@ -21,7 +21,7 @@ describe('Trainer profile page', () => {
   jest.mock('axios')
   beforeEach(async () => {
     axios.get = jest.fn((url) => {
-      if (url.includes('/api/client/trainer/')) {
+      if (url.includes('/api/client/trainers/')) {
         return Promise.resolve({
           data: {
             foundAvg: 3.4,

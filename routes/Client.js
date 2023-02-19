@@ -188,12 +188,7 @@ router.post('/login', async (req, res) => {
   }
 })
 
-router.get('/trainers', async (_, res) => {
-  const trainers = await Trainer.find()
-  res.status(200).send({ status: 'success', message: 'Trainers found', trainers })
-})
-
-router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
+router.get('/trainers/:trainerId', async ({ params: { trainerId } }, res) => {
   try {
     trainerId = new mongoose.Types.ObjectId(trainerId)
   } catch (err) {
@@ -229,7 +224,12 @@ router.get('/trainer/:trainerId', async ({ params: { trainerId } }, res) => {
   })
 })
 
-router.get('/profile/:id', async ({ params: { id } }, res) => {
+router.get('/trainers', async (_, res) => {
+  const trainers = await Trainer.find()
+  res.status(200).send({ status: 'success', message: 'Trainers found', trainers })
+})
+
+router.get('/profiles/:id', async ({ params: { id } }, res) => {
   try {
     id = new mongoose.Types.ObjectId(id)
   } catch (err) {
@@ -247,7 +247,7 @@ router.get('/profile/:id', async ({ params: { id } }, res) => {
   }
 })
 
-router.put('/editprofile/', auth, async ({ tokenUser, body }, res) => {
+router.put('/profiles', auth, async ({ tokenUser, body }, res) => {
   const { userId } = tokenUser
   const formInfo = body
   let update = {}
@@ -328,7 +328,7 @@ router.get('/search', async ({ query: { search, type } }, res) => {
 })
 
 router.post(
-  '/review/:sessionId',
+  '/reviews/:sessionId',
   auth,
   async ({ body: { rating, comment }, params: { sessionId }, tokenUser: { userId } }, res) => {
     try {

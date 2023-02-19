@@ -27,7 +27,7 @@ const TrainerProfile = () => {
   useEffect(() => {
     let subscribed = true
     axios
-      .get(`/api/client/trainer/${trainerId}`)
+      .get(`/api/client/trainers/${trainerId}`)
       .then(({ data: { trainer, foundSessions, foundReviews, foundAvg } }) => {
         if (subscribed) {
           setAvg(foundAvg)
