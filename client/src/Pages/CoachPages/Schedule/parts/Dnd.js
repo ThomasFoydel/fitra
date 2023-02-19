@@ -100,13 +100,12 @@ const Dnd = ({
     updateBlocks(newStartDate, newEndDate, newStartTime, endTime, recurring)
   }
 
-  const handleResize = ({}, {}, refToElement) => {
-    let { transform, height } = refToElement.style
-    let elementYPosition = transform.split(', ')[1]
-    elementYPosition = elementYPosition.substring(0, elementYPosition.length - 3)
-    const start = times[elementYPosition / 50]
-    let elementHeight = height.substring(0, height.length - 2)
-    elementHeight /= 50
+  const handleResize = (...[, , refToElement]) => {
+    const { transform, height } = refToElement.style
+    const elementYPosition = transform.split(', ')[1]
+    const y = elementYPosition.substring(0, elementYPosition.length - 3)
+    const start = times[y / 50]
+    const elementHeight = +height.substring(0, height.length - 2) / 50
     const startIndex = times.indexOf(start)
     const newEndTime = times[startIndex + elementHeight]
     if (newEndTime && newEndTime !== startTime) {
