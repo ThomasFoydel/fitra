@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom'
 import { Link, Navigate } from 'react-router-dom'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import MobileNavBar from './MobileNavBar'
 import { CTX } from 'context/Store'
 import './NavBar.scss'
@@ -27,9 +27,11 @@ const NavBar = () => {
     updateState({ type: 'TOGGLE_AUTH' })
   }
 
+  useEffect(() => setRedirect(false), [redirect])
+
   return (
     <>
-      {redirect && <Navigate to="/" />}
+      {redirect && location.pathname !== '/' && <Navigate to="/" />}
       <div className="navbar">
         <Link
           to={isLoggedIn ? `${trainerExt}/` : '/'}
