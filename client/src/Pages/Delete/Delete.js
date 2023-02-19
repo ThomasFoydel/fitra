@@ -75,7 +75,7 @@ const Delete = () => {
           </>
         )}
         <Link className="close-btn" to={`${type === 'trainer' ? '/coachportal' : ''}/settings`}>
-          <i className="fas fa-times fa-3x"></i>
+          <i className="fas fa-times fa-3x" />
         </Link>
       </div>
     </>

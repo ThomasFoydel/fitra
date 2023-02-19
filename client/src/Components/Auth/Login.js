@@ -44,7 +44,7 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   return (
     <form className="login" onSubmit={handleSubmit} onClick={stopBubble}>
       <button type="button" className="closeauth-btn" onClick={() => setAuthOpen(false)}>
-        <i className="fas fa-times fa-3x close-btn"></i>
+        <i className="fas fa-times fa-3x close-btn" />
       </button>
       <h2>{trainer && 'Trainer '}Login</h2>
       <input id="email" type="text" placeholder="email" onChange={handleChange} />

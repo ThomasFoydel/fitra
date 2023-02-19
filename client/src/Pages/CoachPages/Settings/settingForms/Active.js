@@ -25,7 +25,7 @@ const Active = ({ props: { type, onComplete, token, active } }) => {
           data-testid="active-btn"
           checked={active || false}
         />
-        <span className="slider round"></span>
+        <span className="slider round" />
       </label>
     </div>
   )

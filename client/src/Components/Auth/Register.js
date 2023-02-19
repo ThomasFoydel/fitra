@@ -22,7 +22,7 @@ const Register = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
   return (
     <form className="register" onSubmit={handleSubmit} onClick={stopBubble}>
       <button type="button" className="closeauth-btn" onClick={() => setAuthOpen(false)}>
-        <i className="fas fa-times fa-3x close-btn"></i>
+        <i className="fas fa-times fa-3x close-btn" />
       </button>
       <h2>{trainer && 'Trainer '}Register</h2>
       <input id="name" type="text" placeholder="name" onChange={handleChange} />

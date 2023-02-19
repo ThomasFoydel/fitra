@@ -14,7 +14,7 @@ const PayPal = ({ props: { complete, desc, price, setPayPalOpen } }) => {
     <div className="paypal-background">
       <div className="paypal-container">
         <div className="paypal">
-          <i onClick={() => setPayPalOpen(false)} className="fas fa-times fa-3x close-btn"></i>
+          <i onClick={() => setPayPalOpen(false)} className="fas fa-times fa-3x close-btn" />
           <div className="test">
             <p>test email: sb-7ub213671568@personal.example.com</p>
             <p>{`test password: %)z6>&Ry`}</p>

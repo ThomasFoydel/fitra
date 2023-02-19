@@ -101,13 +101,13 @@ const TrainerProfile = () => {
                 onClick={toggleMessageOpen}
                 className={`msg-btn ${messageOpen ? 'current' : ''}`}
               >
-                <i className="far fa-envelope fa-4x"></i>
+                <i className="far fa-envelope fa-4x" />
               </button>
               <button
                 onClick={toggleSelectorOpen}
                 className={`book-btn ${sessionSelectorOpen ? 'current' : ''}`}
               >
-                <i className="fa fa-calendar fa-4x" aria-hidden="true"></i>
+                <i className="fa fa-calendar fa-4x" aria-hidden="true" />
               </button>
             </div>
             {messageOpen && <IntroMessage toggle={setMessageOpen} id={trainerId} />}

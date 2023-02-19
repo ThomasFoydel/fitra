@@ -187,14 +187,14 @@ const SessionSelector = ({
             className="weekshift-btn"
             onClick={() => shiftWeek(weekShift - 1)}
           >
-            <i className="far fa-arrow-alt-circle-left fa-4x"></i>
+            <i className="far fa-arrow-alt-circle-left fa-4x" />
           </button>
           <button
             data-testid="forward-btn"
             className="weekshift-btn"
             onClick={() => shiftWeek(weekShift + 1)}
           >
-            <i className="far fa-arrow-alt-circle-right fa-4x"></i>
+            <i className="far fa-arrow-alt-circle-right fa-4x" />
           </button>
         </div>
         <div className="booking">

@@ -43,7 +43,7 @@ const Settings = () => {
                 onChange={handleDarkMode}
                 id="darkmode"
               />
-              <span className="slider round"></span>
+              <span className="slider round" />
             </label>
           </div>
           <div className="setting-item">

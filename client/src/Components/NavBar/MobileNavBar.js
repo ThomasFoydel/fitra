@@ -15,7 +15,7 @@ const MobileNavBar = ({
 
   return (
     <div>
-      <div className="white-border"></div>
+      <div className="white-border" />
       <animated.div
         style={sideBarAnimation}
         className="mobile-sidebar"

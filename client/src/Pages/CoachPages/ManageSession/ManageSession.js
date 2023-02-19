@@ -47,7 +47,7 @@ const ManageSession = () => {
       {found && (
         <>
           <Link to="/coachportal/schedule">
-            <i className="fas fa-angle-left fa-4x back-link"></i>
+            <i className="fas fa-angle-left fa-4x back-link" />
           </Link>
           <Link to={`/user/${client}`}>
             <Image
