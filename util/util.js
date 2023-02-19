@@ -12,7 +12,7 @@ const messageSorter = async (userId) => {
     .limit(1000)
   if (messages && messages.length > 0) {
     messages.forEach((msg) => {
-      let otherUser = msg.participants.filter((participant) => participant !== userId)
+      const otherUser = msg.participants.filter((participant) => participant !== userId)
       if (sortedMessages[otherUser]) sortedMessages[otherUser] = [...sortedMessages[otherUser], msg]
       else sortedMessages[otherUser] = [msg]
     })
@@ -63,7 +63,7 @@ const sendReminders = async () => {
     startTime: { $gte: tomorrow.toISOString(), $lt: tomorrowPlusHalfHour.toISOString() },
   })
 
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     service: 'gmail',

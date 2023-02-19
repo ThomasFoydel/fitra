@@ -68,7 +68,7 @@ const Connect = ({ socket }) => {
         try {
           stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
         } catch (err) {
-          console.log('connect media error: ', err)
+          return toast.error('Media connection error')
         }
 
         myVideoRef.current.srcObject = stream
