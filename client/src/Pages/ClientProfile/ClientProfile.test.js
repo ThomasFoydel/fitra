@@ -18,9 +18,7 @@ describe('Client profile page', () => {
   beforeEach(async () => {
     axios.get = jest.fn((url) => {
       if (url === `/api/client/profiles/${exampleUser._id}`) {
-        return Promise.resolve({
-          data: { foundUser: exampleUser },
-        })
+        return Promise.resolve({ data: { foundUser: exampleUser } })
       }
     })
     render(

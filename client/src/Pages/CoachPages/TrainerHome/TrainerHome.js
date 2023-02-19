@@ -19,7 +19,7 @@ const TrainerHome = () => {
       .then(({ data: { sessions } }) => {
         if (subscribed) act(() => setFoundSessions(sessions))
       })
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
     return () => (subscribed = false)
   }, [token, type])
 

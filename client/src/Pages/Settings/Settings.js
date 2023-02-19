@@ -12,7 +12,7 @@ const Settings = () => {
 
   const handleDarkMode = ({ target: { checked } }) => {
     axios
-      .post(
+      .put(
         `/api/user/settings/${type}/darkmode`,
         { checked },
         { headers: { 'x-auth-token': token } }
@@ -23,7 +23,7 @@ const Settings = () => {
           payload: { type: 'darkmode', value: settings.darkmode },
         })
       })
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
   }
 
   return (

@@ -20,7 +20,7 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     axios
       .post(`/api/${type}/login`, userForm)
       .then(({ data: { user, token } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
   }
 
   const handleKeyDown = (e) => e.charCode === 13 && handleSubmit()
@@ -30,7 +30,7 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     axios
       .post(`/api/${type}/fblogin`, { accessToken, userID })
       .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
   }
 
   const googleHandleSuccess = (response) => {
@@ -38,7 +38,7 @@ const Login = ({ props: { setCurrentShow, setAuthOpen, trainer } }) => {
     axios
       .post(`/api/${type}/googlelogin`, { tokenId })
       .then(({ data: { token, user } }) => updateState({ type: 'LOGIN', payload: { user, token } }))
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
   }
 
   const googleHandleError = () => setGoogleErr(true)

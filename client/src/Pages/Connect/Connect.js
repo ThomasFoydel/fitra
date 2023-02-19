@@ -115,7 +115,7 @@ const Connect = ({ socket }) => {
           }
         }
       })
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
 
     return async () => {
       subscribed = false

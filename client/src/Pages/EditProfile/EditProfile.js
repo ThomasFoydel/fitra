@@ -35,7 +35,7 @@ const EditProfile = () => {
           setFormInfo(initFormData)
         })
       })
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
   }
 
   return (

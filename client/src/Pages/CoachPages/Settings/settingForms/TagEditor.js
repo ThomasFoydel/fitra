@@ -19,7 +19,7 @@ const TagEditor = () => {
         updateState({ type: 'CHANGE_TAGS', payload: { tags } })
         setInputVal('')
       })
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
   }
 
   const handleDelete = ({ target: { id } }) => {
@@ -28,7 +28,7 @@ const TagEditor = () => {
         headers: { 'x-auth-token': token, value: id },
       })
       .then(({ data: { tags } }) => updateState({ type: 'CHANGE_TAGS', payload: { tags } }))
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
   }
 
   const handleKeyPress = ({ charCode }) => {

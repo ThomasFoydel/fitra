@@ -19,7 +19,7 @@ const Home = () => {
       .then(({ data: { sessions } }) => {
         if (subscribed && sessions) act(() => setFoundSessions(sessions))
       })
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
     return () => (subscribed = false)
   }, [token, type])
 

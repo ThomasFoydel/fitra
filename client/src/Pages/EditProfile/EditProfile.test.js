@@ -17,9 +17,7 @@ describe('Edit Profile page', () => {
 
   beforeEach(async () => {
     axios.put = jest.fn((url, body) => {
-      if (url === '/api/client/profiles') {
-        return Promise.resolve({ data: { updatedProfile: body } })
-      }
+      if (url === '/api/client/profiles') return Promise.resolve({ data: { updatedProfile: body } })
     })
 
     render(

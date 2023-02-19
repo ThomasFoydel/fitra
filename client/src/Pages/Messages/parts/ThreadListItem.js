@@ -11,7 +11,7 @@ const ThreadListItem = ({ user, setCurrentThread, currentThread, token }) => {
     axios
       .get(`/api/user/${user}`, { headers: { 'x-auth-token': token } })
       .then(({ data: { user } }) => setUserInfo(user))
-      .catch(({ data: { response } }) => toast.error(response.message))
+      .catch(({ response: { data } }) => toast.error(data.message))
   }, [token, user])
 
   const current = currentThread === user
