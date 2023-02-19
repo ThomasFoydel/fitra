@@ -54,9 +54,9 @@ const Trainers = () => {
         </div>
       </div>
       <div className="trainers-container">
-        {animatedTrainers((style, item, key) => (
+        {animatedTrainers((style, trainer, key) => (
           <animated.div style={style} key={key}>
-            <TrainerCard props={{ trainer: item, tagSearch }} />
+            <TrainerCard props={{ trainer, tagSearch }} />
           </animated.div>
         ))}
       </div>

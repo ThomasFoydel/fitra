@@ -7,14 +7,20 @@ import PropTypes from 'prop-types'
 const TrainerCard = ({ props: { trainer, tagSearch } }) => {
   const [hover, setHover] = useState(false)
 
-  const cardAnimation = useSpring({
+  const scaleAnimation = useSpring({
     config: config.wobbly,
     transform: hover ? 'scale(1.03)' : 'scale(1)',
   })
 
-  const rightSectionAnimation = useSpring({
+  const backgroundAnimation = useSpring({
     config: config.wobbly,
     background: hover ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.8)',
+  })
+
+  const sizeAnimation = useSpring({
+    config: config.stiff,
+    width: hover ? '10rem' : '8rem',
+    height: hover ? '10rem' : '8rem',
   })
 
   const handleTag = ({ target }) => tagSearch(target.id)
@@ -24,16 +30,16 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <Link to={`/trainer/${_id}`} key={_id} className="link">
-        <animated.div className="trainer-card" style={cardAnimation}>
+        <animated.div className="trainer-card" style={scaleAnimation}>
           <div className="left-section">
             <Image alt="trainer's cover" name="coverpic" src={`/api/image/${coverPic}`} />
             <div className="shadow" />
             <div className="name">{name}</div>
-            <div className="profile-container">
-              <Image alt="trainer's profile" name="profilepic" src={`/api/image/${profilePic}`} />
-            </div>
+            <animated.div className="profile-container" style={sizeAnimation}>
+              <Image name="profilepic" alt="trainer's profile" src={`/api/image/${profilePic}`} />
+            </animated.div>
           </div>
-          <animated.div className="right-section" style={rightSectionAnimation}>
+          <animated.div className="right-section" style={backgroundAnimation}>
             <div className="bio">{bio}</div>
             <div className="tags">
               {tags.map((tag, i) => (
