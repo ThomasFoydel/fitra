@@ -39,7 +39,7 @@ const TrainerHome = () => {
         <h2>Sessions</h2>
         <div className="sessions">
           {foundSessions.length > 0 ? (
-            animatedSessions.map((props, item, key) => (
+            animatedSessions((props, item, key) => (
               <animated.div style={props} key={key}>
                 <Session session={item} />
               </animated.div>

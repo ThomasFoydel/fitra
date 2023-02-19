@@ -39,7 +39,7 @@ const Home = () => {
         <h2>Sessions</h2>
         <div className="sessions">
           {animatedSessions.length > 0 ? (
-            animatedSessions.map((props, session, key) => (
+            animatedSessions((props, session, key) => (
               <animated.div style={props} key={key}>
                 <Session session={session} />
               </animated.div>
