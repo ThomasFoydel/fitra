@@ -24,7 +24,10 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
     height: hover ? '11rem' : '8rem',
   })
 
-  const handleTag = ({ target }) => tagSearch(target.id)
+  const handleTag = (e) => {
+    e.preventDefault()
+    tagSearch(e.target.id)
+  }
 
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
@@ -42,7 +45,7 @@ const TrainerCard = ({ props: { trainer, tagSearch } }) => {
             <div className="bio">{bio}</div>
             <div className="tags">
               {tags.map((tag, i) => (
-                <span key={tag} id={tag} className="tag" onClick={handleTag}>
+                <span id={tag} key={tag} className="tag" onClick={handleTag}>
                   #{tag}
                   {i < tags.length - 1 && tags.length > 1 && ', '}
                 </span>
