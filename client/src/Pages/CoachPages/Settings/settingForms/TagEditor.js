@@ -11,12 +11,14 @@ const TagEditor = () => {
 
   const handleChange = ({ target: { value } }) => setInputVal(value)
 
-  const handleAddTag = () => {
+  const handleAddTag = (e) => {
+    e.preventDefault()
     if (!inputVal) return toast.error('Tag cannot be empty')
     axios
       .put('/api/trainer/add-tag', { value: inputVal }, { headers: { 'x-auth-token': token } })
       .then(({ data: { tags } }) => {
         updateState({ type: 'CHANGE_TAGS', payload: { tags } })
+        toast.success('Tag added')
         setInputVal('')
       })
       .catch(({ response: { data } }) => toast.error(data.message))
@@ -24,43 +26,35 @@ const TagEditor = () => {
 
   const handleDelete = ({ target: { id } }) => {
     axios
-      .delete('/api/trainer/delete-tag', {
-        headers: { 'x-auth-token': token, value: id },
+      .delete('/api/trainer/delete-tag', { headers: { 'x-auth-token': token, value: id } })
+      .then(({ data: { tags } }) => {
+        updateState({ type: 'CHANGE_TAGS', payload: { tags } })
+        toast.success('Tag removed')
       })
-      .then(({ data: { tags } }) => updateState({ type: 'CHANGE_TAGS', payload: { tags } }))
       .catch(({ response: { data } }) => toast.error(data.message))
   }
 
-  const handleKeyPress = ({ charCode }) => {
-    if (charCode === 13) handleAddTag()
-  }
-
   return (
-    <div className="tag-editor">
+    <form className="tag-editor" onSubmit={handleAddTag}>
       {Array.isArray(user.tags) &&
         user.tags.map((tag) => (
           <div className="tag" key={tag}>
             <span data-testid="tag">{tag}</span>
-            <button id={tag} onClick={handleDelete}>
-              <i id={tag} onClick={handleDelete} className="fas fa-times"></i>
+            <button id={tag} type="button" onClick={handleDelete}>
+              <i id={tag} onClick={handleDelete} className="fas fa-times" />
             </button>
           </div>
         ))}
-      <input
-        type="text"
-        value={inputVal}
-        onChange={handleChange}
-        onKeyPress={handleKeyPress}
-        data-testid="tag-editor-input"
-      />
+      <input type="text" value={inputVal} onChange={handleChange} data-testid="tag-editor-input" />
       <button
+        type="submit"
         className="add-btn"
         data-testid="add-tag-btn"
         onClick={maxMet ? () => toast.error('Tag list limited to 4 tags') : handleAddTag}
       >
         add tag
       </button>
-    </div>
+    </form>
   )
 }
 
