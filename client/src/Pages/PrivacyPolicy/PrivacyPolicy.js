@@ -599,9 +599,13 @@ const PrivacyPolicy = () => (
       months:
     </p>
     <table>
-      <th>Category</th>
-      <th>Examples</th>
-      <th>Collected</th>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Examples</th>
+          <th>Collected</th>
+        </tr>
+      </thead>
       <tbody>
         <tr>
           <td>A. Identifiers</td>
