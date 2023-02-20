@@ -38,13 +38,7 @@ const ClientProfile = () => {
           }}
         >
           <div className="info">
-            <Image
-              name="profile-pic"
-              alt={profilePic ? "user's profile" : 'loading profile'}
-              src={
-                profilePic ? `/api/image/${profilePic}` : userData ? defaultProfile : loadingSpin
-              }
-            />
+            <Image name="profile-pic" alt="user's profile" src={`/api/image/${profilePic}`} />
             <div className="section-1">
               <div className="name">{name}</div>
               <div className="email">{displayEmail}</div>

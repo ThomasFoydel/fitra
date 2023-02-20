@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { act } from '@testing-library/react'
 import React, { useState, useContext } from 'react'
 import ImageUploader from 'Components/ImageUploader/ImageUploader'
-import defaultProfile from 'imgs/default/profile.jpg'
 import Image from 'Components/Image/Image'
 import { CTX } from 'context/Store'
 import './EditProfile.scss'
@@ -72,21 +71,11 @@ const EditProfile = () => {
         </button>
         <div className="image-uploaders">
           <div className="uploader">
-            <Image
-              name="edit-pic"
-              alt="your profile"
-              defaultImage={defaultProfile}
-              src={`/api/image/${profilePic}`}
-            />
+            <Image name="edit-pic" alt="your profile" src={`/api/image/${profilePic}`} />
             <ImageUploader props={{ kind: 'profilePic' }} />
           </div>
           <div className="uploader">
-            <Image
-              name="edit-pic"
-              alt="your cover"
-              defaultImage={defaultProfile}
-              src={`/api/image/${coverPic}`}
-            />
+            <Image name="edit-pic" alt="your cover" src={`/api/image/${coverPic}`} />
             <ImageUploader props={{ kind: 'coverPic' }} />
           </div>
         </div>

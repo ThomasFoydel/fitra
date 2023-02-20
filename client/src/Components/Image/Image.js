@@ -5,19 +5,19 @@ import loadingGif from 'imgs/loading/spin.gif'
 
 const Image = ({ name, src, style, alt, defaultImage }) => {
   const [loading, setLoading] = useState(true)
-  const [source, setSource] = useState(src || defaultProfile)
-  const [err, setErr] = useState(false)
+  const [errored, setErrored] = useState(false)
+  const [source, setSource] = useState(src || defaultImage || defaultProfile)
 
   useEffect(() => {
-    if (err) setSource(defaultProfile)
-  }, [err])
+    if (errored) setSource(defaultImage || defaultProfile)
+  }, [errored])
 
   useEffect(() => {
-    if (src) setSource(src)
-    else setSource(defaultProfile)
+    if (src && !src.includes('undefined') && src !== source) setSource(src)
   }, [src])
 
   const imgStyle = { background: 'white' }
+
   const styles = style ? { ...style, ...imgStyle } : imgStyle
 
   return (
@@ -25,8 +25,8 @@ const Image = ({ name, src, style, alt, defaultImage }) => {
       alt={alt}
       style={styles}
       className={name}
-      onError={() => setErr(true)}
-      src={loading ? loadingGif : source ? source : defaultImage}
+      onError={() => setErrored(true)}
+      src={loading ? loadingGif : source}
       onLoad={() => setTimeout(() => setLoading(false), 200)}
     />
   )

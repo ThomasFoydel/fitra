@@ -3,8 +3,9 @@ import { toast } from 'react-toastify'
 import { Navigate, Link, useParams } from 'react-router-dom'
 import React, { useState, useEffect, useContext } from 'react'
 import IntroMessage from 'Components/IntroMessage/IntroMessage'
-import SessionSelector from './SessionSelector'
+import defaultProfile from 'imgs/default/profile.jpg'
 import loadingSpin from 'imgs/loading/spin.gif'
+import SessionSelector from './SessionSelector'
 import Image from 'Components/Image/Image'
 import ReviewSlide from './ReviewSlide'
 import { CTX } from 'context/Store'
@@ -74,7 +75,7 @@ const TrainerProfile = () => {
           <Image
             name="profile-pic"
             alt="trainer's profile"
-            src={profilePic ? `/api/image/${profilePic}` : loadingSpin}
+            src={`/api/image/${profilePic}`}
           />
 
           <div className="section-1">
