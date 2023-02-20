@@ -199,7 +199,7 @@ const SessionSelector = ({
         </div>
         <div className="booking">
           {isNaN(minimum) || minimum <= 0 || !active ? (
-            <p>this trainer's scheduling is not set up</p>
+            <p className="not-set-up">This trainer's scheduling is not set up yet.</p>
           ) : (
             <>
               {selectionStart ? (
