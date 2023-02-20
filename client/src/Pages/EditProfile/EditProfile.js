@@ -22,7 +22,8 @@ const EditProfile = () => {
 
   const handleChange = ({ target: { id, value } }) => setFormInfo({ ...formInfo, [id]: value })
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     axios
       .put(`/api/${type}/profiles`, formInfo, { headers: { 'x-auth-token': token } })
       .then(({ data: { updatedProfile } }) => {
@@ -38,7 +39,7 @@ const EditProfile = () => {
   }
 
   return (
-    <div className="edit-profile">
+    <form className="edit-profile" onSubmit={handleSubmit}>
       <h2>EDIT YOUR PROFILE</h2>
       <Link className="link" to={`${type === 'trainer' ? '/trainer' : '/user'}/${id}`}>
         back to my profile
@@ -64,7 +65,7 @@ const EditProfile = () => {
         value={formInfo.displayEmail}
         placeholder={displayEmail || 'display email...'}
       />
-      <button className="submit-btn" onClick={handleSubmit}>
+      <button className="submit-btn" type="submit">
         submit
       </button>
       <div className="image-uploaders">
@@ -77,7 +78,7 @@ const EditProfile = () => {
           <ImageUploader props={{ kind: 'coverPic' }} />
         </div>
       </div>
-    </div>
+    </form>
   )
 }
 
