@@ -10,7 +10,8 @@ const IntroMessage = ({ id, toggle }) => {
 
   const handleChange = ({ target: { value } }) => setMessage(value)
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     const valid = id && message && user.id && user.name
     if (!valid) return
 
@@ -35,7 +36,7 @@ const IntroMessage = ({ id, toggle }) => {
   }, [complete, toggle])
 
   return (
-    <div className="intro-message">
+    <form className="intro-message" onSubmit={handleSubmit}>
       <h2>intro message</h2>
       <textarea
         rows="10"
@@ -46,8 +47,8 @@ const IntroMessage = ({ id, toggle }) => {
         onChange={handleChange}
       />
       {complete && <p>message sent!</p>}
-      <button onClick={handleSubmit}>send</button>
-    </div>
+      <button type="submit">send</button>
+    </form>
   )
 }
 
