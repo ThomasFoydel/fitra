@@ -5,7 +5,8 @@ import { toast } from 'react-toastify'
 const RateEditor = ({ props: { rate, onComplete, token } }) => {
   const [input, setInput] = useState(rate || 0)
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     axios
       .put(
         '/api/user/settings/trainer/rate/',
@@ -17,7 +18,7 @@ const RateEditor = ({ props: { rate, onComplete, token } }) => {
   }
 
   return (
-    <div className="rate-editor">
+    <form className="rate-editor" onSubmit={handleSubmit}>
       {rate ? (
         <div>
           <h3>Current Rate:</h3> <span data-testid="rate-display">${rate}</span>
@@ -26,6 +27,7 @@ const RateEditor = ({ props: { rate, onComplete, token } }) => {
         <div>rate not set</div>
       )}
       <input
+        min={1}
         value={input}
         type="number"
         className="input"
@@ -33,10 +35,10 @@ const RateEditor = ({ props: { rate, onComplete, token } }) => {
         data-testid="rate-editor-input"
         onChange={({ target: { value } }) => setInput(value)}
       />
-      <button onClick={handleSubmit} data-testid="rate-editor-btn">
+      <button type="submit" data-testid="rate-editor-btn">
         update
       </button>
-    </div>
+    </form>
   )
 }
 
