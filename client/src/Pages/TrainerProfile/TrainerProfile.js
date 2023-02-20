@@ -3,8 +3,6 @@ import { toast } from 'react-toastify'
 import { Navigate, Link, useParams } from 'react-router-dom'
 import React, { useState, useEffect, useContext } from 'react'
 import IntroMessage from 'Components/IntroMessage/IntroMessage'
-import defaultProfile from 'imgs/default/profile.jpg'
-import loadingSpin from 'imgs/loading/spin.gif'
 import SessionSelector from './SessionSelector'
 import Image from 'Components/Image/Image'
 import ReviewSlide from './ReviewSlide'
@@ -20,6 +18,7 @@ const TrainerProfile = () => {
   const [bookingSuccess, setBookingSuccess] = useState(false)
   const [currentTrainer, setCurrentTrainer] = useState(null)
   const [messageOpen, setMessageOpen] = useState(false)
+  const [fetchDone, setFetchDone] = useState(false)
   const [selection, setSelection] = useState([])
   const [sessions, setSessions] = useState([])
   const [reviews, setReviews] = useState([])
@@ -27,11 +26,13 @@ const TrainerProfile = () => {
 
   useEffect(() => {
     let subscribed = true
+    if (!trainerId) return
     axios
       .get(`/api/client/trainers/${trainerId}`)
       .then(({ data: { trainer, foundSessions, foundReviews, foundAvg } }) => {
         if (subscribed) {
           setAvg(foundAvg)
+          setFetchDone(true)
           setReviews(foundReviews)
           setSessions(foundSessions)
           setCurrentTrainer(trainer)
@@ -56,6 +57,8 @@ const TrainerProfile = () => {
     setMessageOpen(false)
   }
 
+  if (!fetchDone) return <></>
+
   return (
     <div className="trainerprofile">
       {bookingSuccess && <Navigate to="/" />}
@@ -72,11 +75,7 @@ const TrainerProfile = () => {
         }}
       >
         <div className="info">
-          <Image
-            name="profile-pic"
-            alt="trainer's profile"
-            src={`/api/image/${profilePic}`}
-          />
+          <Image name="profile-pic" alt="trainer's profile" src={`/api/image/${profilePic}`} />
 
           <div className="section-1">
             <div className="name">{name}</div>
