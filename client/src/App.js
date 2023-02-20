@@ -91,82 +91,86 @@ function App() {
       <div className="overlay" />
       <Router>
         <NavBar />
-        <Routes>
-          <Route exact path="/" element={isLoggedIn ? <HomeComponent /> : <LandingPage />} />
+        <div className="page-container">
+          <Routes>
+            <Route exact path="/" element={isLoggedIn ? <HomeComponent /> : <LandingPage />} />
 
-          <Route
-            exact
-            path="/coachportal"
-            element={isLoggedIn ? <HomeComponent /> : <TrainerLandingPage />}
-          />
+            <Route
+              exact
+              path="/coachportal"
+              element={isLoggedIn ? <HomeComponent /> : <TrainerLandingPage />}
+            />
 
-          <Route exact path="/terms-of-use" element={<TermsOfUse />} />
+            <Route exact path="/terms-of-use" element={<TermsOfUse />} />
 
-          <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
 
-          <Route exact path="/trainers" element={<Trainers />} />
+            <Route exact path="/trainers" element={<Trainers />} />
 
-          <Route exact path="/trainer/:trainerId" element={<TrainerProfile />} />
+            <Route exact path="/trainer/:trainerId" element={<TrainerProfile />} />
 
-          <Route exact path="/settings" element={isLoggedIn ? <Settings /> : <LandingPage />} />
+            <Route exact path="/settings" element={isLoggedIn ? <Settings /> : <LandingPage />} />
 
-          <Route
-            exact
-            path="/editprofile"
-            element={isLoggedIn ? <EditProfile /> : <LandingPage />}
-          />
+            <Route
+              exact
+              path="/editprofile"
+              element={isLoggedIn ? <EditProfile /> : <LandingPage />}
+            />
 
-          <Route
-            exact
-            path="/review/:sessionId"
-            element={isLoggedIn ? <SessionReview /> : <LandingPage />}
-          />
+            <Route
+              exact
+              path="/review/:sessionId"
+              element={isLoggedIn ? <SessionReview /> : <LandingPage />}
+            />
 
-          <Route
-            exact
-            path="/connect/:connectionId"
-            element={socketRef.current ? <Connect socket={socketRef.current} /> : <HomeComponent />}
-          />
+            <Route
+              exact
+              path="/connect/:connectionId"
+              element={
+                socketRef.current ? <Connect socket={socketRef.current} /> : <HomeComponent />
+              }
+            />
 
-          <Route exact path="/messages" element={isLoggedIn ? <Messages /> : <LandingPage />} />
+            <Route exact path="/messages" element={isLoggedIn ? <Messages /> : <LandingPage />} />
 
-          <Route exact path="/user/:id" element={<ClientProfile />} />
+            <Route exact path="/user/:id" element={<ClientProfile />} />
 
-          <Route exact path="/delete_my_account" element={<Delete />} />
+            <Route exact path="/delete_my_account" element={<Delete />} />
 
-          <Route
-            exact
-            path="/coachportal/settings"
-            element={isLoggedIn ? <TrainerSettings /> : <TrainerLandingPage />}
-          />
+            <Route
+              exact
+              path="/coachportal/settings"
+              element={isLoggedIn ? <TrainerSettings /> : <TrainerLandingPage />}
+            />
 
-          <Route
-            exact
-            path="/coachportal/editprofile"
-            element={isLoggedIn ? <EditProfile /> : <TrainerLandingPage />}
-          />
+            <Route
+              exact
+              path="/coachportal/editprofile"
+              element={isLoggedIn ? <EditProfile /> : <TrainerLandingPage />}
+            />
 
-          <Route
-            exact
-            path="/coachportal/schedule"
-            element={isLoggedIn ? <TrainerSchedule /> : <TrainerLandingPage />}
-          />
+            <Route
+              exact
+              path="/coachportal/schedule"
+              element={isLoggedIn ? <TrainerSchedule /> : <TrainerLandingPage />}
+            />
 
-          <Route
-            exact
-            path="/coachportal/messages"
-            element={isLoggedIn ? <Messages /> : <TrainerLandingPage />}
-          />
+            <Route
+              exact
+              path="/coachportal/messages"
+              element={isLoggedIn ? <Messages /> : <TrainerLandingPage />}
+            />
 
-          <Route
-            exact
-            path="/coachportal/manage/:id"
-            element={isLoggedIn ? <ManageSession /> : <TrainerLandingPage />}
-          />
-        </Routes>
+            <Route
+              exact
+              path="/coachportal/manage/:id"
+              element={isLoggedIn ? <ManageSession /> : <TrainerLandingPage />}
+            />
+          </Routes>
 
-        <Auth trainer={false} />
-        <ToastContainer position="bottom-right" theme="dark" limit={5} />
+          <Auth trainer={false} />
+          <ToastContainer position="bottom-right" theme="dark" limit={5} />
+        </div>
       </Router>
     </div>
   )

@@ -48,6 +48,7 @@
     transition: all 0.2s ease;
 
     &:hover {
+      color: $grey2;
       box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.466);
     }
   }

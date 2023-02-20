@@ -47,6 +47,12 @@ input:focus {
   outline: 0;
 }
 
+.page-container {
+  overflow: scroll;
+  padding-bottom: 4rem;
+  height: calc(100vh - 6rem);
+}
+
 .coachportal-btn {
   left: 0;
   bottom: 0;
