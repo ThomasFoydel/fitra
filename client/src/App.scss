@@ -53,27 +53,6 @@ input:focus {
   height: calc(100vh - 6rem);
 }
 
-.coachportal-btn {
-  left: 0;
-  bottom: 0;
-  opacity: 0.5;
-  padding: 1rem;
-  color: $white;
-  font-weight: bold;
-  position: absolute;
-  text-decoration: none;
-  background-color: $red2;
-  transition: all 0.2s ease;
-  border-radius: 0 1rem 0 0;
-
-  &:hover {
-    opacity: 1;
-    color: $red9;
-    background: $red1;
-    box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
-  }
-}
-
 .overlay {
   top: 0;
   right: 0;
