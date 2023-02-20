@@ -42,7 +42,7 @@ const EditProfile = () => {
     <>
       <div className="background" />
       <div className="edit-profile">
-        <h2>Edit your profile</h2>
+        <h2>EDIT YOUR PROFILE</h2>
         <Link className="link" to={`${type === 'trainer' ? '/trainer' : '/user'}/${id}`}>
           back to my profile
         </Link>

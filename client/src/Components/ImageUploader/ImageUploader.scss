@@ -45,13 +45,15 @@
   }
 
   .file-label {
-    width: 20rem;
     display: flex;
     color: $white;
-    height: 3.4rem;
+    height: 3.8rem;
     cursor: pointer;
+    padding: 0 2rem;
+    min-width: 30rem;
     margin-left: 50%;
     background: $red4;
+    font-size: 1.8rem;
     text-align: center;
     align-items: center;
     border-radius: 0.3rem;
