@@ -1,70 +1,66 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
+const express = require('express')
+const bcrypt = require('bcryptjs')
+const Trainer = require('../models/Trainer')
+const auth = require('../middlewares/auth')
+const Client = require('../models/Client')
 
-const auth = require('../middlewares/auth');
-const Trainer = require('../models/Trainer');
-const Client = require('../models/Client');
+const router = express.Router()
 
-const router = express.Router();
-
-router.get('/:id', auth, async (req, res) => {
-  let { id } = req.params;
-  const foundClient = await Client.findById(id);
-  if (foundClient)
-    res.send({ user: { ...foundClient, email: foundClient.displayEmail } });
-  else {
-    const foundTrainer = await Trainer.findById(id);
-    if (foundTrainer)
-      return res.send({
-        user: { ...foundTrainer, email: foundTrainer.displayEmail },
-      });
-    else return res.send({ err: 'no user found' });
+router.get('/:id', auth, async ({ params: { id } }, res) => {
+  try {
+    const foundClient = await Client.findById(id)
+    if (foundClient) {
+      return res.status(200).send({ user: { ...foundClient, email: foundClient.displayEmail } })
+    }
+    const foundTrainer = await Trainer.findById(id)
+    if (foundTrainer) {
+      return res.status(200).send({ user: { ...foundTrainer, email: foundTrainer.displayEmail } })
+    }
+    return res.status(404).send({ status: 'error', message: 'User not found' })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
   }
-});
+})
 
-router.put('/settings/:type/:setting', auth, async (req, res) => {
-  let { type, setting } = req.params;
-  let { value } = req.body;
-  let { userId } = req.tokenUser;
-  let User = type === 'client' ? Client : Trainer;
+router.put('/settings/:type/:setting', auth, async ({ params, body, tokenUser }, res) => {
+  try {
+    const { value } = body
+    const { userId } = tokenUser
+    const { type, setting } = params
+    const User = type === 'client' ? Client : Trainer
 
-  User.findByIdAndUpdate(
-    userId,
-    { $set: { [`settings.${setting}`]: value } },
-    { new: true, useFindAndModify: false, fields: { settings: 1 } }
-  )
-    .then(({ settings }) => res.send(settings))
-    .catch((err) => {
-      console.log('setting update error: ', err);
-      return res.send({ err: 'database error' });
-    });
-});
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: { [`settings.${setting}`]: value } },
+      { new: true, useFindAndModify: false, fields: { settings: 1 } }
+    )
+    return res
+      .status(200)
+      .send({ status: 'success', message: 'User updated', settings: updatedUser.settings })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
+})
 
 router.delete(
   '/delete_my_account/:type',
   auth,
-  async (
-    { tokenUser: { userId }, params: { type }, headers: { pass } },
-    res
-  ) => {
-    let User = type === 'client' ? Client : Trainer;
-    const foundUser = await User.findById(userId);
-    if (!foundUser) return res.send({ err: 'No user found' });
+  async ({ tokenUser: { userId }, params: { type }, headers: { pass } }, res) => {
+    try {
+      const User = type === 'client' ? Client : Trainer
+      const foundUser = await User.findById(userId)
+      if (!foundUser) return res.status(404).send({ status: 'error', message: 'User not found' })
 
-    const passwordsMatch = await bcrypt.compare(pass, foundUser.password);
-    if (passwordsMatch) {
-      User.findByIdAndDelete(userId)
-        .then((result) => {
-          console.log('delete client success : ', result);
-          return res.send({ message: 'deletion successful' });
-        })
-        .catch((err) => {
-          console.log('find client database error: ', err);
-          return res.send({ err: 'database error' });
-        });
-    } else {
-      return res.json({ err: 'Incorrect password' });
+      const passwordsMatch = bcrypt.compare(pass, foundUser.password)
+      if (!passwordsMatch) {
+        return res.status(401).send({ status: 'error', message: 'Incorrect password' })
+      }
+
+      await User.findByIdAndDelete(userId)
+      return res.status(200).send({ status: 'success', message: 'Account deleted' })
+    } catch (err) {
+      return res.status(500).send({ status: 'error', message: 'Database is down' })
     }
   }
-);
-module.exports = router;
+)
+module.exports = router

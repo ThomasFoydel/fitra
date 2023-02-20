@@ -1,62 +1,52 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { CTX } from 'context/Store';
-import './Home.scss';
-
-import { config, animated, useTransition } from 'react-spring';
-
-import Session from './Session';
-import { act } from '@testing-library/react';
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { act } from '@testing-library/react'
+import { config, animated, useTransition } from 'react-spring'
+import React, { useContext, useEffect, useState } from 'react'
+import { CTX } from 'context/Store'
+import Session from './Session'
+import './Home.scss'
 
 const Home = () => {
-  const [appState] = useContext(CTX);
-  const { type } = appState.user;
-  const [sessions, setFoundSessions] = useState([]);
-  let { token } = appState.user;
+  const [{ user }] = useContext(CTX)
+  const { type, token } = user
+  const [sessions, setFoundSessions] = useState([])
 
   useEffect(() => {
-    let subscribed = true;
+    let subscribed = true
     axios
       .get(`/api/${type}/dashboard`, { headers: { 'x-auth-token': token } })
-      .then(({ data: { sessions }, err }) => {
-        if (err) return console.log({ err });
-        if (subscribed && sessions)
-          process.env.NODE_ENV === 'production'
-            ? setFoundSessions(sessions)
-            : act(() => setFoundSessions(sessions));
+      .then(({ data: { sessions } }) => {
+        if (subscribed && sessions) act(() => setFoundSessions(sessions))
       })
-      .catch((err) => console.log('connection error: ', err));
-    return () => (subscribed = false);
-  }, [token, type]);
+      .catch(({ response: { data } }) => toast.error(data.message))
+    return () => (subscribed = false)
+  }, [token, type])
 
-  const animation = useTransition(sessions, (item) => item && item._id, {
+  const animatedSessions = useTransition(sessions, {
+    trail: 200,
+    config: config.wobbly,
     from: { opacity: '0', transform: 'translateY(-20px)' },
     enter: { opacity: '1', transform: 'translateY(0px)' },
     leave: { opacity: '0', transform: 'translateY(-20px)' },
-    trail: 200,
-    config: config.wobbly,
-  });
+  })
 
   return (
-    <>
-      <div className='background' />
-      <div className='overlay' />
-      <div className='home'>
-        <h2>Sessions</h2>
-        <div className='sessions'>
-          {sessions.length > 0 ? (
-            animation.map(({ item, props, key }) => (
-              <animated.div style={props} key={key}>
-                <Session session={item} />
-              </animated.div>
-            ))
-          ) : (
-            <h3>no recent or upcoming sessions</h3>
-          )}
-        </div>
+    <div className="home">
+      <h2>Sessions</h2>
+      <div className="sessions">
+        {sessions.length > 0 ? (
+          animatedSessions((props, session, key) => (
+            <animated.div style={props} key={key}>
+              <Session session={session} />
+            </animated.div>
+          ))
+        ) : (
+          <h3>no recent or upcoming sessions</h3>
+        )}
       </div>
-    </>
-  );
-};
+    </div>
+  )
+}
 
-export default Home;
+export default Home

@@ -1,33 +1,31 @@
-import React, { useState } from 'react';
-import { GoogleLogin } from 'react-google-login';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+import { GoogleLogin } from '@leecheuk/react-google-login'
 
-const Google = ({
-  props: { googleHandleSuccess, googleHandleError, googleErr },
-}) => {
-  const [hover, setHover] = useState(false);
+const Google = ({ props: { googleHandleSuccess, googleHandleError, googleErr } }) => {
+  const [hover, setHover] = useState(false)
 
   return (
     <div onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
       <GoogleLogin
-        clientId='1034940197721-bs2c0n1opcqmdlcumn3c1bubrm3ga77k.apps.googleusercontent.com'
-        onSuccess={googleHandleSuccess}
         onFailure={googleHandleError}
+        onSuccess={googleHandleSuccess}
         cookiePolicy={'single_host_origin'}
-        render={(renderProps) => (
+        clientId="1034940197721-bs2c0n1opcqmdlcumn3c1bubrm3ga77k.apps.googleusercontent.com"
+        render={renderProps => (
           <button
-            onClick={googleErr ? null : renderProps.onClick}
+            className="google-btn"
             disabled={renderProps.disabled}
-            className='google-btn'
+            onClick={googleErr ? null : renderProps.onClick}
           >
             {googleErr && hover ? (
               <span
-                className='nocookies'
+                className="nocookies"
                 style={{
+                  width: '20rem',
                   fontSize: '1rem',
                   lineHeight: '1.2rem',
                   whiteSpace: 'nowrap',
-                  width: '20rem',
                 }}
               >
                 Must enable third party cookies
@@ -37,17 +35,17 @@ const Google = ({
             )}
           </button>
         )}
-      ></GoogleLogin>
+      />
     </div>
-  );
-};
+  )
+}
 
 Google.propTypes = {
   props: PropTypes.shape({
-    googleHandleSuccess: PropTypes.func.isRequired,
-    googleHandleError: PropTypes.func.isRequired,
     googleErr: PropTypes.bool.isRequired,
+    googleHandleError: PropTypes.func.isRequired,
+    googleHandleSuccess: PropTypes.func.isRequired,
   }),
-};
+}
 
-export default Google;
+export default Google

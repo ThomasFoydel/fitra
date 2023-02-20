@@ -1,55 +1,65 @@
-const express = require('express');
-const router = express.Router();
-const auth = require('../middlewares/auth');
+const express = require('express')
+const Session = require('../models/Session')
+const Trainer = require('../models/Trainer')
+const auth = require('../middlewares/auth')
+const Client = require('../models/Client')
 
-const Client = require('../models/Client');
-const Session = require('../models/Session');
-const Trainer = require('../models/Trainer');
+const router = express.Router()
 
-router.get('/:connectionId', auth, async (req, res) => {
-  const { connectionId } = req.params;
-  const { userId } = req.tokenUser;
-  const foundClient = await Client.findById(userId);
-  const foundTrainer = await Trainer.findById(userId);
-
-  const noUserFound = !foundClient && !foundTrainer;
-  if (noUserFound) return res.send({ err: 'user info not found' });
-
-  let foundSession;
+router.get('/:connectionId', auth, async ({ params, tokenUser }, res) => {
   try {
-    foundSession = await Session.findById(connectionId).select('+roomId');
+    const { userId } = tokenUser
+
+    const { connectionId } = params
+    const foundClient = await Client.findById(userId)
+    const foundTrainer = await Trainer.findById(userId)
+
+    const noUserFound = !foundClient && !foundTrainer
+    if (noUserFound) {
+      return res.status(404).send({ status: 'error', message: 'User info not found' })
+    }
+
+    let foundSession
+    try {
+      foundSession = await Session.findById(connectionId).select('+roomId')
+    } catch (err) {
+      return res.status(400).send({ status: 'error', message: 'Invalid session id' })
+    }
+
+    if (!foundSession) return res.status(404).send({ status: 'error', message: 'No session found' })
+    const { roomId } = foundSession
+    const isClient = foundSession.client === userId
+    const isTrainer = foundSession.trainer === userId
+    const userNotOnSession = !isClient && !isTrainer
+
+    if (userNotOnSession) {
+      return res.status(401).send({ status: 'error', message: 'Not authenticated' })
+    }
+
+    const { startTime, endTime } = foundSession
+    const startDate = new Date(startTime)
+    const endDate = new Date(endTime)
+    const currentTime = new Date(Date.now())
+    const started = currentTime > startDate
+    const ended = currentTime > endDate
+    const active = started && !ended
+
+    if (!started) {
+      return res.status(400).send({ status: 'error', message: 'This session has not yet begun' })
+    }
+
+    if (!active) {
+      return res.status(400).send({ status: 'error', message: 'This session has ended' })
+    }
+
+    return res
+      .status(200)
+      .send({ status: 'success', message: 'Session found', isClient, isTrainer, roomId })
   } catch (err) {
-    return res.send({ err: 'no session found' });
+    return res
+      .status(500)
+      .send({ status: 'error', message: 'Database is down. We are working to fix this.' })
   }
+})
 
-  if (!foundSession) return res.send({ err: 'no session found' });
-  const { roomId } = foundSession;
-
-  const isClient = foundSession.client === userId;
-  const isTrainer = foundSession.trainer === userId;
-  const userNotOnSession = !isClient && !isTrainer;
-  if (userNotOnSession)
-    return res.send({
-      err: 'you are not logged in as a member of this session',
-    });
-
-  let { startTime, endTime } = foundSession;
-  let startDate = new Date(startTime);
-  let endDate = new Date(endTime);
-  let currentTime = new Date(Date.now());
-  let started = currentTime > startDate;
-  let ended = currentTime > endDate;
-  let active = started && !ended;
-
-  if (!started) return res.send({ err: 'this session has not yet begun' });
-  if (!active) return res.send({ err: 'this session has ended' });
-
-  // change status of session if !started or !active
-  // if !started and time until session is less than 5hrs
-  // then send back time until session starts
-  // and display a countdown on the front end
-  // cause page to reload when timer hits zero
-  return res.send({ isClient, isTrainer, roomId });
-});
-
-module.exports = router;
+module.exports = router

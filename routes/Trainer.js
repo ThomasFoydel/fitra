@@ -1,275 +1,314 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
+const express = require('express')
+const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
+const { messageSorter } = require('../util/util')
+const Trainer = require('../models/Trainer')
+const Session = require('../models/Session')
+const auth = require('../middlewares/auth')
+const Client = require('../models/Client')
 
-const Trainer = require('../models/Trainer');
-const Session = require('../models/Session');
-const Client = require('../models/Client');
-const auth = require('../middlewares/auth');
-const util = require('../util/util');
-const { messageSorter } = util;
-
-const router = express.Router();
+const router = express.Router()
 
 router.post('/register', async (req, res) => {
-  let { email, name, password, confirmpassword } = req.body;
+  try {
+    const { email, name, password, confirmpassword } = req.body
 
-  let allFieldsExist = email && name && password && confirmpassword;
-  if (!allFieldsExist) {
-    return res.send({ err: 'all fields required' });
-  }
-
-  if (password.length < 8) {
-    return res.send({ err: 'password must be at least 8 characters' });
-  }
-  if (name.length < 4 || name.length > 12) {
-    return res.send({ err: 'name must be between 4 and 12 characters' });
-  }
-  if (password !== confirmpassword) {
-    return res.send({ err: 'passwords do not match' });
-  }
-  if (!email.includes('@') || !email.includes('.')) {
-    return res.send({ err: 'valid email required' });
-  }
-
-  const existingTrainer = await Trainer.findOne({ email: email });
-  if (existingTrainer) {
-    return res.send({ err: 'account with this email already exists' });
-  }
-
-  const hashedPw = await bcrypt.hash(password, 12);
-
-  const newTrainer = new Trainer({
-    name: name,
-    email: email.toLowerCase(),
-    password: hashedPw,
-    settings: { active: false },
-    availability: [],
-    minimum: 1,
-    maximum: 4,
-  });
-
-  newTrainer
-    .save()
-    .then((result) => {
-      result = { ...result._doc };
-      delete result.password;
-      res.status(201).send(result);
-    })
-    .catch((err) => {
-      res.status(400).send(err);
-    });
-});
-
-router.post('/login', (req, res) => {
-  Trainer.findOne(
-    { email: req.body.email },
-    '+password settings name email bio profilePic coverPic tags displayEmail',
-    async function (err, user) {
-      if (err) {
-        return res.json({
-          err:
-            'sorry, there is an issue with connecting to the database. We are working on fixing this.',
-        });
-      } else {
-        if (!user) {
-          return res.json({ err: 'no user found with this email' });
-        }
-        const passwordsMatch = await bcrypt.compare(
-          req.body.password,
-          user.password
-        );
-        if (passwordsMatch) {
-          const token = jwt.sign(
-            {
-              tokenUser: {
-                userId: user._id,
-                email: user.email,
-                userType: 'trainer',
-              },
-            },
-            process.env.SECRET,
-            { expiresIn: '1000hr' }
-          );
-          const messages = await messageSorter(user._id.toString());
-          const userInfo = {
-            userId: user._id,
-            email: user.email,
-            displayEmail: user.displayEmail,
-            name: user.name,
-            coverPic: user.coverPic,
-            profilePic: user.profilePic,
-            settings: user.settings,
-            messages,
-            id: user._id,
-            tags: user.tags,
-            bio: user.bio,
-            userType: 'trainer',
-          };
-          res.json({
-            status: 'success',
-            message: 'login successful',
-            data: {
-              user: userInfo,
-              token,
-            },
-          });
-        } else {
-          return res.json({ err: 'incorrect password' });
-        }
-      }
+    const allFieldsExist = email && name && password && confirmpassword
+    if (!allFieldsExist) {
+      return res.status(400).send({ status: 'error', message: 'All fields required' })
     }
-  );
-});
 
-router.get('/dashboard', auth, (req, res) => {
-  let { userId } = req.tokenUser;
-  Session.find({ trainer: userId })
-    .sort({ startTime: -1 })
-    .limit(12)
-    .then((sessions) => res.send({ sessions }))
-    .catch((err) => {
-      console.log('trainer dashboard info fetch error: ', err);
-      return res.send('database error');
-    });
-});
+    if (password.length < 8) {
+      return res
+        .status(400)
+        .send({ status: 'error', message: 'Password must be at least 8 characters' })
+    }
 
-router.put('/editprofile/', auth, (req, res) => {
-  let { userId } = req.tokenUser;
-  let formInfo = req.body;
-  let update = {};
-  Object.keys(formInfo).forEach((key) => {
-    let trimmedValue = formInfo[key].replace(/^\s+|\s+$/gm, '');
-    if (trimmedValue && trimmedValue.length > 0) update[key] = trimmedValue;
-  });
+    if (name.length < 4 || name.length > 12) {
+      return res
+        .status(400)
+        .send({ status: 'error', message: 'Name must be between 4 and 12 characters' })
+    }
 
-  Trainer.findOneAndUpdate({ _id: userId }, update, {
-    new: true,
-    useFindAndModify: false,
-  })
-    .then((result) => res.send(result))
-    .catch((err) => {
-      console.log('trainer profile edit error: ', err);
-      return res.send({ err: 'database error' });
-    });
-});
+    if (password !== confirmpassword) {
+      return res.status(400).send({ status: 'error', message: 'Passwords do not match' })
+    }
 
-router.get('/schedule/', auth, async (req, res) => {
-  let { userId } = req.tokenUser;
-  let foundTrainer = await Trainer.findById(userId);
-  if (!foundTrainer) return res.send({ err: 'no trainer found' });
-  let entries = foundTrainer.availability || [];
+    if (!email.includes('@') || !email.includes('.')) {
+      return res.status(400).send({ status: 'error', message: 'Valid email required' })
+    }
 
-  let foundSessions = await Session.find({ trainer: userId });
+    const existingTrainer = await Trainer.findOne({ email: email })
+    if (existingTrainer) {
+      return res
+        .status(400)
+        .send({ status: 'error', message: 'Account with this email already exists' })
+    }
 
-  let { minimum, maximum } = foundTrainer || {};
-  res.send({ entries, min: minimum, max: maximum, foundSessions });
-});
+    const hashedPw = await bcrypt.hash(password, 12)
 
-router.put('/schedule/', auth, async ({ tokenUser, body }, res) => {
-  let { userId } = tokenUser;
-  Trainer.findOneAndUpdate(
-    { _id: userId },
-    { availability: body },
-    { new: true, useFindAndModify: false }
-  )
-    .then((user) => res.send(user.availability || []))
-    .catch((err) => {
-      console.log('trainer schedule update error: ', err);
-      return res.send('database error');
-    });
-});
+    const newTrainer = new Trainer({
+      name,
+      minimum: 1,
+      maximum: 4,
+      availability: [],
+      password: hashedPw,
+      settings: { active: false },
+      email: email.toLowerCase(),
+    })
 
-router.put(
-  '/minmax/:type',
-  auth,
-  async ({ params: { type }, tokenUser, body: { value } }, res) => {
-    let { userId } = tokenUser;
+    try {
+      const result = await newTrainer.save()
+      const trainer = { ...result._doc }
+      delete trainer.password
+      return res.status(201).send({ status: 'success', message: 'Account created', trainer })
+    } catch (err) {
+      return res.status(500).send({ status: 'error', message: 'Account creation failed' })
+    }
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
+})
 
-    let foundTrainer = await Trainer.findById(userId);
-    if (type === 'maximum' && value < foundTrainer.minimum)
-      return res.send({ err: 'maximum must be greater than minimum' });
-    if (type === 'minimum' && value > foundTrainer.maximum)
-      return res.send({ err: 'minimum cannot be greater than maximum' });
+router.post('/login', async (req, res) => {
+  try {
+    const trainer = await Trainer.findOne(
+      { email: req.body.email },
+      '+password settings name email bio profilePic coverPic tags displayEmail'
+    )
+    if (!trainer) {
+      return res.status(404).send({ status: 'error', message: 'No user found with this email' })
+    }
 
-    Trainer.findOneAndUpdate(
+    const passwordsMatch = await bcrypt.compare(req.body.password, trainer.password)
+    if (!passwordsMatch) {
+      return res.status(400).send({ status: 'error', message: 'Incorrect password' })
+    }
+
+    const token = jwt.sign(
+      { tokenUser: { userId: trainer._id, email: trainer.email, userType: 'trainer' } },
+      process.env.SECRET,
+      { expiresIn: '1000hr' }
+    )
+    const messages = await messageSorter(trainer._id.toString())
+    const userInfo = {
+      messages,
+      id: trainer._id,
+      bio: trainer.bio,
+      name: trainer.name,
+      tags: trainer.tags,
+      userId: trainer._id,
+      email: trainer.email,
+      userType: 'trainer',
+      settings: trainer.settings,
+      coverPic: trainer.coverPic,
+      profilePic: trainer.profilePic,
+      displayEmail: trainer.displayEmail,
+    }
+    res.status(200).send({
+      token,
+      user: userInfo,
+      status: 'success',
+      message: 'Login successful',
+    })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
+})
+
+router.get('/dashboard', auth, async ({ tokenUser: { userId } }, res) => {
+  try {
+    const sessions = await Session.find({ trainer: userId }).sort({ startTime: -1 }).limit(12)
+    res.status(200).send({ status: 'success', message: 'Sessions found', sessions })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
+})
+
+router.put('/profiles', auth, async ({ tokenUser, body }, res) => {
+  try {
+    const { userId } = tokenUser
+    const formInfo = body
+    let update = {}
+    Object.keys(formInfo).forEach((key) => {
+      const trimmedValue = formInfo[key].replace(/^\s+|\s+$/gm, '')
+      if (trimmedValue && trimmedValue.length > 0) update[key] = trimmedValue
+    })
+
+    try {
+      const updatedProfile = await Trainer.findOneAndUpdate({ _id: userId }, update, {
+        new: true,
+        useFindAndModify: false,
+      })
+      return res.status(200).send({ status: 'success', message: 'Profile updated', updatedProfile })
+    } catch (err) {
+      return res.status(500).send({ status: 'error', message: 'Profile update failed' })
+    }
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
+})
+
+router.get('/schedule/', auth, async ({ tokenUser: { userId } }, res) => {
+  try {
+    const foundTrainer = await Trainer.findById(userId)
+    if (!foundTrainer) {
+      return res.status(404).send({ status: 'error', message: 'Trainer not found' })
+    }
+    const entries = foundTrainer.availability || []
+    const foundSessions = await Session.find({ trainer: userId })
+    const { minimum, maximum } = foundTrainer
+    return res.status(200).send({
+      entries,
+      min: minimum,
+      max: maximum,
+      foundSessions,
+      status: 'success',
+      message: 'Schedule found',
+    })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
+})
+
+router.put('/schedule/', auth, async ({ tokenUser: { userId }, body }, res) => {
+  try {
+    const updatedTrainer = await Trainer.findOneAndUpdate(
       { _id: userId },
-      { [type]: Number(value) },
+      { availability: body },
       { new: true, useFindAndModify: false }
     )
-      .then((user) => {
-        return res.send({ min: user.minimum, max: user.maximum });
-      })
-      .catch((err) => {
-        console.log('trainer min/max update error: ', err);
-        return res.send({ err: 'database error' });
-      });
+
+    return res.status(200).send({
+      status: 'success',
+      message: 'Schedule updated',
+      updatedSchedule: updatedTrainer.availability,
+    })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
   }
-);
+})
+
+router.put('/minmax/:type', auth, async ({ params: { type }, tokenUser, body: { value } }, res) => {
+  try {
+    const { userId } = tokenUser
+
+    const foundTrainer = await Trainer.findById(userId)
+
+    if (!foundTrainer) {
+      return res.status(404).send({ status: 'error', message: 'Trainer not found' })
+    }
+
+    if (type === 'maximum' && value < foundTrainer.minimum) {
+      return res
+        .status(400)
+        .send({ status: 'error', message: 'Maximum must be greater than minimum' })
+    }
+
+    if (type === 'minimum' && value > foundTrainer.maximum) {
+      return res
+        .status(400)
+        .send({ status: 'error', message: 'Minimum cannot be greater than maximum' })
+    }
+
+    try {
+      const updatedTrainer = await Trainer.findOneAndUpdate(
+        { _id: userId },
+        { [type]: Number(value) },
+        { new: true, useFindAndModify: false }
+      )
+
+      const { min, max } = updatedTrainer
+      return res
+        .status(200)
+        .send({ status: 'success', message: 'Trainer min max updated', min, max })
+    } catch (err) {
+      return res.status(500).send({ status: 'error', message: 'Trainer update failed' })
+    }
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
+})
 
 router.get('/session/:id', auth, async ({ params: { id } }, res) => {
-  let _id;
   try {
-    _id = new mongoose.Types.ObjectId(id);
+    let _id
+    try {
+      _id = new mongoose.Types.ObjectId(id)
+    } catch (err) {
+      return res.status(400).send({ status: 'error', message: 'Invalid session id' })
+    }
+    const foundSession = await Session.findById(_id)
+    if (!foundSession) {
+      return res.status(404).send({ status: 'error', message: 'Session not found' })
+    }
+    const foundClient = await Client.findById(foundSession.client)
+    return res
+      .status(200)
+      .send({ status: 'success', message: 'Session found', foundSession, foundClient })
   } catch (err) {
-    return res.send({ err: 'no session found' });
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
   }
-  let foundSession = await Session.findById(_id);
-  if (!foundSession) return res.send({ err: 'no session found' });
-  let foundClient = await Client.findById(foundSession.client);
-  return res.send({ foundSession, foundClient });
-});
+})
 
 router.delete('/cancel-session/', auth, async ({ headers: { id } }, res) => {
-  let deletedSession = await Session.findByIdAndDelete(id);
-  if (deletedSession) res.send({ id: deletedSession.id });
-  else res.send({ err: 'no session found' });
-});
+  try {
+    const deletedSession = await Session.findByIdAndDelete(id)
+    if (!deletedSession) {
+      return res.status(404).send({ status: 'error', message: 'Session not found' })
+    }
+    return res
+      .status(200)
+      .send({ status: 'success', message: 'Session canceled', id: deletedSession.id })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
+  }
+})
 
-router.put(
-  '/add-tag',
-  auth,
-  async ({ tokenUser: { userId }, body: { value } }, res) => {
-    let foundTrainer = await Trainer.findById(userId);
-    if (!foundTrainer) return res.send({ err: 'user not found' });
-    if (foundTrainer.tags.indexOf(value) > -1)
-      return res.send({ err: 'no tag duplicate' });
-    if (foundTrainer.tags.length >= 4)
-      return res.send({ err: 'tag list limited to 4 tags' });
-    Trainer.findOneAndUpdate(
+router.put('/add-tag', auth, async ({ tokenUser: { userId }, body: { value } }, res) => {
+  try {
+    const foundTrainer = await Trainer.findById(userId)
+    if (!foundTrainer) {
+      return res.status(404).send({ status: 'error', message: 'User not found' })
+    }
+    if (foundTrainer.tags.indexOf(value) > -1) {
+      return res.status(400).send({ status: 'error', message: 'No tag duplicate' })
+    }
+    if (foundTrainer.tags.length >= 4) {
+      return res.status(400).send({ status: 'error', message: 'Tag list limited to 4 tags' })
+    }
+    const updatedTrainer = await Trainer.findOneAndUpdate(
       { _id: userId },
       { $push: { tags: value } },
       { new: true, useFindAndModify: false }
     )
-      .then((result) => res.send(result.tags))
-      .catch((err) => {
-        console.log('trainer add tag error: ', err);
-        res.send({ err: 'database error' });
-      });
+    return res
+      .status(200)
+      .send({ status: 'success', message: 'Tag added', tags: updatedTrainer.tags })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
   }
-);
+})
 
-router.delete(
-  '/delete-tag',
-  auth,
-  async ({ tokenUser: { userId }, headers: { value } }, res) => {
-    let foundTrainer = await Trainer.findById(userId);
-    if (!foundTrainer) return res.send({ err: 'user not found' });
-    let tags = [...foundTrainer.tags];
-    let filteredTags = tags.filter((t) => t !== value);
-    Trainer.findOneAndUpdate(
+router.delete('/delete-tag', auth, async ({ tokenUser: { userId }, headers: { value } }, res) => {
+  try {
+    const foundTrainer = await Trainer.findById(userId)
+    if (!foundTrainer) {
+      return res.status(404).send({ status: 'error', message: 'User not found' })
+    }
+    const tags = [...foundTrainer.tags]
+    const filteredTags = tags.filter((t) => t !== value)
+    const updatedTrainer = await Trainer.findOneAndUpdate(
       { _id: userId },
       { tags: filteredTags },
       { new: true, useFindAndModify: false }
     )
-      .then((result) => {
-        res.send(result.tags);
-      })
-      .catch((err) => {
-        console.log('trainer tag deletion error: ', err);
-        res.send({ err: 'database error' });
-      });
+    return res
+      .status(200)
+      .send({ status: 'success', message: 'Tage deleted', tags: updatedTrainer.tags })
+  } catch (err) {
+    return res.status(500).send({ status: 'error', message: 'Database is down' })
   }
-);
-module.exports = router;
+})
+module.exports = router

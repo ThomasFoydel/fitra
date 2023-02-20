@@ -1,66 +1,64 @@
-$small: 576px;
-$medium: 850px;
-$large: 992px;
+@import 'variables';
 
 .clientprofile {
   .email,
   .bio {
-    font-size: 1.5rem;
-    overflow: scroll;
     height: 2.5rem;
+    overflow: scroll;
+    font-size: 1.5rem;
   }
+
   .bio {
     margin-bottom: 1rem;
   }
+
   .name {
-    margin-left: 0.5rem;
     margin-top: 1rem;
     font-size: 4.5rem;
     font-weight: bold;
+    margin-left: 0.5rem;
     letter-spacing: 0.4rem;
   }
+
   .cover-pic {
+    left: 0;
     width: 100vw;
     height: 100%;
-    background-position: top;
-    background-size: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    padding-top: 2rem;
     overflow: scroll;
+    position: absolute;
+    background-size: cover;
+    background-position: top;
   }
+
   .info {
-    margin-top: 10rem;
-    padding: 2rem 0;
-    background: rgba(255, 255, 255, 0.39);
+    height: 49rem;
+    padding: 4rem 0;
     text-align: center;
-    height: 48rem;
+    background: rgba(255, 255, 255, 0.39);
   }
+
   .profile-pic {
     width: 25rem;
     height: 25rem;
-    border-radius: 20rem;
-    border: 12px solid hsl(0, 0%, 94%);
-    margin-left: 50%;
-    transform: translateX(-50%);
     display: block;
-    background: rgb(240, 240, 240);
+    margin-left: 50%;
+    background: $grey1;
+    border-radius: 20rem;
+    transform: translateX(-50%);
+    border: 12px solid $grey1;
   }
 
-  .link {
-    font-size: 1.8rem;
-    text-decoration: none;
-    background: rgba(230, 230, 230, 0.767);
+  .edit-link {
+    color: $grey1;
     padding: 0.4rem;
+    font-size: 1.8rem;
+    background: $grey11;
     padding: 0.6rem 1rem;
+    text-decoration: none;
     border-radius: 0.5rem;
-    background: rgb(22, 22, 22);
-    color: #ddd;
 
     &:hover {
-      background: rgb(51, 51, 51);
+      background: $grey9;
     }
   }
 }

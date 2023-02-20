@@ -1,136 +1,164 @@
+@import 'variables';
+
 .trainers {
   width: 100vw;
   overflow: hidden;
 
   .tags {
     .tag {
-      color: rgb(121, 0, 0);
+      color: $red7;
       &:hover {
-        color: rgb(173, 0, 0);
+        color: $pink2;
       }
     }
   }
 
   .suggestion-tags {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: $small) {
+      display: none;
+    }
+
     .suggestion-tag {
       z-index: 1;
       width: 10rem;
-      margin: 0 0.3rem;
-      background: linear-gradient(
-        -45deg,
-        rgb(247, 247, 247),
-        rgb(194, 194, 194)
-      );
-      color: #222;
-      text-align: center;
-      transition: all 0.2s ease;
-      border-radius: 0.5rem;
-      font-size: 1.5rem;
+      color: $grey2;
       cursor: pointer;
-      padding: 0.2rem;
-      border: 1px solid rgba(211, 211, 211, 0);
+      margin: 0 0.3rem;
+      font-size: 1.5rem;
+      background: $grey11;
+      text-align: center;
+      border-radius: 0.5rem;
+      padding: 0.8rem 0.2rem;
+      border: 1px solid $grey4;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, $grey6, $grey8);
 
       &:hover {
-        filter: invert(95%);
-        border: 1px solid rgb(0, 0, 0);
+        color: $white;
+        border: 1px solid $red4;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.824);
+        background: linear-gradient(135deg, grey8, grey11);
       }
     }
-    .current {
-      filter: invert(75%);
-      border: 1px solid rgb(0, 0, 0);
-    }
-  }
 
-  .trainer-animation-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    .current {
+      color: $grey1;
+      cursor: default;
+      border: 1px solid $red4;
+      background: linear-gradient(135deg, $grey8, $grey11);
+      &:hover {
+        opacity: 0.9;
+        color: $grey1;
+        background: linear-gradient(135deg, $grey8, $grey11);
+      }
+    }
   }
 
   .trainers-container {
+    width: 100vw;
+    max-width: 100%;
+    max-height: 100%;
     margin-top: 3rem;
     position: absolute;
-    width: 100vw;
-    max-height: 100%;
-    max-width: 100%;
     padding-bottom: 30rem;
   }
 
-  .card-container {
-    width: 80%;
+  .link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: inherit;
   }
 
   .trainer-card {
+    width: 80%;
     height: 20rem;
-    position: relative;
-
-    border-radius: 1rem;
     display: flex;
+    position: relative;
+    border-radius: 1rem;
     justify-content: space-between;
 
     .left-section {
-      min-width: 20rem;
-    }
-    .right-section {
-      padding: 1rem;
-      width: 100%;
-      text-align: center;
-      font-size: 1.4rem;
-    }
-    .name {
-      letter-spacing: 0.3rem;
-      color: black;
-      font-weight: bold;
-      position: absolute;
       width: 20rem;
+      height: 20rem;
+      min-width: 20rem;
+      overflow: hidden;
+      position: relative;
+      border-top-left-radius: 0.8rem;
+      border-bottom-left-radius: 0.8rem;
+    }
+
+    .right-section {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.4rem;
       text-align: center;
-      top: 2rem;
+      border-top-right-radius: 0.8rem;
+      border-bottom-right-radius: 0.8rem;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .name {
       left: 0;
-      color: white;
+      top: 2rem;
+      width: 20rem;
+      color: $white;
       font-size: 1.3rem;
+      font-weight: bold;
+      text-align: center;
+      position: absolute;
       margin-left: 0.3rem;
+      letter-spacing: 0.3rem;
+      text-shadow: 0 0 5px $black;
     }
 
     .profile-container {
+      margin-top: 50%;
+      margin-left: 50%;
       position: relative;
+      transform: translateX(-50%) translateY(-50%);
     }
 
     .profilepic {
-      position: absolute;
-      width: 8rem;
-      height: 8rem;
-      border-radius: 40rem;
-      border: 4px solid #f0f0f0;
-      margin-left: 50%;
+      width: 100%;
+      height: 100%;
       margin-top: 50%;
+      margin-left: 50%;
+      background: $grey1;
+      position: absolute;
+      border-radius: 40rem;
+      border: 4px solid $grey1;
       transform: translateX(-50%) translateY(-50%);
-      background: #f0f0f0;
     }
-    .coverpic {
-      position: absolute;
-      width: 20rem;
-      height: 20rem;
-      border-radius: 0.8rem;
 
-      left: 0;
+    .coverpic {
       top: 0;
-    }
-    .shadow {
-      position: absolute;
       left: 0;
-      top: 0;
       width: 20rem;
       height: 20rem;
-      border-radius: 0.8rem;
+      position: absolute;
+      border-top-left-radius: 0.8rem;
+      border-bottom-left-radius: 0.8rem;
+    }
+
+    .shadow {
+      top: 0;
+      left: 0;
+      width: 20rem;
+      height: 20rem;
+      position: absolute;
+      border-top-left-radius: 0.8rem;
       background: rgba(0, 0, 0, 0.4);
+      border-bottom-left-radius: 0.8rem;
     }
   }
+
   .bio {
-    color: black;
+    color: $black;
     font-weight: bold;
   }
 }

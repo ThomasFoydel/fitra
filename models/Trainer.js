@@ -1,21 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const availabilitySchema = new mongoose.Schema({
+  id: String,
   day: String,
   end: String,
+  endDate: Date,
+  title: String,
   start: String,
   startDate: Date,
-  endDate: Date,
   recurring: Boolean,
-  title: String,
-  id: String,
-});
+})
 
 const settingSchema = new mongoose.Schema({
   rate: Number,
-  currency: String,
   active: Boolean,
-});
+  currency: String,
+})
 
 const trainerSchema = {
   name: {
@@ -27,34 +27,24 @@ const trainerSchema = {
     unique: true,
     required: true,
   },
-  displayEmail: {
-    type: String,
-  },
   password: {
     type: String,
     required: true,
     select: false,
-  },
-  profilePic: {
-    type: String,
-  },
-  coverPic: {
-    type: String,
-  },
-  timeZone: {
-    type: String,
-  },
-  bio: {
-    type: String,
   },
   settings: {
     type: settingSchema,
     select: false,
   },
   availability: [availabilitySchema],
+  displayEmail: String,
+  profilePic: String,
+  coverPic: String,
+  timeZone: String,
   minimum: Number,
   maximum: Number,
   tags: [String],
-};
+  bio: String,
+}
 
-module.exports = mongoose.model('Trainer', trainerSchema);
+module.exports = mongoose.model('Trainer', trainerSchema)

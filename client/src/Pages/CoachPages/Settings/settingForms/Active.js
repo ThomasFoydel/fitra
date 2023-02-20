@@ -1,7 +1,8 @@
-import React from 'react';
-import axios from 'axios';
+import React from 'react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
-const Active = ({ props: { onError, type, onComplete, token, active } }) => {
+const Active = ({ props: { type, onComplete, token, active } }) => {
   const handleActive = async ({ target: { checked } }) => {
     axios
       .put(
@@ -9,28 +10,25 @@ const Active = ({ props: { onError, type, onComplete, token, active } }) => {
         { value: checked },
         { headers: { 'x-auth-token': token } }
       )
-      .then(({ data: { active, err } }) => {
-        if (err) return onError(err);
-        onComplete({ type: 'active', value: active });
-      })
-      .catch((err) => onError(err));
-  };
+      .then(({ data: { settings } }) => onComplete({ type: 'active', value: settings.active }))
+      .catch(({ response: { data } }) => toast.error(data.message))
+  }
 
   return (
-    <div className='active'>
+    <div className="active">
       <h3>Active</h3>
-      <label className='switch' htmlFor='active'>
+      <label className="switch" htmlFor="active">
         <input
-          checked={active || false}
-          type='checkbox'
+          id="active"
+          type="checkbox"
           onChange={handleActive}
-          id='active'
-          data-testid='active-btn'
+          data-testid="active-btn"
+          checked={active || false}
         />
-        <span className='slider round'></span>
+        <span className="slider round" />
       </label>
     </div>
-  );
-};
+  )
+}
 
-export default Active;
+export default Active

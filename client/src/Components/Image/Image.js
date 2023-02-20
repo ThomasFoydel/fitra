@@ -1,46 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import loadingGif from 'imgs/loading/spin.gif';
-import defaultProfile from 'imgs/default/profile.jpg';
+import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
+import defaultProfile from 'imgs/default/profile.jpg'
+import loadingGif from 'imgs/loading/spin.gif'
 
-const Image = ({ name, src, style, alt }) => {
-  const [loading, setLoading] = useState(true);
-  const [source, setSource] = useState(src || defaultProfile);
-  const [err, setErr] = useState(false);
-
-  useEffect(() => {
-    if (err) setSource(defaultProfile);
-  }, [err]);
+const Image = ({ name, src, style, alt, defaultImage }) => {
+  const [loading, setLoading] = useState(true)
+  const [errored, setErrored] = useState(false)
+  const [source, setSource] = useState(src || defaultImage || defaultProfile)
 
   useEffect(() => {
-    if (src) setSource(src);
-    else setSource(defaultProfile);
-  }, [src]);
+    if (errored) setSource(defaultImage || defaultProfile)
+  }, [errored])
+
+  useEffect(() => {
+    if (src && !src.includes('undefined') && src !== source) setSource(src)
+  }, [src])
+
+  const imgStyle = { background: 'white' }
+
+  const styles = style ? { ...style, ...imgStyle } : imgStyle
 
   return (
     <img
-      style={style}
-      className={name}
       alt={alt}
+      style={styles}
+      className={name}
+      onError={() => setErrored(true)}
       src={loading ? loadingGif : source}
-      onError={(err) => {
-        console.log({ err });
-        setErr(true);
-      }}
-      onLoad={() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 200);
-      }}
+      onLoad={() => setTimeout(() => setLoading(false), 200)}
     />
-  );
-};
+  )
+}
 
 Image.propTypes = {
+  style: PropTypes.object,
+  defaultImage: PropTypes.string,
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  style: PropTypes.object,
-};
+}
 
-export default Image;
+export default Image

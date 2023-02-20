@@ -1,97 +1,83 @@
-import React, { useState } from 'react';
-import TimeInput from './TimeInput';
+import React, { useState } from 'react'
+import TimeInput from './TimeInput'
 
-const Day = ({
-  props: { currentDate, day, displayBlocks, handleSubmitTime },
-}) => {
-  const [addTimeOpen, setAddTimeOpen] = useState(false);
+const Day = ({ props: { currentDate, day, displayBlocks, handleSubmitTime } }) => {
+  const [addTimeOpen, setAddTimeOpen] = useState(false)
 
   const [timeSelection, setTimeSelection] = useState({
-    start: {
-      amOrPm: 'AM',
-      hour: '1',
-      minute: '00',
-    },
-    end: {
-      amOrPm: 'AM',
-      hour: '1',
-      minute: '30',
-    },
-  });
+    start: { minute: '00', hour: '1', amOrPm: 'AM' },
+    end: { minute: '30', hour: '1', amOrPm: 'AM' },
+  })
+  
+  const { start, end } = timeSelection
 
-  const toggleOpen = () => setAddTimeOpen((o) => !o);
+  const toggleOpen = () => setAddTimeOpen((o) => !o)
 
   const handleTimeSelect = ({ id, value, label }) => {
-    setTimeSelection((s) => {
-      return { ...s, [label]: { ...s[label], [id]: value } };
-    });
-  };
-
-  const { start, end } = timeSelection;
+    setTimeSelection((s) => ({ ...s, [label]: { ...s[label], [id]: value } }))
+  }
 
   return (
-    <div className='mb-day'>
+    <div className="mb-day">
       <h3>{currentDate.toDateString()}</h3>
 
       {Object.keys(displayBlocks).map((key) => {
-        let { startDate, endDate, _id, id } = displayBlocks[key];
-        startDate = new Date(startDate);
-        endDate = new Date(endDate);
-        const belongsOnCurrent =
-          currentDate.toDateString() === startDate.toDateString();
+        let { startDate, endDate, _id, id } = displayBlocks[key]
+        startDate = new Date(startDate)
+        endDate = new Date(endDate)
+        const belongsOnCurrent = currentDate.toDateString() === startDate.toDateString()
 
-        return belongsOnCurrent ? (
+        if (!belongsOnCurrent) return null
+        return (
           <div key={_id || id}>
             {belongsOnCurrent && (
-              <div className='mb-block'>
+              <div className="mb-block">
                 <p>start: {startDate.toDateString()}</p>
                 <p>end: {endDate.toDateString()}</p>
               </div>
             )}
           </div>
-        ) : null;
+        )
       })}
 
       <div
-        className='addtime-form'
+        className="addtime-form"
         style={{
-          height: addTimeOpen ? '16rem' : '0rem',
-          transition: 'all 0.3s ease',
           overflow: 'hidden',
+          transition: 'all 0.3s ease',
+          height: addTimeOpen ? '16rem' : '0rem',
         }}
       >
-        <button className='close-btn' onClick={toggleOpen}>
-          <i className='fas fa-times fa-2x' />
+        <button className="close-btn" onClick={toggleOpen}>
+          <i className="fas fa-times fa-2x" />
         </button>
 
         <TimeInput
           props={{
             id: 'start',
-            label: 'start',
             value: start,
+            label: 'start',
             handleTimeSelect,
           }}
         />
         <TimeInput
           props={{
             id: 'end',
-            label: 'end',
             value: end,
+            label: 'end',
             handleTimeSelect,
           }}
         />
-        <button onClick={() => handleSubmitTime({ timeSelection, day })}>
-          submit
-        </button>
+        <button onClick={() => handleSubmitTime({ timeSelection, day })}>submit</button>
       </div>
 
       {!addTimeOpen && (
-        <button className='addtime-btn' onClick={toggleOpen}>
+        <button className="addtime-btn" onClick={toggleOpen}>
           add time
         </button>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Day;
+export default Day

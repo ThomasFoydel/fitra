@@ -1,36 +1,40 @@
-$small: 576px;
-$medium: 768px;
-$large: 992px;
+@import 'variables';
 
 .privacy-policy {
-  background: #000;
-  color: lightgrey;
   padding: 4rem;
+  color: rgb(211, 211, 211);
+  background: $black;
+
   h2 {
-    text-align: center;
     font-size: 9rem;
     line-height: 8rem;
+    text-align: center;
+
     @media screen and (max-width: $medium) {
       font-size: 6rem;
       line-height: 5rem;
     }
   }
+
   h4 {
     font-size: 2rem;
   }
 
   h3 {
     font-size: 3rem;
-    line-height: 4rem;
     margin-top: 5rem;
+    line-height: 4rem;
   }
+
   p {
     padding: 1rem;
   }
+
   ul li {
-    list-style: inside;
     margin-left: 1rem;
+    list-style: inside;
   }
+
   ol li {
     margin-left: 1rem;
     font-size: 1.8rem;
@@ -41,6 +45,7 @@ $large: 992px;
     text-align: center;
     border: 1px solid lightgrey;
   }
+
   table td:nth-child(1) {
     text-align: left;
   }

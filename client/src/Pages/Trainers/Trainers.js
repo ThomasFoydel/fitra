@@ -1,97 +1,65 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import SearchBar from 'Components/SearchBar/SearchBar';
-import './Trainers.scss';
-import TrainerCard from './TrainerCard';
-import { config, animated, useTransition } from 'react-spring';
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { config, animated, useTransition } from 'react-spring'
+import SearchBar from 'Components/SearchBar/SearchBar'
+import TrainerCard from './TrainerCard'
+import './Trainers.scss'
 
-const suggestionTags = [
-  'mma',
-  'yoga',
-  'diet',
-  'pilates',
-  'boxing',
-  'cardio',
-  'calisthenics',
-];
+const suggestionTags = ['mma', 'yoga', 'diet', 'pilates', 'boxing', 'cardio', 'calisthenics']
 
 const Trainers = () => {
-  const [currentTrainers, setCurrentTrainers] = useState([]);
-  const [search, setSearch] = useState('');
-  const [err, setErr] = useState('');
-  const [queryType, setQueryType] = useState('tags');
+  const [currentTrainers, setCurrentTrainers] = useState([])
+  const [queryType, setQueryType] = useState('tags')
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
+    let subscribed = true
     if (queryType && search)
       axios
         .get(`/api/client/search?type=${queryType}&search=${search}`)
-        .then(({ data: { result, err } }) => {
-          if (err) return setErr(err);
-          else setCurrentTrainers(result);
-        });
-  }, [search, queryType]);
+        .then(({ data: { trainers } }) => subscribed && setCurrentTrainers(trainers))
+    return () => (subscribed = false)
+  }, [search, queryType])
 
   const tagSearch = (tag) => {
-    setQueryType('tags');
-    setSearch(tag);
-  };
+    setQueryType('tags')
+    setSearch(tag)
+  }
 
-  const didMountRef = useRef(false);
-  useEffect(() => {
-    let subscribed = true;
-    if (didMountRef.current) {
-      setTimeout(() => {
-        if (subscribed) setErr('');
-      }, 2700);
-    } else didMountRef.current = true;
-    return () => (subscribed = false);
-  }, [err]);
-
-  const animation = useTransition(currentTrainers, (item) => item._id, {
-    from: { opacity: '0', height: '0rem', transform: 'translateY(-20px)' },
-    enter: { opacity: '1', height: '22rem', transform: 'translateY(0px)' },
-    leave: {
-      opacity: '0',
-      height: '0rem',
-      transform: 'translateY(0px)',
-    },
+  const animatedTrainers = useTransition(currentTrainers, {
     trail: 300,
     config: config.molasses,
-  });
+    from: { opacity: '0', height: '0rem', transform: 'translateY(-20px)' },
+    enter: { opacity: '1', height: '22rem', transform: 'translateY(0px)' },
+    leave: { opacity: '0', height: '0rem', transform: 'translateY(0px)' },
+  })
 
   return (
-    <div className='trainers'>
-      <div className='background' />
-      <div className='overlay' />
-      <div className='top-section'>
+    <div className="trainers">
+      <div className="top-section">
         <SearchBar props={{ search, setSearch, queryType, setQueryType }} />
-        <div className='suggestion-tags'>
+        <div className="suggestion-tags">
           {queryType === 'tags' &&
             suggestionTags.map((tag) => (
-              <div
+              <button
                 key={tag}
                 className={`suggestion-tag ${search === tag ? 'current' : ''}`}
                 onClick={() => tagSearch(tag)}
               >
                 {tag}
-              </div>
+              </button>
             ))}
         </div>
       </div>
-      <div className='trainers-container'>
-        {animation.map(({ item, props, key }) => (
-          <animated.div
-            style={props}
-            className='trainer-animation-container'
-            key={key}
-          >
-            <TrainerCard props={{ trainer: item, tagSearch }} />
+      <div className="trainers-container">
+        {animatedTrainers((style, trainer, key) => (
+          <animated.div style={style} key={key}>
+            <TrainerCard props={{ trainer, tagSearch }} />
           </animated.div>
         ))}
-        <div className='err'>{err}</div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Trainers;
+export default Trainers

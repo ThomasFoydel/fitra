@@ -1,19 +1,17 @@
-$small: 576px;
-$medium: 768px;
-$large: 992px;
+@import 'variables';
 
 .navbar,
 .mobile-navbar {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
+  position: fixed;
   background: rgba(0, 0, 0, 1);
 }
 
 .current-nav {
-  background: white !important;
-  color: black !important;
+  color: $black !important;
+  background: $white !important;
 }
 
 .navbar {
@@ -21,19 +19,19 @@ $large: 992px;
   text-align: left;
   height: 6rem;
   align-items: center;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid $white;
 
   .login-btn,
   .logout-btn {
-    color: inherit;
     font: inherit;
+    color: inherit;
     cursor: pointer;
   }
 
   .logo-title {
-    font-size: 4rem;
-    display: inline;
     margin: 0 1rem;
+    display: inline;
+    font-size: 4rem;
   }
 
   .home-link {
@@ -44,106 +42,113 @@ $large: 992px;
 
   .home-link,
   .link {
+    color: $grey1;
     text-decoration: none;
-    color: #f7f7f7;
     transition: all 0.3s ease;
+
     &:hover {
-      color: #3a3a3a;
-      background: #fafafa;
+      color: $grey9;
+      background: $white;
     }
   }
   .link {
-    text-align: center;
-    background: #00000000;
     border: none;
-    letter-spacing: 0.1rem !important;
-    padding: 2rem 2rem;
     font-size: 1.2rem;
+    text-align: center;
+    padding: 2rem 2rem;
+    background: #00000000;
+    letter-spacing: 0.1rem !important;
   }
+
   button {
     border: none;
+    color: $grey1;
     background: none;
-    color: #f7f7f7;
     font-size: 1.2rem;
   }
 }
 
 .navbar {
   display: flex;
+
   @media screen and (max-width: $medium) {
     display: none;
   }
 }
 
 .white-border {
-  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 6.1rem;
-  border-bottom: 1px solid white;
   z-index: 1;
+  width: 100%;
   display: none;
+  height: 6.1rem;
+  position: fixed;
+  border-bottom: 1px solid $white;
+
   @media screen and (max-width: $medium) {
     display: inherit;
   }
 }
 
 .mobile-navbar {
-  display: none;
-  height: 6rem;
   z-index: 2;
+  height: 6rem;
+  display: none;
   min-width: 100vw;
 
   @media screen and (max-width: $medium) {
     display: inherit;
   }
+
   .home-link {
-    position: absolute;
     left: 1rem;
     top: 0.4rem;
+    position: absolute;
   }
 
   .link,
   .home-link {
+    color: $grey1;
     text-decoration: none;
-    color: #f7f7f7;
   }
+
   .open-btn {
-    position: absolute;
     right: 1rem;
     top: 1.2rem;
-    filter: invert(1);
     cursor: pointer;
+    filter: invert(1);
+    position: absolute;
   }
 }
 
 .mobile-sidebar {
-  position: fixed;
   left: 0;
+  z-index: 2;
   top: 5.9rem;
   width: 28rem;
-  background: rgba(0, 0, 0, 1);
+  display: none;
   display: flex;
+  position: fixed;
+  overflow: hidden;
   flex-direction: column;
   border-radius: 0 0 3rem 0;
-  overflow: hidden;
-  z-index: 2;
-  border-right: 1px solid white;
-  border-bottom: 1px solid white;
-  display: none;
+  background: rgba(0, 0, 0, 1);
+  border-right: 1px solid $white;
+  border-bottom: 1px solid $white;
 
   @media screen and (max-width: $medium) {
     display: flex;
   }
 
   .link {
-    color: #f7f7f7;
+    color: $grey1;
+    padding: 1.5rem 0;
+    text-align: center;
     text-decoration: none;
     letter-spacing: 0.2rem;
-    text-align: center;
-    padding: 1.5rem 0;
   }
+
   button {
     border: none;
     background: none;
@@ -153,11 +158,11 @@ $large: 992px;
   button {
     font-weight: bold;
     font-size: 1.5rem;
-
     transition: all 0.2s ease;
+
     &:hover {
-      background: rgb(168, 168, 168);
-      color: rgb(17, 17, 17);
+      color: $grey11;
+      background: $grey4;
     }
   }
 }

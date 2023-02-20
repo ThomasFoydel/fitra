@@ -1,36 +1,34 @@
-$small: 576px;
-$medium: 768px;
-$large: 992px;
+@import 'variables';
 
 .landing-page {
+  top: 0;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
-
-  background: linear-gradient(rgba(0, 0, 0, 0.747), rgba(0, 0, 0, 0.57)),
-    url('../../imgs/weights.jpg');
+  overflow: hidden;
   max-height: 100vh;
   min-height: 100vh;
-  background-size: cover;
-  background-position: center;
   position: absolute;
   align-items: center;
-  overflow: hidden;
-  width: 100vw;
-  top: 0;
+  background-size: cover;
+  flex-direction: column;
+  background-position: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.747), rgba(0, 0, 0, 0.57)),
+    url('../../imgs/weights.jpg');
 
   .landing-title {
     opacity: 0.5;
-    font-size: 9rem;
-    line-height: 12rem;
-    color: white;
-    text-align: center;
+    color: $white;
     padding: 0 2rem;
-    line-height: 10rem;
+    font-size: 9rem;
     margin-top: 12rem;
+    text-align: center;
+    line-height: 12rem;
+    line-height: 10rem;
 
     @media screen and (max-width: $medium) {
       font-size: 7rem;
     }
+
     @media screen and (max-width: $small) {
       font-size: 5rem;
       line-height: 9rem;
@@ -38,19 +36,41 @@ $large: 992px;
   }
 
   .trainers-link {
+    color: white;
     margin-top: 2rem;
-    padding: 2rem;
+    background: $red3;
+    font-weight: bold;
     font-size: 3.4rem;
+    padding: 2rem 3rem;
     border-radius: 0.8rem;
     text-decoration: none;
-    background: rgb(233, 33, 33);
-    color: white;
-    font-weight: bold;
     transition: all 0.2s ease;
+
     &:hover {
-      background: rgb(248, 88, 88);
-      color: rgb(68, 15, 15);
+      color: $red8;
+      background: $red2;
       box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
     }
+  }
+}
+
+.coachportal-btn {
+  left: 0;
+  bottom: 0;
+  opacity: 0.5;
+  padding: 1rem;
+  color: $white;
+  font-weight: bold;
+  position: absolute;
+  text-decoration: none;
+  background-color: $red2;
+  transition: all 0.2s ease;
+  border-radius: 0 1rem 0 0;
+
+  &:hover {
+    opacity: 1;
+    color: $red8;
+    background: $red1;
+    box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
   }
 }

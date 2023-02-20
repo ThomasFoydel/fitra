@@ -1,32 +1,36 @@
+@import 'variables';
+
 .intro-message {
-  width: 40rem;
   left: 50%;
-  transform: translateX(-50%);
+  width: 40rem;
+  display: flex;
+  color: $white;
   text-align: center;
   position: absolute;
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  background: $grey11;
+  flex-direction: column;
+  border: 1px solid $grey4;
+  transform: translateX(-50%);
   padding: 1rem 4rem 2rem 4rem;
-  color: white;
-  background: rgb(31, 31, 31);
-  border: 1px solid rgb(156, 156, 156);
   border-radius: 0 18px 0 18px;
+
   button {
-    margin-top: 1rem;
-    padding: 1rem;
-    font-weight: bold;
     width: 50%;
     border: none;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-weight: bold;
     border-radius: 0.4rem;
   }
+
   textarea {
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
     padding: 1rem;
     max-width: 100%;
     min-width: 100%;
+    margin-top: 1rem;
     min-height: 15rem;
     max-height: 25rem;
+    margin-bottom: 1.5rem;
   }
 }

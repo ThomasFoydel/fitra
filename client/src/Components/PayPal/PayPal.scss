@@ -1,27 +1,29 @@
+@import 'variables';
+
 .paypal-background {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.603);
   top: 0;
   left: 0;
+  z-index: 3;
   width: 100vw;
   height: 100%;
-  z-index: 3;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.603);
 }
 
 .paypal-container {
-  background: rgb(243, 243, 243);
-  position: fixed;
   left: 50%;
-  transform: translateX(-50%);
-  top: 20rem;
   z-index: 3;
+  top: 20rem;
+  position: fixed;
+  background: $grey1;
   border-radius: 1rem;
+  transform: translateX(-50%);
 
   .paypal {
-    position: relative;
-    display: block;
     width: 35rem;
     height: 30rem;
+    display: block;
+    position: relative;
     padding: 4rem 2rem;
   }
 
@@ -31,13 +33,14 @@
   }
 
   .close-btn {
-    position: absolute;
-    right: 0.8rem;
     top: 0.3rem;
-    color: rgb(121, 0, 0);
+    color: $red8;
+    right: 0.8rem;
     cursor: pointer;
+    position: absolute;
+
     &:hover {
-      color: rgb(173, 0, 0);
+      color: $red6;
     }
   }
 }

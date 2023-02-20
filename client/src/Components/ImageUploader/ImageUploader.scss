@@ -1,4 +1,9 @@
+@import 'variables';
+
 .image-uploader {
+  height: 3rem;
+  display: flex;
+
   .loading-dots {
     width: 14rem;
     height: 14rem;
@@ -6,58 +11,60 @@
   }
 
   .loading-dots-container {
-    padding-top: 0.4rem;
-    height: 3.4rem;
-    border-radius: 0.3rem;
     width: 20rem;
-    margin-left: 50%;
-    transform: translateX(-50%) translateY(-0.1rem);
     display: flex;
+    height: 3.4rem;
+    margin-left: 50%;
     align-items: center;
+    padding-top: 0.4rem;
+    border-radius: 0.3rem;
     justify-content: center;
+    transform: translateX(-50%) translateY(-0.1rem);
   }
 
   .file {
+    opacity: 0;
+    z-index: -1;
     width: 0.1px;
     height: 0.1px;
-    opacity: 0;
     overflow: hidden;
     position: absolute;
-    z-index: -1;
   }
 
   .animated-file {
     width: 20rem;
-    height: 3.4rem;
-    border-radius: 0.3rem;
     display: flex;
-    justify-content: center;
+    height: 3.4rem;
     align-items: center;
+    border-radius: 0.3rem;
+    justify-content: center;
   }
 
   .file-exists {
-    background: rgb(233, 33, 33);
+    background: $red3;
   }
+
   .file-label {
-    width: 20rem;
-    height: 3.4rem;
-    border-radius: 0.3rem;
-    background: rgb(170, 71, 71);
-    color: white;
-    margin-top: 0.1rem;
-    display: inline-block;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transform: translateX(-50%);
-    margin-left: 50%;
-    transition: all 0.2s ease;
+    color: $white;
+    height: 3.8rem;
     cursor: pointer;
+    padding: 0 2rem;
+    min-width: 30rem;
+    margin-left: 50%;
+    background: $red4;
+    font-size: 1.8rem;
+    text-align: center;
+    align-items: center;
+    border-radius: 0.3rem;
+    justify-content: center;
+    transition: all 0.2s ease;
+    transform: translateX(-50%);
+
     &:hover {
+      color: $white;
+      background: $red6;
       box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.466);
-      background: rgb(173, 0, 0);
-      color: white;
     }
   }
 }

@@ -1,60 +1,43 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const Trainer = require('../models/Trainer')
+const auth = require('../middlewares/auth')
+const Client = require('../models/Client')
+const util = require('../util/util')
 
-const auth = require('../middlewares/auth');
-const Trainer = require('../models/Trainer');
-const Client = require('../models/Client');
+const router = express.Router()
+const { messageSorter } = util
 
-const util = require('../util/util');
-const { messageSorter } = util;
+router.get('/', auth, async ({ tokenUser }, res) => {
+  const { userId, userType } = tokenUser
+  const isClient = userType === 'client'
+  const User = isClient ? Client : Trainer
 
-/* get user auth info (happens on every reload of ui, in app.js) */
-router.get('/', auth, async (req, res) => {
-  let { tokenUser } = req;
-  if (tokenUser) {
-    let { userId, userType } = tokenUser;
-    let isClient = userType === 'client';
-    let User = isClient ? Client : Trainer;
-
-    User.findOne(
-      { _id: userId },
-      `+password settings email bio name profilePic coverPic displayEmail ${
-        !isClient && 'tags'
-      }`
-    )
-      .then(async (foundUser) => {
-        const {
-          name,
-          email,
-          _id,
-          coverPic,
-          profilePic,
-          settings,
-          tags,
+  User.findOne(
+    { _id: userId },
+    `+password settings email bio name profilePic coverPic displayEmail ${!isClient && 'tags'}`
+  )
+    .then(async (foundUser) => {
+      const { name, email, _id, coverPic, profilePic, settings, tags, bio, displayEmail } =
+        foundUser
+      const sortedMessages = await messageSorter(userId)
+      return res.status(200).send({
+        status: 'success',
+        message: 'Auth success',
+        user: {
           bio,
-          displayEmail,
-        } = foundUser;
-        let sortedMessages = await messageSorter(userId);
-        return res.send({
+          tags,
           name,
           email,
           id: _id,
+          settings,
           coverPic,
           profilePic,
-          userType: tokenUser.userType,
-          messages: sortedMessages,
-          settings,
-          tags,
-          bio,
           displayEmail,
-        });
+          messages: sortedMessages,
+          userType: tokenUser.userType,
+        },
       })
-      .catch((err) => {
-        console.log('err: ', err);
-        res.send({ err: 'database error' });
-      });
-  } else {
-    return res.send({ err: 'no token' });
-  }
-});
-module.exports = router;
+    })
+    .catch(() => res.status(500).send({ status: 'error', message: 'Database error' }))
+})
+module.exports = router

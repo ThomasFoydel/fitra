@@ -1,45 +1,39 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import axios from 'axios'
+import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
+import React, { useState } from 'react'
 
-const ChatBox = ({
-  props: { userId, userName, currentThread, update, isTrainer },
-}) => {
-  const [text, setText] = useState('');
-  const submit = () => {
-    if (!text) return;
-    let message = {
-      userId: currentThread,
+const ChatBox = ({ props: { userId, userName, currentThread, update, isTrainer } }) => {
+  const [text, setText] = useState('')
+
+  const submit = (e) => {
+    e.preventDefault()
+    if (!text) return toast.error('Message must contain content')
+
+    const message = {
       message: text,
-      sender: userId,
       name: userName,
+      sender: userId,
+      userId: currentThread,
       fromTrainer: isTrainer,
-    };
+    }
+
     axios
       .post('/api/message/', message)
-      .then(({ data }) => {
-        update(data);
-        setText('');
+      .then(({ data: { newMessage } }) => {
+        update(newMessage)
+        setText('')
       })
-      .catch((err) => console.log('chatbox err: ', err));
-  };
-  const handleKeyPress = ({ charCode }) => {
-    if (charCode === 13) submit();
-  };
+      .catch(({ response: { data } }) => toast.error(data.message))
+  }
 
   return (
-    <>
-      <input
-        onChange={(e) => setText(e.target.value)}
-        type='text'
-        className='input'
-        value={text}
-        onKeyPress={handleKeyPress}
-      />
-      <button onClick={submit}>send</button>
-    </>
-  );
-};
+    <form onSubmit={submit}>
+      <input type="text" value={text} className="input" onChange={(e) => setText(e.target.value)} />
+      <button type="submit">send</button>
+    </form>
+  )
+}
 
 ChatBox.propTypes = {
   props: PropTypes.shape({
@@ -49,6 +43,6 @@ ChatBox.propTypes = {
     update: PropTypes.func.isRequired,
     isTrainer: PropTypes.bool.isRequired,
   }),
-};
+}
 
-export default ChatBox;
+export default ChatBox

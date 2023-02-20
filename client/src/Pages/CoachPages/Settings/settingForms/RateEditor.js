@@ -1,48 +1,45 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
-const RateEditor = ({ props: { id, rate, onComplete, onError, token } }) => {
-  const [input, setInput] = useState(rate || 0);
+const RateEditor = ({ props: { rate, onComplete, token } }) => {
+  const [input, setInput] = useState(rate || 0)
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     axios
       .put(
-        `/api/user/settings/trainer/rate/`,
+        '/api/user/settings/trainer/rate/',
         { value: Number(input) },
-        {
-          headers: { 'x-auth-token': token },
-        }
+        { headers: { 'x-auth-token': token } }
       )
-      .then(({ data, err }) => {
-        if (err) onError(err);
-        onComplete({ type: 'rate', value: data.rate });
-      })
-      .catch((err) => {
-        onError({ err });
-      });
-  };
+      .then(({ data: { settings } }) => onComplete({ type: 'rate', value: settings.rate }))
+      .catch(({ response: { data } }) => toast.error(data.message))
+  }
+
   return (
-    <div className='rate-editor'>
+    <form className="rate-editor" onSubmit={handleSubmit}>
       {rate ? (
         <div>
-          <h3>Current Rate:</h3> <span data-testid='rate-display'>${rate}</span>
+          <h3>Current Rate:</h3> <span data-testid="rate-display">${rate}</span>
         </div>
       ) : (
         <div>rate not set</div>
       )}
       <input
-        className='input'
-        data-testid='rate-editor-input'
-        type='number'
-        onChange={({ target: { value } }) => setInput(value)}
-        placeholder='rate'
+        min={1}
         value={input}
+        type="number"
+        className="input"
+        placeholder="rate"
+        data-testid="rate-editor-input"
+        onChange={({ target: { value } }) => setInput(value)}
       />
-      <button onClick={handleSubmit} data-testid='rate-editor-btn'>
+      <button type="submit" data-testid="rate-editor-btn">
         update
       </button>
-    </div>
-  );
-};
+    </form>
+  )
+}
 
-export default RateEditor;
+export default RateEditor

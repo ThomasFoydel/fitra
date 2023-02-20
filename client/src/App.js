@@ -1,209 +1,179 @@
-import React, { useEffect, useContext, useRef } from 'react';
-import axios from 'axios';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import io from 'socket.io-client';
-
-import Auth from 'Components/Auth/Auth';
-import NavBar from 'Components/NavBar/NavBar';
-
-import LandingPage from 'Pages/LandingPage/LandingPage';
-import Home from 'Pages/Home/Home';
-import TrainerHome from 'Pages/CoachPages/TrainerHome/TrainerHome';
-import Settings from 'Pages/Settings/Settings';
-
-import Trainers from 'Pages/Trainers/Trainers';
-import Messages from 'Pages/Messages/Messages';
-import TrainerProfile from 'Pages/TrainerProfile/TrainerProfile';
-import Connect from 'Pages/Connect/Connect';
-import EditProfile from 'Pages/EditProfile/EditProfile';
-import ManageSession from 'Pages/CoachPages/ManageSession/ManageSession';
-import TrainerSettings from 'Pages/CoachPages/Settings/Settings';
-import TrainerSchedule from 'Pages/CoachPages/Schedule/ScheduleContainer';
-import ClientProfile from 'Pages/ClientProfile/ClientProfile';
-import SessionReview from 'Pages/SessionReview/SessionReview';
-import Delete from 'Pages/Delete/Delete';
-
-import TermsOfUse from 'Pages/TermsOfUse/TermsOfUse';
-import PrivacyPolicy from 'Pages/PrivacyPolicy/PrivacyPolicy';
-
-import TrainerLandingPage from 'Pages/CoachPages/TrainerLandingPage/TrainerLandingPage';
-
-import { CTX } from 'context/Store';
-import './App.scss';
+import axios from 'axios'
+import io from 'socket.io-client'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
+import React, { useEffect, useContext, useRef } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import TrainerLandingPage from 'Pages/CoachPages/TrainerLandingPage/TrainerLandingPage'
+import TrainerSchedule from 'Pages/CoachPages/Schedule/ScheduleContainer'
+import ManageSession from 'Pages/CoachPages/ManageSession/ManageSession'
+import TrainerHome from 'Pages/CoachPages/TrainerHome/TrainerHome'
+import TrainerProfile from 'Pages/TrainerProfile/TrainerProfile'
+import TrainerSettings from 'Pages/CoachPages/Settings/Settings'
+import SessionReview from 'Pages/SessionReview/SessionReview'
+import ClientProfile from 'Pages/ClientProfile/ClientProfile'
+import PrivacyPolicy from 'Pages/PrivacyPolicy/PrivacyPolicy'
+import LandingPage from 'Pages/LandingPage/LandingPage'
+import EditProfile from 'Pages/EditProfile/EditProfile'
+import TermsOfUse from 'Pages/TermsOfUse/TermsOfUse'
+import Settings from 'Pages/Settings/Settings'
+import Trainers from 'Pages/Trainers/Trainers'
+import Messages from 'Pages/Messages/Messages'
+import NavBar from 'Components/NavBar/NavBar'
+import Connect from 'Pages/Connect/Connect'
+import Delete from 'Pages/Delete/Delete'
+import Auth from 'Components/Auth/Auth'
+import { CTX } from 'context/Store'
+import Home from 'Pages/Home/Home'
+import './App.scss'
 
 function App() {
-  const [appState, updateState] = useContext(CTX);
-  let {
-    isLoggedIn,
-    user: { token, type },
-    showAuth,
-  } = appState;
+  const [{ isLoggedIn, user }, updateState] = useContext(CTX)
+  const { token, type } = user
 
-  let socketRef = useRef(null);
+  const socketRef = useRef(null)
 
   useEffect(() => {
-    let subscribed = true;
-    let tokenLS = localStorage.getItem('fitr-token');
+    let subscribed = true
+    const token = localStorage.getItem('fitr-token')
 
-    let checkAuth = async () => {
+    const checkAuth = async () => {
       axios
-        .get('/api/auth/', {
-          headers: { 'x-auth-token': tokenLS },
-        })
-        .then(({ data }) => {
-          if (subscribed) {
-            if (data.err && process.env.NODE_ENV === 'production')
-              return updateState({ type: 'LOGOUT' });
-            if (data)
-              updateState({
-                type: 'LOGIN',
-                payload: { user: data, token: tokenLS },
-              });
-          }
+        .get('/api/auth/', { headers: { 'x-auth-token': token } })
+        .then(({ data: { user } }) => {
+          if (subscribed && user) updateState({ type: 'LOGIN', payload: { user, token } })
         })
         .catch(() => {
-          if (process.env.NODE_ENV === 'production')
-            updateState({ type: 'LOGOUT' });
-        });
-    };
+          if (process.env.NODE_ENV === 'production') updateState({ type: 'LOGOUT' })
+        })
+    }
 
-    let noToken = !tokenLS || tokenLS === 'undefined';
+    const noToken = !token || token === 'undefined'
 
-    noToken ? updateState({ type: 'LOGOUT' }) : checkAuth();
+    noToken ? updateState({ type: 'LOGOUT' }) : checkAuth()
 
     return () => {
-      if (socketRef.current)
-        socketRef.current.emit('disconnect-room', socketRef.current.id);
-      subscribed = false;
-    };
-  }, [updateState]);
+      if (socketRef.current) socketRef.current.emit('disconnect-room', socketRef.current.id)
+      subscribed = false
+    }
+  }, [updateState])
 
   useEffect(() => {
-    let subscribed = true;
+    let subscribed = true
 
     if (token) {
-      const urlBase =
-        process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000/';
-      const ENDPOINT = urlBase + `?token=${token}`;
+      const urlBase = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000/'
+      const ENDPOINT = urlBase + `?token=${token}`
 
-      socketRef.current = io(ENDPOINT, {
-        transports: ['websocket', 'polling', 'flashsocket'],
-      });
+      socketRef.current = io(ENDPOINT, { transports: ['websocket', 'polling', 'flashsocket'] })
 
       if (subscribed) {
         socketRef.current.on('chat-message', (message) =>
           updateState({ type: 'NEW_MESSAGE', payload: { message } })
-        );
+        )
       }
     }
 
     return () => {
-      subscribed = false;
+      subscribed = false
       if (socketRef.current) {
-        socketRef.current.removeAllListeners();
-        socketRef.current.off();
+        socketRef.current.removeAllListeners()
+        socketRef.current.off()
       }
-    };
-  }, [token, updateState]);
+    }
+  }, [token, updateState])
 
-  let HomeComponent = type === 'trainer' ? TrainerHome : Home;
+  const HomeComponent = type === 'trainer' ? TrainerHome : Home
 
   return (
     <div className={`App`}>
+      <div className="background" />
+      <div className="overlay" />
       <Router>
         <NavBar />
-        <Switch>
-          <Route
-            exact
-            path='/'
-            component={isLoggedIn ? HomeComponent : LandingPage}
-          />
+        <div className="page-container">
+          <Routes>
+            <Route exact path="/" element={isLoggedIn ? <HomeComponent /> : <LandingPage />} />
 
-          <Route
-            exact
-            path='/coachportal'
-            component={isLoggedIn ? HomeComponent : TrainerLandingPage}
-          />
+            <Route
+              exact
+              path="/coachportal"
+              element={isLoggedIn ? <HomeComponent /> : <TrainerLandingPage />}
+            />
 
-          <Route exact path='/terms-of-use' component={TermsOfUse} />
-          <Route exact path='/privacy-policy' component={PrivacyPolicy} />
-          <Route exact path='/trainers' component={Trainers} />
-          <Route exact path='/trainer/:trainerId' component={TrainerProfile} />
-          <Route
-            exact
-            path='/settings'
-            component={isLoggedIn ? Settings : LandingPage}
-          />
-          <Route
-            exact
-            path='/editprofile'
-            component={isLoggedIn ? EditProfile : LandingPage}
-          />
+            <Route exact path="/terms-of-use" element={<TermsOfUse />} />
 
-          <Route
-            exact
-            path='/review/:sessionId'
-            component={isLoggedIn ? SessionReview : LandingPage}
-          />
+            <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
 
-          <Route
-            exact
-            path='/connect/:connectionId'
-            component={({ match }) =>
-              match && socketRef.current ? (
-                <Connect socket={socketRef.current} match={match} />
-              ) : (
-                <HomeComponent />
-              )
-            }
-          />
-          <Route
-            exact
-            path='/messages'
-            component={isLoggedIn ? Messages : LandingPage}
-          />
+            <Route exact path="/trainers" element={<Trainers />} />
 
-          <Route exact path='/user/:id' component={ClientProfile} />
-          <Route exact path='/delete_my_account' component={Delete} />
+            <Route exact path="/trainer/:trainerId" element={<TrainerProfile />} />
 
-          <Route
-            exact
-            path='/coachportal/settings'
-            component={isLoggedIn ? TrainerSettings : TrainerLandingPage}
-          />
-          <Route
-            exact
-            path='/coachportal/editprofile'
-            component={isLoggedIn ? EditProfile : TrainerLandingPage}
-          />
-          <Route
-            exact
-            path='/coachportal/schedule'
-            component={isLoggedIn ? TrainerSchedule : TrainerLandingPage}
-          />
+            <Route exact path="/settings" element={isLoggedIn ? <Settings /> : <LandingPage />} />
 
-          <Route
-            exact
-            path='/coachportal/messages'
-            component={isLoggedIn ? Messages : TrainerLandingPage}
-          />
-          <Route
-            exact
-            path='/coachportal/manage/:id'
-            component={({ match }) =>
-              isLoggedIn ? (
-                <ManageSession match={match} />
-              ) : (
-                <TrainerLandingPage />
-              )
-            }
-          />
-        </Switch>
+            <Route
+              exact
+              path="/editprofile"
+              element={isLoggedIn ? <EditProfile /> : <LandingPage />}
+            />
 
-        {!isLoggedIn && showAuth && <Auth trainer={false} />}
+            <Route
+              exact
+              path="/review/:sessionId"
+              element={isLoggedIn ? <SessionReview /> : <LandingPage />}
+            />
+
+            <Route
+              exact
+              path="/connect/:connectionId"
+              element={
+                socketRef.current ? <Connect socket={socketRef.current} /> : <HomeComponent />
+              }
+            />
+
+            <Route exact path="/messages" element={isLoggedIn ? <Messages /> : <LandingPage />} />
+
+            <Route exact path="/user/:id" element={<ClientProfile />} />
+
+            <Route exact path="/delete_my_account" element={<Delete />} />
+
+            <Route
+              exact
+              path="/coachportal/settings"
+              element={isLoggedIn ? <TrainerSettings /> : <TrainerLandingPage />}
+            />
+
+            <Route
+              exact
+              path="/coachportal/editprofile"
+              element={isLoggedIn ? <EditProfile /> : <TrainerLandingPage />}
+            />
+
+            <Route
+              exact
+              path="/coachportal/schedule"
+              element={isLoggedIn ? <TrainerSchedule /> : <TrainerLandingPage />}
+            />
+
+            <Route
+              exact
+              path="/coachportal/messages"
+              element={isLoggedIn ? <Messages /> : <TrainerLandingPage />}
+            />
+
+            <Route
+              exact
+              path="/coachportal/manage/:id"
+              element={isLoggedIn ? <ManageSession /> : <TrainerLandingPage />}
+            />
+          </Routes>
+
+          <Auth trainer={false} />
+          <ToastContainer position="bottom-right" theme="dark" limit={5} />
+        </div>
       </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

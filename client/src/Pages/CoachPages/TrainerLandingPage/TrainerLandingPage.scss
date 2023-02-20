@@ -1,71 +1,85 @@
-$small: 576px;
-$medium: 768px;
-$large: 992px;
+@import 'variables';
+
+.trainer-landingpage-background {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 6rem;
+  background: $black;
+  position: absolute;
+}
 
 .trainer-landingpage {
-  margin-top: 2rem;
-  position: relative;
   height: 80vh;
+  margin-top: 2rem;
   min-height: 50rem;
+  position: relative;
 
   .trainer-overlay {
+    left: 50%;
+    width: 80vw;
+    transform: translate(-50%);
     background: linear-gradient(rgba(0, 0, 0, 0.393), rgba(0, 0, 0, 0.3));
   }
-  .landing-background {
-    background: linear-gradient(rgba(0, 0, 0, 0.307), rgba(0, 0, 0, 0.225)),
-      url('../../../imgs/yogacoach.jpg');
+
+  .landing-background-image {
+    left: 50%;
     width: 80vw;
     height: 80vh;
-    background-position: center;
-    background-size: cover;
-    position: absolute;
-    z-index: -1;
-    left: 50%;
-    transform: translateX(-50%);
-    min-height: 50rem;
     filter: blur(2px);
+    min-height: 50rem;
+    position: absolute;
+    background-size: cover;
+    transform: translateX(-50%);
+    background-position: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.307), rgba(0, 0, 0, 0.225)),
+      url('../../../imgs/yogacoach.jpg');
   }
-  .image2 {
-    object-fit: contain;
+
+  .image {
+    left: 50%;
     width: 80vw;
     height: 80vh;
-    position: absolute;
-    z-index: -1;
-    left: 50%;
-    transform: translateX(-50%);
     min-height: 50rem;
+    position: absolute;
+    object-fit: contain;
+    transform: translateX(-50%);
   }
+
   .heading {
-    text-align: center;
+    left: 50%;
+    width: 80%;
+    bottom: 1rem;
     font-size: 4rem;
+    text-align: center;
+    position: absolute;
     line-height: 5.5rem;
     letter-spacing: 0.2rem;
-    width: 80%;
     color: rgba(255, 255, 255, 0.9);
-    left: 50%;
     transform: scaleY(1.15) translateX(-50%);
-    position: absolute;
-    bottom: 1rem;
   }
+
   button {
-    transform: translateX(-50%);
-    margin-left: 50%;
-    padding: 1.4rem 2rem;
-    display: block;
-    margin-bottom: 5rem;
-    border-radius: 0.8rem;
     border: none;
+    color: $white;
+    display: block;
     font-size: 2rem;
-    transition: all 0.1s ease;
-    letter-spacing: 0.2rem;
-    margin-top: 0.4rem;
-    background: rgb(233, 33, 33);
-    color: white;
+    margin-left: 50%;
     font-weight: bold;
+    background: $red3;
+    margin-top: 0.4rem;
+    margin-bottom: 5rem;
+    padding: 1.4rem 2rem;
+    border-radius: 0.8rem;
+    letter-spacing: 0.2rem;
+    transition: all 0.1s ease;
     transition: all 0.2s ease;
+    transform: translateX(-50%);
+
     &:hover {
-      background: rgb(248, 88, 88);
-      color: rgb(68, 15, 15);
+      color: $red9;
+      background: $red2;
       box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
     }
   }

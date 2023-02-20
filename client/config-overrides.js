@@ -1,15 +1,14 @@
-const webpack = require('./node_modules/webpack');
+const webpack = require('./node_modules/webpack')
 
-module.exports = function override(config, env) {
-  if (!config.plugins) {
-    config.plugins = [];
-  }
+module.exports = function override(config) {
+  if (!config.plugins) config.plugins = []
+
   config.plugins.push(
     new webpack.ContextReplacementPlugin(/\/peerjs\//, (data) => {
-      delete data.dependencies[0].critical;
-      return data;
+      delete data.dependencies[0].critical
+      return data
     })
-  );
+  )
 
-  return config;
-};
+  return config
+}
