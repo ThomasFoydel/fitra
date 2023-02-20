@@ -6,15 +6,15 @@ import { CTX } from 'context/Store'
 import './Settings.scss'
 
 const Settings = () => {
-  const [appState, updateState] = useContext(CTX)
-  const { type, token } = appState.user
-  const { darkmode } = appState.settings
+  const [{ user, settings }, updateState] = useContext(CTX)
+  const { darkmode } = settings
+  const { type, token } = user
 
   const handleDarkMode = ({ target: { checked } }) => {
     axios
       .put(
         `/api/user/settings/${type}/darkmode`,
-        { checked },
+        { checked: !checked },
         { headers: { 'x-auth-token': token } }
       )
       .then(({ data: { settings } }) => {
@@ -32,13 +32,13 @@ const Settings = () => {
       <div className="form">
         <div className="setting-item">
           <span>darkmode</span>
-          <label className="switch" htmlFor="darkmode">
+          <label className="switch darkmode-switch" htmlFor="darkmode">
             <input
-              data-testid="darkmode-btn"
-              checked={darkmode}
-              type="checkbox"
-              onChange={handleDarkMode}
               id="darkmode"
+              type="checkbox"
+              checked={darkmode}
+              onChange={handleDarkMode}
+              data-testid="darkmode-btn"
             />
             <span className="slider round" />
           </label>

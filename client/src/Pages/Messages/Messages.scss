@@ -95,28 +95,30 @@
     justify-content: space-around;
     background-color: rgba(201, 201, 201, 0.884);
 
-    Input,
-    Button {
+    input,
+    button {
       padding: 0.5rem;
       border-radius: 1rem;
     }
 
-    Button {
+    button {
       width: 18%;
       min-width: 4.3rem;
     }
 
-    Input {
+    input {
       width: 78%;
     }
   }
 
   .no-msg {
-    width: 100%;
-    font-size: 2rem;
+    color: $red1;
     margin-left: 50%;
+    font-size: 2.5rem;
     text-align: center;
+    white-space: nowrap;
     transform: translateX(-50%);
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.401);
   }
 
   .close-btn {
