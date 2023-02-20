@@ -38,49 +38,46 @@ const EditProfile = () => {
   }
 
   return (
-    <>
-      <div className="background" />
-      <div className="edit-profile">
-        <h2>EDIT YOUR PROFILE</h2>
-        <Link className="link" to={`${type === 'trainer' ? '/trainer' : '/user'}/${id}`}>
-          back to my profile
-        </Link>
-        <input
-          id="name"
-          type="text"
-          value={formInfo.name}
-          onChange={handleChange}
-          placeholder={name || 'name...'}
-        />
-        <input
-          id="bio"
-          type="text"
-          value={formInfo.bio}
-          onChange={handleChange}
-          placeholder={bio || 'bio...'}
-        />
-        <input
-          id="displayEmail"
-          type="displayEmail"
-          onChange={handleChange}
-          value={formInfo.displayEmail}
-          placeholder={displayEmail || 'display email...'}
-        />
-        <button className="submit-btn" onClick={handleSubmit}>
-          submit
-        </button>
-        <div className="image-uploaders">
-          <div className="uploader">
-            <Image name="edit-pic" alt="your profile" src={`/api/image/${profilePic}`} />
-            <ImageUploader props={{ kind: 'profilePic' }} />
-          </div>
-          <div className="uploader">
-            <Image name="edit-pic" alt="your cover" src={`/api/image/${coverPic}`} />
-            <ImageUploader props={{ kind: 'coverPic' }} />
-          </div>
+    <div className="edit-profile">
+      <h2>EDIT YOUR PROFILE</h2>
+      <Link className="link" to={`${type === 'trainer' ? '/trainer' : '/user'}/${id}`}>
+        back to my profile
+      </Link>
+      <input
+        id="name"
+        type="text"
+        value={formInfo.name}
+        onChange={handleChange}
+        placeholder={name || 'name...'}
+      />
+      <input
+        id="bio"
+        type="text"
+        value={formInfo.bio}
+        onChange={handleChange}
+        placeholder={bio || 'bio...'}
+      />
+      <input
+        id="displayEmail"
+        type="displayEmail"
+        onChange={handleChange}
+        value={formInfo.displayEmail}
+        placeholder={displayEmail || 'display email...'}
+      />
+      <button className="submit-btn" onClick={handleSubmit}>
+        submit
+      </button>
+      <div className="image-uploaders">
+        <div className="uploader">
+          <Image name="edit-pic" alt="your profile" src={`/api/image/${profilePic}`} />
+          <ImageUploader props={{ kind: 'profilePic' }} />
+        </div>
+        <div className="uploader">
+          <Image name="edit-pic" alt="your cover" src={`/api/image/${coverPic}`} />
+          <ImageUploader props={{ kind: 'coverPic' }} />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
