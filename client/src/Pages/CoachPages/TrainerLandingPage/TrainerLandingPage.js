@@ -14,19 +14,21 @@ const TrainerLandingPage = () => {
   }
 
   return (
-    <div className="trainer-landingpage">
-      <div className="landing-background" />
-      <img src={yogatrainer} alt="yoga coach" className="image2" />
-      <div className="overlay trainer-overlay" />
+    <div className="trainer-landingpage-background">
+      <div className="trainer-landingpage">
+        <div className="landing-background-image" />
+        <img src={yogatrainer} alt="yoga coach" className="image" />
+        <div className="overlay trainer-overlay" />
+        <h2 className="heading">
+          STREAMLINE
+          <br />
+          YOUR
+          <br />
+          WORKFLOW
+          <button onClick={openAuth}>Get Started</button>
+        </h2>
+      </div>
       {isLoggedIn && <Navigate to="/coachportal/home" />}
-      <h2 className="heading">
-        STREAMLINE
-        <br />
-        YOUR
-        <br />
-        WORKFLOW
-        <button onClick={openAuth}>Get Started</button>
-      </h2>
     </div>
   )
 }

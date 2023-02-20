@@ -31,8 +31,6 @@ const Messages = () => {
 
   return (
     <div className="messages">
-      <div className="background" />
-      <div className="overlay" />
       <div className="thread-section">
         {messageKeys.length === 0 && <div className="no-msg">no messages</div>}
         <div className="thread-list">

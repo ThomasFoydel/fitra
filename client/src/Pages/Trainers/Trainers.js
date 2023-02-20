@@ -36,8 +36,6 @@ const Trainers = () => {
 
   return (
     <div className="trainers">
-      <div className="background" />
-      <div className="overlay" />
       <div className="top-section">
         <SearchBar props={{ search, setSearch, queryType, setQueryType }} />
         <div className="suggestion-tags">

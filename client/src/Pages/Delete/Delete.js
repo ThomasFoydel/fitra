@@ -24,61 +24,57 @@ const Delete = () => {
   const handleInput = ({ target: { value } }) => setInputVal(value)
 
   return (
-    <>
-      <div className="background" />
-      <div className="overlay" />
-      <div className="delete-page">
-        <h2>delete my account</h2>
+    <div className="delete-page">
+      <h2>delete my account</h2>
 
-        {secondConfirm ? (
-          <div className="flexcol">
-            <input
-              type="password"
-              value={inputVal}
-              placeholder="password"
-              onChange={handleInput}
-              data-testid="delete-password-input"
-            />
-            <div className="btns">
-              <button
-                onClick={() => {
-                  setOpenConfirm(false)
-                  setSecondConfirm(false)
-                }}
-                className="cancel-btn"
-              >
-                nevermind
-              </button>
-              <button onClick={handleDelete} className="delete-btn">
-                DELETE
-              </button>
-            </div>
-          </div>
-        ) : openConfirm ? (
-          <div className="flexcol">
-            <h3>You sure? This cannot be undone.</h3>
-            <div className="btns">
-              <button onClick={() => setOpenConfirm(false)} className="cancel-btn">
-                No
-              </button>
-              <button onClick={() => setSecondConfirm(true)} className="delete-btn">
-                Yes
-              </button>
-            </div>
-          </div>
-        ) : (
-          <>
-            <h3>WARNING! THIS IS PERMANENT!</h3>
-            <button onClick={() => setOpenConfirm(true)} className="delete-btn">
-              delete my account
+      {secondConfirm ? (
+        <div className="flexcol">
+          <input
+            type="password"
+            value={inputVal}
+            placeholder="password"
+            onChange={handleInput}
+            data-testid="delete-password-input"
+          />
+          <div className="btns">
+            <button
+              onClick={() => {
+                setOpenConfirm(false)
+                setSecondConfirm(false)
+              }}
+              className="cancel-btn"
+            >
+              nevermind
             </button>
-          </>
-        )}
-        <Link className="close-btn" to={`${type === 'trainer' ? '/coachportal' : ''}/settings`}>
-          <i className="fas fa-times fa-3x" />
-        </Link>
-      </div>
-    </>
+            <button onClick={handleDelete} className="delete-btn">
+              DELETE
+            </button>
+          </div>
+        </div>
+      ) : openConfirm ? (
+        <div className="flexcol">
+          <h3>You sure? This cannot be undone.</h3>
+          <div className="btns">
+            <button onClick={() => setOpenConfirm(false)} className="cancel-btn">
+              No
+            </button>
+            <button onClick={() => setSecondConfirm(true)} className="delete-btn">
+              Yes
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <h3>WARNING! THIS IS PERMANENT!</h3>
+          <button onClick={() => setOpenConfirm(true)} className="delete-btn">
+            delete my account
+          </button>
+        </>
+      )}
+      <Link className="close-btn" to={`${type === 'trainer' ? '/coachportal' : ''}/settings`}>
+        <i className="fas fa-times fa-3x" />
+      </Link>
+    </div>
   )
 }
 

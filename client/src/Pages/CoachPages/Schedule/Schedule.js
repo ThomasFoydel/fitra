@@ -16,18 +16,18 @@ import {
   days,
 } from '../../../util/util'
 
-const current = new Date()
-const dayOfWeek = current.getDay()
-const currentWeek = setUpWeek(0)
-
 const Schedule = ({
   props: { change, entries, handleMinMax, max, min, sessions, setSessions },
 }) => {
-  const [weekShift, setWeekShift] = useState(0)
-  const [week, setWeek] = useState(currentWeek)
   const [displayBlocks, setDisplayBlocks] = useState(entries)
   const [actualBlocks, setActualBlocks] = useState(entries)
   const [firstRender, setFirstRender] = useState(true)
+  const [weekShift, setWeekShift] = useState(0)
+  const [week, setWeek] = useState(currentWeek)
+
+  const current = new Date()
+  const dayOfWeek = current.getDay()
+  const currentWeek = setUpWeek(0)
 
   useEffect(() => {
     let subscribed = true
@@ -64,14 +64,14 @@ const Schedule = ({
     const endHour = getOneHalfHourAhead(hour)
 
     const newBlock = {
-      startDate,
-      endDate,
-      start: hour,
-      end: endHour,
       day,
+      endDate,
       title: '',
-      recurring: false,
+      startDate,
+      start: hour,
       id: uuidv4(),
+      end: endHour,
+      recurring: false,
     }
     setDisplayBlocks([...displayBlocks, newBlock])
     setActualBlocks([...actualBlocks, newBlock])
@@ -86,85 +86,81 @@ const Schedule = ({
   const today = newDate.getDay()
 
   return (
-    <>
-      <div className="background" />
-      <div className="overlay" />
-      <div className="schedule">
-        <div className="ctrl-panel">
-          <MinMax props={{ handleMinMax, min, max }} />
-          <WeekShift props={{ handleWeekShift, weekShift }} />
-        </div>
-
-        <div className="schedule-spacer" />
-
-        <div className="large-schedule">
-          <div className="drag-n-drop">
-            <Labels props={{ week, weekShift, today }} />
-
-            <div className="time-grid">
-              {days.map((day) => (
-                <div className="grid-day" key={day}>
-                  {halfHours.map((hour, i) => {
-                    if (i < 48)
-                      return (
-                        <div
-                          className="grid-time"
-                          style={{
-                            background: `rgb(${0 + i * 2}, ${110 - i / 2}, ${159 + i * 2})`,
-                          }}
-                          key={hour}
-                          id={JSON.stringify({ day, hour })}
-                          onClick={handleGridClick}
-                        >
-                          {hour}
-                        </div>
-                      )
-                    else return null
-                  })}
-                </div>
-              ))}
-            </div>
-
-            {sessions.map((data) => {
-              const inCurrentWeek = checkBlock(data, week)
-              return <Session props={{ data, inCurrentWeek, setSessions }} key={data.id} />
-            })}
-
-            {displayBlocks.map((data) => {
-              const inCurrentWeek = checkBlock(data, week)
-              return (
-                <Dnd
-                  invisible={inCurrentWeek ? data.invisible : true}
-                  data={data}
-                  destroy={destroy}
-                  key={data.id}
-                  week={week}
-                  currentDay={dayOfWeek}
-                  days={days}
-                  times={halfHours}
-                  setActualBlocks={setActualBlocks}
-                  setDisplayBlocks={setDisplayBlocks}
-                />
-              )
-            })}
-          </div>
-        </div>
-
-        <MobileSchedule
-          props={{
-            halfHours,
-            days,
-            dayOfWeek,
-            week,
-            displayBlocks,
-            setDisplayBlocks,
-            entries,
-            actualBlocks,
-            setActualBlocks,
-          }}
-        />
+    <div className="schedule">
+      <div className="ctrl-panel">
+        <MinMax props={{ handleMinMax, min, max }} />
+        <WeekShift props={{ handleWeekShift, weekShift }} />
       </div>
-    </>
+
+      <div className="schedule-spacer" />
+
+      <div className="large-schedule">
+        <div className="drag-n-drop">
+          <Labels props={{ week, weekShift, today }} />
+
+          <div className="time-grid">
+            {days.map((day) => (
+              <div className="grid-day" key={day}>
+                {halfHours.map((hour, i) => {
+                  if (i < 48)
+                    return (
+                      <div
+                        key={hour}
+                        className="grid-time"
+                        onClick={handleGridClick}
+                        id={JSON.stringify({ day, hour })}
+                        style={{
+                          background: `rgb(${0 + i * 2}, ${110 - i / 2}, ${159 + i * 2})`,
+                        }}
+                      >
+                        {hour}
+                      </div>
+                    )
+                  else return null
+                })}
+              </div>
+            ))}
+          </div>
+
+          {sessions.map((data) => {
+            const inCurrentWeek = checkBlock(data, week)
+            return <Session props={{ data, inCurrentWeek, setSessions }} key={data.id} />
+          })}
+
+          {displayBlocks.map((data) => {
+            const inCurrentWeek = checkBlock(data, week)
+            return (
+              <Dnd
+                days={days}
+                data={data}
+                week={week}
+                key={data.id}
+                times={halfHours}
+                destroy={destroy}
+                currentDay={dayOfWeek}
+                setActualBlocks={setActualBlocks}
+                setDisplayBlocks={setDisplayBlocks}
+                invisible={inCurrentWeek ? data.invisible : true}
+              />
+            )
+          })}
+        </div>
+      </div>
+
+      <MobileSchedule
+        props={{
+          days,
+          week,
+          entries,
+          halfHours,
+          dayOfWeek,
+          actualBlocks,
+          displayBlocks,
+          setActualBlocks,
+          setDisplayBlocks,
+        }}
+      />
+    </div>
   )
 }
 

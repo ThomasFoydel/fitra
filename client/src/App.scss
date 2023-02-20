@@ -69,10 +69,11 @@ input:focus {
 .overlay {
   top: 0;
   right: 0;
-  z-index: -1;
+  // z-index: -1;
   width: 100%;
   height: 100%;
-  position: fixed;
+  // position: fixed;
+  position: absolute;
   background: linear-gradient(rgba(0, 0, 0, 0.273), rgba(0, 0, 0, 0.433));
 }
 
@@ -89,9 +90,9 @@ input:focus {
   width: 100vw;
   height: 100vh;
   position: fixed;
+  background-size: cover;
   background-position: center;
-  background-size: cover !important;
-  background: url('./imgs/sweat.jpg');
+  background-image: url('./imgs/sweat.jpg');
 }
 
 .switch {

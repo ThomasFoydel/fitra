@@ -27,39 +27,35 @@ const Settings = () => {
   }
 
   return (
-    <>
-      <div className="background" />
-      <div className="overlay" />
-      <div className={`settings dm-${darkmode}`}>
-        <h2 className="header center">Settings</h2>
-        <div className="form">
-          <div className="setting-item">
-            <span>darkmode</span>
-            <label className="switch" htmlFor="darkmode">
-              <input
-                data-testid="darkmode-btn"
-                checked={darkmode}
-                type="checkbox"
-                onChange={handleDarkMode}
-                id="darkmode"
-              />
-              <span className="slider round" />
-            </label>
-          </div>
-          <div className="setting-item">
-            <Link to="/terms-of-use">terms of use</Link>
-          </div>
-          <div className="setting-item">
-            <Link to="/privacy-policy">privacy policy</Link>
-          </div>
-          <div className="setting-item">
-            <Link className="delete-btn" to="/delete_my_account">
-              delete my account
-            </Link>
-          </div>
+    <div className={`settings dm-${darkmode}`}>
+      <h2 className="header center">Settings</h2>
+      <div className="form">
+        <div className="setting-item">
+          <span>darkmode</span>
+          <label className="switch" htmlFor="darkmode">
+            <input
+              data-testid="darkmode-btn"
+              checked={darkmode}
+              type="checkbox"
+              onChange={handleDarkMode}
+              id="darkmode"
+            />
+            <span className="slider round" />
+          </label>
+        </div>
+        <div className="setting-item">
+          <Link to="/terms-of-use">terms of use</Link>
+        </div>
+        <div className="setting-item">
+          <Link to="/privacy-policy">privacy policy</Link>
+        </div>
+        <div className="setting-item">
+          <Link className="delete-btn" to="/delete_my_account">
+            delete my account
+          </Link>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

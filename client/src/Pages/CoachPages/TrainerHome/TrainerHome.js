@@ -32,24 +32,20 @@ const TrainerHome = () => {
   })
 
   return (
-    <>
-      <div className="background" />
-      <div className="overlay" />
-      <div className="trainer-home">
-        <h2>Sessions</h2>
-        <div className="sessions">
-          {foundSessions.length > 0 ? (
-            animatedSessions((props, item, key) => (
-              <animated.div style={props} key={key}>
-                <Session session={item} />
-              </animated.div>
-            ))
-          ) : (
-            <h3>no recent or upcoming sessions</h3>
-          )}
-        </div>
+    <div className="trainer-home">
+      <h2>Sessions</h2>
+      <div className="sessions">
+        {foundSessions.length > 0 ? (
+          animatedSessions((props, item, key) => (
+            <animated.div style={props} key={key}>
+              <Session session={item} />
+            </animated.div>
+          ))
+        ) : (
+          <h3>no recent or upcoming sessions</h3>
+        )}
       </div>
-    </>
+    </div>
   )
 }
 

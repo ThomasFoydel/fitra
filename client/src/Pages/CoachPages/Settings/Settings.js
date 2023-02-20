@@ -16,38 +16,34 @@ const Settings = () => {
   }
 
   return (
-    <>
-      <div className="background" />
-      <div className="overlay" />
-      <div className={`trainer-settings `}>
-        <h2 className="header center">Settings</h2>
+    <div className={`trainer-settings `}>
+      <h2 className="header center">Settings</h2>
 
-        <div className="form">
-          <div className="setting-item">
-            <Active props={{ type, onComplete, token, active }} />
-          </div>
-          <div className="setting-item">
-            <TagEditor />
-          </div>
+      <div className="form">
+        <div className="setting-item">
+          <Active props={{ type, onComplete, token, active }} />
+        </div>
+        <div className="setting-item">
+          <TagEditor />
+        </div>
 
-          <div className="setting-item">
-            <RateEditor props={{ rate, onComplete, token }} />
-          </div>
+        <div className="setting-item">
+          <RateEditor props={{ rate, onComplete, token }} />
+        </div>
 
-          <div className="setting-item">
-            <Link to="/terms-of-use">terms of use</Link>
-          </div>
-          <div className="setting-item">
-            <Link to="/privacy-policy">privacy policy</Link>
-          </div>
-          <div className="setting-item">
-            <Link className="delete-btn" to="/delete_my_account">
-              delete my account
-            </Link>
-          </div>
+        <div className="setting-item">
+          <Link to="/terms-of-use">terms of use</Link>
+        </div>
+        <div className="setting-item">
+          <Link to="/privacy-policy">privacy policy</Link>
+        </div>
+        <div className="setting-item">
+          <Link className="delete-btn" to="/delete_my_account">
+            delete my account
+          </Link>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

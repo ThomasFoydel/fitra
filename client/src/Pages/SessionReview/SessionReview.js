@@ -30,8 +30,6 @@ const SessionReview = () => {
 
   return (
     <div className="session-review-page">
-      <div className="background" />
-      <div className="overlay" />
       <div className="session-review">
         {redirect && <Navigate to="/" />}
         <h2>Session Review</h2>
@@ -44,11 +42,11 @@ const SessionReview = () => {
           <option value={0}>bad</option>
         </select>
         <textarea
-          onChange={handleChange}
-          value={comment}
-          id="comment"
-          cols="30"
           rows="10"
+          cols="30"
+          id="comment"
+          value={comment}
+          onChange={handleChange}
           placeholder="Leave your comments here..."
         />
         {confirmOpen ? (

@@ -1,5 +1,15 @@
 @import 'variables';
 
+.trainer-landingpage-background {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 6rem;
+  background: #000;
+  position: absolute;
+}
+
 .trainer-landingpage {
   height: 80vh;
   margin-top: 2rem;
@@ -7,27 +17,28 @@
   position: relative;
 
   .trainer-overlay {
+    left: 50%;
+    width: 80vw;
+    transform: translate(-50%);
     background: linear-gradient(rgba(0, 0, 0, 0.393), rgba(0, 0, 0, 0.3));
   }
 
-  .landing-background {
+  .landing-background-image {
     left: 50%;
     width: 80vw;
-    z-index: -1;
     height: 80vh;
     filter: blur(2px);
     min-height: 50rem;
     position: absolute;
     background-size: cover;
-    background-position: center;
     transform: translateX(-50%);
-    background: linear-gradient(rgba(0, 0, 0, 0.307), rgba(0, 0, 0, 0.225)),
+    background-position: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.307), rgba(0, 0, 0, 0.225)),
       url('../../../imgs/yogacoach.jpg');
   }
 
-  .image2 {
+  .image {
     left: 50%;
-    z-index: -1;
     width: 80vw;
     height: 80vh;
     min-height: 50rem;
