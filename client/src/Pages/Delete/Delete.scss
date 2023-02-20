@@ -1,3 +1,5 @@
+@import 'variables';
+
 .delete-page {
   width: 80%;
   display: flex;
@@ -38,26 +40,26 @@
   }
 
   .delete-btn {
-    color: red;
-    background: rgb(19, 19, 19);
-    border: 1px solid rgb(19, 19, 19);
+    color: $red1;
+    background: $grey11;
+    border: 1px solid $grey11;
 
     &:hover {
-      color: rgb(19, 19, 19);
-      background: rgb(255, 23, 23);
-      border-color: rgb(255, 23, 23);
+      color: $grey12;
+      background: $red1;
+      border-color: $red1;
       box-shadow: 0rem 0rem 1.4rem rgba(0, 0, 0, 0.9);
     }
   }
 
   .cancel-btn {
-    color: rgb(58, 58, 58);
-    border: 1px solid black;
-    background: rgb(189, 189, 189);
+    color: $grey9;
+    background: $grey3;
+    border: 1px solid $black;
 
     &:hover {
-      color: rgb(26, 26, 26);
-      background: rgb(228, 228, 228);
+      color: $grey11;
+      background: $grey1;
     }
   }
 
@@ -68,13 +70,13 @@
     position: absolute;
 
     i {
-      color: rgb(173, 0, 0);
+      color: $red6;
       transition: all 0.2s ease;
     }
 
     &:hover {
       i {
-        color: rgb(121, 0, 0);
+        color: $red8;
       }
     }
   }

@@ -1,3 +1,5 @@
+@import 'variables';
+
 .home {
   margin-top: 5rem;
   margin-left: 50%;
@@ -7,22 +9,22 @@
   h2 {
     font-size: 2rem;
     padding: 0.8rem 0;
+    background: $grey1;
     border-radius: 0.4rem;
     letter-spacing: 0.5rem;
-    background: rgb(233, 233, 233);
   }
 
   .sessions {
     margin: 1rem;
     padding: 1.2rem;
+    background: $grey1;
     border-radius: 1rem;
-    background: rgb(233, 233, 233);
 
     .profile-pic {
       width: 3rem;
       height: 3rem;
       border-radius: 25rem;
-      border: 2px solid #f0f0f0;
+      border: 2px solid $grey1;
     }
 
     .session {
@@ -31,12 +33,12 @@
       border-radius: 1.4rem;
 
       a {
-        color: #111;
+        color: $grey12;
         font-size: 1.8rem;
         transition: 0.3s ease all;
 
         &:hover {
-          color: #9d0b0b;
+          color: $red6;
         }
       }
     }
@@ -47,21 +49,21 @@
   }
 
   .session.active {
-    color: #ffb3b3;
-    background: rgb(15, 15, 15);
-    border: solid 1px rgb(199, 0, 0);
+    color: $pink1;
+    background: $grey12;
+    border: solid 1px $red4;
 
     a {
-      color: rgb(248, 30, 30);
+      color: $red2;
       transition: 0.3s ease all;
 
       &:hover {
-        color: #ff7d7d;
+        color: $pink1;
       }
     }
   }
 
   .not-started {
-    background: rgb(155, 223, 206);
+    background: $blue2;
   }
 }

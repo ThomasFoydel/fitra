@@ -1,17 +1,19 @@
+@import 'variables';
+
 .intro-message {
   left: 50%;
   width: 40rem;
   display: flex;
-  color: white;
+  color: $white;
   text-align: center;
   position: absolute;
   align-items: center;
+  background: $grey11;
   flex-direction: column;
+  border: 1px solid $grey4;
   transform: translateX(-50%);
   padding: 1rem 4rem 2rem 4rem;
   border-radius: 0 18px 0 18px;
-  background: rgb(31, 31, 31);
-  border: 1px solid rgb(156, 156, 156);
 
   button {
     width: 50%;

@@ -28,30 +28,30 @@ h2 {
 .register {
   top: 10rem;
   width: 50%;
+  color: $white;
   display: flex;
-  color: white;
   margin-left: 50%;
   min-width: 30rem;
   position: absolute;
   text-align: center;
+  background: $grey11;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  border: 1px solid $grey4;
   border-radius: 0 18px 0 18px;
-  background: rgb(31, 31, 31);
-  border: 1px solid rgb(156, 156, 156);
 
   .signup-btn,
   .signin-btn {
     border: none;
+    color: $grey4;
     bottom: 1.5rem;
     background: none;
     position: absolute;
-    color: rgb(163, 163, 163);
 
     &:hover {
+      color: $white;
       text-decoration: underline;
-      color: rgb(255, 255, 255);
     }
   }
 
@@ -60,19 +60,18 @@ h2 {
   }
 
   .submit-btn {
-    border: none;
-    color: white;
+    color: $white;
     font-size: 1.8rem;
+    background: $red3;
     font-weight: bold;
     border-radius: 5px;
     padding: 0.8rem 4.2rem;
+    border: 1px solid $red3;
     transition: all 0.2s ease;
-    background: rgb(233, 33, 33);
 
     &:hover {
-      color: rgb(68, 15, 15);
-      background: rgb(248, 88, 88);
-      box-shadow: 0rem 0rem 2rem rgba(255, 255, 255, 0.2);
+      color: $red3;
+      background: $grey11;
     }
   }
 
@@ -94,13 +93,13 @@ h2 {
 
     &:hover {
       .close-btn {
-        color: rgb(173, 0, 0);
+        color: $pink2;
       }
     }
   }
   .close-btn {
+    color: $red8;
     cursor: pointer;
-    color: rgb(121, 0, 0);
     transition: all 0.3s ease;
   }
 
@@ -109,24 +108,24 @@ h2 {
   }
 
   a {
-    color: rgb(255, 137, 137);
+    color: $pink1;
 
     &:hover {
-      color: rgb(255, 72, 72);
+      color: $red1;
     }
   }
   .auth-pagetoggle {
     right: 0;
     bottom: 0;
     border: none;
+    color: $grey6;
     padding: 0.8rem;
     background: none;
     position: absolute;
     border-radius: 1rem 0 0 0;
-    color: rgb(124, 124, 124);
 
     &:hover {
-      color: rgb(233, 233, 233);
+      color: $grey5;
     }
   }
 }
@@ -138,14 +137,14 @@ button.kep-login-facebook.metro,
   opacity: 0.8;
   width: 17rem;
   padding: 1rem;
-  color: black;
+  color: $black;
   margin: 0.2rem;
   font-size: 1.2rem;
   font-weight: bold;
   border-radius: 0.2rem;
+  border: 1px solid $grey5;
+  background-color: $grey3;
   transform: all 0.3s ease;
-  border: 1px solid grey;
-  background-color: rgb(170, 170, 170);
 
   &:hover {
     opacity: 1;
@@ -153,11 +152,11 @@ button.kep-login-facebook.metro,
 }
 
 button.kep-login-facebook.metro {
-  color: white;
-  background: #4267b2;
+  color: $white;
+  background: $fbblue;
 }
 
 .google-btn {
-  color: #4285f4;
-  background: white;
+  color: $googleblue;
+  background: $white;
 }

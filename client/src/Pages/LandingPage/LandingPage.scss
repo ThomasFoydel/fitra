@@ -17,7 +17,7 @@
 
   .landing-title {
     opacity: 0.5;
-    color: white;
+    color: $white;
     padding: 0 2rem;
     font-size: 9rem;
     margin-top: 12rem;
@@ -39,16 +39,16 @@
     padding: 2rem;
     color: white;
     margin-top: 2rem;
+    background: $red3;
     font-weight: bold;
     font-size: 3.4rem;
     border-radius: 0.8rem;
     text-decoration: none;
     transition: all 0.2s ease;
-    background: rgb(233, 33, 33);
 
     &:hover {
-      color: rgb(68, 15, 15);
-      background: rgb(248, 88, 88);
+      color: $red9;
+      background: $red2;
       box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
     }
   }

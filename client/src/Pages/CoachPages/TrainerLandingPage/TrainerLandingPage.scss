@@ -6,7 +6,7 @@
   width: 100vw;
   height: 100vh;
   padding-top: 6rem;
-  background: #000;
+  background: $black;
   position: absolute;
 }
 
@@ -62,11 +62,12 @@
 
   button {
     border: none;
-    color: white;
+    color: $white;
     display: block;
     font-size: 2rem;
     margin-left: 50%;
     font-weight: bold;
+    background: $red3;
     margin-top: 0.4rem;
     margin-bottom: 5rem;
     padding: 1.4rem 2rem;
@@ -75,11 +76,10 @@
     transition: all 0.1s ease;
     transition: all 0.2s ease;
     transform: translateX(-50%);
-    background: rgb(233, 33, 33);
 
     &:hover {
-      color: rgb(68, 15, 15);
-      background: rgb(248, 88, 88);
+      color: $red9;
+      background: $red2;
       box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
     }
   }

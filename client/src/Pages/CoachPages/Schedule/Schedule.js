@@ -23,11 +23,11 @@ const Schedule = ({
   const [actualBlocks, setActualBlocks] = useState(entries)
   const [firstRender, setFirstRender] = useState(true)
   const [weekShift, setWeekShift] = useState(0)
-  const [week, setWeek] = useState(currentWeek)
-
   const current = new Date()
-  const dayOfWeek = current.getDay()
   const currentWeek = setUpWeek(0)
+  const dayOfWeek = current.getDay()
+  const [week, setWeek] = useState(currentWeek)
+  
 
   useEffect(() => {
     let subscribed = true

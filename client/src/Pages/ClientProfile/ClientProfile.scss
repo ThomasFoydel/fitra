@@ -23,7 +23,6 @@
   .cover-pic {
     top: 0;
     left: 0;
-    z-index: -1;
     width: 100vw;
     height: 100%;
     overflow: scroll;
@@ -46,23 +45,23 @@
     height: 25rem;
     display: block;
     margin-left: 50%;
+    background: $grey1;
     border-radius: 20rem;
     transform: translateX(-50%);
-    background: rgb(240, 240, 240);
-    border: 12px solid hsl(0, 0%, 94%);
+    border: 12px solid $grey1;
   }
 
   .edit-link {
-    color: #ddd;
+    color: $grey1;
     padding: 0.4rem;
     font-size: 1.8rem;
+    background: $grey11;
     padding: 0.6rem 1rem;
     text-decoration: none;
     border-radius: 0.5rem;
-    background: rgb(22, 22, 22);
 
     &:hover {
-      background: rgb(51, 51, 51);
+      background: $grey9;
     }
   }
 }

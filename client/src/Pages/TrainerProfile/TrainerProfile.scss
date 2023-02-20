@@ -3,6 +3,7 @@
 .trainerprofile {
   .email,
   .bio {
+    color: $white;
     height: 2.5rem;
     overflow: scroll;
     font-size: 1.5rem;
@@ -20,7 +21,6 @@
   .cover-pic {
     top: 0;
     left: 0;
-    z-index: -1;
     height: 100%;
     width: 100vw;
     overflow: scroll;
@@ -43,9 +43,9 @@
     height: 25rem;
     display: block;
     margin-left: 50%;
+    background: $grey1;
     border-radius: 20rem;
     transform: translateX(-50%);
-    background: rgb(240, 240, 240);
     border: 12px solid hsl(0, 0%, 94%);
   }
 
@@ -81,21 +81,22 @@
   }
 
   .avg {
+    color: $white;
     margin-bottom: 1rem;
   }
 
   .link {
-    color: #ddd;
+    color: $grey1;
     padding: 0.4rem;
     font-size: 1.8rem;
+    background: $grey11;
     padding: 0.6rem 1rem;
     text-decoration: none;
     border-radius: 0.5rem;
-    background: rgb(22, 22, 22);
     background: rgba(230, 230, 230, 0.767);
 
     &:hover {
-      background: rgb(51, 51, 51);
+      background: $grey9;
     }
   }
 
@@ -111,25 +112,25 @@
     display: flex;
     padding: 1rem;
     margin: 0.5rem;
-    background: #eee;
+    background: $grey1;
     align-items: center;
     border-radius: 1rem;
     flex-direction: column;
-    border: 2px solid rgb(29, 29, 29);
+    border: 2px solid $grey11;
 
     .review-profile-pic {
       width: 6rem;
       height: 6rem;
+      background: $grey1;
       border-radius: 90rem;
-      background: rgb(240, 240, 240);
-      border: 3px solid rgb(240, 240, 240);
+      border: 3px solid $grey1;
     }
 
     .star-rating {
       width: 12rem;
       height: 2rem;
       position: relative;
-      background: black;
+      background: $black;
 
       .rating-background,
       .stars {
@@ -149,10 +150,10 @@
 .session-selector {
   .grid-time.unavailable {
     cursor: default;
-    background: black !important;
+    background: $black !important;
 
     &:hover {
-      background: black !important;
+      background: $black !important;
     }
   }
 
@@ -161,12 +162,12 @@
     transition: all 0.3s ease;
 
     &:hover {
-      background: #97c8df !important;
+      background: rgb(151, 200, 223) !important;
     }
   }
 
   .selected-true {
-    background: #139c91 !important;
+    background: rgb(19, 156, 145) !important;
   }
 
   .ctrls {
@@ -176,10 +177,10 @@
     transform: translateX(-50%);
 
     .booking {
+      color: $grey1;
+      display: flex;
       height: 10rem;
       padding: 1rem;
-      display: flex;
-      background: #ddd;
       align-items: center;
       flex-direction: column;
       justify-content: center;
@@ -189,22 +190,22 @@
     .booking-btn {
       border: none;
       width: 15rem;
-      color: white;
+      color: $white;
       padding: 0.4rem;
       font-size: 2.6rem;
       font-weight: bold;
       border-radius: 1rem;
       transition: all 0.3s ease;
-      background: rgb(211, 0, 0);
+      background: $red3;
 
       &:hover {
-        background-color: rgb(122, 0, 0);
+        background-color: $red8;
       }
     }
 
     .minmet-false {
       opacity: 0.6;
-      background: rgb(126, 126, 126);
+      background: $grey5;
     }
 
     .weekshift-btns {
@@ -228,7 +229,7 @@
     position: absolute;
     overflow-y: scroll;
     text-align: center;
-    background: black;
+    background: $black;
     transform: translateX(-50%) scale(1);
     grid-template-columns: repeat(7, 110px);
 
@@ -256,7 +257,7 @@
     border-radius: 8px;
     align-items: center;
     justify-content: center;
-    border: 3px solid black;
+    border: 3px solid $black;
     color: rgba(255, 255, 255, 0.425);
 
     @media screen and (max-width: $medium) {
@@ -279,13 +280,13 @@
 
     .day-label {
       width: 150px;
+      color: $grey3;
       text-align: center;
-      color: rgb(196, 196, 196);
     }
 
     .today-true {
+      color: $white;
       font-weight: bold;
-      color: rgb(255, 255, 255);
     }
 
     @media screen and (max-width: $medium) {

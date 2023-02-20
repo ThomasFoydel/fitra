@@ -42,7 +42,7 @@
       flex-direction: column;
       padding-bottom: 0.8rem;
       justify-content: space-around;
-      background: linear-gradient(rgb(233, 233, 233), rgb(204, 204, 204));
+      background: linear-gradient($grey1, $grey2);
     }
   }
 
@@ -54,8 +54,8 @@
     margin-left: 50%;
     text-align: center;
     position: absolute;
+    background: $black;
     border-radius: 8px;
-    background: black;
     visibility: visible;
     transform: translateX(-50%);
     grid-template-columns: repeat(7, 110px);
@@ -67,18 +67,18 @@
   }
 
   .rnd-item {
+    color: $blue4;
     min-height: 5rem;
     overflow: hidden;
     font-weight: bold;
     border-radius: 9px;
     position: relative;
-    color: rgb(4, 37, 28);
     transition: all 0.5s ease;
     box-shadow: 0.1rem 0.5rem 1rem rgba(0, 0, 0, 0.2), 0rem 0rem 0.2rem rgba(246, 254, 255, 0.2);
   }
 
   .rnd-blocked-time {
-    background: linear-gradient(to bottom right, rgb(248, 248, 248), rgb(189, 189, 189));
+    background: linear-gradient(to bottom right, $grey1, $grey3);
   }
 
   .item-day {
@@ -90,26 +90,26 @@
   }
 
   .recurring-true {
-    background: linear-gradient(to bottom right, rgb(181, 246, 255), rgb(131, 196, 204));
+    background: linear-gradient(to bottom right, $blue1, $blue2);
   }
 
   .drag-bottom {
     border-radius: 3px;
-    background: rgb(48, 171, 241);
+    background: $blue3;
   }
 
   .delete-btn,
   .recurring-btn {
     top: 0;
-    color: white;
+    color: $white;
     cursor: pointer;
     user-select: none;
+    background: $blue4;
     position: absolute;
-    background: rgb(9, 43, 88);
     border: 3px solid rgba(51, 51, 51, 0);
 
     &:hover {
-      color: rgb(9, 43, 88);
+      color: $blue4;
       background: rgba(51, 51, 51, 0);
     }
   }
@@ -132,7 +132,7 @@
     position: absolute;
     border-radius: 1rem;
     padding-top: 0.5rem;
-    background-color: rgb(20, 20, 20);
+    background-color: $grey11;
     transform: translateX(-50%) translateY(-4rem);
 
     @media screen and (max-width: $medium) {
@@ -142,13 +142,13 @@
 
     .day-label {
       width: 120px;
+      color: $grey2;
       text-align: center;
-      color: rgb(196, 196, 196);
     }
 
     .today-true {
+      color: $white;
       font-weight: bold;
-      color: rgb(255, 255, 255);
     }
   }
 
@@ -167,7 +167,7 @@
     border-radius: 8px;
     align-items: center;
     justify-content: center;
-    border: 3px solid black;
+    border: 3px solid $black;
     color: rgba(255, 255, 255, 0.425);
   }
 
@@ -188,7 +188,7 @@
       background: rgba(211, 211, 211, 0.814);
 
       &:hover {
-        background: lightgray;
+        background: $grey2;
       }
     }
   }
@@ -201,7 +201,7 @@
       cursor: pointer;
       position: absolute;
       transition: all 0.3s ease;
-      background: linear-gradient(to bottom right, rgb(248, 248, 248), rgb(189, 189, 189));
+      background: linear-gradient(to bottom right, $grey1, $grey3);
 
       &:hover {
         filter: invert(1);
@@ -214,10 +214,10 @@
       display: block;
       max-width: 100%;
       margin-left: 50%;
-      background: #222;
+      background: $grey11;
       margin-top: 0.4rem;
       border-radius: 4rem;
-      border: 2px solid #222;
+      border: 2px solid $grey11;
       transform: translateX(-50%);
     }
   }
@@ -231,39 +231,39 @@
   margin-left: 50%;
   position: absolute;
   text-align: center;
+  background: $grey8;
   padding-bottom: 30rem;
   transform: translateX(-50%);
-  background: rgb(68, 68, 68);
 
   @media screen and (max-width: $medium) {
     display: inherit;
   }
 
   .time-picker {
-    color: black;
-    background-color: white;
+    color: $black;
+    background-color: $white;
   }
 
   .title {
-    color: #eee;
+    color: $grey1;
     font-size: 4rem;
   }
 
   .mb-day {
+    color: $red1;
     padding: 2rem;
     margin: 0.2rem;
     border-radius: 1rem;
-    color: rgb(255, 21, 21);
-    background: linear-gradient(rgb(29, 29, 29), rgb(12, 12, 12));
+    background: linear-gradient($grey11, $grey12);
   }
 
   .mb-block {
+    color: $red7;
     margin: 0.4rem;
     padding: 0.5rem;
+    background: $grey2;
     border-radius: 1rem;
-    color: rgb(143, 0, 0);
-    background: rgb(202, 202, 202);
-    border: 2px solid rgb(155, 0, 0);
+    border: 2px solid $red6;
   }
 
   .close-btn {
@@ -274,7 +274,7 @@
 
   .addtime-form {
     position: relative;
-    background: white;
+    background: $white;
     border-radius: 1rem;
   }
 
@@ -291,7 +291,7 @@
       width: 80%;
       margin-left: 50%;
       margin-top: 1rem;
-      background: #222;
+      background: $grey11;
       border-radius: 1rem;
       transform: translateX(-50%);
     }

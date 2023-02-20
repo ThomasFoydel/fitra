@@ -1,3 +1,5 @@
+@import 'variables';
+
 .manage-session {
   width: 40%;
   padding: 1rem;
@@ -8,7 +10,7 @@
   font-size: 1.1rem;
   text-align: center;
   position: relative;
-  background: #eee;
+  background: $grey1;
   border-radius: 1rem;
   transform: translateX(-50%);
 
@@ -43,10 +45,10 @@
 
   .cancel-btn,
   .confirm-btn {
-    background: rgb(255, 33, 33);
+    background: $red1;
 
     &:hover {
-      background: rgb(230, 10, 10);
+      background: $red2;
     }
   }
 
@@ -56,17 +58,17 @@
   }
 
   a {
-    color: black;
+    color: $black;
     font-weight: bold;
     text-decoration: none;
 
     &:hover {
-      color: grey;
+      color: $grey5;
     }
   }
 
   .close-btn {
-    background: rgb(136, 136, 136);
+    background: $grey5;
   }
 
   .back-link {
@@ -77,17 +79,17 @@
 
   a.connect-link {
     left: 50%;
+    color: $grey2;
     font-size: 1.5rem;
-    color: lightgrey;
-    background: #222;
     position: absolute;
+    background: $grey11;
     border-radius: 0.5rem;
     padding: 0.3rem 3.2rem;
     transform: translateX(-50%);
 
     &:hover {
-      color: rgb(238, 238, 238);
-      background: rgb(19, 19, 19);
+      color: $grey1;
+      background: $grey12;
     }
   }
 }

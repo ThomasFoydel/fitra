@@ -24,8 +24,8 @@
       bottom: 12.5rem;
       border-radius: 9px;
       position: absolute;
-      background: black;
-      border: 2px solid black;
+      background: $black;
+      border: 2px solid $black;
 
       @media screen and (max-width: $medium) {
         width: 10.5rem;
@@ -45,7 +45,7 @@
       width: 80%;
       height: 6rem;
       position: fixed;
-      background: rgb(58, 58, 58);
+      background: $grey9;
     }
 
     .controls-block {
@@ -58,7 +58,7 @@
       cursor: pointer;
       min-width: 90px;
       padding: 8px 10px;
-      background: #ddd;
+      background: $grey1;
       border-radius: 8px;
       align-items: center;
       margin-left: 0.5rem;
@@ -67,7 +67,7 @@
     }
 
     .control-btn:hover {
-      background-color: #343434;
+      background-color: $grey9;
     }
 
     .control-btn i {
@@ -75,12 +75,12 @@
     }
 
     .leave_meeting {
-      color: #eb534b;
+      color: rgb(235, 83, 75);
     }
 
     .unmute,
     .stop {
-      color: #cc3b33;
+      color: rgb(204, 59, 51);
     }
   }
 
@@ -98,7 +98,7 @@
     }
 
     .messages {
-      color: white;
+      color: $white;
       list-style: none;
 
       li {
@@ -115,7 +115,7 @@
     .message_container input {
       width: 100%;
       border: none;
-      color: #f5f5f5;
+      color: $grey1;
       background-color: transparent;
     }
   }

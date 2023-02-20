@@ -15,7 +15,7 @@ body {
 
 html {
   font-size: 62.5%;
-  background: $grey2;
+  background: $grey10;
   background-size: cover;
 }
 
@@ -62,7 +62,7 @@ input:focus {
 
   &:hover {
     opacity: 1;
-    color: $red3;
+    color: $red9;
     background: $red1;
     box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 0.3);
   }
@@ -131,7 +131,7 @@ input:focus {
     transition: 0.4s;
     position: absolute;
     -webkit-transition: 0.4s;
-    background-color: $grey1;
+    background-color: $grey2;
 
     &:before {
       left: 4px;

@@ -1,3 +1,5 @@
+@import 'variables';
+
 .settings {
   width: 50%;
   margin-left: 50%;
@@ -20,7 +22,7 @@
   }
 
   a {
-    color: rgb(54, 54, 54);
+    color: $grey9;
   }
 
   .setting-item {
@@ -37,27 +39,27 @@
 
   a.delete-btn {
     opacity: 0.7;
-    color: #ddd;
+    color: $grey1;
+    background: $red6;
     text-decoration: none;
     border-radius: 0.5rem;
     padding: 0.2rem 0.5rem;
     transition: all 0.2s ease;
-    background: rgb(165, 0, 0);
 
     &:hover {
       opacity: 1;
-      color: rgb(7, 7, 7);
+      color: $black;
       text-decoration: none;
     }
   }
 }
 
 .settings.dm-true {
-  color: #888;
-  background: black;
+  color: $grey5;
+  background: $black;
 
   h1,
   div {
-    color: #888;
+    color: $grey5;
   }
 }

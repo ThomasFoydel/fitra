@@ -1,3 +1,5 @@
+@import 'variables';
+
 .paypal-background {
   top: 0;
   left: 0;
@@ -13,9 +15,9 @@
   z-index: 3;
   top: 20rem;
   position: fixed;
+  background: $grey1;
   border-radius: 1rem;
   transform: translateX(-50%);
-  background: rgb(243, 243, 243);
 
   .paypal {
     width: 35rem;
@@ -32,13 +34,13 @@
 
   .close-btn {
     top: 0.3rem;
+    color: $red8;
     right: 0.8rem;
     cursor: pointer;
     position: absolute;
-    color: rgb(121, 0, 0);
 
     &:hover {
-      color: rgb(173, 0, 0);
+      color: $red6;
     }
   }
 }

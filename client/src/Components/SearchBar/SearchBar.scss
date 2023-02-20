@@ -1,3 +1,5 @@
+@import 'variables';
+
 .searchbar {
   width: 100%;
   display: flex;
@@ -15,7 +17,7 @@
     border-radius: 1.8rem;
     letter-spacing: 0.1rem;
     padding: 0.5rem 0.8rem;
-    border: 2px solid rgb(83, 83, 83);
+    border: 2px solid $grey8;
   }
 
   .querytype-selector {
